@@ -57,7 +57,7 @@ public class GuiResearchRecipe extends GuiScreen {
    protected int mouseX = 0;
    protected int mouseY = 0;
    private GuiButton button;
-   private final ResearchItem research;
+   private ResearchItem research;
    private ResearchPage[] pages = null;
    private int page = 0;
    private int maxPages = 0;
@@ -564,7 +564,9 @@ public class GuiResearchRecipe extends GuiScreen {
          GL11.glScalef(2.0F, 2.0F, 1.0F);
          this.drawTexturedModalRect(0, 0, 68, 76, 12, 12);
          GL11.glPopMatrix();
-          AspectList tags = recipe.getAspects();
+         int mposx = mx;
+         int mposy = my;
+         AspectList tags = recipe.getAspects();
          if (tags != null && tags.size() > 0) {
             int count = 0;
 
@@ -578,7 +580,7 @@ public class GuiResearchRecipe extends GuiScreen {
             for(Aspect tag : tags.getAspectsSortedAmount()) {
                int tx = x + start + 14 + 18 * count + (5 - tags.size()) * 8;
                int ty = y + 172;
-               if (mx >= tx && my >= ty && mx < tx + 16 && my < ty + 16) {
+               if (mposx >= tx && mposy >= ty && mposx < tx + 16 && mposy < ty + 16) {
                   this.drawCustomTooltip(this, itemRenderer, this.fontRendererObj, Arrays.asList(tag.getName(), tag.getLocalizedDescription()), mx, my - 8, 11);
                }
 
@@ -596,7 +598,7 @@ public class GuiResearchRecipe extends GuiScreen {
          RenderHelper.disableStandardItemLighting();
          GL11.glEnable(2896);
          GL11.glPopMatrix();
-         if (mx >= x + 48 + start && my >= y + 27 && mx < x + 48 + start + 16 && my < y + 27 + 16) {
+         if (mposx >= x + 48 + start && mposy >= y + 27 && mposx < x + 48 + start + 16 && mposy < y + 27 + 16) {
             this.drawCustomTooltip(this, itemRenderer, this.fontRendererObj, InventoryUtils.cycleItemStack(recipe.getRecipeOutput()).getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips), mx, my, 11);
          }
 
@@ -627,7 +629,7 @@ public class GuiResearchRecipe extends GuiScreen {
 
             for(int i = 0; i < rw && i < 3; ++i) {
                for(int j = 0; j < rh && j < 3; ++j) {
-                  if (items[i + j * rw] != null && mx >= x + 16 + start + i * 32 && my >= y + 66 + j * 32 && mx < x + 16 + start + i * 32 + 16 && my < y + 66 + j * 32 + 16) {
+                  if (items[i + j * rw] != null && mposx >= x + 16 + start + i * 32 && mposy >= y + 66 + j * 32 && mposx < x + 16 + start + i * 32 + 16 && mposy < y + 66 + j * 32 + 16) {
                      List addtext = InventoryUtils.cycleItemStack(items[i + j * rw]).getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
                      Object[] ref = this.findRecipeReference(InventoryUtils.cycleItemStack(items[i + j * rw]));
                      if (ref != null && !ref[0].equals(this.research.key)) {
@@ -660,7 +662,7 @@ public class GuiResearchRecipe extends GuiScreen {
             }
 
             for(int i = 0; i < items.size() && i < 9; ++i) {
-               if (items.get(i) != null && mx >= x + 16 + start + i % 3 * 32 && my >= y + 66 + i / 3 * 32 && mx < x + 16 + start + i % 3 * 32 + 16 && my < y + 66 + i / 3 * 32 + 16) {
+               if (items.get(i) != null && mposx >= x + 16 + start + i % 3 * 32 && mposy >= y + 66 + i / 3 * 32 && mposx < x + 16 + start + i % 3 * 32 + 16 && mposy < y + 66 + i / 3 * 32 + 16) {
                   List addtext = InventoryUtils.cycleItemStack(items.get(i)).getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
                   Object[] ref = this.findRecipeReference(InventoryUtils.cycleItemStack(items.get(i)));
                   if (ref != null && !ref[0].equals(this.research.key)) {
@@ -729,7 +731,7 @@ public class GuiResearchRecipe extends GuiScreen {
             this.drawCustomTooltip(this, itemRenderer, this.fontRendererObj, InventoryUtils.cycleItemStack(recipe.getRecipeOutput()).getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips), mx, my, 11);
          }
 
-         if (recipe instanceof ShapedRecipes || recipe instanceof ShapedOreRecipe) {
+         if (recipe != null && (recipe instanceof ShapedRecipes || recipe instanceof ShapedOreRecipe)) {
             String text = StatCollector.translateToLocal("recipe.type.workbench");
             int offset = this.fontRendererObj.getStringWidth(text);
             this.fontRendererObj.drawString(text, x + start + 56 - offset / 2, y, 5263440);
@@ -779,10 +781,7 @@ public class GuiResearchRecipe extends GuiScreen {
             }
          }
 
-         if (
-                 recipe instanceof ShapelessRecipes
-                 || recipe instanceof ShapelessOreRecipe
-         ) {
+         if (recipe != null && (recipe instanceof ShapelessRecipes || recipe instanceof ShapelessOreRecipe)) {
             String text = StatCollector.translateToLocal("recipe.type.workbenchshapeless");
             int offset = this.fontRendererObj.getStringWidth(text);
             this.fontRendererObj.drawString(text, x + start + 56 - offset / 2, y, 5263440);
@@ -1351,8 +1350,8 @@ public class GuiResearchRecipe extends GuiScreen {
          }
       }
 
-      if (!this.reference.isEmpty()) {
-         for(List<?> coords : this.reference) {
+      if (this.reference.size() > 0) {
+         for(List coords : this.reference) {
             if (par1 >= (Integer)coords.get(0) && par2 >= (Integer)coords.get(1) && par1 < (Integer)coords.get(0) + 16 && par2 < (Integer)coords.get(1) + 16) {
                Minecraft.getMinecraft().theWorld.playSound(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY, Minecraft.getMinecraft().thePlayer.posZ, "thaumcraft:page", 0.66F, 1.0F, false);
                history.push(new Object[]{this.research.key, this.page});

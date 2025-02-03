@@ -2,8 +2,6 @@ package thaumcraft.common.config;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import java.util.Arrays;
-
-import io.github.ignorelicensescn.utils.recipe.RecipeWrapper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -34,7 +32,6 @@ import thaumcraft.common.lib.crafting.ArcaneWandRecipe;
 import thaumcraft.common.lib.crafting.InfusionRunicAugmentRecipe;
 import thaumcraft.common.lib.crafting.ShapelessNBTOreRecipe;
 
-//TODO:Find a way to clean these up
 public class ConfigRecipes {
    static ItemStack basicWand;
 
@@ -55,23 +52,10 @@ public class ConfigRecipes {
 
    private static void initializeCompoundRecipes() {
       ItemStack empty = new ItemStack(ConfigBlocks.blockHole, 1, 15);
-      ConfigResearch.recipes.put("Thaumonomicon",
-              new RecipeWrapper(
-                      AspectList.EMPTY,
-                      new int[]{1,2,1},
-                      new ItemStack[]{basicWand, new ItemStack(Blocks.bookshelf)}
-              )
-      );
+      ConfigResearch.recipes.put("Thaumonomicon", Arrays.asList(new AspectList(), 1, 2, 1, Arrays.asList(basicWand, new ItemStack(Blocks.bookshelf))));
       WandTriggerRegistry.registerWandBlockTrigger(Thaumcraft.proxy.wandManager, 0, Blocks.bookshelf, 0, "Thaumcraft");
-      ConfigResearch.recipes.put("ArcTable",
-              new RecipeWrapper(
-                      AspectList.EMPTY,
-                      new int[]{1,2,1},
-                      new ItemStack[]{basicWand, new ItemStack(ConfigBlocks.blockTable)}
-              )
-      );
-      ConfigResearch.recipes.put("ResTable",
-              Arrays.asList(new AspectList(), 1, 2, 2, Arrays.asList(null, new ItemStack(ConfigItems.itemInkwell), new ItemStack(ConfigBlocks.blockTable), new ItemStack(ConfigBlocks.blockTable))));
+      ConfigResearch.recipes.put("ArcTable", Arrays.asList(new AspectList(), 1, 2, 1, Arrays.asList(basicWand, new ItemStack(ConfigBlocks.blockTable))));
+      ConfigResearch.recipes.put("ResTable", Arrays.asList(new AspectList(), 1, 2, 2, Arrays.asList(null, new ItemStack(ConfigItems.itemInkwell), new ItemStack(ConfigBlocks.blockTable), new ItemStack(ConfigBlocks.blockTable))));
       ConfigResearch.recipes.put("Crucible", Arrays.asList(new AspectList(), 1, 2, 1, Arrays.asList(basicWand, new ItemStack(Items.cauldron))));
       WandTriggerRegistry.registerWandBlockTrigger(Thaumcraft.proxy.wandManager, 1, Blocks.cauldron, -1, "Thaumcraft");
       ConfigResearch.recipes.put("InfernalFurnace", Arrays.asList((new AspectList()).add(Aspect.FIRE, 50).add(Aspect.EARTH, 50), 3, 3, 3, Arrays.asList(new ItemStack(Blocks.nether_brick), new ItemStack(Blocks.obsidian), new ItemStack(Blocks.nether_brick), new ItemStack(Blocks.obsidian), empty, new ItemStack(Blocks.obsidian), new ItemStack(Blocks.nether_brick), new ItemStack(Blocks.obsidian), new ItemStack(Blocks.nether_brick), new ItemStack(Blocks.nether_brick), new ItemStack(Blocks.obsidian), new ItemStack(Blocks.nether_brick), new ItemStack(Blocks.obsidian), new ItemStack(Blocks.lava), new ItemStack(Blocks.iron_bars), new ItemStack(Blocks.nether_brick), new ItemStack(Blocks.obsidian), new ItemStack(Blocks.nether_brick), new ItemStack(Blocks.nether_brick), new ItemStack(Blocks.obsidian), new ItemStack(Blocks.nether_brick), new ItemStack(Blocks.obsidian), new ItemStack(Blocks.obsidian), new ItemStack(Blocks.obsidian), new ItemStack(Blocks.nether_brick), new ItemStack(Blocks.obsidian), new ItemStack(Blocks.nether_brick))));
@@ -473,14 +457,7 @@ public class ConfigRecipes {
       ConfigResearch.recipes.put("ThaumiumLegs", oreDictRecipe(new ItemStack(ConfigItems.itemLegsThaumium, 1), new Object[]{"III", "I I", "I I", 'I', "ingotThaumium"}));
       ConfigResearch.recipes.put("ThaumiumBoots", oreDictRecipe(new ItemStack(ConfigItems.itemBootsThaumium, 1), new Object[]{"I I", "I I", 'I', "ingotThaumium"}));
       ConfigResearch.recipes.put("ThaumiumShovel", oreDictRecipe(new ItemStack(ConfigItems.itemShovelThaumium, 1), new Object[]{"I", "S", "S", 'I', "ingotThaumium", 'S', "stickWood"}));
-      ConfigResearch.recipes.put("ThaumiumPick", oreDictRecipe(new ItemStack(ConfigItems.itemPickThaumium, 1), new Object[]{
-              "III",
-              " S ",
-              " S ",
-
-              'I', "ingotThaumium",
-              'S', "stickWood"})
-      );
+      ConfigResearch.recipes.put("ThaumiumPick", oreDictRecipe(new ItemStack(ConfigItems.itemPickThaumium, 1), new Object[]{"III", " S ", " S ", 'I', "ingotThaumium", 'S', "stickWood"}));
       ConfigResearch.recipes.put("ThaumiumAxe", oreDictRecipe(new ItemStack(ConfigItems.itemAxeThaumium, 1), new Object[]{"II", "SI", "S ", 'I', "ingotThaumium", 'S', "stickWood"}));
       ConfigResearch.recipes.put("ThaumiumHoe", oreDictRecipe(new ItemStack(ConfigItems.itemHoeThaumium, 1), new Object[]{"II", "S ", "S ", 'I', "ingotThaumium", 'S', "stickWood"}));
       ConfigResearch.recipes.put("ThaumiumSword", oreDictRecipe(new ItemStack(ConfigItems.itemSwordThaumium, 1), new Object[]{"I", "I", "S", 'I', "ingotThaumium", 'S', "stickWood"}));

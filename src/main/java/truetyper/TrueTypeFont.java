@@ -25,20 +25,28 @@ public class TrueTypeFont {
    public static final int ALIGN_LEFT = 0;
    public static final int ALIGN_RIGHT = 1;
    public static final int ALIGN_CENTER = 2;
-   private final FloatObject[] charArray = new FloatObject[256];
-   private final Map<Character,FloatObject> customChars = new HashMap<>();
+   private FloatObject[] charArray;
+   private Map customChars;
    protected boolean antiAlias;
-   private float fontSize = 0.0F;
-   private float fontHeight = 0.0F;
+   private float fontSize;
+   private float fontHeight;
    private int fontTextureID;
-   private int textureWidth = 1024;
-   private int textureHeight = 1024;
+   private int textureWidth;
+   private int textureHeight;
    protected Font font;
    private FontMetrics fontMetrics;
-   private int correctL = 9;
-   private int correctR = 8;
+   private int correctL;
+   private int correctR;
 
    public TrueTypeFont(Font font, boolean antiAlias, char[] additionalChars) {
+      this.charArray = new FloatObject[256];
+      this.customChars = new HashMap<>();
+      this.fontSize = 0.0F;
+      this.fontHeight = 0.0F;
+      this.textureWidth = 1024;
+      this.textureHeight = 1024;
+      this.correctL = 9;
+      this.correctR = 8;
       this.font = font;
       this.fontSize = (float)(font.getSize() + 3);
       this.antiAlias = antiAlias;
@@ -396,7 +404,7 @@ public class TrueTypeFont {
       GL11.glDeleteTextures(scratch);
    }
 
-   private static class FloatObject {
+   private class FloatObject {
       public float width;
       public float height;
       public float storedX;

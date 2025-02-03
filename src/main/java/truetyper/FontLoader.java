@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class FontLoader {
    public static TrueTypeFont loadSystemFont(String name, float defSize, boolean antialias) {
-      return loadSystemFont(name, defSize, antialias, Font.TRUETYPE_FONT);
+      return loadSystemFont(name, defSize, antialias, 0);
    }
 
    public static TrueTypeFont loadSystemFont(String name, float defSize, boolean antialias, int type) {
@@ -24,7 +24,7 @@ public class FontLoader {
    }
 
    public static TrueTypeFont createFont(ResourceLocation res, float defSize, boolean antialias) {
-      return createFont(res, defSize, antialias, Font.TRUETYPE_FONT);
+      return createFont(res, defSize, antialias, 0);
    }
 
    public static TrueTypeFont createFont(ResourceLocation res, float defSize, boolean antialias, int type) {

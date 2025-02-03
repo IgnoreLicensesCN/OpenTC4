@@ -8,13 +8,16 @@ import cpw.mods.fml.relauncher.FMLInjectionData;
 import cpw.mods.fml.relauncher.FMLLaunchHandler;
 import cpw.mods.fml.relauncher.IFMLCallHook;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
-
+import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
+import java.awt.Window;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -46,9 +49,12 @@ import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.event.HyperlinkEvent.EventType;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 import sun.misc.URLClassPath;
+import sun.net.util.URLUtil;
 
 public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
    private static ByteBuffer downloadBuffer = ByteBuffer.allocateDirect(8388608);
@@ -304,7 +310,7 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
                f_loaders.setAccessible(true);
                f_lmap.setAccessible(true);
                URLClassPath ucp = (URLClassPath)f_ucp.get(cl);
-               Closeable loader = (Closeable)((Map)f_lmap.get(ucp)).remove(urlNoFragString(url));
+               Closeable loader = (Closeable)((Map)f_lmap.get(ucp)).remove(URLUtil.urlNoFragString(url));
                if (loader != null) {
                   loader.close();
                   ((List)f_loaders.get(ucp)).remove(loader);
@@ -617,42 +623,5 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
       Object makeDialog();
 
       void showErrorDialog(String var1, String var2);
-   }
-
-
-   public static String urlNoFragString(URL url) {
-      StringBuilder strForm = new StringBuilder();
-
-      String protocol = url.getProtocol();
-      if (protocol != null) {
-         /* protocol is compared case-insensitive, so convert to lowercase */
-         protocol = protocol.toLowerCase();
-         strForm.append(protocol);
-         strForm.append("://");
-      }
-
-      String host = url.getHost();
-      if (host != null) {
-         /* host is compared case-insensitive, so convert to lowercase */
-         host = host.toLowerCase();
-         strForm.append(host);
-
-         int port = url.getPort();
-         if (port == -1) {
-            /* if no port is specificed then use the protocols
-             * default, if there is one */
-            port = url.getDefaultPort();
-         }
-         if (port != -1) {
-            strForm.append(":").append(port);
-         }
-      }
-
-      String file = url.getFile();
-      if (file != null) {
-         strForm.append(file);
-      }
-
-      return strForm.toString();
    }
 }
