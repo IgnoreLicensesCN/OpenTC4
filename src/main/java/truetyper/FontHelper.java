@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 
 public class FontHelper {
-   private static String formatEscape = "§";
+   private static final String formatEscape = "§";
 
    public static void drawString(String s, float x, float y, TrueTypeFont font, float scaleX, float scaleY, int format, float... rgba) {
       Minecraft mc = Minecraft.getMinecraft();
@@ -35,7 +35,7 @@ public class FontHelper {
                float[] c = rgba;
                if (i > 0) {
                   c = Formatter.getFormatted(par.charAt(0));
-                  par = par.substring(1, par.length());
+                  par = par.substring(1);
                }
 
                font.drawString(x * (float)sr.getScaleFactor() + totalOffset, y - matrix.m31 * (float)sr.getScaleFactor(), par, scaleX / (float)amt, scaleY / (float)amt, format, c);
