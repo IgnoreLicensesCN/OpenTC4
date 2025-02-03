@@ -3,6 +3,8 @@ package thaumcraft.common.config;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import io.github.ignorelicensescn.utils.recipe.RecipeWrapper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -18,7 +20,6 @@ import thaumcraft.api.crafting.IArcaneRecipe;
 import thaumcraft.api.crafting.InfusionEnchantmentRecipe;
 import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.api.crafting.ShapedArcaneRecipe;
-import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchItem;
@@ -29,7 +30,7 @@ import thaumcraft.common.lib.crafting.InfusionRunicAugmentRecipe;
 
 public class ConfigResearch {
    public static ItemStack wand = null;
-   public static HashMap recipes = new HashMap<>();
+   public static HashMap<String, RecipeWrapper> recipes = new HashMap<>();
 
    public static void init() {
       wand = new ItemStack(ConfigItems.itemWandCasting, 1, 0);

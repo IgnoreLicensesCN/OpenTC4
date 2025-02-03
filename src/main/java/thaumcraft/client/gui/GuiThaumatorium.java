@@ -214,7 +214,7 @@ public class GuiThaumatorium extends GuiContainer {
       int gy = (this.height - this.ySize) / 2;
       int x = mx - (gx + 112);
       int y = my - (gy + 16);
-      if (this.container.recipes.size() > 0 && this.index >= 0 && this.index < this.container.recipes.size()) {
+      if (!this.container.recipes.isEmpty() && this.index >= 0 && this.index < this.container.recipes.size()) {
          if (x >= 0 && y >= 0 && x < 16 && y < 16 && (this.inventory.recipeHash.size() < this.inventory.maxRecipes || this.inventory.recipeHash.contains(this.container.recipes.get(this.index).hash))) {
             this.mc.playerController.sendEnchantPacket(this.inventorySlots.windowId, this.index);
             this.playButtonSelect();

@@ -36,13 +36,15 @@ public class PacketResearchComplete implements IMessage, IMessageHandler<PacketR
 
    @SideOnly(Side.CLIENT)
    public IMessage onMessage(PacketResearchComplete message, MessageContext ctx) {
-      if (message.key != null && message.key.length() > 0) {
+
+      if (message.key != null && !message.key.isEmpty()) {
          Thaumcraft.proxy.getResearchManager().completeResearch(Minecraft.getMinecraft().thePlayer, message.key);
          if (message.key.startsWith("@")) {
             String text = StatCollector.translateToLocal("tc.addclue");
             PlayerNotifications.addNotification("§a" + text);
             Minecraft.getMinecraft().thePlayer.playSound("thaumcraft:learn", 0.2F, 1.0F + Minecraft.getMinecraft().thePlayer.worldObj.rand.nextFloat() * 0.1F);
-         } else if (!ResearchCategories.getResearch(message.key).isVirtual()) {
+         }
+         else if (!ResearchCategories.getResearch(message.key).isVirtual()) {
             ClientTickEventsFML.researchPopup.queueResearchInformation(ResearchCategories.getResearch(message.key));
             GuiResearchBrowser.highlightedItem.add(message.key);
             GuiResearchBrowser.highlightedItem.add(ResearchCategories.getResearch(message.key).category);

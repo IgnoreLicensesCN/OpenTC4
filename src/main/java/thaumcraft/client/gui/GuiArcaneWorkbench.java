@@ -19,7 +19,7 @@ import thaumcraft.common.tiles.TileArcaneWorkbench;
 public class GuiArcaneWorkbench extends GuiContainer {
    private TileArcaneWorkbench tileEntity;
    private InventoryPlayer ip;
-   private int[][] aspectLocs = new int[][]{{72, 21}, {24, 43}, {24, 102}, {72, 124}, {120, 102}, {120, 43}};
+   private final int[][] aspectLocs = new int[][]{{72, 21}, {24, 43}, {24, 102}, {72, 124}, {120, 102}, {120, 43}};
    ArrayList<Aspect> primals = Aspect.getPrimalAspects();
 
    public GuiArcaneWorkbench(InventoryPlayer par1InventoryPlayer, TileArcaneWorkbench e) {
@@ -94,6 +94,7 @@ public class GuiArcaneWorkbench extends GuiContainer {
          this.fontRendererObj.drawString(text, -ll, 0, 15625838);
          GL11.glScalef(1.0F, 1.0F, 1.0F);
          GL11.glPopMatrix();
+
       }
 
    }

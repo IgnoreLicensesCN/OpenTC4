@@ -312,6 +312,8 @@ import thaumcraft.common.tiles.TileVisRelay;
 import thaumcraft.common.tiles.TileWandPedestal;
 import thaumcraft.common.tiles.TileWarded;
 
+import javax.annotation.Nullable;
+
 public class ClientProxy extends CommonProxy {
    protected PlayerKnowledge playerResearch = new PlayerKnowledge();
    protected ResearchManager researchManager = new ResearchManager();
@@ -330,6 +332,7 @@ public class ClientProxy extends CommonProxy {
       FMLCommonHandler.instance().bus().register(new KeyHandler());
    }
 
+   @Nullable
    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
       if (world instanceof WorldClient) {
          switch (ID) {
