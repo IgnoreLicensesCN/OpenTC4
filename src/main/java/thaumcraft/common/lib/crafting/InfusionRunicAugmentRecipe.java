@@ -18,11 +18,11 @@ public class InfusionRunicAugmentRecipe extends InfusionRecipe {
    private ItemStack[] components;
 
    public InfusionRunicAugmentRecipe() {
-      super("RUNICAUGMENTATION", (Object)null, 0, (AspectList)null, (ItemStack)null, new ItemStack[]{new ItemStack(Items.diamond), new ItemStack(ConfigItems.itemResource, 1, 14)});
+      super("RUNICAUGMENTATION", null, 0, null, null, new ItemStack[]{new ItemStack(Items.diamond), new ItemStack(ConfigItems.itemResource, 1, 14)});
    }
 
    public InfusionRunicAugmentRecipe(ItemStack in) {
-      super("RUNICAUGMENTATION", (Object)null, 0, (AspectList)null, in, new ItemStack[]{new ItemStack(Items.diamond), new ItemStack(ConfigItems.itemResource, 1, 14)});
+      super("RUNICAUGMENTATION", null, 0, null, in, new ItemStack[]{new ItemStack(Items.diamond), new ItemStack(ConfigItems.itemResource, 1, 14)});
       this.components = new ItemStack[]{new ItemStack(Items.diamond), new ItemStack(ConfigItems.itemResource, 1, 14)};
       int fc = EventHandlerRunic.getFinalCharge(in);
       if (fc > 0) {
@@ -36,7 +36,7 @@ public class InfusionRunicAugmentRecipe extends InfusionRecipe {
             com.add(new ItemStack(ConfigItems.itemResource, 1, 14));
          }
 
-         this.components = (ItemStack[])com.toArray(this.components);
+         this.components = com.toArray(this.components);
       }
 
    }
@@ -58,7 +58,7 @@ public class InfusionRunicAugmentRecipe extends InfusionRecipe {
             boolean b = false;
 
             for(int a = 0; a < ii.size(); ++a) {
-               i2 = ((ItemStack)ii.get(a)).copy();
+               i2 = ii.get(a).copy();
                if (comp.getItemDamage() == 32767) {
                   i2.setItemDamage(32767);
                }
@@ -92,7 +92,7 @@ public class InfusionRunicAugmentRecipe extends InfusionRecipe {
 
    public AspectList getAspects(ItemStack input) {
       AspectList out = new AspectList();
-      int vis = (int)((double)32.0F * Math.pow((double)2.0F, (double)EventHandlerRunic.getFinalCharge(input)));
+      int vis = (int)((double)32.0F * Math.pow(2.0F, EventHandlerRunic.getFinalCharge(input)));
       if (vis > 0) {
          out.add(Aspect.ARMOR, vis / 2);
          out.add(Aspect.MAGIC, vis / 2);
@@ -118,7 +118,7 @@ public class InfusionRunicAugmentRecipe extends InfusionRecipe {
          }
       }
 
-      return (ItemStack[])com.toArray(new ItemStack[0]);
+      return com.toArray(new ItemStack[0]);
    }
 
    public ItemStack[] getComponents() {

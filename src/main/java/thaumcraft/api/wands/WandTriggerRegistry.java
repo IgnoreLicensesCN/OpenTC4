@@ -21,7 +21,7 @@ import net.minecraft.world.World;
  */
 public class WandTriggerRegistry {
 	
-	private static HashMap<String,HashMap<List,List>> triggers = new HashMap<String,HashMap<List,List>>();
+	private static HashMap<String,HashMap<List,List>> triggers = new HashMap<>();
 	private static final String DEFAULT = "default";
 
 	/**
@@ -35,7 +35,7 @@ public class WandTriggerRegistry {
 	 */
 	public static void registerWandBlockTrigger(IWandTriggerManager manager, int event, Block block, int meta, String modid) {
 		if (!triggers.containsKey(modid)) {
-			triggers.put(modid, new HashMap<List,List>());
+			triggers.put(modid, new HashMap<>());
 		}
 		HashMap<List,List> temp = triggers.get(modid);
 		temp.put(Arrays.asList(block,meta),Arrays.asList(manager,event));
@@ -70,10 +70,9 @@ public class WandTriggerRegistry {
 	public static boolean hasTrigger(Block block, int meta, String modid) {
 		if (!triggers.containsKey(modid)) return false;
 		HashMap<List,List> temp = triggers.get(modid);
-		if (temp.containsKey(Arrays.asList(block,meta)) ||
-				temp.containsKey(Arrays.asList(block,-1))) return true;
-		return false;
-	}
+        return temp.containsKey(Arrays.asList(block, meta)) ||
+                temp.containsKey(Arrays.asList(block, -1));
+    }
 	
 	
 	/**

@@ -18,7 +18,7 @@ public class ChampionModVampire implements IChampionModifierEffect {
          float w = boss.worldObj.rand.nextFloat() * boss.width;
          float d = boss.worldObj.rand.nextFloat() * boss.width;
          float h = boss.worldObj.rand.nextFloat() * boss.height;
-         Thaumcraft.proxy.drawGenericParticles(boss.worldObj, boss.boundingBox.minX + (double)w, boss.boundingBox.minY + (double)h, boss.boundingBox.minZ + (double)d, (double)0.0F, (double)0.0F, (double)0.0F, 0.9F + boss.worldObj.rand.nextFloat() * 0.1F, 0.0F, 0.0F, 0.9F, false, 147, 4, 1, 8 + boss.worldObj.rand.nextInt(4), 0, 0.5F + boss.worldObj.rand.nextFloat() * 0.2F);
+         Thaumcraft.proxy.drawGenericParticles(boss.worldObj, boss.boundingBox.minX + (double)w, boss.boundingBox.minY + (double)h, boss.boundingBox.minZ + (double)d, 0.0F, 0.0F, 0.0F, 0.9F + boss.worldObj.rand.nextFloat() * 0.1F, 0.0F, 0.0F, 0.9F, false, 147, 4, 1, 8 + boss.worldObj.rand.nextInt(4), 0, 0.5F + boss.worldObj.rand.nextFloat() * 0.2F);
       }
    }
 }

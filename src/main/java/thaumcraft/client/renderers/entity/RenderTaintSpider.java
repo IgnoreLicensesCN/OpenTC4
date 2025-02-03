@@ -39,11 +39,7 @@ public class RenderTaintSpider extends RenderLiving {
          GL11.glEnable(3042);
          GL11.glDisable(3008);
          GL11.glBlendFunc(1, 1);
-         if (par1EntitySpider.isInvisible()) {
-            GL11.glDepthMask(false);
-         } else {
-            GL11.glDepthMask(true);
-         }
+          GL11.glDepthMask(!par1EntitySpider.isInvisible());
 
          char c0 = '\uf0f0';
          int j = c0 % 65536;

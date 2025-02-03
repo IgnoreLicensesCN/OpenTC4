@@ -95,7 +95,7 @@ public class BlockCrystal extends BlockContainer implements IInfusionStabiliser 
       if (metadata <= 6) {
          return new TileCrystal();
       } else {
-         return (TileEntity)(metadata == 7 ? new TileEldritchCrystal() : super.createTileEntity(world, metadata));
+         return metadata == 7 ? new TileEldritchCrystal() : super.createTileEntity(world, metadata);
       }
    }
 
@@ -137,12 +137,9 @@ public class BlockCrystal extends BlockContainer implements IInfusionStabiliser 
       if (md <= 6 && this.checkIfAttachedToBlock(world, i, j, k)) {
          TileCrystal tes = (TileCrystal)world.getTileEntity(i, j, k);
          int i1 = tes.orientation;
-         boolean flag = false;
-         if (!world.isSideSolid(i - 1, j, k, ForgeDirection.getOrientation(5)) && i1 == 5) {
-            flag = true;
-         }
+         boolean flag = !world.isSideSolid(i - 1, j, k, ForgeDirection.getOrientation(5)) && i1 == 5;
 
-         if (!world.isSideSolid(i + 1, j, k, ForgeDirection.getOrientation(4)) && i1 == 4) {
+          if (!world.isSideSolid(i + 1, j, k, ForgeDirection.getOrientation(4)) && i1 == 4) {
             flag = true;
          }
 
@@ -214,7 +211,7 @@ public class BlockCrystal extends BlockContainer implements IInfusionStabiliser 
       } else if (world.isSideSolid(i, j, k + 1, ForgeDirection.getOrientation(2))) {
          return true;
       } else {
-         return world.isSideSolid(i, j - 1, k, ForgeDirection.getOrientation(1)) ? true : world.isSideSolid(i, j + 1, k, ForgeDirection.getOrientation(0));
+         return world.isSideSolid(i, j - 1, k, ForgeDirection.getOrientation(1)) || world.isSideSolid(i, j + 1, k, ForgeDirection.getOrientation(0));
       }
    }
 

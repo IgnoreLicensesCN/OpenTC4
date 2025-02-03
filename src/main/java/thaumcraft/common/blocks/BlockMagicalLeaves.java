@@ -59,13 +59,13 @@ public class BlockMagicalLeaves extends Block implements IShearable {
    @SideOnly(Side.CLIENT)
    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5) {
       Block var6 = par1IBlockAccess.getBlock(par2, par3, par4);
-      return Blocks.leaves.isOpaqueCube() && var6 == this ? false : super.shouldSideBeRendered(par1IBlockAccess, par2, par3, par4, par5);
+      return (!Blocks.leaves.isOpaqueCube() || var6 != this) && super.shouldSideBeRendered(par1IBlockAccess, par2, par3, par4, par5);
    }
 
    @SideOnly(Side.CLIENT)
    public int getBlockColor() {
-      double var1 = (double)0.5F;
-      double var3 = (double)1.0F;
+      double var1 = 0.5F;
+      double var3 = 1.0F;
       return ColorizerFoliage.getFoliageColor(var1, var3);
    }
 
@@ -137,12 +137,14 @@ public class BlockMagicalLeaves extends Block implements IShearable {
                   for(int var13 = -var7; var13 <= var7; ++var13) {
                      for(int var14 = -var7; var14 <= var7; ++var14) {
                         Block block = par1World.getBlock(par2 + var12, par3 + var13, par4 + var14);
+
+                        int i = (var12 + var11) * var10 + (var13 + var11) * var9 + var14 + var11;
                         if (block != null && block.canSustainLeaves(par1World, par2 + var12, par3 + var13, par4 + var14)) {
-                           this.adjacentTreeBlocks[(var12 + var11) * var10 + (var13 + var11) * var9 + var14 + var11] = 0;
+                           this.adjacentTreeBlocks[i] = 0;
                         } else if (block != null && block.isLeaves(par1World, par2 + var12, par3 + var13, par4 + var14)) {
-                           this.adjacentTreeBlocks[(var12 + var11) * var10 + (var13 + var11) * var9 + var14 + var11] = -2;
+                           this.adjacentTreeBlocks[i] = -2;
                         } else {
-                           this.adjacentTreeBlocks[(var12 + var11) * var10 + (var13 + var11) * var9 + var14 + var11] = -1;
+                           this.adjacentTreeBlocks[i] = -1;
                         }
                      }
                   }
@@ -199,10 +201,10 @@ public class BlockMagicalLeaves extends Block implements IShearable {
    @SideOnly(Side.CLIENT)
    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
       if (par1World.canLightningStrikeAt(par2, par3 + 1, par4) && !World.doesBlockHaveSolidTopSurface(par1World, par2, par3 - 1, par4) && par5Random.nextInt(15) == 1) {
-         double var6 = (double)((float)par2 + par5Random.nextFloat());
+         double var6 = (float)par2 + par5Random.nextFloat();
          double var8 = (double)par3 - 0.05;
-         double var10 = (double)((float)par4 + par5Random.nextFloat());
-         par1World.spawnParticle("dripWater", var6, var8, var10, (double)0.0F, (double)0.0F, (double)0.0F);
+         double var10 = (float)par4 + par5Random.nextFloat();
+         par1World.spawnParticle("dripWater", var6, var8, var10, 0.0F, 0.0F, 0.0F);
       }
 
       int md = par1World.getBlockMetadata(par2, par3, par4);

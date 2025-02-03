@@ -45,16 +45,16 @@ public class RenderCultist extends RenderBiped {
       float bob = 0.0F;
       boolean rit = entity instanceof EntityCultistCleric && ((EntityCultistCleric)entity).getIsRitualist();
       if (rit) {
-         int val = (new Random((long)entity.getEntityId())).nextInt(1000);
-         float c = (float)((EntityCultistCleric)entity).ticksExisted + p_76986_9_ + (float)val;
+         int val = (new Random(entity.getEntityId())).nextInt(1000);
+         float c = (float) entity.ticksExisted + p_76986_9_ + (float)val;
          bob = MathHelper.sin(c / 9.0F) * 0.1F + 0.21F;
-         GL11.glTranslated((double)0.0F, (double)bob, (double)0.0F);
+         GL11.glTranslated(0.0F, bob, 0.0F);
       }
 
       super.doRender(entity, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_, p_76986_9_);
       if (rit) {
          GL11.glPushMatrix();
-         this.drawFloatyLine(entity.posX, entity.posY + (double)(entity.getEyeHeight() * 1.2F), entity.posZ, (double)((EntityCultistCleric)entity).getHomePosition().posX + (double)0.5F, (double)((EntityCultistCleric)entity).getHomePosition().posY + (double)1.5F - (double)bob, (double)((EntityCultistCleric)entity).getHomePosition().posZ + (double)0.5F, p_76986_9_, 1114129, "textures/misc/wispy.png", -0.03F, (float)Math.min(((EntityCultistCleric)entity).ticksExisted, 10) / 10.0F, 0.25F);
+         this.drawFloatyLine(entity.posX, entity.posY + (double)(entity.getEyeHeight() * 1.2F), entity.posZ, (double)((EntityCultistCleric)entity).getHomePosition().posX + (double)0.5F, (double)((EntityCultistCleric)entity).getHomePosition().posY + (double)1.5F - (double)bob, (double)((EntityCultistCleric)entity).getHomePosition().posZ + (double)0.5F, p_76986_9_, 1114129, "textures/misc/wispy.png", -0.03F, (float)Math.min(entity.ticksExisted, 10) / 10.0F, 0.25F);
          GL11.glPopMatrix();
       }
 
@@ -75,14 +75,14 @@ public class RenderCultist extends RenderBiped {
       GL11.glEnable(3042);
       GL11.glBlendFunc(770, 771);
       Tessellator tessellator = Tessellator.instance;
-      double dc1x = (double)((float)(x - x2));
-      double dc1y = (double)((float)(y - y2));
-      double dc1z = (double)((float)(z - z2));
+      double dc1x = (float)(x - x2);
+      double dc1y = (float)(y - y2);
+      double dc1z = (float)(z - z2);
       UtilsFX.bindTexture(texture);
       tessellator.startDrawing(5);
-      double dx2 = (double)0.0F;
-      double dy2 = (double)0.0F;
-      double dz2 = (double)0.0F;
+      double dx2 = 0.0F;
+      double dy2 = 0.0F;
+      double dz2 = 0.0F;
       double d3 = x - x2;
       double d4 = y - y2;
       double d5 = z - z2;
@@ -102,8 +102,8 @@ public class RenderCultist extends RenderBiped {
          double dz = dc1z + (double)(MathHelper.sin((float)((y % (double)16.0F + (double)(dist * (1.0F - f2) * (float)Config.golemLinkQuality / 2.0F) - (double)(time % 32767.0F / 5.0F)) / (double)2.0F)) * 0.5F * f3);
          tessellator.setColorRGBA_F(r, g, b, 0.8F);
          float f13 = (1.0F - f2) * dist - time * speed;
-         tessellator.addVertexWithUV(dx * (double)f2, dy * (double)f2 - (double)width, dz * (double)f2, (double)f13, (double)f10);
-         tessellator.addVertexWithUV(dx * (double)f2, dy * (double)f2 + (double)width, dz * (double)f2, (double)f13, (double)f9);
+         tessellator.addVertexWithUV(dx * (double)f2, dy * (double)f2 - (double)width, dz * (double)f2, f13, f10);
+         tessellator.addVertexWithUV(dx * (double)f2, dy * (double)f2 + (double)width, dz * (double)f2, f13, f9);
       }
 
       tessellator.draw();
@@ -119,8 +119,8 @@ public class RenderCultist extends RenderBiped {
          double dz = dc1z + (double)(MathHelper.sin((float)((y % (double)16.0F + (double)(dist * (1.0F - f2) * (float)Config.golemLinkQuality / 2.0F) - (double)(time % 32767.0F / 5.0F)) / (double)2.0F)) * 0.5F * f3);
          tessellator.setColorRGBA_F(r, g, b, 0.8F);
          float f13 = (1.0F - f2) * dist - time * speed;
-         tessellator.addVertexWithUV(dx * (double)f2 - (double)width, dy * (double)f2, dz * (double)f2, (double)f13, (double)f10);
-         tessellator.addVertexWithUV(dx * (double)f2 + (double)width, dy * (double)f2, dz * (double)f2, (double)f13, (double)f9);
+         tessellator.addVertexWithUV(dx * (double)f2 - (double)width, dy * (double)f2, dz * (double)f2, f13, f10);
+         tessellator.addVertexWithUV(dx * (double)f2 + (double)width, dy * (double)f2, dz * (double)f2, f13, f9);
       }
 
       tessellator.draw();

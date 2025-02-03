@@ -29,8 +29,8 @@ public class AILiquidGather extends EntityAIBase {
    private World theWorld;
    private float pumpDist = 0.0F;
    int count = 0;
-   HashMap queue = new HashMap<>();
-   ArrayList cache = new ArrayList<>();
+   HashMap<ChunkCoordinates,ArrayList<SourceBlock>> queue = new HashMap<>();
+   ArrayList<ChunkCoordinates> cache = new ArrayList<>();
    ChunkCoordinates origin = null;
 
    public AILiquidGather(EntityGolemBase par1EntityCreature) {
@@ -43,7 +43,7 @@ public class AILiquidGather extends EntityAIBase {
       ArrayList<FluidStack> fluids = GolemHelper.getMissingLiquids(this.theGolem);
       if (fluids == null) {
          return false;
-      } else if (this.theGolem.itemWatched != null && fluids.size() != 0 && this.theGolem.getNavigator().noPath()) {
+      } else if (this.theGolem.itemWatched != null && !fluids.isEmpty() && this.theGolem.getNavigator().noPath()) {
          ForgeDirection facing = ForgeDirection.getOrientation(this.theGolem.homeFacing);
          ChunkCoordinates home = this.theGolem.getHomePosition();
          int var10000 = home.posX - facing.offsetX;
@@ -59,7 +59,7 @@ public class AILiquidGather extends EntityAIBase {
          for(FluidStack fluid : fluids) {
             for(Marker marker : GolemHelper.getMarkedFluidHandlersAdjacentToGolem(fluid, this.theWorld, this.theGolem)) {
                TileEntity te = this.theWorld.getTileEntity(marker.x, marker.y, marker.z);
-               if (te != null && te instanceof IFluidHandler) {
+               if (te instanceof IFluidHandler) {
                   FluidStack fs = ((IFluidHandler)te).drain(ForgeDirection.getOrientation(marker.side), new FluidStack(fluid.getFluid(), max - camt), false);
                   if (fs != null && fs.amount > 0) {
                      return true;
@@ -125,7 +125,7 @@ public class AILiquidGather extends EntityAIBase {
             for(FluidStack fluidstack : fluids) {
                for(Marker marker : GolemHelper.getMarkedFluidHandlersAdjacentToGolem(fluidstack, this.theWorld, this.theGolem)) {
                   TileEntity te = this.theWorld.getTileEntity(marker.x, marker.y, marker.z);
-                  if (te != null && te instanceof IFluidHandler) {
+                  if (te instanceof IFluidHandler) {
                      FluidStack fs = ((IFluidHandler)te).drain(ForgeDirection.getOrientation(marker.side), new FluidStack(fluidstack.getFluid(), max - camt), true);
                      if (fs != null && fs.amount > 0) {
                         if (this.theGolem.fluidCarried != null) {
@@ -160,11 +160,11 @@ public class AILiquidGather extends EntityAIBase {
                         this.rebuildQueue(loc, fluidstack.getFluid());
                      }
 
-                     if (this.queue.containsKey(loc) && ((ArrayList)this.queue.get(loc)).size() > 0) {
+                     if (this.queue.containsKey(loc) && !((ArrayList) this.queue.get(loc)).isEmpty()) {
                         ArrayList<SourceBlock> t = (ArrayList)this.queue.get(loc);
 
                         do {
-                           ChunkCoordinates current = ((SourceBlock)t.get(0)).loc;
+                           ChunkCoordinates current = t.get(0).loc;
                            i = current.posX;
                            j = current.posY;
                            k = current.posZ;
@@ -247,7 +247,7 @@ public class AILiquidGather extends EntityAIBase {
       this.origin = loc;
       ArrayList<SourceBlock> sources = new ArrayList<>();
       this.getConnectedFluidBlocks(this.theWorld, loc.posX, loc.posY, loc.posZ, fluid, sources);
-      Collections.sort(sources, Collections.reverseOrder());
+      sources.sort(Collections.reverseOrder());
       this.queue.put(loc, sources);
    }
 
@@ -291,12 +291,12 @@ public class AILiquidGather extends EntityAIBase {
                }
             }
          }
-      } catch (Exception var17) {
+      } catch (Exception ignored) {
       }
 
    }
 
-   private class SourceBlock implements Comparable {
+   private static class SourceBlock implements Comparable {
       ChunkCoordinates loc;
       float dist;
 
@@ -306,7 +306,7 @@ public class AILiquidGather extends EntityAIBase {
       }
 
       public int compareTo(SourceBlock target) {
-         return target.dist < this.dist ? 1 : (target.dist > this.dist ? -1 : 0);
+         return Float.compare(this.dist, target.dist);
       }
 
       public int compareTo(Object target) {

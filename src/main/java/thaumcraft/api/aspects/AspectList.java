@@ -10,7 +10,7 @@ import thaumcraft.api.ThaumcraftApiHelper;
 
 public class AspectList implements Serializable {
 	
-	public LinkedHashMap<Aspect,Integer> aspects = new LinkedHashMap<Aspect,Integer>();//aspects associated with this object
+	public LinkedHashMap<Aspect,Integer> aspects = new LinkedHashMap<>();//aspects associated with this object
 
 	
 	/**
@@ -24,7 +24,7 @@ public class AspectList implements Serializable {
 			for (Aspect tag:temp.getAspects()) {
 				add(tag,temp.getAmount(tag));
 			}
-		} catch (Exception e) {}
+		} catch (Exception ignored) {}
 	}
 	
 	public AspectList() {
@@ -98,7 +98,7 @@ public class AspectList implements Serializable {
 						break;
 					}
 				}
-			} while (change==true);
+			} while (change);
 			return out;
 		} catch (Exception e) {
 			return this.getAspects(); 
@@ -126,7 +126,7 @@ public class AspectList implements Serializable {
 						break;
 					}
 				}
-			} while (change==true);
+			} while (change);
 			return out;
 		} catch (Exception e) {
 			return this.getAspects();
@@ -237,7 +237,7 @@ public class AspectList implements Serializable {
         aspects.clear();
         NBTTagList tlist = nbttagcompound.getTagList("Aspects",(byte)10);
 		for (int j = 0; j < tlist.tagCount(); j++) {
-			NBTTagCompound rs = (NBTTagCompound) tlist.getCompoundTagAt(j);
+			NBTTagCompound rs = tlist.getCompoundTagAt(j);
 			if (rs.hasKey("key")) {
 				add(	Aspect.getAspect(rs.getString("key")),
 						rs.getInteger("amount"));
@@ -250,7 +250,7 @@ public class AspectList implements Serializable {
         aspects.clear();
         NBTTagList tlist = nbttagcompound.getTagList(label,(byte)10);
 		for (int j = 0; j < tlist.tagCount(); j++) {
-			NBTTagCompound rs = (NBTTagCompound) tlist.getCompoundTagAt(j);
+			NBTTagCompound rs = tlist.getCompoundTagAt(j);
 			if (rs.hasKey("key")) {
 				add(	Aspect.getAspect(rs.getString("key")),
 						rs.getInteger("amount"));

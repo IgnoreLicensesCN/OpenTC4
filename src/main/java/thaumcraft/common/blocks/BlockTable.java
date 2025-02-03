@@ -52,7 +52,7 @@ public class BlockTable extends BlockContainer implements IWandable {
    }
 
    public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {
-      return side == ForgeDirection.UP ? true : super.isSideSolid(world, x, y, z, side);
+      return side == ForgeDirection.UP || super.isSideSolid(world, x, y, z, side);
    }
 
    @SideOnly(Side.CLIENT)
@@ -68,7 +68,7 @@ public class BlockTable extends BlockContainer implements IWandable {
       } else if (metadata == 14) {
          return new TileDeconstructionTable();
       } else {
-         return (TileEntity)(metadata == 15 ? new TileArcaneWorkbench() : new TileResearchTable());
+         return metadata == 15 ? new TileArcaneWorkbench() : new TileResearchTable();
       }
    }
 
@@ -115,7 +115,7 @@ public class BlockTable extends BlockContainer implements IWandable {
    public void onNeighborBlockChange(World world, int x, int y, int z, Block par5) {
       TileEntity tile = world.getTileEntity(x, y, z);
       int md = world.getBlockMetadata(x, y, z);
-      if (tile != null && tile instanceof TileResearchTable) {
+      if (tile instanceof TileResearchTable) {
          int mm = world.getBlockMetadata(x + ForgeDirection.getOrientation(md).offsetX, y + ForgeDirection.getOrientation(md).offsetY, z + ForgeDirection.getOrientation(md).offsetZ);
          if (mm < 6) {
             InventoryUtils.dropItems(world, x, y, z);
@@ -124,7 +124,7 @@ public class BlockTable extends BlockContainer implements IWandable {
          }
       } else if (md >= 6 && md < 14) {
          TileEntity tile2 = world.getTileEntity(x + ForgeDirection.getOrientation(md - 4).offsetX, y + ForgeDirection.getOrientation(md - 4).offsetY, z + ForgeDirection.getOrientation(md - 4).offsetZ);
-         if (tile2 == null || !(tile2 instanceof TileResearchTable)) {
+         if (!(tile2 instanceof TileResearchTable)) {
             world.setBlock(x, y, z, this, 0, 3);
          }
       }
@@ -150,7 +150,7 @@ public class BlockTable extends BlockContainer implements IWandable {
             } else {
                for(int a = 2; a < 6; ++a) {
                   TileEntity tile = world.getTileEntity(x + ForgeDirection.getOrientation(a).offsetX, y + ForgeDirection.getOrientation(a).offsetY, z + ForgeDirection.getOrientation(a).offsetZ);
-                  if (tile != null && tile instanceof TileResearchTable) {
+                  if (tile instanceof TileResearchTable) {
                      player.openGui(Thaumcraft.instance, 10, world, x + ForgeDirection.getOrientation(a).offsetX, y + ForgeDirection.getOrientation(a).offsetY, z + ForgeDirection.getOrientation(a).offsetZ);
                      break;
                   }
@@ -196,7 +196,7 @@ public class BlockTable extends BlockContainer implements IWandable {
          TileArcaneWorkbench tawb = (TileArcaneWorkbench)world.getTileEntity(x, y, z);
          if (tawb != null && !wand.isStaff(wandstack)) {
             tawb.setInventorySlotContents(10, wandstack.copy());
-            player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
+            player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
          }
 
          tawb.markDirty();

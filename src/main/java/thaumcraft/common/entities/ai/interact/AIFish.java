@@ -117,7 +117,7 @@ public class AIFish extends EntityAIBase {
                double d1 = this.theGolem.posX + (double)this.theWorld.rand.nextFloat() - (double)this.theWorld.rand.nextFloat() - this.target.xCoord + (double)0.5F;
                double d3 = this.theGolem.posY - this.target.yCoord + (double)1.0F;
                double d5 = this.theGolem.posZ + (double)this.theWorld.rand.nextFloat() - (double)this.theWorld.rand.nextFloat() - this.target.zCoord + (double)0.5F;
-               double d7 = (double)MathHelper.sqrt_double(d1 * d1 + d3 * d3 + d5 * d5);
+               double d7 = MathHelper.sqrt_double(d1 * d1 + d3 * d3 + d5 * d5);
                double d9 = 0.1;
                entityitem.motionX = d1 * d9;
                entityitem.motionY = d3 * d9 + (double)MathHelper.sqrt_double(d7) * 0.08;
@@ -127,7 +127,7 @@ public class AIFish extends EntityAIBase {
 
             if (this.bobber != null) {
                this.bobber.playSound("random.splash", 0.15F, 1.0F + (this.theWorld.rand.nextFloat() - this.theWorld.rand.nextFloat()) * 0.4F);
-               ((WorldServer)this.theWorld).func_147487_a("splash", this.bobber.posX, this.bobber.posY + (double)0.5F, this.bobber.posZ, 20 + this.theWorld.rand.nextInt(20), (double)0.1F, (double)0.0F, (double)0.1F, (double)0.0F);
+               ((WorldServer)this.theWorld).func_147487_a("splash", this.bobber.posX, this.bobber.posY + (double)0.5F, this.bobber.posZ, 20 + this.theWorld.rand.nextInt(20), 0.1F, 0.0F, 0.1F, 0.0F);
                this.bobber.setDead();
             }
 
@@ -159,7 +159,7 @@ public class AIFish extends EntityAIBase {
          int y = (int)((float)(this.theGolem.getHomePosition().posY + rand.nextInt((int)(1.0F + this.distance))) - this.distance / 2.0F);
          int z = (int)((float)(this.theGolem.getHomePosition().posZ + rand.nextInt((int)(1.0F + this.distance * 2.0F))) - this.distance);
          if (this.theWorld.getBlock(x, y, z).getMaterial() == Material.water && this.theWorld.isAirBlock(x, y + 1, z)) {
-            Vec3 v = Vec3.createVectorHelper((double)x, (double)y, (double)z);
+            Vec3 v = Vec3.createVectorHelper(x, y, z);
             return v;
          }
       }

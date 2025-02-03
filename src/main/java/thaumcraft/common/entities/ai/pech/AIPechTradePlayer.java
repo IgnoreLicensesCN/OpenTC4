@@ -21,7 +21,7 @@ public class AIPechTradePlayer extends EntityAIBase {
       } else if (!this.villager.onGround) {
          return false;
       } else {
-         return this.villager.velocityChanged ? false : this.villager.trading;
+         return !this.villager.velocityChanged && this.villager.trading;
       }
    }
 

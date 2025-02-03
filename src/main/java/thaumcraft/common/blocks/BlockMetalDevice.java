@@ -123,7 +123,7 @@ public class BlockMetalDevice extends BlockContainer {
          } else {
             if (metadata == 8) {
                TileEntity te = iblockaccess.getTileEntity(i, j, k);
-               if (te != null && te instanceof TileArcaneLampGrowth) {
+               if (te instanceof TileArcaneLampGrowth) {
                   if (((TileArcaneLampGrowth)te).charges > 0) {
                      if (side <= 1) {
                         return this.icon[13];
@@ -140,7 +140,7 @@ public class BlockMetalDevice extends BlockContainer {
                }
             } else if (metadata == 13) {
                TileEntity te = iblockaccess.getTileEntity(i, j, k);
-               if (te != null && te instanceof TileArcaneLampFertility) {
+               if (te instanceof TileArcaneLampFertility) {
                   if (((TileArcaneLampFertility)te).charges > 0) {
                      if (side <= 1) {
                         return this.icon[19];
@@ -225,7 +225,7 @@ public class BlockMetalDevice extends BlockContainer {
                this.delay = 0;
                if (entity instanceof EntityLivingBase && tile != null && tile.heat > 150 && tile.tank.getFluidAmount() > 0) {
                   entity.attackEntityFrom(DamageSource.inFire, 1.0F);
-                  world.playSoundEffect((double)i, (double)j, (double)k, "random.fizz", 0.4F, 2.0F + world.rand.nextFloat() * 0.4F);
+                  world.playSoundEffect(i, j, k, "random.fizz", 0.4F, 2.0F + world.rand.nextFloat() * 0.4F);
                }
             }
          }
@@ -247,7 +247,7 @@ public class BlockMetalDevice extends BlockContainer {
                this.setBlockBounds(BlockRenderer.W5, 0.5F, BlockRenderer.W5, BlockRenderer.W11, 1.0F, BlockRenderer.W11);
             } else if (metadata == 14) {
                TileEntity te = world.getTileEntity(i, j, k);
-               if (te != null && te instanceof TileVisRelay) {
+               if (te instanceof TileVisRelay) {
                   switch (ForgeDirection.getOrientation(((TileVisRelay)te).orientation).getOpposite()) {
                      case UP:
                         this.setBlockBounds(BlockRenderer.W5, 0.5F, BlockRenderer.W5, BlockRenderer.W11, 1.0F, BlockRenderer.W11);
@@ -312,7 +312,7 @@ public class BlockMetalDevice extends BlockContainer {
             super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
          } else if (metadata == 14) {
             TileEntity te = world.getTileEntity(i, j, k);
-            if (te != null && te instanceof TileVisRelay) {
+            if (te instanceof TileVisRelay) {
                switch (ForgeDirection.getOrientation(((TileVisRelay)te).orientation).getOpposite()) {
                   case UP:
                      this.setBlockBounds(BlockRenderer.W5, 0.5F, BlockRenderer.W5, BlockRenderer.W11, 1.0F, BlockRenderer.W11);
@@ -350,8 +350,8 @@ public class BlockMetalDevice extends BlockContainer {
    public void randomDisplayTick(World w, int i, int j, int k, Random r) {
       if (r.nextInt(10) == 0) {
          TileEntity te = w.getTileEntity(i, j, k);
-         if (te != null && te instanceof TileCrucible && ((TileCrucible)te).tank.getFluidAmount() > 0 && ((TileCrucible)te).heat > 150) {
-            w.playSound((double)i, (double)j, (double)k, "liquid.lavapop", 0.1F + r.nextFloat() * 0.1F, 1.2F + r.nextFloat() * 0.2F, false);
+         if (te instanceof TileCrucible && ((TileCrucible) te).tank.getFluidAmount() > 0 && ((TileCrucible) te).heat > 150) {
+            w.playSound(i, j, k, "liquid.lavapop", 0.1F + r.nextFloat() * 0.1F, 1.2F + r.nextFloat() * 0.2F, false);
          }
       }
 
@@ -389,7 +389,7 @@ public class BlockMetalDevice extends BlockContainer {
       } else if (metadata == 14) {
          return new TileVisRelay();
       } else {
-         return (TileEntity)(metadata == 2 ? new TileMagicWorkbenchCharger() : super.createTileEntity(world, metadata));
+         return metadata == 2 ? new TileMagicWorkbenchCharger() : super.createTileEntity(world, metadata);
       }
    }
 
@@ -399,12 +399,12 @@ public class BlockMetalDevice extends BlockContainer {
 
    public int getComparatorInputOverride(World world, int x, int y, int z, int rs) {
       TileEntity te = world.getTileEntity(x, y, z);
-      if (te != null && te instanceof TileThaumatorium) {
+      if (te instanceof TileThaumatorium) {
          return Container.calcRedstoneFromInventory((IInventory)te);
-      } else if (te != null && te instanceof TileAlembic) {
+      } else if (te instanceof TileAlembic) {
          float r = (float)((TileAlembic)te).amount / (float)((TileAlembic)te).maxAmount;
          return MathHelper.floor_float(r * 14.0F) + (((TileAlembic)te).amount > 0 ? 1 : 0);
-      } else if (te != null && te instanceof TileCrucible) {
+      } else if (te instanceof TileCrucible) {
          float var10000 = (float)((TileCrucible)te).aspects.visSize();
          ((TileCrucible)te).getClass();
          float r = var10000 / 100.0F;
@@ -421,32 +421,32 @@ public class BlockMetalDevice extends BlockContainer {
    public void onNeighborBlockChange(World world, int x, int y, int z, Block nbid) {
       TileEntity te = world.getTileEntity(x, y, z);
       int md = world.getBlockMetadata(x, y, z);
-      if (te != null && te instanceof TileCrucible) {
+      if (te instanceof TileCrucible) {
          ((TileCrucible)te).getBellows();
       }
 
       if (!world.isRemote) {
-         if (te != null && te instanceof TileAlembic) {
+         if (te instanceof TileAlembic) {
             world.markBlockForUpdate(x, y, z);
-         } else if (te != null && te instanceof TileArcaneLamp) {
+         } else if (te instanceof TileArcaneLamp) {
             TileArcaneLamp telb = (TileArcaneLamp)te;
             if (world.isAirBlock(x + telb.facing.offsetX, y + telb.facing.offsetY, z + telb.facing.offsetZ)) {
                this.dropBlockAsItem(world, x, y, z, 7, 0);
                world.setBlockToAir(x, y, z);
             }
-         } else if (te != null && te instanceof TileArcaneLampGrowth) {
+         } else if (te instanceof TileArcaneLampGrowth) {
             TileArcaneLampGrowth telb = (TileArcaneLampGrowth)te;
             if (world.isAirBlock(x + telb.facing.offsetX, y + telb.facing.offsetY, z + telb.facing.offsetZ)) {
                this.dropBlockAsItem(world, x, y, z, 8, 0);
                world.setBlockToAir(x, y, z);
             }
-         } else if (te != null && te instanceof TileBrainbox) {
+         } else if (te instanceof TileBrainbox) {
             TileBrainbox telb = (TileBrainbox)te;
             if (world.isAirBlock(x + telb.facing.offsetX, y + telb.facing.offsetY, z + telb.facing.offsetZ)) {
                this.dropBlockAsItem(world, x, y, z, 12, 0);
                world.setBlockToAir(x, y, z);
             }
-         } else if (te != null && te instanceof TileVisRelay && md == 14) {
+         } else if (te instanceof TileVisRelay && md == 14) {
             TileVisRelay telb = (TileVisRelay)te;
             if (world.isAirBlock(x + ForgeDirection.getOrientation(telb.orientation).getOpposite().offsetX, y + ForgeDirection.getOrientation(telb.orientation).getOpposite().offsetY, z + ForgeDirection.getOrientation(telb.orientation).getOpposite().offsetZ)) {
                this.dropBlockAsItem(world, x, y, z, 14, 0);
@@ -461,7 +461,7 @@ public class BlockMetalDevice extends BlockContainer {
             }
 
             TileEntity tile = world.getTileEntity(x, y, z);
-            if (tile != null && tile instanceof TileThaumatorium) {
+            if (tile instanceof TileThaumatorium) {
                ((TileThaumatorium)tile).getUpgrades();
             }
          } else if (md == 11) {
@@ -472,7 +472,7 @@ public class BlockMetalDevice extends BlockContainer {
             }
 
             TileEntity tile = world.getTileEntity(x, y - 1, z);
-            if (tile != null && tile instanceof TileThaumatorium) {
+            if (tile instanceof TileThaumatorium) {
                ((TileThaumatorium)tile).getUpgrades();
             }
          }
@@ -489,11 +489,11 @@ public class BlockMetalDevice extends BlockContainer {
    public void breakBlock(World par1World, int par2, int par3, int par4, Block par5, int par6) {
       InventoryUtils.dropItems(par1World, par2, par3, par4);
       TileEntity te = par1World.getTileEntity(par2, par3, par4);
-      if (te != null && te instanceof TileCrucible) {
+      if (te instanceof TileCrucible) {
          ((TileCrucible)te).spillRemnants();
-      } else if (te != null && te instanceof TileAlembic && ((TileAlembic)te).aspectFilter != null) {
-         par1World.spawnEntityInWorld(new EntityItem(par1World, (double)((float)par2 + 0.5F), (double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F), new ItemStack(ConfigItems.itemResource, 1, 13)));
-      } else if (te != null && te instanceof TileArcaneLamp) {
+      } else if (te instanceof TileAlembic && ((TileAlembic) te).aspectFilter != null) {
+         par1World.spawnEntityInWorld(new EntityItem(par1World, (float)par2 + 0.5F, (float)par3 + 0.5F, (float)par4 + 0.5F, new ItemStack(ConfigItems.itemResource, 1, 13)));
+      } else if (te instanceof TileArcaneLamp) {
          ((TileArcaneLamp)te).removeLights();
       }
 
@@ -507,7 +507,7 @@ public class BlockMetalDevice extends BlockContainer {
          if (fs != null && fs.isFluidEqual(new FluidStack(FluidRegistry.WATER, 1000))) {
             int volume = fs.amount;
             TileEntity te = world.getTileEntity(x, y, z);
-            if (te != null && te instanceof TileCrucible) {
+            if (te instanceof TileCrucible) {
                TileCrucible tile = (TileCrucible)te;
                if (tile.tank.getFluidAmount() >= tile.tank.getCapacity()) {
                   return true;
@@ -538,7 +538,7 @@ public class BlockMetalDevice extends BlockContainer {
 
       if (metadata == 1 && !world.isRemote && !player.isSneaking() && player.getHeldItem() == null) {
          TileEntity te = world.getTileEntity(x, y, z);
-         if (te != null && te instanceof TileAlembic) {
+         if (te instanceof TileAlembic) {
             TileAlembic tile = (TileAlembic)te;
             String msg = "";
             if (tile.aspect != null && tile.amount != 0) {
@@ -555,23 +555,23 @@ public class BlockMetalDevice extends BlockContainer {
                msg = StatCollector.translateToLocal("tile.alembic.msg.1");
             }
 
-            player.addChatMessage(new ChatComponentTranslation("§3" + msg, new Object[0]));
-            world.playSoundEffect((double)x, (double)y, (double)z, "thaumcraft:alembicknock", 0.2F, 1.0F);
+            player.addChatMessage(new ChatComponentTranslation("§3" + msg));
+            world.playSoundEffect(x, y, z, "thaumcraft:alembicknock", 0.2F, 1.0F);
          }
       }
 
       if (metadata == 1) {
          TileEntity te = world.getTileEntity(x, y, z);
-         if (te != null && te instanceof TileAlembic) {
+         if (te instanceof TileAlembic) {
             if (player.isSneaking() && ((TileAlembic)te).aspectFilter != null) {
                ((TileAlembic)te).aspectFilter = null;
                world.markBlockForUpdate(x, y, z);
                te.markDirty();
                if (world.isRemote) {
-                  world.playSound((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "thaumcraft:page", 1.0F, 1.1F, false);
+                  world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "thaumcraft:page", 1.0F, 1.1F, false);
                } else {
                   ForgeDirection fd = ForgeDirection.getOrientation(side);
-                  world.spawnEntityInWorld(new EntityItem(world, (double)((float)x + 0.5F + (float)fd.offsetX / 3.0F), (double)((float)y + 0.5F), (double)((float)z + 0.5F + (float)fd.offsetZ / 3.0F), new ItemStack(ConfigItems.itemResource, 1, 13)));
+                  world.spawnEntityInWorld(new EntityItem(world, (float)x + 0.5F + (float)fd.offsetX / 3.0F, (float)y + 0.5F, (float)z + 0.5F + (float)fd.offsetZ / 3.0F, new ItemStack(ConfigItems.itemResource, 1, 13)));
                }
 
                return true;
@@ -581,17 +581,17 @@ public class BlockMetalDevice extends BlockContainer {
                ((TileAlembic)te).amount = 0;
                ((TileAlembic)te).aspect = null;
                if (world.isRemote) {
-                  world.playSound((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "thaumcraft:alembicknock", 0.2F, 1.0F, false);
-                  world.playSound((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "game.neutral.swim", 0.5F, 1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.3F, false);
+                  world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "thaumcraft:alembicknock", 0.2F, 1.0F, false);
+                  world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "game.neutral.swim", 0.5F, 1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.3F, false);
                }
             } else {
                if (player.getHeldItem() != null && ((TileAlembic)te).aspectFilter == null && player.getHeldItem().getItem() == ConfigItems.itemResource && player.getHeldItem().getItemDamage() == 13) {
-                  if (((TileAlembic)te).amount == 0 && ((IEssentiaContainerItem)((IEssentiaContainerItem)player.getHeldItem().getItem())).getAspects(player.getHeldItem()) == null) {
+                  if (((TileAlembic)te).amount == 0 && ((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()) == null) {
                      return true;
                   }
 
-                  if (((TileAlembic)te).amount == 0 && ((IEssentiaContainerItem)((IEssentiaContainerItem)player.getHeldItem().getItem())).getAspects(player.getHeldItem()) != null) {
-                     ((TileAlembic)te).aspect = ((IEssentiaContainerItem)((IEssentiaContainerItem)player.getHeldItem().getItem())).getAspects(player.getHeldItem()).getAspects()[0];
+                  if (((TileAlembic)te).amount == 0 && ((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()) != null) {
+                     ((TileAlembic)te).aspect = ((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()).getAspects()[0];
                   }
 
                   --player.getHeldItem().stackSize;
@@ -599,7 +599,7 @@ public class BlockMetalDevice extends BlockContainer {
                   world.markBlockForUpdate(x, y, z);
                   te.markDirty();
                   if (world.isRemote) {
-                     world.playSound((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "thaumcraft:page", 1.0F, 0.9F, false);
+                     world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "thaumcraft:page", 1.0F, 0.9F, false);
                   }
 
                   return true;
@@ -654,7 +654,7 @@ public class BlockMetalDevice extends BlockContainer {
                      te.markDirty();
                      world.markBlockForUpdate(x, y, z);
                      if (world.isRemote) {
-                        world.playSound((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "game.neutral.swim", 0.5F, 1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.3F, false);
+                        world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "game.neutral.swim", 0.5F, 1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.3F, false);
                      }
                   }
 
@@ -693,7 +693,7 @@ public class BlockMetalDevice extends BlockContainer {
 
          if ((metadata == 14 || metadata == 2) && !world.isRemote && !player.isSneaking() && player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemShard) {
             TileEntity te = world.getTileEntity(x, y, z);
-            if (te != null && te instanceof TileVisRelay) {
+            if (te instanceof TileVisRelay) {
                TileVisRelay tile = (TileVisRelay)te;
                byte c = (byte)player.getHeldItem().getItemDamage();
                if (c != tile.color && c != 6) {
@@ -706,7 +706,7 @@ public class BlockMetalDevice extends BlockContainer {
                tile.nodeRefresh = true;
                tile.markDirty();
                world.markBlockForUpdate(x, y, z);
-               world.playSoundEffect((double)x, (double)y, (double)z, "thaumcraft:crystal", 0.2F, 1.0F);
+               world.playSoundEffect(x, y, z, "thaumcraft:crystal", 0.2F, 1.0F);
             }
          }
 
@@ -718,10 +718,10 @@ public class BlockMetalDevice extends BlockContainer {
       int l = par1World.getBlockMetadata(par2, par3, par4);
       if (l == 5 && flag) {
          par1World.setBlockMetadataWithNotify(par2, par3, par4, 6, 2);
-         par1World.playAuxSFXAtEntity((EntityPlayer)null, 1003, par2, par3, par4, 0);
+         par1World.playAuxSFXAtEntity(null, 1003, par2, par3, par4, 0);
       } else if (l == 6 && !flag) {
          par1World.setBlockMetadataWithNotify(par2, par3, par4, 5, 2);
-         par1World.playAuxSFXAtEntity((EntityPlayer)null, 1003, par2, par3, par4, 0);
+         par1World.playAuxSFXAtEntity(null, 1003, par2, par3, par4, 0);
       }
 
    }
@@ -760,7 +760,7 @@ public class BlockMetalDevice extends BlockContainer {
       } else {
          if (md == 8) {
             TileEntity te = world.getTileEntity(x, y, z);
-            if (te != null && te instanceof TileArcaneLampGrowth) {
+            if (te instanceof TileArcaneLampGrowth) {
                if (((TileArcaneLampGrowth)te).charges > 0) {
                   return 15;
                }
@@ -769,7 +769,7 @@ public class BlockMetalDevice extends BlockContainer {
             }
          } else if (md == 13) {
             TileEntity te = world.getTileEntity(x, y, z);
-            if (te != null && te instanceof TileArcaneLampFertility) {
+            if (te instanceof TileArcaneLampFertility) {
                if (((TileArcaneLampFertility)te).charges > 0) {
                   return 15;
                }
@@ -778,7 +778,7 @@ public class BlockMetalDevice extends BlockContainer {
             }
          } else if (md == 14) {
             TileEntity te = world.getTileEntity(x, y, z);
-            if (te != null && te instanceof TileVisRelay) {
+            if (te instanceof TileVisRelay) {
                if (VisNetHandler.isNodeValid(((TileVisRelay)te).getParent())) {
                   return 10;
                }

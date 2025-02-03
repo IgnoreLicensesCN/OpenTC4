@@ -38,9 +38,9 @@ public class EntityFallingTaint extends Entity implements IEntityAdditionalSpawn
       this.setSize(0.98F, 0.98F);
       this.yOffset = this.height / 2.0F;
       this.setPosition(par2, par4, par6);
-      this.motionX = (double)0.0F;
-      this.motionY = (double)0.0F;
-      this.motionZ = (double)0.0F;
+      this.motionX = 0.0F;
+      this.motionY = 0.0F;
+      this.motionZ = 0.0F;
       this.prevPosX = par2;
       this.prevPosY = par4;
       this.prevPosZ = par6;
@@ -65,7 +65,7 @@ public class EntityFallingTaint extends Entity implements IEntityAdditionalSpawn
       try {
          this.block = Block.getBlockById(data.readInt());
          this.metadata = data.readByte();
-      } catch (Exception var3) {
+      } catch (Exception ignored) {
       }
 
    }
@@ -80,11 +80,11 @@ public class EntityFallingTaint extends Entity implements IEntityAdditionalSpawn
          this.prevPosY = this.posY;
          this.prevPosZ = this.posZ;
          ++this.fallTime;
-         this.motionY -= (double)0.04F;
+         this.motionY -= 0.04F;
          this.moveEntity(this.motionX, this.motionY, this.motionZ);
-         this.motionX *= (double)0.98F;
-         this.motionY *= (double)0.98F;
-         this.motionZ *= (double)0.98F;
+         this.motionX *= 0.98F;
+         this.motionY *= 0.98F;
+         this.motionZ *= 0.98F;
          if (!this.worldObj.isRemote) {
             int i = MathHelper.floor_double(this.posX);
             int j = MathHelper.floor_double(this.posY);
@@ -103,9 +103,9 @@ public class EntityFallingTaint extends Entity implements IEntityAdditionalSpawn
                   this.setDead();
                }
             } else {
-               this.motionX *= (double)0.7F;
-               this.motionZ *= (double)0.7F;
-               this.motionY *= (double)-0.5F;
+               this.motionX *= 0.7F;
+               this.motionZ *= 0.7F;
+               this.motionY *= -0.5F;
                if (this.worldObj.getBlock(i, j, k) != Blocks.piston && this.worldObj.getBlock(i, j, k) != Blocks.piston_extension && this.worldObj.getBlock(i, j, k) != Blocks.piston_head) {
                   this.worldObj.playSoundAtEntity(this, "thaumcraft:gore", 0.5F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
                   this.setDead();
@@ -126,7 +126,7 @@ public class EntityFallingTaint extends Entity implements IEntityAdditionalSpawn
    }
 
    private boolean canPlace(int i, int j, int k) {
-      return this.worldObj.getBlock(i, j, k) == ConfigBlocks.blockTaintFibres || this.worldObj.getBlock(i, j, k) == ConfigBlocks.blockFluxGoo || this.worldObj.canPlaceEntityOnSide(this.block, i, j, k, true, 1, (Entity)null, (ItemStack)null);
+      return this.worldObj.getBlock(i, j, k) == ConfigBlocks.blockTaintFibres || this.worldObj.getBlock(i, j, k) == ConfigBlocks.blockFluxGoo || this.worldObj.canPlaceEntityOnSide(this.block, i, j, k, true, 1, null, null);
    }
 
    protected void fall(float par1) {

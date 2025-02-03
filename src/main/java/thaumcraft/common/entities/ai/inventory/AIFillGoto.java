@@ -40,7 +40,7 @@ public class AIFillGoto extends EntityAIBase {
                for(ItemStack stack : mi) {
                   int od = OreDictionary.getOreID(stack);
                   if (od != -1) {
-                     ItemStack[] ores = (ItemStack[])OreDictionary.getOres(od).toArray(new ItemStack[0]);
+                     ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[0]);
 
                      for(ItemStack ore : ores) {
                         missingItems.add(ore.copy());
@@ -94,9 +94,9 @@ public class AIFillGoto extends EntityAIBase {
                }
 
                if (this.dest != null) {
-                  this.movePosX = (double)tX;
-                  this.movePosY = (double)tY;
-                  this.movePosZ = (double)tZ;
+                  this.movePosX = tX;
+                  this.movePosY = tY;
+                  this.movePosZ = tZ;
                   return true;
                } else {
                   return false;
@@ -122,7 +122,7 @@ public class AIFillGoto extends EntityAIBase {
          Vec3 var2 = RandomPositionGenerator.findRandomTarget(this.theGolem, 2, 1);
          if (var2 != null) {
             this.count = 20;
-            this.theGolem.getNavigator().tryMoveToXYZ(var2.xCoord, var2.yCoord, var2.zCoord, (double)this.theGolem.getAIMoveSpeed());
+            this.theGolem.getNavigator().tryMoveToXYZ(var2.xCoord, var2.yCoord, var2.zCoord, this.theGolem.getAIMoveSpeed());
          }
       }
 
@@ -139,6 +139,6 @@ public class AIFillGoto extends EntityAIBase {
       this.prevX = MathHelper.floor_double(this.theGolem.posX);
       this.prevY = MathHelper.floor_double(this.theGolem.posY);
       this.prevZ = MathHelper.floor_double(this.theGolem.posZ);
-      this.theGolem.getNavigator().tryMoveToXYZ(this.movePosX, this.movePosY, this.movePosZ, (double)this.theGolem.getAIMoveSpeed());
+      this.theGolem.getNavigator().tryMoveToXYZ(this.movePosX, this.movePosY, this.movePosZ, this.theGolem.getAIMoveSpeed());
    }
 }

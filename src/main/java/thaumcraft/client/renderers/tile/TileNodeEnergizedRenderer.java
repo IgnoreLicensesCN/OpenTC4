@@ -16,7 +16,7 @@ public class TileNodeEnergizedRenderer extends TileEntitySpecialRenderer {
 
    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTicks) {
       EntityLivingBase viewer = Minecraft.getMinecraft().renderViewEntity;
-      TileNodeRenderer.renderNode(viewer, (double)64.0F, true, false, 1.0F, tile.xCoord, tile.yCoord, tile.zCoord, partialTicks, ((TileNodeEnergized)tile).getAuraBase(), ((TileNodeEnergized)tile).getNodeType(), ((TileNodeEnergized)tile).getNodeModifier());
+      TileNodeRenderer.renderNode(viewer, 64.0F, true, false, 1.0F, tile.xCoord, tile.yCoord, tile.zCoord, partialTicks, ((TileNodeEnergized)tile).getAuraBase(), ((TileNodeEnergized)tile).getNodeType(), ((TileNodeEnergized)tile).getNodeModifier());
       GL11.glPushMatrix();
       GL11.glAlphaFunc(516, 0.003921569F);
       GL11.glEnable(3042);

@@ -62,7 +62,7 @@ public class BlockEssentiaReservoir extends BlockContainer {
    }
 
    public TileEntity createTileEntity(World world, int metadata) {
-      return (TileEntity)(metadata == 0 ? new TileEssentiaReservoir() : super.createTileEntity(world, metadata));
+      return metadata == 0 ? new TileEssentiaReservoir() : super.createTileEntity(world, metadata);
    }
 
    public TileEntity createNewTileEntity(World var1, int md) {
@@ -75,7 +75,7 @@ public class BlockEssentiaReservoir extends BlockContainer {
 
    public int getComparatorInputOverride(World world, int x, int y, int z, int rs) {
       TileEntity te = world.getTileEntity(x, y, z);
-      if (te != null && te instanceof TileEssentiaReservoir) {
+      if (te instanceof TileEssentiaReservoir) {
          float r = (float)((TileEssentiaReservoir)te).essentia.visSize() / (float)((TileEssentiaReservoir)te).maxAmount;
          return MathHelper.floor_float(r * 14.0F) + (((TileEssentiaReservoir)te).essentia.visSize() > 0 ? 1 : 0);
       } else {
@@ -85,11 +85,11 @@ public class BlockEssentiaReservoir extends BlockContainer {
 
    public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
       TileEntity te = world.getTileEntity(x, y, z);
-      if (te != null && te instanceof TileEssentiaReservoir) {
+      if (te instanceof TileEssentiaReservoir) {
          int sz = ((TileEssentiaReservoir)te).essentia.visSize() / 16;
          int q = 0;
          if (sz > 0) {
-            world.createExplosion((Entity)null, (double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, 1.0F, false);
+            world.createExplosion(null, (double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, 1.0F, false);
 
             for(int a = 0; a < 50; ++a) {
                int xx = x + world.rand.nextInt(5) - world.rand.nextInt(5);

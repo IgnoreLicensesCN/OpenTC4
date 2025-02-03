@@ -29,12 +29,12 @@ public class TileTubeOnewayRenderer extends TileEntitySpecialRenderer {
          GL11.glRotatef(90.0F, (float)this.fd.offsetX, (float)this.fd.offsetY, (float)this.fd.offsetZ);
          GL11.glPushMatrix();
          GL11.glColor3f(0.45F, 0.5F, 1.0F);
-         GL11.glScaled(1.1, (double)0.5F, 1.1);
-         GL11.glTranslated((double)0.0F, (double)-0.5F, (double)0.0F);
+         GL11.glScaled(1.1, 0.5F, 1.1);
+         GL11.glTranslated(0.0F, -0.5F, 0.0F);
          this.model.render();
-         GL11.glTranslated((double)0.0F, (double)-0.25F, (double)0.0F);
+         GL11.glTranslated(0.0F, -0.25F, 0.0F);
          this.model.render();
-         GL11.glTranslated((double)0.0F, (double)-0.25F, (double)0.0F);
+         GL11.glTranslated(0.0F, -0.25F, 0.0F);
          this.model.render();
          GL11.glPopMatrix();
          GL11.glPopMatrix();

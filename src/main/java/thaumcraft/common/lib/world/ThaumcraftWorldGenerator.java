@@ -72,7 +72,7 @@ public class ThaumcraftWorldGenerator implements IWorldGenerator {
    }
 
    public static int getDimBlacklist(int dim) {
-      return !dimensionBlacklist.containsKey(dim) ? -1 : (Integer)dimensionBlacklist.get(dim);
+      return !dimensionBlacklist.containsKey(dim) ? -1 : dimensionBlacklist.get(dim);
    }
 
    public static void addBiomeBlacklist(int biome, int level) {
@@ -80,7 +80,7 @@ public class ThaumcraftWorldGenerator implements IWorldGenerator {
    }
 
    public static int getBiomeBlacklist(int biome) {
-      return !biomeBlacklist.containsKey(biome) ? -1 : (Integer)biomeBlacklist.get(biome);
+      return !biomeBlacklist.containsKey(biome) ? -1 : biomeBlacklist.get(biome);
    }
 
    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
@@ -264,19 +264,19 @@ public class ThaumcraftWorldGenerator implements IWorldGenerator {
       if (ra != null) {
          al.add(ra, 2);
       } else {
-         Aspect aa = (Aspect)complexAspects.get(random.nextInt(complexAspects.size()));
+         Aspect aa = complexAspects.get(random.nextInt(complexAspects.size()));
          al.add(aa, 1);
-         aa = (Aspect)basicAspects.get(random.nextInt(basicAspects.size()));
+         aa = basicAspects.get(random.nextInt(basicAspects.size()));
          al.add(aa, 1);
       }
 
       for(int a = 0; a < 3; ++a) {
          if (random.nextBoolean()) {
             if (random.nextInt(Config.specialNodeRarity) == 0) {
-               Aspect aa = (Aspect)complexAspects.get(random.nextInt(complexAspects.size()));
+               Aspect aa = complexAspects.get(random.nextInt(complexAspects.size()));
                al.merge(aa, 1);
             } else {
-               Aspect aa = (Aspect)basicAspects.get(random.nextInt(basicAspects.size()));
+               Aspect aa = basicAspects.get(random.nextInt(basicAspects.size()));
                al.merge(aa, 1);
             }
          }
@@ -333,12 +333,12 @@ public class ThaumcraftWorldGenerator implements IWorldGenerator {
                      if (bi.isFoliage(world, x + xx, y + yy, z + zz)) {
                         ++foliage;
                      }
-                  } catch (Exception var23) {
+                  } catch (Exception ignored) {
                   }
                }
             }
          }
-      } catch (Exception var24) {
+      } catch (Exception ignored) {
       }
 
       if (water > 100) {
@@ -384,7 +384,7 @@ public class ThaumcraftWorldGenerator implements IWorldGenerator {
       }
 
       TileEntity te = world.getTileEntity(x, y, z);
-      if (te != null && te instanceof TileNode) {
+      if (te instanceof TileNode) {
          ((TileNode)te).setNodeType(nt);
          ((TileNode)te).setNodeModifier(nm);
          ((TileNode)te).setAspects(al);
@@ -420,7 +420,7 @@ public class ThaumcraftWorldGenerator implements IWorldGenerator {
          int randPosZ = chunkZ * 16 + random.nextInt(16);
          int randPosY = world.getHeightValue(randPosX, randPosZ) - 9;
          if (randPosY < world.getActualHeight()) {
-            world.getChunkFromBlockCoords(MathHelper.floor_double((double)randPosX), MathHelper.floor_double((double)randPosZ));
+            world.getChunkFromBlockCoords(MathHelper.floor_double(randPosX), MathHelper.floor_double(randPosZ));
             WorldGenerator mound = new WorldGenMound();
             if (random.nextInt(150) == 0) {
                if (mound.generate(world, random, randPosX, randPosY, randPosZ)) {

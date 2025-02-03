@@ -120,7 +120,7 @@ public class ItemRobeArmor extends ItemArmor implements IRepairable, IVisDiscoun
    }
 
    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
-      return par2ItemStack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 7)) ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
+      return par2ItemStack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 7)) || super.getIsRepairable(par1ItemStack, par2ItemStack);
    }
 
    public int getVisDiscount(ItemStack stack, EntityPlayer player, Aspect aspect) {
@@ -128,7 +128,7 @@ public class ItemRobeArmor extends ItemArmor implements IRepairable, IVisDiscoun
    }
 
    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-      list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": " + this.getVisDiscount(stack, player, (Aspect)null) + "%");
+      list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": " + this.getVisDiscount(stack, player, null) + "%");
    }
 
    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {

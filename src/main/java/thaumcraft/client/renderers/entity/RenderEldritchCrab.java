@@ -35,11 +35,7 @@ public class RenderEldritchCrab extends RenderLiving {
          this.bindTexture(skin[1]);
          GL11.glEnable(3042);
          GL11.glBlendFunc(770, 771);
-         if (par1EntityLiving.isInvisible()) {
-            GL11.glDepthMask(false);
-         } else {
-            GL11.glDepthMask(true);
-         }
+          GL11.glDepthMask(!par1EntityLiving.isInvisible());
 
          char c0 = 200;
          int j = c0 % 65536;

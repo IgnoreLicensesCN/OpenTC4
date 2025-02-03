@@ -27,7 +27,7 @@ public class RenderEldritchOrb extends Render {
       float f1 = (float)entity.ticksExisted / 80.0F;
       float f3 = 0.9F;
       float f2 = 0.0F;
-      Random random = new Random((long)entity.getEntityId());
+      Random random = new Random(entity.getEntityId());
       GL11.glTranslatef((float)x, (float)y, (float)z);
       GL11.glDisable(3553);
       GL11.glShadeModel(7425);
@@ -51,12 +51,12 @@ public class RenderEldritchOrb extends Render {
          fa /= 30.0F / ((float)Math.min(entity.ticksExisted, 10) / 10.0F);
          f4 /= 30.0F / ((float)Math.min(entity.ticksExisted, 10) / 10.0F);
          tessellator.setColorRGBA_I(16777215, (int)(255.0F * (1.0F - f2)));
-         tessellator.addVertex((double)0.0F, (double)0.0F, (double)0.0F);
+         tessellator.addVertex(0.0F, 0.0F, 0.0F);
          tessellator.setColorRGBA_I(BlockCustomOreItem.colors[5], 0);
-         tessellator.addVertex(-0.866 * (double)f4, (double)fa, (double)(-0.5F * f4));
-         tessellator.addVertex(0.866 * (double)f4, (double)fa, (double)(-0.5F * f4));
-         tessellator.addVertex((double)0.0F, (double)fa, (double)(f4));
-         tessellator.addVertex(-0.866 * (double)f4, (double)fa, (double)(-0.5F * f4));
+         tessellator.addVertex(-0.866 * (double)f4, fa, -0.5F * f4);
+         tessellator.addVertex(0.866 * (double)f4, fa, -0.5F * f4);
+         tessellator.addVertex(0.0F, fa, f4);
+         tessellator.addVertex(-0.866 * (double)f4, fa, -0.5F * f4);
          tessellator.draw();
       }
 
@@ -88,10 +88,10 @@ public class RenderEldritchOrb extends Render {
       GL11.glScalef(1.0F, 1.0F, 1.0F);
       tessellator.startDrawingQuads();
       tessellator.setNormal(0.0F, 1.0F, 0.0F);
-      tessellator.addVertexWithUV((double)(0.0F - f7), (double)(0.0F - f8), (double)0.0F, (double)f2, (double)f5);
-      tessellator.addVertexWithUV((double)(f6 - f7), (double)(0.0F - f8), (double)0.0F, (double)f3, (double)f5);
-      tessellator.addVertexWithUV((double)(f6 - f7), (double)(1.0F - f8), (double)0.0F, (double)f3, (double)f4);
-      tessellator.addVertexWithUV((double)(0.0F - f7), (double)(1.0F - f8), (double)0.0F, (double)f2, (double)f4);
+      tessellator.addVertexWithUV(0.0F - f7, 0.0F - f8, 0.0F, f2, f5);
+      tessellator.addVertexWithUV(f6 - f7, 0.0F - f8, 0.0F, f3, f5);
+      tessellator.addVertexWithUV(f6 - f7, 1.0F - f8, 0.0F, f3, f4);
+      tessellator.addVertexWithUV(0.0F - f7, 1.0F - f8, 0.0F, f2, f4);
       tessellator.draw();
       GL11.glDisable(3042);
       GL11.glDisable(32826);

@@ -57,7 +57,7 @@ public class TileJarBrain extends TileJar {
       if (this.worldObj.isRemote) {
          this.rotb = this.rota;
          if (entity == null) {
-            entity = this.worldObj.getClosestPlayer((double)((float)this.xCoord + 0.5F), (double)((float)this.yCoord + 0.5F), (double)((float)this.zCoord + 0.5F), (double)6.0F);
+            entity = this.worldObj.getClosestPlayer((float)this.xCoord + 0.5F, (float)this.yCoord + 0.5F, (float)this.zCoord + 0.5F, 6.0F);
             if (entity != null && this.lastsigh < System.currentTimeMillis()) {
                this.worldObj.playSound((double)this.xCoord + (double)0.5F, (double)this.yCoord + (double)0.5F, (double)this.zCoord + (double)0.5F, "thaumcraft:brain", 0.15F, 0.8F + this.worldObj.rand.nextFloat() * 0.4F, false);
                this.lastsigh = System.currentTimeMillis() + 5000L + (long)this.worldObj.rand.nextInt(25000);
@@ -129,7 +129,7 @@ public class TileJarBrain extends TileJar {
    public Entity getClosestXPOrb() {
       double cdist = Double.MAX_VALUE;
       Entity orb = null;
-      List ents = this.worldObj.getEntitiesWithinAABB(EntityXPOrb.class, AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1)).expand((double)6.0F, (double)6.0F, (double)6.0F));
+      List ents = this.worldObj.getEntitiesWithinAABB(EntityXPOrb.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(6.0F, 6.0F, 6.0F));
       if (ents.size() > 0) {
          for(Object ent : ents) {
             EntityXPOrb eo = (EntityXPOrb)ent;

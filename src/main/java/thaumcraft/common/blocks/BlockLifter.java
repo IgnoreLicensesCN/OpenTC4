@@ -58,7 +58,7 @@ public class BlockLifter extends BlockContainer {
    @SideOnly(Side.CLIENT)
    public void randomDisplayTick(World w, int i, int j, int k, Random r) {
       TileEntity te = w.getTileEntity(i, j, k);
-      if (te != null && te instanceof TileLifter && !((TileLifter)te).gettingPower() && ((TileLifter)te).rangeAbove > 0) {
+      if (te instanceof TileLifter && !((TileLifter) te).gettingPower() && ((TileLifter) te).rangeAbove > 0) {
          Thaumcraft.proxy.sparkle((float)i + 0.2F + r.nextFloat() * 0.6F, (float)(j + 1), (float)k + 0.2F + r.nextFloat() * 0.6F, 1.0F, 3, -0.3F);
       }
 
@@ -84,7 +84,7 @@ public class BlockLifter extends BlockContainer {
 
    public void onNeighborBlockChange(World world, int x, int y, int z, Block par5) {
       TileEntity te = world.getTileEntity(x, y, z);
-      if (te != null && te instanceof TileLifter && ((TileLifter)te).gettingPower() != ((TileLifter)te).lastPowerState) {
+      if (te instanceof TileLifter && ((TileLifter) te).gettingPower() != ((TileLifter) te).lastPowerState) {
          this.updateLifterStack(world, x, y, z);
       }
 
@@ -94,7 +94,7 @@ public class BlockLifter extends BlockContainer {
    private void updateLifterStack(World worldObj, int xCoord, int yCoord, int zCoord) {
       for(int count = 1; worldObj.getBlock(xCoord, yCoord - count, zCoord) == this; ++count) {
          TileEntity te = worldObj.getTileEntity(xCoord, yCoord - count, zCoord);
-         if (te != null && te instanceof TileLifter) {
+         if (te instanceof TileLifter) {
             ((TileLifter)te).requiresUpdate = true;
          }
       }

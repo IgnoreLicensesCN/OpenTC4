@@ -82,9 +82,9 @@ public class TileFluxScrubber extends TileThaumcraft implements IEssentiaTranspo
 
       while(cc < 16 && this.checklist.size() > 0) {
          ++cc;
-         x = ((BlockCoordinates)this.checklist.get(0)).x;
-         y = ((BlockCoordinates)this.checklist.get(0)).y;
-         z = ((BlockCoordinates)this.checklist.get(0)).z;
+         x = this.checklist.get(0).x;
+         y = this.checklist.get(0).y;
+         z = this.checklist.get(0).z;
          this.checklist.remove(0);
          if (!this.worldObj.isAirBlock(x, y, z) && this.isFlux(x, y, z) && this.getDistanceFrom((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F) < (double)(distance * distance)) {
             this.power -= 5;
@@ -95,7 +95,7 @@ public class TileFluxScrubber extends TileThaumcraft implements IEssentiaTranspo
                this.worldObj.setBlockToAir(x, y, z);
             }
 
-            PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(x, y, z, 14483711), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, (double)x, (double)y, (double)z, (double)32.0F));
+            PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(x, y, z, 14483711), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, x, y, z, 32.0F));
             ++this.charges;
             this.markDirty();
             return;

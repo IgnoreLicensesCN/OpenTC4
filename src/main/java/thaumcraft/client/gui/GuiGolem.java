@@ -52,7 +52,7 @@ public class GuiGolem extends GuiContainer {
 
    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
       GL11.glPushMatrix();
-      GL11.glScaled((double)0.5F, (double)0.5F, (double)0.5F);
+      GL11.glScaled(0.5F, 0.5F, 0.5F);
       if (this.threat >= 0) {
          this.fontRendererObj.drawSplitString(StatCollector.translateToLocal("golemthreat." + this.threat + ".text"), 80, 22, 110, 14540253);
       } else {
@@ -299,7 +299,7 @@ public class GuiGolem extends GuiContainer {
       this.golem.rotationPitch = 0.0F;
       this.golem.prevRotationYawHead = -5.0F;
       this.golem.rotationYawHead = -5.0F;
-      RenderManager.instance.renderEntityWithPosYaw(this.golem, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F, 1.0F);
+      RenderManager.instance.renderEntityWithPosYaw(this.golem, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F);
       this.golem.renderYawOffset = f2;
       this.golem.rotationYaw = f3;
       this.golem.rotationPitch = f4;

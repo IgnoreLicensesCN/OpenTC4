@@ -20,7 +20,7 @@ public class FXSwarm extends EntityFX {
    public int particle;
 
    public FXSwarm(World par1World, double x, double y, double z, Entity target, float r, float g, float b) {
-      super(par1World, x, y, z, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(par1World, x, y, z, 0.0F, 0.0F, 0.0F);
       this.turnSpeed = 10.0F;
       this.speed = 0.2F;
       this.deathtimer = 0;
@@ -31,9 +31,9 @@ public class FXSwarm extends EntityFX {
       this.particleScale = this.rand.nextFloat() * 0.5F + 1.0F;
       this.target = target;
       float f3 = 0.2F;
-      this.motionX = (double)((this.rand.nextFloat() - this.rand.nextFloat()) * f3);
-      this.motionY = (double)((this.rand.nextFloat() - this.rand.nextFloat()) * f3);
-      this.motionZ = (double)((this.rand.nextFloat() - this.rand.nextFloat()) * f3);
+      this.motionX = (this.rand.nextFloat() - this.rand.nextFloat()) * f3;
+      this.motionY = (this.rand.nextFloat() - this.rand.nextFloat()) * f3;
+      this.motionZ = (this.rand.nextFloat() - this.rand.nextFloat()) * f3;
       this.particleGravity = 0.1F;
       this.noClip = false;
       EntityLivingBase renderentity = FMLClientHandler.instance().getClient().renderViewEntity;
@@ -76,10 +76,10 @@ public class FXSwarm extends EntityFX {
          tessellator.setColorRGBA_F(this.particleRed * var16, this.particleGreen * var16 / 2.0F, this.particleBlue * var16 / 2.0F, trans);
       }
 
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 - f3 * var12 - f5 * var12), (double)var9, (double)var11);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 - f3 * var12 + f5 * var12), (double)var9, (double)var10);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 + f3 * var12 + f5 * var12), (double)var8, (double)var10);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 + f3 * var12 - f5 * var12), (double)var8, (double)var11);
+      tessellator.addVertexWithUV(var13 - f1 * var12 - f4 * var12, var14 - f2 * var12, var15 - f3 * var12 - f5 * var12, var9, var11);
+      tessellator.addVertexWithUV(var13 - f1 * var12 + f4 * var12, var14 + f2 * var12, var15 - f3 * var12 + f5 * var12, var9, var10);
+      tessellator.addVertexWithUV(var13 + f1 * var12 + f4 * var12, var14 + f2 * var12, var15 + f3 * var12 + f5 * var12, var8, var10);
+      tessellator.addVertexWithUV(var13 + f1 * var12 - f4 * var12, var14 - f2 * var12, var15 + f3 * var12 - f5 * var12, var8, var11);
    }
 
    public int getFXLayer() {
@@ -93,12 +93,12 @@ public class FXSwarm extends EntityFX {
       ++this.particleAge;
       if (this.target == null || this.target.isDead || this.target instanceof EntityLivingBase && ((EntityLivingBase)this.target).deathTime > 0) {
          ++this.deathtimer;
-         this.motionY -= (double)(this.particleGravity / 2.0F);
+         this.motionY -= this.particleGravity / 2.0F;
          if (this.deathtimer > 50) {
             this.setDead();
          }
       } else {
-         this.motionY += (double)this.particleGravity;
+         this.motionY += this.particleGravity;
       }
 
       this.pushOutOfBlocks(this.posX, this.posY, this.posZ);
@@ -118,18 +118,18 @@ public class FXSwarm extends EntityFX {
             this.faceEntity(this.target, -(this.turnSpeed / 2.0F + (float)this.rand.nextInt((int)(this.turnSpeed / 2.0F))), -(this.turnSpeed / 2.0F + (float)this.rand.nextInt((int)(this.turnSpeed / 2.0F))));
          }
 
-         this.motionX = (double)(-MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI));
-         this.motionZ = (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI));
-         this.motionY = (double)(-MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI));
+         this.motionX = -MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI);
+         this.motionZ = MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI);
+         this.motionY = -MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI);
          this.setHeading(this.motionX, this.motionY, this.motionZ, this.speed, 15.0F);
       }
 
-      if (buzzcount.size() < 3 && this.rand.nextInt(50) == 0 && this.worldObj.getClosestPlayerToEntity(this, (double)8.0F) != null) {
+      if (buzzcount.size() < 3 && this.rand.nextInt(50) == 0 && this.worldObj.getClosestPlayerToEntity(this, 8.0F) != null) {
          this.worldObj.playSound(this.posX, this.posY, this.posZ, "thaumcraft:fly", 0.03F, 0.5F + this.rand.nextFloat() * 0.4F, false);
          buzzcount.add(System.nanoTime() + 1500000L);
       }
 
-      if (buzzcount.size() >= 3 && (Long)buzzcount.get(0) < System.nanoTime()) {
+      if (buzzcount.size() >= 3 && buzzcount.get(0) < System.nanoTime()) {
          buzzcount.remove(0);
       }
 
@@ -139,7 +139,7 @@ public class FXSwarm extends EntityFX {
       double d0 = par1Entity.posX - this.posX;
       double d1 = par1Entity.posZ - this.posZ;
       double d2 = (par1Entity.boundingBox.minY + par1Entity.boundingBox.maxY) / (double)2.0F - (this.boundingBox.minY + this.boundingBox.maxY) / (double)2.0F;
-      double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d1 * d1);
+      double d3 = MathHelper.sqrt_double(d0 * d0 + d1 * d1);
       float f2 = (float)(Math.atan2(d1, d0) * (double)180.0F / Math.PI) - 90.0F;
       float f3 = (float)(-(Math.atan2(d2, d3) * (double)180.0F / Math.PI));
       this.rotationPitch = this.updateRotation(this.rotationPitch, f3, par3);
@@ -161,15 +161,15 @@ public class FXSwarm extends EntityFX {
 
    public void setHeading(double par1, double par3, double par5, float par7, float par8) {
       float f2 = MathHelper.sqrt_double(par1 * par1 + par3 * par3 + par5 * par5);
-      par1 /= (double)f2;
-      par3 /= (double)f2;
-      par5 /= (double)f2;
+      par1 /= f2;
+      par3 /= f2;
+      par5 /= f2;
       par1 += this.rand.nextGaussian() * (double)(this.rand.nextBoolean() ? -1 : 1) * (double)0.0075F * (double)par8;
       par3 += this.rand.nextGaussian() * (double)(this.rand.nextBoolean() ? -1 : 1) * (double)0.0075F * (double)par8;
       par5 += this.rand.nextGaussian() * (double)(this.rand.nextBoolean() ? -1 : 1) * (double)0.0075F * (double)par8;
-      par1 *= (double)par7;
-      par3 *= (double)par7;
-      par5 *= (double)par7;
+      par1 *= par7;
+      par3 *= par7;
+      par5 *= par7;
       this.motionX = par1;
       this.motionY = par3;
       this.motionZ = par5;
@@ -190,7 +190,7 @@ public class FXSwarm extends EntityFX {
          boolean var20 = !this.worldObj.isBlockNormalCubeDefault(var7, var8, var9 - 1, true);
          boolean var21 = !this.worldObj.isBlockNormalCubeDefault(var7, var8, var9 + 1, true);
          byte var22 = -1;
-         double var23 = (double)9999.0F;
+         double var23 = 9999.0F;
          if (var16 && var10 < var23) {
             var23 = var10;
             var22 = 0;
@@ -224,33 +224,33 @@ public class FXSwarm extends EntityFX {
          float var25 = this.rand.nextFloat() * 0.05F + 0.025F;
          float var26 = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F;
          if (var22 == 0) {
-            this.motionX = (double)(-var25);
-            this.motionY = this.motionZ = (double)var26;
+            this.motionX = -var25;
+            this.motionY = this.motionZ = var26;
          }
 
          if (var22 == 1) {
-            this.motionX = (double)var25;
-            this.motionY = this.motionZ = (double)var26;
+            this.motionX = var25;
+            this.motionY = this.motionZ = var26;
          }
 
          if (var22 == 2) {
-            this.motionY = (double)(-var25);
-            this.motionX = this.motionZ = (double)var26;
+            this.motionY = -var25;
+            this.motionX = this.motionZ = var26;
          }
 
          if (var22 == 3) {
-            this.motionY = (double)var25;
-            this.motionX = this.motionZ = (double)var26;
+            this.motionY = var25;
+            this.motionX = this.motionZ = var26;
          }
 
          if (var22 == 4) {
-            this.motionZ = (double)(-var25);
-            this.motionY = this.motionX = (double)var26;
+            this.motionZ = -var25;
+            this.motionY = this.motionX = var26;
          }
 
          if (var22 == 5) {
-            this.motionZ = (double)var25;
-            this.motionY = this.motionX = (double)var26;
+            this.motionZ = var25;
+            this.motionY = this.motionX = var26;
          }
 
          return true;

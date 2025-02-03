@@ -232,7 +232,7 @@ public class BlockTube extends BlockContainer {
       } else if (metadata == 6) {
          return new TileTubeOneway();
       } else {
-         return (TileEntity)(metadata == 7 ? new TileEssentiaCrystalizer() : super.createTileEntity(world, metadata));
+         return metadata == 7 ? new TileEssentiaCrystalizer() : super.createTileEntity(world, metadata);
       }
    }
 
@@ -246,7 +246,7 @@ public class BlockTube extends BlockContainer {
 
    public int getComparatorInputOverride(World world, int x, int y, int z, int rs) {
       TileEntity te = world.getTileEntity(x, y, z);
-      if (te != null && te instanceof TileTubeBuffer) {
+      if (te instanceof TileTubeBuffer) {
          float var10000 = (float)((TileTubeBuffer)te).aspects.visSize();
          ((TileTubeBuffer)te).getClass();
          float r = var10000 / 8.0F;
@@ -258,8 +258,8 @@ public class BlockTube extends BlockContainer {
 
    public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
       TileEntity te = world.getTileEntity(x, y, z);
-      if (te != null && te instanceof TileTubeFilter && ((TileTubeFilter)te).aspectFilter != null && !world.isRemote) {
-         world.spawnEntityInWorld(new EntityItem(world, (double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), new ItemStack(ConfigItems.itemResource, 1, 13)));
+      if (te instanceof TileTubeFilter && ((TileTubeFilter) te).aspectFilter != null && !world.isRemote) {
+         world.spawnEntityInWorld(new EntityItem(world, (float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, new ItemStack(ConfigItems.itemResource, 1, 13)));
       }
 
       super.breakBlock(world, x, y, z, par5, par6);
@@ -286,26 +286,26 @@ public class BlockTube extends BlockContainer {
 
       if (metadata == 3) {
          TileEntity te = world.getTileEntity(x, y, z);
-         if (te != null && te instanceof TileTubeFilter && player.isSneaking() && ((TileTubeFilter)te).aspectFilter != null) {
+         if (te instanceof TileTubeFilter && player.isSneaking() && ((TileTubeFilter) te).aspectFilter != null) {
             ((TileTubeFilter)te).aspectFilter = null;
             world.markBlockForUpdate(x, y, z);
             if (world.isRemote) {
-               world.playSound((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "thaumcraft:page", 1.0F, 1.0F, false);
+               world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
             } else {
                ForgeDirection fd = ForgeDirection.getOrientation(side);
-               world.spawnEntityInWorld(new EntityItem(world, (double)((float)x + 0.5F + (float)fd.offsetX / 3.0F), (double)((float)y + 0.5F), (double)((float)z + 0.5F + (float)fd.offsetZ / 3.0F), new ItemStack(ConfigItems.itemResource, 1, 13)));
+               world.spawnEntityInWorld(new EntityItem(world, (float)x + 0.5F + (float)fd.offsetX / 3.0F, (float)y + 0.5F, (float)z + 0.5F + (float)fd.offsetZ / 3.0F, new ItemStack(ConfigItems.itemResource, 1, 13)));
             }
 
             return true;
          }
 
-         if (te != null && te instanceof TileTubeFilter && player.getHeldItem() != null && ((TileTubeFilter)te).aspectFilter == null && player.getHeldItem().getItem() == ConfigItems.itemResource && player.getHeldItem().getItemDamage() == 13) {
-            if (((IEssentiaContainerItem)((IEssentiaContainerItem)player.getHeldItem().getItem())).getAspects(player.getHeldItem()) != null) {
-               ((TileTubeFilter)te).aspectFilter = ((IEssentiaContainerItem)((IEssentiaContainerItem)player.getHeldItem().getItem())).getAspects(player.getHeldItem()).getAspects()[0];
+         if (te instanceof TileTubeFilter && player.getHeldItem() != null && ((TileTubeFilter) te).aspectFilter == null && player.getHeldItem().getItem() == ConfigItems.itemResource && player.getHeldItem().getItemDamage() == 13) {
+            if (((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()) != null) {
+               ((TileTubeFilter)te).aspectFilter = ((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()).getAspects()[0];
                --player.getHeldItem().stackSize;
                world.markBlockForUpdate(x, y, z);
                if (world.isRemote) {
-                  world.playSound((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "thaumcraft:page", 1.0F, 1.0F, false);
+                  world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
                }
             }
 
@@ -327,7 +327,7 @@ public class BlockTube extends BlockContainer {
 
    public MovingObjectPosition collisionRayTrace(World world, int x, int y, int z, Vec3 start, Vec3 end) {
       TileEntity tile = world.getTileEntity(x, y, z);
-      if (tile != null && (tile instanceof TileTube || tile instanceof TileTubeBuffer)) {
+      if ((tile instanceof TileTube || tile instanceof TileTubeBuffer)) {
          List<IndexedCuboid6> cuboids = new LinkedList<>();
          if (tile instanceof TileTube) {
             ((TileTube)tile).addTraceableCuboids(cuboids);

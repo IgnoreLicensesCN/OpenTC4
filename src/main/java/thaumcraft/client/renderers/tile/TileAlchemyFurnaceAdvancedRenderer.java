@@ -67,7 +67,7 @@ public class TileAlchemyFurnaceAdvancedRenderer extends TileEntitySpecialRendere
             GL11.glRotatef((float)(90 * a), 0.0F, 0.0F, 1.0F);
             GL11.glRotatef(90.0F, -1.0F, 0.0F, 0.0F);
             GL11.glTranslatef(0.85F, -1.8F, -1.4F);
-            GL11.glScaled(0.3, 0.6, (double)1.0F);
+            GL11.glScaled(0.3, 0.6, 1.0F);
             this.renderQuadCenteredFromIcon(tile.getBlockType().getIcon(0, 0), 150, 0.0F);
             GL11.glTranslatef(0.0F, 0.0F, -0.01F);
             this.renderQuadCenteredFromIcon(ConfigBlocks.FLUXGOO.getIcon(), 190, f);
@@ -76,7 +76,7 @@ public class TileAlchemyFurnaceAdvancedRenderer extends TileEntitySpecialRendere
             GL11.glRotatef((float)(90 * a), 0.0F, 0.0F, -1.0F);
             GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
             GL11.glTranslatef(1.15F, 1.8F, -1.4F);
-            GL11.glScaled(-0.3, -0.6, (double)-1.0F);
+            GL11.glScaled(-0.3, -0.6, -1.0F);
             this.renderQuadCenteredFromIcon(tile.getBlockType().getIcon(0, 0), 150, 0.0F);
             GL11.glTranslatef(0.0F, 0.0F, 0.01F);
             this.renderQuadCenteredFromIcon(ConfigBlocks.FLUXGOO.getIcon(), 190, f);
@@ -126,10 +126,10 @@ public class TileAlchemyFurnaceAdvancedRenderer extends TileEntitySpecialRendere
       tessellator.startDrawingQuads();
       tessellator.setBrightness(brightness);
       tessellator.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-      tessellator.addVertexWithUV((double)0.0F, (double)1.0F, (double)0.0F, (double)f1, (double)f4);
-      tessellator.addVertexWithUV((double)1.0F, (double)1.0F, (double)0.0F, (double)f3, (double)f4);
-      tessellator.addVertexWithUV((double)1.0F, (double)width, (double)0.0F, (double)f3, (double)f2);
-      tessellator.addVertexWithUV((double)0.0F, (double)width, (double)0.0F, (double)f1, (double)f2);
+      tessellator.addVertexWithUV(0.0F, 1.0F, 0.0F, f1, f4);
+      tessellator.addVertexWithUV(1.0F, 1.0F, 0.0F, f3, f4);
+      tessellator.addVertexWithUV(1.0F, width, 0.0F, f3, f2);
+      tessellator.addVertexWithUV(0.0F, width, 0.0F, f1, f2);
       tessellator.draw();
       GL11.glDisable(3042);
       GL11.glDisable(32826);

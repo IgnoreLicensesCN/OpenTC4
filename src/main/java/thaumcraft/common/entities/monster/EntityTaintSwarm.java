@@ -35,7 +35,7 @@ public class EntityTaintSwarm extends EntityMob implements ITaintedMob {
 
    protected void entityInit() {
       super.entityInit();
-      this.dataWatcher.addObject(16, new Byte((byte)0));
+      this.dataWatcher.addObject(16, (byte) 0);
    }
 
    @SideOnly(Side.CLIENT)
@@ -73,8 +73,8 @@ public class EntityTaintSwarm extends EntityMob implements ITaintedMob {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)30.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)(2 + this.damBonus));
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(30.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2 + this.damBonus);
    }
 
    public boolean getIsSummoned() {
@@ -101,7 +101,7 @@ public class EntityTaintSwarm extends EntityMob implements ITaintedMob {
 
    public void onUpdate() {
       super.onUpdate();
-      this.motionY *= (double)0.6F;
+      this.motionY *= 0.6F;
       if (this.worldObj.isRemote) {
          for(int a = 0; a < this.swarm.size(); ++a) {
             if (this.swarm.get(a) == null || ((Entity)this.swarm.get(a)).isDead) {
@@ -180,7 +180,7 @@ public class EntityTaintSwarm extends EntityMob implements ITaintedMob {
    }
 
    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-      return this.isEntityInvulnerable() ? false : super.attackEntityFrom(par1DamageSource, par2);
+      return !this.isEntityInvulnerable() && super.attackEntityFrom(par1DamageSource, par2);
    }
 
    protected void attackEntity(Entity par1Entity, float par2) {
@@ -207,7 +207,7 @@ public class EntityTaintSwarm extends EntityMob implements ITaintedMob {
    }
 
    protected Entity findPlayerToAttack() {
-      double var1 = (double)12.0F;
+      double var1 = 12.0F;
       return this.getIsSummoned() ? null : this.worldObj.getClosestVulnerablePlayerToEntity(this, var1);
    }
 
@@ -229,7 +229,7 @@ public class EntityTaintSwarm extends EntityMob implements ITaintedMob {
       int var3 = MathHelper.floor_double(this.posZ);
       int var4 = this.worldObj.getBlockLightValue(var2, var1, var3);
       byte var5 = 7;
-      return var4 > this.rand.nextInt(var5) ? false : super.getCanSpawnHere();
+      return var4 <= this.rand.nextInt(var5) && super.getCanSpawnHere();
    }
 
    protected boolean isValidLightLevel() {

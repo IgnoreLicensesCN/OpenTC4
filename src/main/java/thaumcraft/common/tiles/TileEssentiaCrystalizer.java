@@ -60,7 +60,7 @@ public class TileEssentiaCrystalizer extends TileThaumcraft implements IAspectCo
 
    @SideOnly(Side.CLIENT)
    public AxisAlignedBB getRenderBoundingBox() {
-      return AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1));
+      return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1);
    }
 
    public void readCustomNBT(NBTTagCompound nbttagcompound) {
@@ -264,7 +264,7 @@ public class TileEssentiaCrystalizer extends TileThaumcraft implements IAspectCo
             float fz2 = 0.1F - this.worldObj.rand.nextFloat() * 0.2F;
             float fy2 = 0.1F - this.worldObj.rand.nextFloat() * 0.2F;
             int color = 16777215;
-            Thaumcraft.proxy.drawVentParticles(this.worldObj, (double)((float)this.xCoord + 0.5F + fx + (float)this.facing.getOpposite().offsetX / 2.1F), (double)((float)this.yCoord + 0.5F + fy + (float)this.facing.getOpposite().offsetY / 2.1F), (double)((float)this.zCoord + 0.5F + fz + (float)this.facing.getOpposite().offsetZ / 2.1F), (double)((float)this.facing.getOpposite().offsetX / 4.0F + fx2), (double)((float)this.facing.getOpposite().offsetY / 4.0F + fy2), (double)((float)this.facing.getOpposite().offsetZ / 4.0F + fz2), color);
+            Thaumcraft.proxy.drawVentParticles(this.worldObj, (float)this.xCoord + 0.5F + fx + (float)this.facing.getOpposite().offsetX / 2.1F, (float)this.yCoord + 0.5F + fy + (float)this.facing.getOpposite().offsetY / 2.1F, (float)this.zCoord + 0.5F + fz + (float)this.facing.getOpposite().offsetZ / 2.1F, (float)this.facing.getOpposite().offsetX / 4.0F + fx2, (float)this.facing.getOpposite().offsetY / 4.0F + fy2, (float)this.facing.getOpposite().offsetZ / 4.0F + fz2, color);
          }
       }
 
@@ -286,7 +286,7 @@ public class TileEssentiaCrystalizer extends TileThaumcraft implements IAspectCo
       ItemStack stack = new ItemStack(ConfigItems.itemCrystalEssence, 1, 0);
       ((ItemCrystalEssence)stack.getItem()).setAspects(stack, (new AspectList()).add(this.aspect, 1));
       TileEntity inventory = this.worldObj.getTileEntity(this.xCoord + this.facing.getOpposite().offsetX, this.yCoord + this.facing.getOpposite().offsetY, this.zCoord + this.facing.getOpposite().offsetZ);
-      if (inventory != null && inventory instanceof IInventory) {
+      if (inventory instanceof IInventory) {
          stack = InventoryUtils.placeItemStackIntoInventory(stack, (IInventory)inventory, this.facing.ordinal(), true);
       }
 
@@ -299,9 +299,9 @@ public class TileEssentiaCrystalizer extends TileThaumcraft implements IAspectCo
 
    public boolean spawnItem(ItemStack stack) {
       EntityItem ie2 = new EntityItem(this.worldObj, (double)this.xCoord + (double)0.5F + (double)this.facing.getOpposite().offsetX * 0.65, (double)this.yCoord + (double)0.5F + (double)this.facing.getOpposite().offsetY * 0.65, (double)this.zCoord + (double)0.5F + (double)this.facing.getOpposite().offsetZ * 0.65, stack);
-      ie2.motionX = (double)((float)this.facing.getOpposite().offsetX * 0.04F);
-      ie2.motionY = (double)((float)this.facing.getOpposite().offsetY * 0.04F);
-      ie2.motionZ = (double)((float)this.facing.getOpposite().offsetZ * 0.04F);
+      ie2.motionX = (float)this.facing.getOpposite().offsetX * 0.04F;
+      ie2.motionY = (float)this.facing.getOpposite().offsetY * 0.04F;
+      ie2.motionZ = (float)this.facing.getOpposite().offsetZ * 0.04F;
       this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.getBlockType(), 0, 0);
       return this.worldObj.spawnEntityInWorld(ie2);
    }

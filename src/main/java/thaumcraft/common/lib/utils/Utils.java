@@ -102,7 +102,7 @@ public class Utils {
          if (ee.isAssignableFrom(item.getClass())) {
             return true;
          }
-      } catch (Exception var3) {
+      } catch (Exception ignored) {
       }
 
       return false;
@@ -113,23 +113,9 @@ public class Utils {
          destFile.createNewFile();
       }
 
-      FileChannel source = null;
-      FileChannel destination = null;
-
-      try {
-         source = (new FileInputStream(sourceFile)).getChannel();
-         destination = (new FileOutputStream(destFile)).getChannel();
-         destination.transferFrom(source, 0L, source.size());
-      } finally {
-         if (source != null) {
-            source.close();
-         }
-
-         if (destination != null) {
-            destination.close();
-         }
-
-      }
+       try (FileChannel source = (new FileInputStream(sourceFile)).getChannel(); FileChannel destination = (new FileOutputStream(destFile)).getChannel()) {
+           destination.transferFrom(source, 0L, source.size());
+       }
 
    }
 
@@ -150,8 +136,8 @@ public class Utils {
       ItemStack dropped = is.copy();
       float r = rand.nextFloat();
       List ik = Arrays.asList(is.getItem(), is.getItemDamage());
-      if (specialMiningResult.containsKey(ik) && r <= chance * (Float)specialMiningChance.get(ik)) {
-         dropped = ((ItemStack)specialMiningResult.get(ik)).copy();
+      if (specialMiningResult.containsKey(ik) && r <= chance * specialMiningChance.get(ik)) {
+         dropped = specialMiningResult.get(ik).copy();
          dropped.stackSize *= is.stackSize;
       }
 
@@ -169,7 +155,7 @@ public class Utils {
          array[(z & 15) << 4 | x & 15] = (byte)(biome.biomeID & 255);
          chunk.setBiomeArray(array);
          if (!world.isRemote) {
-            PacketHandler.INSTANCE.sendToAllAround(new PacketBiomeChange(x, z, (short)biome.biomeID), new NetworkRegistry.TargetPoint(world.provider.dimensionId, (double)x, (double)world.getHeightValue(x, z), (double)z, (double)32.0F));
+            PacketHandler.INSTANCE.sendToAllAround(new PacketBiomeChange(x, z, (short)biome.biomeID), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, world.getHeightValue(x, z), z, 32.0F));
          }
 
       }
@@ -189,8 +175,8 @@ public class Utils {
 
    public static void resetFloatCounter(EntityPlayerMP player) {
       try {
-         ObfuscationReflectionHelper.setPrivateValue(NetHandlerPlayServer.class, player.playerNetServerHandler, 0, new String[]{"floatingTickCount", "floatingTickCount"});
-      } catch (Exception var2) {
+         ObfuscationReflectionHelper.setPrivateValue(NetHandlerPlayServer.class, player.playerNetServerHandler, 0, "floatingTickCount", "floatingTickCount");
+      } catch (Exception ignored) {
       }
 
    }
@@ -265,12 +251,12 @@ public class Utils {
       Long time = System.currentTimeMillis();
       Random rand = new Random(time);
       if (effectBuffer.containsKey(wc)) {
-         if ((Long)effectBuffer.get(wc) < time) {
+         if (effectBuffer.get(wc) < time) {
             effectBuffer.remove(wc);
          }
       } else {
          effectBuffer.put(wc, time + 500L + (long)rand.nextInt(100));
-         PacketHandler.INSTANCE.sendToAllAround(new PacketFXVisDrain(x, y, z, x2, y2, z2, color), new NetworkRegistry.TargetPoint(dim, (double)x, (double)y, (double)z, (double)64.0F));
+         PacketHandler.INSTANCE.sendToAllAround(new PacketFXVisDrain(x, y, z, x2, y2, z2, color), new NetworkRegistry.TargetPoint(dim, x, y, z, 64.0F));
       }
 
    }
@@ -290,7 +276,7 @@ public class Utils {
    }
 
    public static boolean isLyingInCone(double[] x, double[] t, double[] b, float aperture) {
-      double halfAperture = (double)(aperture / 2.0F);
+      double halfAperture = aperture / 2.0F;
       double[] apexToXVect = dif(t, x);
       double[] axisVect = dif(t, b);
       boolean isInInfiniteCone = dotProd(apexToXVect, axisVect) / magn(apexToXVect) / magn(axisVect) > Math.cos(halfAperture);
@@ -317,7 +303,7 @@ public class Utils {
    public static Vec3 calculateVelocity(Vec3 from, Vec3 to, double heightGain, double gravity) {
       double endGain = to.yCoord - from.yCoord;
       double horizDist = Math.sqrt(distanceSquared2d(from, to));
-      double maxGain = heightGain > endGain + heightGain ? heightGain : endGain + heightGain;
+      double maxGain = Math.max(heightGain, endGain + heightGain);
       double a = -horizDist * horizDist / ((double)4.0F * maxGain);
       double c = -endGain;
       double slope = -horizDist / ((double)2.0F * a) - Math.sqrt(horizDist * horizDist - (double)4.0F * a * c) / ((double)2.0F * a);

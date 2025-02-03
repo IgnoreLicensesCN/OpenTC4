@@ -24,7 +24,7 @@ public class GuiTravelingTrunk extends GuiContainer {
 
    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
       GL11.glPushMatrix();
-      GL11.glScaled((double)0.5F, (double)0.5F, (double)0.5F);
+      GL11.glScaled(0.5F, 0.5F, 0.5F);
       this.fontRendererObj.drawString(this.themob.func_152113_b() + StatCollector.translateToLocal("entity.trunk.guiname"), 8, 4, 12624112);
       GL11.glPopMatrix();
    }
@@ -62,9 +62,9 @@ public class GuiTravelingTrunk extends GuiContainer {
       if (k1 >= 0 && l1 >= 0 && k1 < 10 && l1 <= 10) {
          this.themob.worldObj.playSound(this.themob.posX, this.themob.posY, this.themob.posZ, "random.click", 0.3F, 0.6F + (this.themob.getStay() ? 0.0F : 0.2F), false);
          if (this.themob.getStay()) {
-            this.theplayer.addChatMessage(new ChatComponentTranslation("entity.trunk.move", new Object[0]));
+            this.theplayer.addChatMessage(new ChatComponentTranslation("entity.trunk.move"));
          } else {
-            this.theplayer.addChatMessage(new ChatComponentTranslation("entity.trunk.stay", new Object[0]));
+            this.theplayer.addChatMessage(new ChatComponentTranslation("entity.trunk.stay"));
          }
 
          this.mc.playerController.sendEnchantPacket(this.inventorySlots.windowId, 1);

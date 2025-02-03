@@ -47,7 +47,7 @@ public class TileArcaneBoreRenderer extends TileEntitySpecialRenderer {
       GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
       GL11.glRotatef(-(rotation * 8.0F), 0.0F, 0.0F, 1.0F);
       GL11.glRotatef(10.0F, 0.0F, 1.0F, 0.0F);
-      UtilsFX.renderQuadCenteredFromTexture((String)"textures/misc/vortex.png", 0.4F, 1.0F, 1.0F, 1.0F, 200, 771, 1.0F);
+      UtilsFX.renderQuadCenteredFromTexture("textures/misc/vortex.png", 0.4F, 1.0F, 1.0F, 1.0F, 200, 771, 1.0F);
       GL11.glPopMatrix();
       GL11.glPushMatrix();
       rotation = (float)(Minecraft.getMinecraft().renderViewEntity.ticksExisted % 45) + fq;
@@ -55,7 +55,7 @@ public class TileArcaneBoreRenderer extends TileEntitySpecialRenderer {
       GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
       GL11.glRotatef(rotation * 8.0F, 0.0F, 0.0F, 1.0F);
       GL11.glRotatef(10.0F, 0.0F, 1.0F, 0.0F);
-      UtilsFX.renderQuadCenteredFromTexture((String)"textures/misc/vortex.png", 0.3F, 1.0F, 1.0F, 1.0F, 200, 771, 0.8F);
+      UtilsFX.renderQuadCenteredFromTexture("textures/misc/vortex.png", 0.3F, 1.0F, 1.0F, 1.0F, 200, 771, 0.8F);
       GL11.glPopMatrix();
       GL11.glPushMatrix();
       rotation = (float)(Minecraft.getMinecraft().renderViewEntity.ticksExisted % 45) + fq;
@@ -63,7 +63,7 @@ public class TileArcaneBoreRenderer extends TileEntitySpecialRenderer {
       GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
       GL11.glRotatef(-(rotation * 8.0F), 0.0F, 0.0F, 1.0F);
       GL11.glRotatef(-10.0F, 0.0F, 1.0F, 0.0F);
-      UtilsFX.renderQuadCenteredFromTexture((String)"textures/misc/vortex.png", 0.2F, 1.0F, 1.0F, 1.0F, 200, 771, 0.8F);
+      UtilsFX.renderQuadCenteredFromTexture("textures/misc/vortex.png", 0.2F, 1.0F, 1.0F, 1.0F, 200, 771, 0.8F);
       GL11.glPopMatrix();
       GL11.glPushMatrix();
       UtilsFX.bindTexture("textures/models/jar.png");

@@ -62,7 +62,7 @@ public class GuiArcaneWorkbench extends GuiContainer {
                   }
                }
 
-               UtilsFX.drawTag(var5 + this.aspectLocs[count][0] - 8, var6 + this.aspectLocs[count][1] - 8, primal, amt, 0, (double)this.zLevel, 771, alpha, false);
+               UtilsFX.drawTag(var5 + this.aspectLocs[count][0] - 8, var6 + this.aspectLocs[count][1] - 8, primal, amt, 0, this.zLevel, 771, alpha, false);
             }
 
             ++count;

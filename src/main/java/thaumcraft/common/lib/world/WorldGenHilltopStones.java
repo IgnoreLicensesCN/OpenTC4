@@ -17,38 +17,36 @@ public class WorldGenHilltopStones extends WorldGenerator {
    }
 
    public boolean LocationIsValidSpawn(World world, int i, int j, int k) {
-      if (j < 85) {
-         return false;
-      } else {
-         int distanceToAir = 0;
+       if (j >= 85) {
+           int distanceToAir = 0;
 
-         for(Block checkID = world.getBlock(i, j, k); checkID != Blocks.air; checkID = world.getBlock(i, j + distanceToAir, k)) {
-            ++distanceToAir;
-         }
+           for (Block checkID = world.getBlock(i, j, k); checkID != Blocks.air; checkID = world.getBlock(i, j + distanceToAir, k)) {
+               ++distanceToAir;
+           }
 
-          if (distanceToAir <= 2) {
-              j += distanceToAir - 1;
-              Block blockID = world.getBlock(i, j, k);
-              Block blockIDAbove = world.getBlock(i, j + 1, k);
-              Block blockIDBelow = world.getBlock(i, j - 1, k);
+           if (distanceToAir <= 2) {
+               j += distanceToAir - 1;
+               Block blockID = world.getBlock(i, j, k);
+               Block blockIDAbove = world.getBlock(i, j + 1, k);
+               Block blockIDBelow = world.getBlock(i, j - 1, k);
 
-              for (Block x : this.GetValidSpawnBlocks()) {
-                  if (blockIDAbove != Blocks.air) {
-                      return false;
-                  }
+               for (Block x : this.GetValidSpawnBlocks()) {
+                   if (blockIDAbove != Blocks.air) {
+                       return false;
+                   }
 
-                  if (blockID == x) {
-                      return true;
-                  }
+                   if (blockID == x) {
+                       return true;
+                   }
 
-                  if ((blockID == Blocks.snow_layer || blockID == Blocks.tallgrass) && blockIDBelow == x) {
-                      return true;
-                  }
-              }
+                   if ((blockID == Blocks.snow_layer || blockID == Blocks.tallgrass) && blockIDBelow == x) {
+                       return true;
+                   }
+               }
 
-          }
-          return false;
-      }
+           }
+       }
+       return false;
    }
 
    public boolean generate(World world, Random rand, int i, int j, int k) {

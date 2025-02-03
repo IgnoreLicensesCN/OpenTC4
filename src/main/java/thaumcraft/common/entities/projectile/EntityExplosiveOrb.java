@@ -32,7 +32,7 @@ public class EntityExplosiveOrb extends EntityThrowable {
             mop.entityHit.attackEntityFrom(causeFireballDamage(this, this.getThrower()), this.strength * 1.5F);
          }
 
-         this.worldObj.newExplosion((Entity)null, this.posX, this.posY, this.posZ, this.strength, this.onFire, false);
+         this.worldObj.newExplosion(null, this.posX, this.posY, this.posZ, this.strength, this.onFire, false);
          this.setDead();
       }
 
@@ -50,7 +50,7 @@ public class EntityExplosiveOrb extends EntityThrowable {
    public void onUpdate() {
       super.onUpdate();
       if (this.worldObj.isRemote) {
-         Thaumcraft.proxy.drawGenericParticles(this.worldObj, this.prevPosX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.3F), this.prevPosY + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.3F), this.prevPosZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.3F), (double)0.0F, (double)0.0F, (double)0.0F, 1.0F, 1.0F, 1.0F, 0.8F, false, 151, 9, 1, 7 + this.rand.nextInt(5), 0, 2.0F + this.rand.nextFloat());
+         Thaumcraft.proxy.drawGenericParticles(this.worldObj, this.prevPosX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.3F), this.prevPosY + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.3F), this.prevPosZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.3F), 0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F, 0.8F, false, 151, 9, 1, 7 + this.rand.nextInt(5), 0, 2.0F + this.rand.nextFloat());
       }
 
       if (this.ticksExisted > 500) {

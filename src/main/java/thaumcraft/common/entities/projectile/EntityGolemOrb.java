@@ -49,7 +49,7 @@ public class EntityGolemOrb extends EntityThrowable implements IEntityAdditional
          if (id >= 0) {
             this.target = (EntityLivingBase)this.worldObj.getEntityByID(id);
          }
-      } catch (Exception var4) {
+      } catch (Exception ignored) {
       }
 
       this.red = data.readBoolean();
@@ -87,9 +87,9 @@ public class EntityGolemOrb extends EntityThrowable implements IEntityAdditional
          this.motionX += dx * d13;
          this.motionY += dy * d13;
          this.motionZ += dz * d13;
-         this.motionX = (double)MathHelper.clamp_float((float)this.motionX, -0.25F, 0.25F);
-         this.motionY = (double)MathHelper.clamp_float((float)this.motionY, -0.25F, 0.25F);
-         this.motionZ = (double)MathHelper.clamp_float((float)this.motionZ, -0.25F, 0.25F);
+         this.motionX = MathHelper.clamp_float((float)this.motionX, -0.25F, 0.25F);
+         this.motionY = MathHelper.clamp_float((float)this.motionY, -0.25F, 0.25F);
+         this.motionZ = MathHelper.clamp_float((float)this.motionZ, -0.25F, 0.25F);
       }
 
    }

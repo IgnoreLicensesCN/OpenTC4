@@ -58,12 +58,12 @@ public class TileRunicMatrixRenderer extends TileEntitySpecialRenderer {
          fa /= 20.0F / ((float)Math.min(count, 50) / 50.0F);
          f4 /= 20.0F / ((float)Math.min(count, 50) / 50.0F);
          tessellator.setColorRGBA_I(16777215, (int)(255.0F * (1.0F - f2)));
-         tessellator.addVertex((double)0.0F, (double)0.0F, (double)0.0F);
+         tessellator.addVertex(0.0F, 0.0F, 0.0F);
          tessellator.setColorRGBA_I(13369599, 0);
-         tessellator.addVertex(-0.866 * (double)f4, (double)fa, (double)(-0.5F * f4));
-         tessellator.addVertex(0.866 * (double)f4, (double)fa, (double)(-0.5F * f4));
-         tessellator.addVertex((double)0.0F, (double)fa, (double)(f4));
-         tessellator.addVertex(-0.866 * (double)f4, (double)fa, (double)(-0.5F * f4));
+         tessellator.addVertex(-0.866 * (double)f4, fa, -0.5F * f4);
+         tessellator.addVertex(0.866 * (double)f4, fa, -0.5F * f4);
+         tessellator.addVertex(0.0F, fa, f4);
+         tessellator.addVertex(-0.866 * (double)f4, fa, -0.5F * f4);
          tessellator.draw();
       }
 
@@ -191,7 +191,7 @@ public class TileRunicMatrixRenderer extends TileEntitySpecialRenderer {
             this.renderInfusionMatrix((TileInfusionMatrix)par1TileEntity, par2, par4, par6, par8);
             break;
          case 1:
-            this.renderTileEntityAt((TileInfusionMatrix)par1TileEntity, par2, par4, par6, par8);
+            this.renderTileEntityAt(par1TileEntity, par2, par4, par6, par8);
       }
 
    }

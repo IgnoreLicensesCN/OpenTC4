@@ -169,7 +169,7 @@ public class TileArcaneFurnace extends TileThaumcraft {
             int yy = this.yCoord + dir.offsetY * 2;
             int zz = this.zCoord + dir.offsetZ * 2;
             TileEntity tile = this.worldObj.getTileEntity(xx, yy, zz);
-            if (tile != null && tile instanceof TileBellows && ((TileBellows)tile).orientation == dir.getOpposite().ordinal() && !this.worldObj.isBlockIndirectlyGettingPowered(xx, yy, zz)) {
+            if (tile instanceof TileBellows && ((TileBellows) tile).orientation == dir.getOpposite().ordinal() && !this.worldObj.isBlockIndirectlyGettingPowered(xx, yy, zz)) {
                ++bellows;
             }
          }
@@ -211,11 +211,11 @@ public class TileArcaneFurnace extends TileThaumcraft {
 
    private void destroyItem(int slot) {
       this.furnaceItemStacks[slot] = null;
-      this.worldObj.playSound((double)((float)this.xCoord + 0.5F), (double)((float)this.yCoord + 0.5F), (double)((float)this.zCoord + 0.5F), "random.fizz", 0.3F, 2.6F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.8F, false);
-      double var21 = (double)((float)this.xCoord + this.worldObj.rand.nextFloat());
-      double var22 = (double)(this.yCoord + 1);
-      double var23 = (double)((float)this.zCoord + this.worldObj.rand.nextFloat());
-      this.worldObj.spawnParticle("lava", var21, var22, var23, (double)0.0F, (double)0.0F, (double)0.0F);
+      this.worldObj.playSound((float)this.xCoord + 0.5F, (float)this.yCoord + 0.5F, (float)this.zCoord + 0.5F, "random.fizz", 0.3F, 2.6F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.8F, false);
+      double var21 = (float)this.xCoord + this.worldObj.rand.nextFloat();
+      double var22 = this.yCoord + 1;
+      double var23 = (float)this.zCoord + this.worldObj.rand.nextFloat();
+      this.worldObj.spawnParticle("lava", var21, var22, var23, 0.0F, 0.0F, 0.0F);
    }
 
    private void getFacing() {
@@ -243,10 +243,10 @@ public class TileArcaneFurnace extends TileThaumcraft {
          lz += (float)this.facingZ * 1.2F;
          float mx = this.facingX == 0 ? (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.03F : (float)this.facingX * 0.13F;
          float mz = this.facingZ == 0 ? (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.03F : (float)this.facingZ * 0.13F;
-         EntityItem entityitem = new EntityItem(this.worldObj, (double)((float)this.xCoord + lx), (double)((float)this.yCoord + 0.4F), (double)((float)this.zCoord + lz), items);
-         entityitem.motionX = (double)mx;
-         entityitem.motionZ = (double)mz;
-         entityitem.motionY = (double)0.0F;
+         EntityItem entityitem = new EntityItem(this.worldObj, (float)this.xCoord + lx, (float)this.yCoord + 0.4F, (float)this.zCoord + lz, items);
+         entityitem.motionX = mx;
+         entityitem.motionZ = mz;
+         entityitem.motionY = 0.0F;
          this.worldObj.spawnEntityInWorld(entityitem);
          if (ThaumcraftApi.getSmeltingBonus(furnaceItemStack) != null) {
             ItemStack bonus = ThaumcraftApi.getSmeltingBonus(furnaceItemStack).copy();
@@ -267,10 +267,10 @@ public class TileArcaneFurnace extends TileThaumcraft {
             if (bonus != null && bonus.stackSize > 0) {
                mx = this.facingX == 0 ? (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.03F : (float)this.facingX * 0.13F;
                mz = this.facingZ == 0 ? (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.03F : (float)this.facingZ * 0.13F;
-               EntityItem entityitem2 = new EntityItem(this.worldObj, (double)((float)this.xCoord + lx), (double)((float)this.yCoord + 0.4F), (double)((float)this.zCoord + lz), bonus);
-               entityitem2.motionX = (double)mx;
-               entityitem2.motionZ = (double)mz;
-               entityitem2.motionY = (double)0.0F;
+               EntityItem entityitem2 = new EntityItem(this.worldObj, (float)this.xCoord + lx, (float)this.yCoord + 0.4F, (float)this.zCoord + lz, bonus);
+               entityitem2.motionX = mx;
+               entityitem2.motionZ = mz;
+               entityitem2.motionY = 0.0F;
                this.worldObj.spawnEntityInWorld(entityitem2);
             }
          }
@@ -291,12 +291,12 @@ public class TileArcaneFurnace extends TileThaumcraft {
          while(var2 > 0) {
             int var4 = EntityXPOrb.getXPSplit(var2);
             var2 -= var4;
-            EntityXPOrb xp = new EntityXPOrb(this.worldObj, (double)((float)this.xCoord + lx), (double)((float)this.yCoord + 0.4F), (double)((float)this.zCoord + lz), var4);
+            EntityXPOrb xp = new EntityXPOrb(this.worldObj, (float)this.xCoord + lx, (float)this.yCoord + 0.4F, (float)this.zCoord + lz, var4);
             mx = this.facingX == 0 ? (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.025F : (float)this.facingX * 0.13F;
             mz = this.facingZ == 0 ? (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.025F : (float)this.facingZ * 0.13F;
-            xp.motionX = (double)mx;
-            xp.motionZ = (double)mz;
-            xp.motionY = (double)0.0F;
+            xp.motionX = mx;
+            xp.motionZ = mz;
+            xp.motionY = 0.0F;
             this.worldObj.spawnEntityInWorld(xp);
          }
 
@@ -319,7 +319,7 @@ public class TileArcaneFurnace extends TileThaumcraft {
          if (this.worldObj.isRemote) {
             for(int a = 0; a < 5; ++a) {
                Thaumcraft.proxy.furnaceLavaFx(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.facingX, this.facingZ);
-               this.worldObj.playSound((double)((float)this.xCoord + 0.5F), (double)((float)this.yCoord + 0.5F), (double)((float)this.zCoord + 0.5F), "liquid.lavapop", 0.1F + this.worldObj.rand.nextFloat() * 0.1F, 0.9F + this.worldObj.rand.nextFloat() * 0.15F, false);
+               this.worldObj.playSound((float)this.xCoord + 0.5F, (float)this.yCoord + 0.5F, (float)this.zCoord + 0.5F, "liquid.lavapop", 0.1F + this.worldObj.rand.nextFloat() * 0.1F, 0.9F + this.worldObj.rand.nextFloat() * 0.15F, false);
             }
          }
 

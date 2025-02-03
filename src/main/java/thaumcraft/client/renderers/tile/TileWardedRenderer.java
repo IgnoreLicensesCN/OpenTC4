@@ -44,8 +44,8 @@ public class TileWardedRenderer extends TileEntitySpecialRenderer {
                RenderBlocks renderBlocks = new RenderBlocks();
                GL11.glDisable(2896);
                Tessellator t = Tessellator.instance;
-               renderBlocks.setRenderBounds((double)-0.001F, (double)-0.001F, (double)-0.001F, (double)1.001F, (double)1.001F, (double)1.001F);
-               if (tile.owner == ((EntityPlayer)viewer).getCommandSenderName().hashCode()) {
+               renderBlocks.setRenderBounds(-0.001F, -0.001F, -0.001F, 1.001F, 1.001F, 1.001F);
+               if (tile.owner == viewer.getCommandSenderName().hashCode()) {
                   float r = MathHelper.sin((float)player.ticksExisted / 2.0F + (float)tile.xCoord) * 0.2F + 0.8F;
                   float g = MathHelper.sin((float)player.ticksExisted / 3.0F + (float)tile.yCoord) * 0.2F + 0.7F;
                   float b = MathHelper.sin((float)player.ticksExisted / 4.0F + (float)tile.zCoord) * 0.2F + 0.28F;
@@ -62,27 +62,27 @@ public class TileWardedRenderer extends TileEntitySpecialRenderer {
                this.field_147501_a.field_147553_e.bindTexture(TextureMap.locationBlocksTexture);
                GL11.glTexEnvi(8960, 8704, 260);
                if (this.shouldSideBeRendered(world, tile.xCoord, tile.yCoord, tile.zCoord, 1)) {
-                  renderBlocks.renderFaceYNeg(ConfigBlocks.blockJar, -0.5001, (double)0.0F, -0.5001, this.getIconOnSide(world, tile.xCoord, tile.yCoord, tile.zCoord, 0, tile.owner, player.ticksExisted));
+                  renderBlocks.renderFaceYNeg(ConfigBlocks.blockJar, -0.5001, 0.0F, -0.5001, this.getIconOnSide(world, tile.xCoord, tile.yCoord, tile.zCoord, 0, tile.owner, player.ticksExisted));
                }
 
                if (this.shouldSideBeRendered(world, tile.xCoord, tile.yCoord, tile.zCoord, 0)) {
-                  renderBlocks.renderFaceYPos(ConfigBlocks.blockJar, -0.5001, (double)0.0F, -0.5001, this.getIconOnSide(world, tile.xCoord, tile.yCoord, tile.zCoord, 1, tile.owner, player.ticksExisted));
+                  renderBlocks.renderFaceYPos(ConfigBlocks.blockJar, -0.5001, 0.0F, -0.5001, this.getIconOnSide(world, tile.xCoord, tile.yCoord, tile.zCoord, 1, tile.owner, player.ticksExisted));
                }
 
                if (this.shouldSideBeRendered(world, tile.xCoord, tile.yCoord, tile.zCoord, 3)) {
-                  renderBlocks.renderFaceZNeg(ConfigBlocks.blockJar, -0.5001, (double)0.0F, -0.5001, this.getIconOnSide(world, tile.xCoord, tile.yCoord, tile.zCoord, 2, tile.owner, player.ticksExisted));
+                  renderBlocks.renderFaceZNeg(ConfigBlocks.blockJar, -0.5001, 0.0F, -0.5001, this.getIconOnSide(world, tile.xCoord, tile.yCoord, tile.zCoord, 2, tile.owner, player.ticksExisted));
                }
 
                if (this.shouldSideBeRendered(world, tile.xCoord, tile.yCoord, tile.zCoord, 2)) {
-                  renderBlocks.renderFaceZPos(ConfigBlocks.blockJar, -0.5001, (double)0.0F, -0.5001, this.getIconOnSide(world, tile.xCoord, tile.yCoord, tile.zCoord, 3, tile.owner, player.ticksExisted));
+                  renderBlocks.renderFaceZPos(ConfigBlocks.blockJar, -0.5001, 0.0F, -0.5001, this.getIconOnSide(world, tile.xCoord, tile.yCoord, tile.zCoord, 3, tile.owner, player.ticksExisted));
                }
 
                if (this.shouldSideBeRendered(world, tile.xCoord, tile.yCoord, tile.zCoord, 5)) {
-                  renderBlocks.renderFaceXNeg(ConfigBlocks.blockJar, -0.5001, (double)0.0F, -0.5001, this.getIconOnSide(world, tile.xCoord, tile.yCoord, tile.zCoord, 4, tile.owner, player.ticksExisted));
+                  renderBlocks.renderFaceXNeg(ConfigBlocks.blockJar, -0.5001, 0.0F, -0.5001, this.getIconOnSide(world, tile.xCoord, tile.yCoord, tile.zCoord, 4, tile.owner, player.ticksExisted));
                }
 
                if (this.shouldSideBeRendered(world, tile.xCoord, tile.yCoord, tile.zCoord, 4)) {
-                  renderBlocks.renderFaceXPos(ConfigBlocks.blockJar, -0.5001, (double)0.0F, -0.5001, this.getIconOnSide(world, tile.xCoord, tile.yCoord, tile.zCoord, 5, tile.owner, player.ticksExisted));
+                  renderBlocks.renderFaceXPos(ConfigBlocks.blockJar, -0.5001, 0.0F, -0.5001, this.getIconOnSide(world, tile.xCoord, tile.yCoord, tile.zCoord, 5, tile.owner, player.ticksExisted));
                }
 
                t.draw();
@@ -109,7 +109,7 @@ public class TileWardedRenderer extends TileEntitySpecialRenderer {
    private boolean isConnectedBlock(World world, int x, int y, int z, int owner) {
       if (world.getBlock(x, y, z) == ConfigBlocks.blockWarded) {
          TileEntity tile = world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileWarded) {
+         if (tile instanceof TileWarded) {
             return ((TileWarded)tile).owner == owner;
          }
       }
@@ -119,7 +119,7 @@ public class TileWardedRenderer extends TileEntitySpecialRenderer {
 
    private IIcon getIconOnSide(World world, int x, int y, int z, int side, int owner, int ticks) {
       WorldCoordinates wc = new WorldCoordinates(x, y, z, side);
-      IIcon out = (IIcon)iconCache.get(wc);
+      IIcon out = iconCache.get(wc);
       if ((ticks + side) % 10 == 0 || out == null) {
          boolean[] bitMatrix = new boolean[8];
          if (side == 0 || side == 1) {

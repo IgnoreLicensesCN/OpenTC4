@@ -19,9 +19,9 @@ public class UVTransformationList extends UVTransformation {
    }
 
    public void apply(UV uv) {
-      for(int i = 0; i < this.transformations.size(); ++i) {
-         ((UVTransformation)this.transformations.get(i)).apply(uv);
-      }
+       for (UVTransformation transformation : this.transformations) {
+           ((UVTransformation) transformation).apply(uv);
+       }
 
    }
 
@@ -61,10 +61,10 @@ public class UVTransformationList extends UVTransformation {
       UVTransformation prev = null;
 
       while(iterator.hasNext()) {
-         UVTransformation t = (UVTransformation)iterator.next();
+         UVTransformation t = iterator.next();
          if (!t.isRedundant()) {
             if (prev != null) {
-               UVTransformation m = (UVTransformation)prev.merge(t);
+               UVTransformation m = prev.merge(t);
                if (m == null) {
                   newList.add(prev);
                } else if (m.isRedundant()) {
@@ -93,22 +93,22 @@ public class UVTransformationList extends UVTransformation {
    }
 
    public UVTransformation inverse() {
-      UVTransformationList rev = new UVTransformationList(new UVTransformation[0]);
+      UVTransformationList rev = new UVTransformationList();
 
       for(int i = this.transformations.size() - 1; i >= 0; --i) {
-         rev.with((UVTransformation)((UVTransformation)this.transformations.get(i)).inverse());
+         rev.with(this.transformations.get(i).inverse());
       }
 
       return rev;
    }
 
    public String toString() {
-      String s = "";
+      StringBuilder s = new StringBuilder();
 
       for(UVTransformation t : this.transformations) {
-         s = s + "\n" + t.toString();
+         s.append("\n").append(t.toString());
       }
 
-      return s.trim();
+      return s.toString().trim();
    }
 }

@@ -22,12 +22,12 @@ public class FXShieldRunes extends EntityFX {
    private static final ResourceLocation MODEL = new ResourceLocation("thaumcraft", "textures/models/hemis.obj");
 
    public FXShieldRunes(World world, double d, double d1, double d2, Entity target, int age, float yaw, float pitch) {
-      super(world, d, d1, d2, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, d, d1, d2, 0.0F, 0.0F, 0.0F);
       this.particleRed = 1.0F;
       this.particleGreen = 1.0F;
       this.particleBlue = 1.0F;
       this.particleGravity = 0.0F;
-      this.motionX = this.motionY = this.motionZ = (double)0.0F;
+      this.motionX = this.motionY = this.motionZ = 0.0F;
       this.particleMaxAge = age + this.rand.nextInt(age / 2);
       this.noClip = false;
       this.setSize(0.01F, 0.01F);
@@ -55,7 +55,7 @@ public class FXShieldRunes extends EntityFX {
       float xx = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)f - interpPosX);
       float yy = (float)(this.prevPosY + (this.posY - this.prevPosY) * (double)f - interpPosY);
       float zz = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * (double)f - interpPosZ);
-      GL11.glTranslated((double)xx, (double)yy, (double)zz);
+      GL11.glTranslated(xx, yy, zz);
       float b = 1.0F;
       int frame = Math.min(15, (int)(14.0F * fade) + 1);
       if (this.target instanceof EntityMob && !(this.target instanceof EntityCultist)) {

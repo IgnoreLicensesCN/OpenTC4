@@ -59,7 +59,7 @@ public class GenBossRoom extends GenCommon {
                case 1:
                   placeBlock(world, xx, y + 2 + b, zz, 16, cell);
                   TileEntity t = world.getTileEntity(xx, y + 2 + b, zz);
-                  if (t != null && t instanceof TileEldritchLock) {
+                  if (t instanceof TileEldritchLock) {
                      ((TileEldritchLock)t).setFacing((byte)dir.ordinal());
                   }
                   break;

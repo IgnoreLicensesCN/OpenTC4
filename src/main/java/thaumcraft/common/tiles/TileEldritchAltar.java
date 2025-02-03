@@ -49,12 +49,12 @@ public class TileEldritchAltar extends TileThaumcraft {
    }
 
    public double getMaxRenderDistanceSquared() {
-      return (double)9216.0F;
+      return 9216.0F;
    }
 
    @SideOnly(Side.CLIENT)
    public AxisAlignedBB getRenderBoundingBox() {
-      return AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1));
+      return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1);
    }
 
    public boolean isSpawner() {
@@ -87,20 +87,20 @@ public class TileEldritchAltar extends TileThaumcraft {
    }
 
    private void spawnGuards() {
-      List ents = this.worldObj.getEntitiesWithinAABB(EntityCultistCleric.class, AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1)).expand((double)24.0F, (double)16.0F, (double)24.0F));
+      List ents = this.worldObj.getEntitiesWithinAABB(EntityCultistCleric.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(24.0F, 16.0F, 24.0F));
       if (ents.size() < 1) {
          this.setSpawner(false);
       } else {
-         ents = this.worldObj.getEntitiesWithinAABB(EntityCultist.class, AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1)).expand((double)24.0F, (double)16.0F, (double)24.0F));
+         ents = this.worldObj.getEntitiesWithinAABB(EntityCultist.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(24.0F, 16.0F, 24.0F));
          if (ents.size() < 8) {
             EntityCultistKnight eg = new EntityCultistKnight(this.worldObj);
             int i1 = this.xCoord + MathHelper.getRandomIntegerInRange(this.worldObj.rand, 4, 10) * MathHelper.getRandomIntegerInRange(this.worldObj.rand, -1, 1);
             int j1 = this.yCoord + MathHelper.getRandomIntegerInRange(this.worldObj.rand, 0, 3) * MathHelper.getRandomIntegerInRange(this.worldObj.rand, -1, 1);
             int k1 = this.zCoord + MathHelper.getRandomIntegerInRange(this.worldObj.rand, 4, 10) * MathHelper.getRandomIntegerInRange(this.worldObj.rand, -1, 1);
             if (World.doesBlockHaveSolidTopSurface(this.worldObj, i1, j1 - 1, k1)) {
-               eg.setPosition((double)i1, (double)j1, (double)k1);
+               eg.setPosition(i1, j1, k1);
                if (this.worldObj.checkNoEntityCollision(eg.boundingBox) && this.worldObj.getCollidingBoundingBoxes(eg, eg.boundingBox).isEmpty() && !this.worldObj.isAnyLiquid(eg.boundingBox)) {
-                  eg.onSpawnWithEgg((IEntityLivingData)null);
+                  eg.onSpawnWithEgg(null);
                   eg.spawnExplosionParticle();
                   eg.setHomeArea(this.xCoord, this.yCoord, this.zCoord, 16);
                   this.worldObj.spawnEntityInWorld(eg);
@@ -117,9 +117,9 @@ public class TileEldritchAltar extends TileThaumcraft {
       int j1 = this.yCoord + MathHelper.getRandomIntegerInRange(this.worldObj.rand, 0, 3) * MathHelper.getRandomIntegerInRange(this.worldObj.rand, -1, 1);
       int k1 = this.zCoord + MathHelper.getRandomIntegerInRange(this.worldObj.rand, 4, 10) * MathHelper.getRandomIntegerInRange(this.worldObj.rand, -1, 1);
       if (World.doesBlockHaveSolidTopSurface(this.worldObj, i1, j1 - 1, k1)) {
-         eg.setPosition((double)i1, (double)j1, (double)k1);
+         eg.setPosition(i1, j1, k1);
          if (eg.getCanSpawnHere()) {
-            eg.onSpawnWithEgg((IEntityLivingData)null);
+            eg.onSpawnWithEgg(null);
             eg.spawnExplosionParticle();
             eg.setHomeArea(this.xCoord, this.yCoord, this.zCoord, 16);
             this.worldObj.spawnEntityInWorld(eg);
@@ -154,10 +154,10 @@ public class TileEldritchAltar extends TileThaumcraft {
 
          EntityCultistCleric cleric = new EntityCultistCleric(this.worldObj);
          if (World.doesBlockHaveSolidTopSurface(this.worldObj, this.xCoord + xx, this.yCoord - 1, this.zCoord + zz)) {
-            cleric.setPosition((double)this.xCoord + (double)0.5F + (double)xx, (double)this.yCoord, (double)this.zCoord + (double)0.5F + (double)zz);
+            cleric.setPosition((double)this.xCoord + (double)0.5F + (double)xx, this.yCoord, (double)this.zCoord + (double)0.5F + (double)zz);
             if (this.worldObj.checkNoEntityCollision(cleric.boundingBox) && this.worldObj.getCollidingBoundingBoxes(cleric, cleric.boundingBox).isEmpty() && !this.worldObj.isAnyLiquid(cleric.boundingBox)) {
                cleric.setHomeArea(this.xCoord, this.yCoord, this.zCoord, 8);
-               cleric.onSpawnWithEgg((IEntityLivingData)null);
+               cleric.onSpawnWithEgg(null);
                cleric.spawnExplosionParticle();
                if (this.worldObj.spawnEntityInWorld(cleric)) {
                   ++success;

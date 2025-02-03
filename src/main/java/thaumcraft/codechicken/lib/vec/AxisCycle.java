@@ -1,7 +1,7 @@
 package thaumcraft.codechicken.lib.vec;
 
 public class AxisCycle {
-   public static Transformation[] cycles = new Transformation[]{new RedundantTransformation(), new VariableTransformation(new Matrix4((double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F)) {
+   public static Transformation[] cycles = new Transformation[]{new RedundantTransformation(), new VariableTransformation(new Matrix4(0.0F, 0.0F, 1.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F)) {
       public void apply(Vector3 vec) {
          double d0 = vec.x;
          double d1 = vec.y;
@@ -14,7 +14,7 @@ public class AxisCycle {
       public Transformation inverse() {
          return AxisCycle.cycles[2];
       }
-   }, new VariableTransformation(new Matrix4((double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F)) {
+   }, new VariableTransformation(new Matrix4(0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F)) {
       public void apply(Vector3 vec) {
          double d0 = vec.x;
          double d1 = vec.y;

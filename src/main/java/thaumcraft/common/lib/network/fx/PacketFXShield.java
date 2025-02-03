@@ -46,7 +46,7 @@ public class PacketFXShield implements IMessage, IMessageHandler<PacketFXShield,
                double d0 = p.posX - t.posX;
                double d1 = (p.boundingBox.minY + p.boundingBox.maxY) / (double)2.0F - (t.boundingBox.minY + t.boundingBox.maxY) / (double)2.0F;
                double d2 = p.posZ - t.posZ;
-               double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+               double d3 = MathHelper.sqrt_double(d0 * d0 + d2 * d2);
                float f = (float)(Math.atan2(d2, d0) * (double)180.0F / Math.PI) - 90.0F;
                float f1 = (float)(-(Math.atan2(d1, d3) * (double)180.0F / Math.PI));
                pitch = f1;

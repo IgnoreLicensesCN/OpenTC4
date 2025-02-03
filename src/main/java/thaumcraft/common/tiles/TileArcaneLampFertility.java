@@ -52,7 +52,7 @@ public class TileArcaneLampFertility extends TileThaumcraft implements IEssentia
 
    private void updateAnimals() {
       int distance = 7;
-      List<EntityAnimal> var5 = this.worldObj.getEntitiesWithinAABB(EntityAnimal.class, AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1)).expand((double)distance, (double)distance, (double)distance));
+      List<EntityAnimal> var5 = this.worldObj.getEntitiesWithinAABB(EntityAnimal.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(distance, distance, distance));
 
       for(EntityAnimal var3 : var5) {
          EntityLivingBase var4 = var3;
@@ -74,8 +74,8 @@ public class TileArcaneLampFertility extends TileThaumcraft implements IEssentia
                   if (var33.getGrowingAge() == 0 && !var33.isInLove()) {
                      if (partner != null) {
                         this.charges -= 2;
-                        var33.func_146082_f((EntityPlayer)null);
-                        partner.func_146082_f((EntityPlayer)null);
+                        var33.func_146082_f(null);
+                        partner.func_146082_f(null);
                         return;
                      }
 
@@ -109,9 +109,7 @@ public class TileArcaneLampFertility extends TileThaumcraft implements IEssentia
                return false;
             }
 
-            if (ic.getSuctionAmount(this.facing.getOpposite()) < this.getSuctionAmount(this.facing) && ic.takeEssentia(Aspect.LIFE, 1, this.facing.getOpposite()) == 1) {
-               return true;
-            }
+             return ic.getSuctionAmount(this.facing.getOpposite()) < this.getSuctionAmount(this.facing) && ic.takeEssentia(Aspect.LIFE, 1, this.facing.getOpposite()) == 1;
          }
 
          return false;

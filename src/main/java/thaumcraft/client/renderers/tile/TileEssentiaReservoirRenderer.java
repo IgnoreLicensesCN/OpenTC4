@@ -53,19 +53,19 @@ public class TileEssentiaReservoirRenderer extends TileEntitySpecialRenderer {
          GL11.glDisable(2896);
          float level = (float)te.essentia.visSize() / (float)te.maxAmount;
          Tessellator t = Tessellator.instance;
-         renderBlocks.setRenderBounds((double)BlockRenderer.W3, (double)BlockRenderer.W3, (double)BlockRenderer.W3, (double)BlockRenderer.W13, (double)(BlockRenderer.W3 + BlockRenderer.W10 * level), (double)BlockRenderer.W13);
+         renderBlocks.setRenderBounds(BlockRenderer.W3, BlockRenderer.W3, BlockRenderer.W3, BlockRenderer.W13, BlockRenderer.W3 + BlockRenderer.W10 * level, BlockRenderer.W13);
          t.startDrawingQuads();
          t.setColorRGBA_F(te.cr, te.cg, te.cb, 0.9F);
          int bright = 200;
          t.setBrightness(200);
          IIcon icon = ((BlockJar)ConfigBlocks.blockJar).iconLiquid;
          this.field_147501_a.field_147553_e.bindTexture(TextureMap.locationBlocksTexture);
-         renderBlocks.renderFaceYNeg(ConfigBlocks.blockEssentiaReservoir, (double)0.0F, (double)0.5F, (double)0.0F, icon);
-         renderBlocks.renderFaceYPos(ConfigBlocks.blockEssentiaReservoir, (double)0.0F, (double)0.5F, (double)0.0F, icon);
-         renderBlocks.renderFaceZNeg(ConfigBlocks.blockEssentiaReservoir, (double)0.0F, (double)0.5F, (double)0.0F, icon);
-         renderBlocks.renderFaceZPos(ConfigBlocks.blockEssentiaReservoir, (double)0.0F, (double)0.5F, (double)0.0F, icon);
-         renderBlocks.renderFaceXNeg(ConfigBlocks.blockEssentiaReservoir, (double)0.0F, (double)0.5F, (double)0.0F, icon);
-         renderBlocks.renderFaceXPos(ConfigBlocks.blockEssentiaReservoir, (double)0.0F, (double)0.5F, (double)0.0F, icon);
+         renderBlocks.renderFaceYNeg(ConfigBlocks.blockEssentiaReservoir, 0.0F, 0.5F, 0.0F, icon);
+         renderBlocks.renderFaceYPos(ConfigBlocks.blockEssentiaReservoir, 0.0F, 0.5F, 0.0F, icon);
+         renderBlocks.renderFaceZNeg(ConfigBlocks.blockEssentiaReservoir, 0.0F, 0.5F, 0.0F, icon);
+         renderBlocks.renderFaceZPos(ConfigBlocks.blockEssentiaReservoir, 0.0F, 0.5F, 0.0F, icon);
+         renderBlocks.renderFaceXNeg(ConfigBlocks.blockEssentiaReservoir, 0.0F, 0.5F, 0.0F, icon);
+         renderBlocks.renderFaceXPos(ConfigBlocks.blockEssentiaReservoir, 0.0F, 0.5F, 0.0F, icon);
          t.draw();
          GL11.glEnable(2896);
          GL11.glDisable(3042);
@@ -89,7 +89,7 @@ public class TileEssentiaReservoirRenderer extends TileEntitySpecialRenderer {
          }
       }
 
-      GL11.glTranslated((double)0.0F, (double)0.0F, (double)-0.5F);
+      GL11.glTranslated(0.0F, 0.0F, -0.5F);
    }
 
    public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {

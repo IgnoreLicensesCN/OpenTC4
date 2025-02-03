@@ -13,10 +13,10 @@ public class Quat implements Copyable {
    public double s;
 
    public Quat() {
-      this.s = (double)1.0F;
-      this.x = (double)0.0F;
-      this.y = (double)0.0F;
-      this.z = (double)0.0F;
+      this.s = 1.0F;
+      this.x = 0.0F;
+      this.y = 0.0F;
+      this.z = 0.0F;
    }
 
    public Quat(Quat quat) {
@@ -58,7 +58,7 @@ public class Quat implements Copyable {
    }
 
    public Quat setAroundAxis(double ax, double ay, double az, double angle) {
-      angle *= (double)0.5F;
+      angle *= 0.5F;
       double d4 = MathHelper.sin(angle);
       return this.set(MathHelper.cos(angle), ax * d4, ay * d4, az * d4);
    }

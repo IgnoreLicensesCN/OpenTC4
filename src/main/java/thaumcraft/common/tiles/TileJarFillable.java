@@ -109,7 +109,7 @@ public class TileJarFillable extends TileJar implements IAspectSource, IEssentia
    }
 
    public boolean doesContainerAccept(Aspect tag) {
-      return this.aspectFilter != null ? tag.equals(this.aspectFilter) : true;
+      return this.aspectFilter == null || tag.equals(this.aspectFilter);
    }
 
    public boolean isConnectable(ForgeDirection face) {

@@ -64,7 +64,7 @@ public class TileEldritchCrabSpawner extends TileThaumcraft {
       float fx2 = 0.1F - this.worldObj.rand.nextFloat() * 0.2F;
       float fz2 = 0.1F - this.worldObj.rand.nextFloat() * 0.2F;
       float fy2 = 0.1F - this.worldObj.rand.nextFloat() * 0.2F;
-      Thaumcraft.proxy.drawVentParticles(this.worldObj, (double)((float)this.xCoord + 0.5F + fx + (float)dir.offsetX / 2.1F), (double)((float)this.yCoord + 0.5F + fy + (float)dir.offsetY / 2.1F), (double)((float)this.zCoord + 0.5F + fz + (float)dir.offsetZ / 2.1F), (double)((float)dir.offsetX / 3.0F + fx2), (double)((float)dir.offsetY / 3.0F + fy2), (double)((float)dir.offsetZ / 3.0F + fz2), 10061994, 2.0F);
+      Thaumcraft.proxy.drawVentParticles(this.worldObj, (float)this.xCoord + 0.5F + fx + (float)dir.offsetX / 2.1F, (float)this.yCoord + 0.5F + fy + (float)dir.offsetY / 2.1F, (float)this.zCoord + 0.5F + fz + (float)dir.offsetZ / 2.1F, (float)dir.offsetX / 3.0F + fx2, (float)dir.offsetY / 3.0F + fy2, (float)dir.offsetZ / 3.0F + fz2, 10061994, 2.0F);
    }
 
    public boolean receiveClientEvent(int i, int j) {
@@ -77,32 +77,32 @@ public class TileEldritchCrabSpawner extends TileThaumcraft {
    }
 
    private boolean maxEntitiesReached() {
-      List ents = this.worldObj.getEntitiesWithinAABB(EntityEldritchCrab.class, AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)this.xCoord + (double)1.0F, (double)this.yCoord + (double)1.0F, (double)this.zCoord + (double)1.0F).expand((double)32.0F, (double)32.0F, (double)32.0F));
+      List ents = this.worldObj.getEntitiesWithinAABB(EntityEldritchCrab.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, (double)this.xCoord + (double)1.0F, (double)this.yCoord + (double)1.0F, (double)this.zCoord + (double)1.0F).expand(32.0F, 32.0F, 32.0F));
       return ents.size() > 5;
    }
 
    public boolean isActivated() {
-      return this.worldObj.getClosestPlayer((double)this.xCoord + (double)0.5F, (double)this.yCoord + (double)0.5F, (double)this.zCoord + (double)0.5F, (double)16.0F) != null;
+      return this.worldObj.getClosestPlayer((double)this.xCoord + (double)0.5F, (double)this.yCoord + (double)0.5F, (double)this.zCoord + (double)0.5F, 16.0F) != null;
    }
 
    private void spawnCrab() {
       ForgeDirection dir = ForgeDirection.getOrientation(this.facing);
       EntityEldritchCrab crab = new EntityEldritchCrab(this.worldObj);
-      double x = (double)(this.xCoord + dir.offsetX);
-      double y = (double)(this.yCoord + dir.offsetY);
-      double z = (double)(this.zCoord + dir.offsetZ);
+      double x = this.xCoord + dir.offsetX;
+      double y = this.yCoord + dir.offsetY;
+      double z = this.zCoord + dir.offsetZ;
       crab.setLocationAndAngles(x + (double)0.5F, y + (double)0.5F, z + (double)0.5F, 0.0F, 0.0F);
-      crab.onSpawnWithEgg((IEntityLivingData)null);
+      crab.onSpawnWithEgg(null);
       crab.setHelm(false);
-      crab.motionX = (double)((float)dir.offsetX * 0.2F);
-      crab.motionY = (double)((float)dir.offsetY * 0.2F);
-      crab.motionZ = (double)((float)dir.offsetZ * 0.2F);
+      crab.motionX = (float)dir.offsetX * 0.2F;
+      crab.motionY = (float)dir.offsetY * 0.2F;
+      crab.motionZ = (float)dir.offsetZ * 0.2F;
       this.worldObj.spawnEntityInWorld(crab);
    }
 
    @SideOnly(Side.CLIENT)
    public AxisAlignedBB getRenderBoundingBox() {
-      return AxisAlignedBB.getBoundingBox((double)(this.xCoord - 1), (double)(this.yCoord - 1), (double)(this.zCoord - 1), (double)(this.xCoord + 2), (double)(this.yCoord + 2), (double)(this.zCoord + 2));
+      return AxisAlignedBB.getBoundingBox(this.xCoord - 1, this.yCoord - 1, this.zCoord - 1, this.xCoord + 2, this.yCoord + 2, this.zCoord + 2);
    }
 
    public byte getFacing() {

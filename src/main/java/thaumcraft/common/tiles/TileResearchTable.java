@@ -142,18 +142,18 @@ public class TileResearchTable extends TileThaumcraft implements IInventory {
                } else {
                   Thaumcraft.proxy.playerKnowledge.addAspectPool(player.getCommandSenderName(), aspect, (short)-1);
                   ResearchManager.scheduleSave(player);
-                  PacketHandler.INSTANCE.sendTo(new PacketAspectPool(aspect.getTag(), Short.valueOf((short)0), Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), aspect)), (EntityPlayerMP)player);
+                  PacketHandler.INSTANCE.sendTo(new PacketAspectPool(aspect.getTag(), (short) 0, Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), aspect)), (EntityPlayerMP)player);
                }
             } else {
                float f = this.worldObj.rand.nextFloat();
-               if (((ResearchManager.HexEntry)this.data.hexEntries.get(hex.toString())).aspect != null && (r1 && f < 0.25F || r2 && f < 0.5F)) {
+               if (this.data.hexEntries.get(hex.toString()).aspect != null && (r1 && f < 0.25F || r2 && f < 0.5F)) {
                   this.worldObj.playSoundAtEntity(player, "random.orb", 0.2F, 0.9F + player.worldObj.rand.nextFloat() * 0.2F);
-                  Thaumcraft.proxy.playerKnowledge.addAspectPool(player.getCommandSenderName(), ((ResearchManager.HexEntry)this.data.hexEntries.get(hex.toString())).aspect, (short)1);
+                  Thaumcraft.proxy.playerKnowledge.addAspectPool(player.getCommandSenderName(), this.data.hexEntries.get(hex.toString()).aspect, (short)1);
                   ResearchManager.scheduleSave(player);
-                  PacketHandler.INSTANCE.sendTo(new PacketAspectPool(((ResearchManager.HexEntry)this.data.hexEntries.get(hex.toString())).aspect.getTag(), Short.valueOf((short)0), Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), ((ResearchManager.HexEntry)this.data.hexEntries.get(hex.toString())).aspect)), (EntityPlayerMP)player);
+                  PacketHandler.INSTANCE.sendTo(new PacketAspectPool(this.data.hexEntries.get(hex.toString()).aspect.getTag(), (short) 0, Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), this.data.hexEntries.get(hex.toString()).aspect)), (EntityPlayerMP)player);
                }
 
-               he = new ResearchManager.HexEntry((Aspect)null, 0);
+               he = new ResearchManager.HexEntry(null, 0);
             }
 
             this.data.hexEntries.put(hex.toString(), he);
@@ -272,7 +272,7 @@ public class TileResearchTable extends TileThaumcraft implements IInventory {
 
                   if (bi == Blocks.bookshelf && this.worldObj.rand.nextInt(300) == 0 || bi == ConfigBlocks.blockJar && md == 1 && this.worldObj.rand.nextInt(200) == 0) {
                      Aspect[] aspects = new Aspect[0];
-                     aspects = (Aspect[])Aspect.aspects.values().toArray(aspects);
+                     aspects = Aspect.aspects.values().toArray(aspects);
                      this.bonusAspects.merge(aspects[this.worldObj.rand.nextInt(aspects.length)], 1);
                      return;
                   }
@@ -339,7 +339,7 @@ public class TileResearchTable extends TileThaumcraft implements IInventory {
    }
 
    public boolean isUseableByPlayer(EntityPlayer var1) {
-      return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : var1.getDistanceSq((double)this.xCoord + (double)0.5F, (double)this.yCoord + (double)0.5F, (double)this.zCoord + (double)0.5F) <= (double)64.0F;
+      return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && var1.getDistanceSq((double) this.xCoord + (double) 0.5F, (double) this.yCoord + (double) 0.5F, (double) this.zCoord + (double) 0.5F) <= (double) 64.0F;
    }
 
    public void openInventory() {
@@ -372,7 +372,7 @@ public class TileResearchTable extends TileThaumcraft implements IInventory {
 
    @SideOnly(Side.CLIENT)
    public AxisAlignedBB getRenderBoundingBox() {
-      return AxisAlignedBB.getBoundingBox((double)(this.xCoord - 1), (double)this.yCoord, (double)(this.zCoord - 1), (double)(this.xCoord + 2), (double)(this.yCoord + 2), (double)(this.zCoord + 2));
+      return AxisAlignedBB.getBoundingBox(this.xCoord - 1, this.yCoord, this.zCoord - 1, this.xCoord + 2, this.yCoord + 2, this.zCoord + 2);
    }
 
    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
@@ -386,7 +386,7 @@ public class TileResearchTable extends TileThaumcraft implements IInventory {
    public boolean receiveClientEvent(int i, int j) {
       if (i == 1) {
          if (this.worldObj.isRemote) {
-            this.worldObj.playSound((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, "thaumcraft:learn", 1.0F, 1.0F, false);
+            this.worldObj.playSound(this.xCoord, this.yCoord, this.zCoord, "thaumcraft:learn", 1.0F, 1.0F, false);
          }
 
          return true;
@@ -412,7 +412,7 @@ public class TileResearchTable extends TileThaumcraft implements IInventory {
          for(Aspect aspect : rr.tags.getAspects()) {
             Thaumcraft.proxy.playerKnowledge.addAspectPool(player.getCommandSenderName(), aspect, (short)(-(rr.tags.getAmount(aspect) + this.data.copies)));
             ResearchManager.scheduleSave(player);
-            PacketHandler.INSTANCE.sendTo(new PacketAspectPool(aspect.getTag(), Short.valueOf((short)0), Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), aspect)), (EntityPlayerMP)player);
+            PacketHandler.INSTANCE.sendTo(new PacketAspectPool(aspect.getTag(), (short) 0, Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), aspect)), (EntityPlayerMP)player);
          }
 
          InventoryUtils.consumeInventoryItem(player, Items.paper, 0);

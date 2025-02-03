@@ -108,10 +108,10 @@ public class GuiSpa extends GuiContainer {
          tessellator.startDrawingQuads();
          tessellator.setColorRGBA_F(1.0F, 1.0F, 1.0F, 1.0F);
          tessellator.setNormal(0.0F, 0.0F, 1.0F);
-         tessellator.addVertexWithUV((double)0.0F, (double)(1 + a), (double)0.0F, (double)f1, (double)f4);
-         tessellator.addVertexWithUV((double)1.0F, (double)(1 + a), (double)0.0F, (double)f3, (double)f4);
-         tessellator.addVertexWithUV((double)1.0F, (double)(a), (double)0.0F, (double)f3, (double)f2);
-         tessellator.addVertexWithUV((double)0.0F, (double)(a), (double)0.0F, (double)f1, (double)f2);
+         tessellator.addVertexWithUV(0.0F, 1 + a, 0.0F, f1, f4);
+         tessellator.addVertexWithUV(1.0F, 1 + a, 0.0F, f3, f4);
+         tessellator.addVertexWithUV(1.0F, a, 0.0F, f3, f2);
+         tessellator.addVertexWithUV(0.0F, a, 0.0F, f1, f2);
          tessellator.draw();
       }
 

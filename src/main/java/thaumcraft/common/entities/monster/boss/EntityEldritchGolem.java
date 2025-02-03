@@ -73,7 +73,7 @@ public class EntityEldritchGolem extends EntityThaumcraftBoss implements IEldrit
    }
 
    public void setHeadless(boolean par1) {
-      this.dataWatcher.updateObject(12, Byte.valueOf((byte)(par1 ? 1 : 0)));
+      this.dataWatcher.updateObject(12, (byte) (par1 ? 1 : 0));
    }
 
    public void writeEntityToNBT(NBTTagCompound nbt) {
@@ -101,8 +101,8 @@ public class EntityEldritchGolem extends EntityThaumcraftBoss implements IEldrit
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
       this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.3);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)10.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)250.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(10.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(250.0F);
    }
 
    protected String getHurtSound() {
@@ -134,7 +134,7 @@ public class EntityEldritchGolem extends EntityThaumcraftBoss implements IEldrit
          int k = MathHelper.floor_double(this.posZ);
          Block block = this.worldObj.getBlock(i, j, k);
          if (block.getMaterial() != Material.air) {
-            this.worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(block) + "_" + this.worldObj.getBlockMetadata(i, j, k), this.posX + ((double)this.rand.nextFloat() - (double)0.5F) * (double)this.width, this.boundingBox.minY + 0.1, this.posZ + ((double)this.rand.nextFloat() - (double)0.5F) * (double)this.width, (double)4.0F * ((double)this.rand.nextFloat() - (double)0.5F), (double)0.5F, ((double)this.rand.nextFloat() - (double)0.5F) * (double)4.0F);
+            this.worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(block) + "_" + this.worldObj.getBlockMetadata(i, j, k), this.posX + ((double)this.rand.nextFloat() - (double)0.5F) * (double)this.width, this.boundingBox.minY + 0.1, this.posZ + ((double)this.rand.nextFloat() - (double)0.5F) * (double)this.width, (double)4.0F * ((double)this.rand.nextFloat() - (double)0.5F), 0.5F, ((double)this.rand.nextFloat() - (double)0.5F) * (double)4.0F);
          }
 
          if (!this.worldObj.isRemote && block instanceof BlockLoot) {
@@ -159,8 +159,8 @@ public class EntityEldritchGolem extends EntityThaumcraftBoss implements IEldrit
       if (!this.worldObj.isRemote && damage > this.getHealth() && !this.isHeadless()) {
          this.setHeadless(true);
          this.spawnTimer = 100;
-         double xx = (double)(MathHelper.cos(this.rotationYaw % 360.0F / 180.0F * (float)Math.PI) * 0.75F);
-         double zz = (double)(MathHelper.sin(this.rotationYaw % 360.0F / 180.0F * (float)Math.PI) * 0.75F);
+         double xx = MathHelper.cos(this.rotationYaw % 360.0F / 180.0F * (float)Math.PI) * 0.75F;
+         double zz = MathHelper.sin(this.rotationYaw % 360.0F / 180.0F * (float)Math.PI) * 0.75F;
          this.worldObj.createExplosion(this, this.posX + xx, this.posY + (double)this.getEyeHeight(), this.posZ + zz, 2.0F, false);
          this.makeHeadless();
          return false;
@@ -170,7 +170,7 @@ public class EntityEldritchGolem extends EntityThaumcraftBoss implements IEldrit
    }
 
    void makeHeadless() {
-      this.tasks.addTask(2, new AILongRangeAttack(this, (double)3.0F, (double)1.0F, 5, 5, 24.0F));
+      this.tasks.addTask(2, new AILongRangeAttack(this, 3.0F, 1.0F, 5, 5, 24.0F));
    }
 
    public boolean attackEntityAsMob(Entity target) {
@@ -183,7 +183,7 @@ public class EntityEldritchGolem extends EntityThaumcraftBoss implements IEldrit
          if (flag) {
             target.motionY += 0.2000000059604645;
             if (this.isHeadless()) {
-               target.addVelocity((double)(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * 1.5F), 0.1, (double)(MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * 1.5F));
+               target.addVelocity(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * 1.5F, 0.1, MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * 1.5F);
             }
          }
 
@@ -220,7 +220,7 @@ public class EntityEldritchGolem extends EntityThaumcraftBoss implements IEldrit
       } else if (p_70103_1_ == 19) {
          if (this.arcing == 0) {
             float radius = 2.0F + this.rand.nextFloat() * 2.0F;
-            double radians = Math.toRadians((double)this.rand.nextInt(360));
+            double radians = Math.toRadians(this.rand.nextInt(360));
             double deltaX = (double)radius * Math.cos(radians);
             double deltaZ = (double)radius * Math.sin(radians);
             int bx = MathHelper.floor_double(this.posX + deltaX);
@@ -262,16 +262,16 @@ public class EntityEldritchGolem extends EntityThaumcraftBoss implements IEldrit
             float f2 = MathHelper.sin(-this.renderYawOffset * ((float)Math.PI / 180F) - (float)Math.PI);
             float f3 = -MathHelper.cos(-this.rotationPitch * ((float)Math.PI / 180F));
             float f4 = MathHelper.sin(-this.rotationPitch * ((float)Math.PI / 180F));
-            Vec3 v = Vec3.createVectorHelper((double)(f2 * f3), (double)f4, (double)(f1 * f3));
+            Vec3 v = Vec3.createVectorHelper(f2 * f3, f4, f1 * f3);
             if (this.rand.nextInt(20) == 0) {
                float a = (this.rand.nextFloat() - this.rand.nextFloat()) / 2.0F;
                float b = (this.rand.nextFloat() - this.rand.nextFloat()) / 2.0F;
                Thaumcraft.proxy.spark((float)(this.posX + v.xCoord + (double)a), (float)this.posY + this.getEyeHeight() - 0.25F, (float)(this.posZ + v.zCoord + (double)b), 0.3F, 0.65F + this.rand.nextFloat() * 0.1F, 1.0F, 1.0F, 0.8F);
             }
 
-            Thaumcraft.proxy.drawVentParticles(this.worldObj, (double)((float)this.posX) + v.xCoord * 0.66, (double)((float)this.posY + this.getEyeHeight() - 0.75F), (double)((float)this.posZ) + v.zCoord * 0.66, (double)0.0F, 0.001, (double)0.0F, 5592405, 4.0F);
+            Thaumcraft.proxy.drawVentParticles(this.worldObj, (double)((float)this.posX) + v.xCoord * 0.66, (float)this.posY + this.getEyeHeight() - 0.75F, (double)((float)this.posZ) + v.zCoord * 0.66, 0.0F, 0.001, 0.0F, 5592405, 4.0F);
             if (this.arcing > 0) {
-               Thaumcraft.proxy.arcLightning(this.worldObj, this.posX, this.posY + (double)(this.height / 2.0F), this.posZ, (double)this.ax + (double)0.5F, (double)(this.ay + 1), (double)this.az + (double)0.5F, 0.65F + this.rand.nextFloat() * 0.1F, 1.0F, 1.0F, 1.0F - (float)this.arcing / 10.0F);
+               Thaumcraft.proxy.arcLightning(this.worldObj, this.posX, this.posY + (double)(this.height / 2.0F), this.posZ, (double)this.ax + (double)0.5F, this.ay + 1, (double)this.az + (double)0.5F, 0.65F + this.rand.nextFloat() * 0.1F, 1.0F, 1.0F, 1.0F - (float)this.arcing / 10.0F);
                --this.arcing;
             }
          }

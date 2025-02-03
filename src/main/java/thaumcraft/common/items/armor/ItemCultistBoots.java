@@ -43,7 +43,7 @@ public class ItemCultistBoots extends ItemArmor implements IRepairable, IRunicAr
    }
 
    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
-      return par2ItemStack.isItemEqual(new ItemStack(Items.iron_ingot)) ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
+      return par2ItemStack.isItemEqual(new ItemStack(Items.iron_ingot)) || super.getIsRepairable(par1ItemStack, par2ItemStack);
    }
 
    public EnumRarity getRarity(ItemStack itemstack) {
@@ -63,6 +63,6 @@ public class ItemCultistBoots extends ItemArmor implements IRepairable, IRunicAr
    }
 
    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-      list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": " + this.getVisDiscount(stack, player, (Aspect)null) + "%");
+      list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": " + this.getVisDiscount(stack, player, null) + "%");
    }
 }

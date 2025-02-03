@@ -37,7 +37,7 @@ public class TileVisRelay extends TileVisNode implements IWandable {
 
    @SideOnly(Side.CLIENT)
    public AxisAlignedBB getRenderBoundingBox() {
-      return AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1));
+      return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1);
    }
 
    public byte getAttunement() {
@@ -68,7 +68,7 @@ public class TileVisRelay extends TileVisNode implements IWandable {
       this.drawEffect();
       super.updateEntity();
       if (!this.worldObj.isRemote && this.nodeCounter % 20 == 0) {
-         List<EntityPlayer> var5 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1)).expand((double)5.0F, (double)5.0F, (double)5.0F));
+         List<EntityPlayer> var5 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(5.0F, 5.0F, 5.0F));
          if (var5 != null && var5.size() > 0) {
             for(EntityPlayer player : var5) {
                if (!nearbyPlayers.containsKey(player.getEntityId()) || ((WeakReference)nearbyPlayers.get(player.getEntityId())).get() == null || !(((TileVisRelay)((WeakReference)nearbyPlayers.get(player.getEntityId())).get()).getDistanceFrom(player.posX, player.posY, player.posZ) < this.getDistanceFrom(player.posX, player.posY, player.posZ))) {
@@ -84,10 +84,10 @@ public class TileVisRelay extends TileVisNode implements IWandable {
       if (this.worldObj.isRemote) {
          if (this.parentLoaded) {
             if (this.px == 0 && this.py == 0 && this.pz == 0) {
-               this.setParent((WeakReference)null);
+               this.setParent(null);
             } else {
                TileEntity tile = this.getWorldObj().getTileEntity(this.xCoord - this.px, this.yCoord - this.py, this.zCoord - this.pz);
-               if (tile != null && tile instanceof TileVisNode) {
+               if (tile instanceof TileVisNode) {
                   this.setParent(new WeakReference(tile));
                }
             }
@@ -97,9 +97,9 @@ public class TileVisRelay extends TileVisNode implements IWandable {
          }
 
          if (VisNetHandler.isNodeValid(this.getParent())) {
-            double xx = (double)((TileVisNode)this.getParent().get()).xCoord + (double)0.5F;
-            double yy = (double)((TileVisNode)this.getParent().get()).yCoord + (double)0.5F;
-            double zz = (double)((TileVisNode)this.getParent().get()).zCoord + (double)0.5F;
+            double xx = (double) this.getParent().get().xCoord + (double)0.5F;
+            double yy = (double) this.getParent().get().yCoord + (double)0.5F;
+            double zz = (double) this.getParent().get().zCoord + (double)0.5F;
             ForgeDirection d1 = ForgeDirection.UNKNOWN;
             if (this.getParent().get() instanceof TileVisRelay) {
                d1 = ForgeDirection.getOrientation(((TileVisRelay)this.getParent().get()).orientation);
@@ -178,7 +178,7 @@ public class TileVisRelay extends TileVisNode implements IWandable {
             this.pGreen = (float)c.getGreen() / 255.0F;
             this.pBlue = (float)c.getBlue() / 255.0F;
 
-            for(WeakReference<TileVisNode> vr = this.getParent(); VisNetHandler.isNodeValid(vr) && vr.get() instanceof TileVisRelay && ((TileVisRelay)vr.get()).pulse == 0; vr = ((TileVisNode)vr.get()).getParent()) {
+            for(WeakReference<TileVisNode> vr = this.getParent(); VisNetHandler.isNodeValid(vr) && vr.get() instanceof TileVisRelay && ((TileVisRelay)vr.get()).pulse == 0; vr = vr.get().getParent()) {
                ((TileVisRelay)vr.get()).pRed = this.pRed;
                ((TileVisRelay)vr.get()).pGreen = this.pGreen;
                ((TileVisRelay)vr.get()).pBlue = this.pBlue;
@@ -205,9 +205,9 @@ public class TileVisRelay extends TileVisNode implements IWandable {
       nbttagcompound.setShort("orientation", this.orientation);
       nbttagcompound.setByte("color", this.color);
       if (VisNetHandler.isNodeValid(this.getParent())) {
-         nbttagcompound.setByte("px", (byte)(this.xCoord - ((TileVisNode)this.getParent().get()).xCoord));
-         nbttagcompound.setByte("py", (byte)(this.yCoord - ((TileVisNode)this.getParent().get()).yCoord));
-         nbttagcompound.setByte("pz", (byte)(this.zCoord - ((TileVisNode)this.getParent().get()).zCoord));
+         nbttagcompound.setByte("px", (byte)(this.xCoord - this.getParent().get().xCoord));
+         nbttagcompound.setByte("py", (byte)(this.yCoord - this.getParent().get().yCoord));
+         nbttagcompound.setByte("pz", (byte)(this.zCoord - this.getParent().get().zCoord));
       } else {
          nbttagcompound.setByte("px", (byte)0);
          nbttagcompound.setByte("py", (byte)0);
@@ -227,7 +227,7 @@ public class TileVisRelay extends TileVisNode implements IWandable {
          this.nodeRefresh = true;
          this.markDirty();
          world.markBlockForUpdate(x, y, z);
-         world.playSoundEffect((double)x, (double)y, (double)z, "thaumcraft:crystal", 0.2F, 1.0F);
+         world.playSoundEffect(x, y, z, "thaumcraft:crystal", 0.2F, 1.0F);
       }
 
       return 0;

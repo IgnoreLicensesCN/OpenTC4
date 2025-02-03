@@ -75,7 +75,7 @@ public class AISortingPlace extends EntityAIBase {
          if (this.inv != null && Config.golemChestInteract) {
             this.inv.closeInventory();
          }
-      } catch (Exception var2) {
+      } catch (Exception ignored) {
       }
 
    }
@@ -126,7 +126,7 @@ public class AISortingPlace extends EntityAIBase {
                   if (Config.golemChestInteract) {
                      ((IInventory)tile).openInventory();
                   }
-               } catch (Exception var14) {
+               } catch (Exception ignored) {
                }
                break;
             }

@@ -60,7 +60,7 @@ public class RenderWatcher extends RenderLiving {
          GL11.glPushMatrix();
          GL11.glTranslatef((float)p_177109_2_, (float)p_177109_4_ + f6, (float)p_177109_6_);
          Vec3 vec3 = this.func_177110_a(entitylivingbase, (double)entitylivingbase.height * (double)0.5F, p_177109_9_);
-         Vec3 vec31 = this.func_177110_a(p_177109_1_, (double)f6, p_177109_9_);
+         Vec3 vec31 = this.func_177110_a(p_177109_1_, f6, p_177109_9_);
          Vec3 vec32 = vec3.subtract(vec31);
          double d3 = vec32.lengthVector() + (double)1.0F;
          vec32 = vec32.normalize();
@@ -91,27 +91,27 @@ public class RenderWatcher extends RenderLiving {
          double d20 = (double)0.0F + Math.sin(d4 + (Math.PI / 2D)) * d5;
          double d21 = (double)0.0F + Math.cos(d4 + (Math.PI * 1.5D)) * d5;
          double d22 = (double)0.0F + Math.sin(d4 + (Math.PI * 1.5D)) * d5;
-         double d23 = (double)0.0F;
+         double d23 = 0.0F;
          double d24 = 0.4999;
-         double d25 = (double)(-1.0F + f5);
+         double d25 = -1.0F + f5;
          double d26 = d3 * ((double)0.5F / d5) + d25;
          tessellator.addVertexWithUV(d15, d3, d16, d24, d26);
-         tessellator.addVertexWithUV(d15, (double)0.0F, d16, d24, d25);
-         tessellator.addVertexWithUV(d17, (double)0.0F, d18, d23, d25);
+         tessellator.addVertexWithUV(d15, 0.0F, d16, d24, d25);
+         tessellator.addVertexWithUV(d17, 0.0F, d18, d23, d25);
          tessellator.addVertexWithUV(d17, d3, d18, d23, d26);
          tessellator.addVertexWithUV(d19, d3, d20, d24, d26);
-         tessellator.addVertexWithUV(d19, (double)0.0F, d20, d24, d25);
-         tessellator.addVertexWithUV(d21, (double)0.0F, d22, d23, d25);
+         tessellator.addVertexWithUV(d19, 0.0F, d20, d24, d25);
+         tessellator.addVertexWithUV(d21, 0.0F, d22, d23, d25);
          tessellator.addVertexWithUV(d21, d3, d22, d23, d26);
-         double d27 = (double)0.0F;
+         double d27 = 0.0F;
          if (p_177109_1_.ticksExisted % 2 == 0) {
-            d27 = (double)0.5F;
+            d27 = 0.5F;
          }
 
-         tessellator.addVertexWithUV(d7, d3, d8, (double)0.5F, d27 + (double)0.5F);
-         tessellator.addVertexWithUV(d9, d3, d10, (double)1.0F, d27 + (double)0.5F);
-         tessellator.addVertexWithUV(d13, d3, d14, (double)1.0F, d27);
-         tessellator.addVertexWithUV(d11, d3, d12, (double)0.5F, d27);
+         tessellator.addVertexWithUV(d7, d3, d8, 0.5F, d27 + (double)0.5F);
+         tessellator.addVertexWithUV(d9, d3, d10, 1.0F, d27 + (double)0.5F);
+         tessellator.addVertexWithUV(d13, d3, d14, 1.0F, d27);
+         tessellator.addVertexWithUV(d11, d3, d12, 0.5F, d27);
          tessellator.draw();
          GL11.glPopMatrix();
       }

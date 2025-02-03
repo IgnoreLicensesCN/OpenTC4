@@ -15,7 +15,7 @@ public class FXVisSparkle extends EntityFX {
    float sizeMod = 0.0F;
 
    public FXVisSparkle(World par1World, double par2, double par4, double par6, double tx, double ty, double tz) {
-      super(par1World, par2, par4, par6, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(par1World, par2, par4, par6, 0.0F, 0.0F, 0.0F);
       this.particleRed = this.particleGreen = this.particleBlue = 0.6F;
       this.particleScale = 0.0F;
       this.targetX = tx;
@@ -23,9 +23,9 @@ public class FXVisSparkle extends EntityFX {
       this.targetZ = tz;
       this.particleMaxAge = 1000;
       float f3 = 0.01F;
-      this.motionX = (double)((float)this.rand.nextGaussian() * f3);
-      this.motionY = (double)((float)this.rand.nextGaussian() * f3);
-      this.motionZ = (double)((float)this.rand.nextGaussian() * f3);
+      this.motionX = (float)this.rand.nextGaussian() * f3;
+      this.motionY = (float)this.rand.nextGaussian() * f3;
+      this.motionZ = (float)this.rand.nextGaussian() * f3;
       this.sizeMod = (float)(45 + this.rand.nextInt(15));
       this.particleRed = 0.2F;
       this.particleGreen = 0.6F + this.rand.nextFloat() * 0.3F;
@@ -59,10 +59,10 @@ public class FXVisSparkle extends EntityFX {
       float var16 = 1.0F;
       tessellator.setBrightness(240);
       tessellator.setColorRGBA_F(this.particleRed * var16, this.particleGreen * var16, this.particleBlue * var16, 0.5F);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 - f3 * var12 - f5 * var12), (double)var9, (double)var11);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 - f3 * var12 + f5 * var12), (double)var9, (double)var10);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 + f3 * var12 + f5 * var12), (double)var8, (double)var10);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 + f3 * var12 - f5 * var12), (double)var8, (double)var11);
+      tessellator.addVertexWithUV(var13 - f1 * var12 - f4 * var12, var14 - f2 * var12, var15 - f3 * var12 - f5 * var12, var9, var11);
+      tessellator.addVertexWithUV(var13 - f1 * var12 + f4 * var12, var14 + f2 * var12, var15 - f3 * var12 + f5 * var12, var9, var10);
+      tessellator.addVertexWithUV(var13 + f1 * var12 + f4 * var12, var14 + f2 * var12, var15 + f3 * var12 + f5 * var12, var8, var10);
+      tessellator.addVertexWithUV(var13 + f1 * var12 - f4 * var12, var14 - f2 * var12, var15 + f3 * var12 - f5 * var12, var8, var11);
    }
 
    public void onUpdate() {
@@ -79,8 +79,8 @@ public class FXVisSparkle extends EntityFX {
          double dx = this.targetX - this.posX;
          double dy = this.targetY - this.posY;
          double dz = this.targetZ - this.posZ;
-         double d13 = (double)0.1F;
-         double d11 = (double)MathHelper.sqrt_double(dx * dx + dy * dy + dz * dz);
+         double d13 = 0.1F;
+         double d11 = MathHelper.sqrt_double(dx * dx + dy * dy + dz * dz);
          if (d11 < (double)2.0F) {
             this.particleScale *= 0.95F;
          }
@@ -99,9 +99,9 @@ public class FXVisSparkle extends EntityFX {
          this.motionX += dx * d13;
          this.motionY += dy * d13;
          this.motionZ += dz * d13;
-         this.motionX = (double)MathHelper.clamp_float((float)this.motionX, -0.1F, 0.1F);
-         this.motionY = (double)MathHelper.clamp_float((float)this.motionY, -0.1F, 0.1F);
-         this.motionZ = (double)MathHelper.clamp_float((float)this.motionZ, -0.1F, 0.1F);
+         this.motionX = MathHelper.clamp_float((float)this.motionX, -0.1F, 0.1F);
+         this.motionY = MathHelper.clamp_float((float)this.motionY, -0.1F, 0.1F);
+         this.motionZ = MathHelper.clamp_float((float)this.motionZ, -0.1F, 0.1F);
       }
    }
 

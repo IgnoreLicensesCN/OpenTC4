@@ -26,12 +26,12 @@ public class EntityTaintPig extends EntityMob implements ITaintedMob {
       this.setSize(0.9F, 0.9F);
       this.getNavigator().setAvoidsWater(true);
       this.tasks.addTask(0, new EntityAISwimming(this));
-      this.tasks.addTask(2, new AIAttackOnCollide(this, EntityPlayer.class, (double)1.0F, false));
-      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityVillager.class, (double)1.0F, true));
-      this.tasks.addTask(5, new EntityAIWander(this, (double)1.0F));
+      this.tasks.addTask(2, new AIAttackOnCollide(this, EntityPlayer.class, 1.0F, false));
+      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityVillager.class, 1.0F, true));
+      this.tasks.addTask(5, new EntityAIWander(this, 1.0F));
       this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
       this.tasks.addTask(7, new EntityAILookIdle(this));
-      this.tasks.addTask(8, new AIAttackOnCollide(this, EntityAnimal.class, (double)1.0F, false));
+      this.tasks.addTask(8, new AIAttackOnCollide(this, EntityAnimal.class, 1.0F, false));
       this.targetTasks.addTask(0, new EntityAIHurtByTarget(this, false));
       this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
       this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityVillager.class, 0, false));
@@ -40,8 +40,8 @@ public class EntityTaintPig extends EntityMob implements ITaintedMob {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)20.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)4.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(4.0F);
       this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.275);
    }
 

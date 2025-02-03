@@ -40,7 +40,7 @@ public class PacketBoreDig implements IMessage, IMessageHandler<PacketBoreDig,IM
 
    public IMessage onMessage(PacketBoreDig message, MessageContext ctx) {
       TileEntity tile = Thaumcraft.proxy.getClientWorld().getTileEntity(message.x, message.y, message.z);
-      if (tile != null && tile instanceof TileArcaneBore) {
+      if (tile instanceof TileArcaneBore) {
          ((TileArcaneBore)tile).getDigEvent(message.digloc);
       }
 

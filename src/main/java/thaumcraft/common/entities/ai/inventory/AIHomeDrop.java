@@ -22,13 +22,13 @@ public class AIHomeDrop extends EntityAIBase {
 
    public boolean shouldExecute() {
       ChunkCoordinates home = this.theGolem.getHomePosition();
-      if (this.theGolem.getCarried() != null && this.theGolem.getNavigator().noPath() && !(this.theGolem.getDistanceSq((double)((float)home.posX + 0.5F), (double)((float)home.posY + 0.5F), (double)((float)home.posZ + 0.5F)) > (double)5.0F)) {
+      if (this.theGolem.getCarried() != null && this.theGolem.getNavigator().noPath() && !(this.theGolem.getDistanceSq((float)home.posX + 0.5F, (float)home.posY + 0.5F, (float)home.posZ + 0.5F) > (double)5.0F)) {
          ForgeDirection facing = ForgeDirection.getOrientation(this.theGolem.homeFacing);
          int cX = home.posX - facing.offsetX;
          int cY = home.posY - facing.offsetY;
          int cZ = home.posZ - facing.offsetZ;
          TileEntity tile = this.theGolem.worldObj.getTileEntity(cX, cY, cZ);
-         return tile == null || !(tile instanceof IInventory);
+         return !(tile instanceof IInventory);
       } else {
          return false;
       }
@@ -43,7 +43,7 @@ public class AIHomeDrop extends EntityAIBase {
          if (this.inv != null && Config.golemChestInteract) {
             this.inv.closeInventory();
          }
-      } catch (Exception var2) {
+      } catch (Exception ignored) {
       }
 
    }

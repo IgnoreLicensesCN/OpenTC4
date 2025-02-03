@@ -115,7 +115,7 @@ public class ItemJarFilled extends Item implements IEssentiaContainerItem {
          int var14 = ConfigBlocks.blockJar.onBlockPlaced(world, x, y, z, side, par8, par9, par10, var13);
          if (this.placeBlockAt(stack, player, world, x, y, z, side, par8, par9, par10, var14)) {
             TileEntity te = world.getTileEntity(x, y, z);
-            if (te != null && te instanceof TileJarFillable && stack.hasTagCompound()) {
+            if (te instanceof TileJarFillable && stack.hasTagCompound()) {
                AspectList aspects = this.getAspects(stack);
                if (aspects != null && aspects.size() == 1) {
                   ((TileJarFillable)te).amount = aspects.getAmount(aspects.getAspects()[0]);
@@ -128,7 +128,7 @@ public class ItemJarFilled extends Item implements IEssentiaContainerItem {
                }
             }
 
-            world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), var12.stepSound.func_150496_b(), (var12.stepSound.getVolume() + 1.0F) / 2.0F, var12.stepSound.getPitch() * 0.8F);
+            world.playSoundEffect((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, var12.stepSound.func_150496_b(), (var12.stepSound.getVolume() + 1.0F) / 2.0F, var12.stepSound.getPitch() * 0.8F);
             --stack.stackSize;
          }
 

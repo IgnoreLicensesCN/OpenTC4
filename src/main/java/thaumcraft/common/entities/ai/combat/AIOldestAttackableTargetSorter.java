@@ -16,7 +16,7 @@ public class AIOldestAttackableTargetSorter implements Comparator {
    public int compareAge(Entity par1Entity, Entity par2Entity) {
       int var3 = par1Entity.ticksExisted;
       int var5 = par2Entity.ticksExisted;
-      return var3 > var5 ? -1 : (var3 < var5 ? 1 : 0);
+      return Integer.compare(var5, var3);
    }
 
    public int compare(Object par1Obj, Object par2Obj) {

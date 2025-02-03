@@ -64,7 +64,7 @@ public class BiomeGenMagicalForest extends BiomeGenBase {
    }
 
    public WorldGenAbstractTree func_150567_a(Random par1Random) {
-      return (WorldGenAbstractTree)(par1Random.nextInt(14) == 0 ? new WorldGenSilverwoodTrees(false, 8, 5) : (par1Random.nextInt(10) == 0 ? new WorldGenGreatwoodTrees(false) : this.bigTree));
+      return par1Random.nextInt(14) == 0 ? new WorldGenSilverwoodTrees(false, 8, 5) : (par1Random.nextInt(10) == 0 ? new WorldGenGreatwoodTrees(false) : this.bigTree);
    }
 
    public WorldGenerator getRandomWorldGenForGrass(Random par1Random) {

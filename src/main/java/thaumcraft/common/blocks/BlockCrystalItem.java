@@ -28,7 +28,7 @@ public class BlockCrystalItem extends ItemBlock {
          try {
             TileCrystal ts = (TileCrystal)world.getTileEntity(x, y, z);
             ts.orientation = (short)side;
-         } catch (Exception var14) {
+         } catch (Exception ignored) {
          }
       }
 

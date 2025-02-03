@@ -42,21 +42,21 @@ public class ItemWandRenderer implements IItemRenderer {
 
          GL11.glPushMatrix();
          if (staff) {
-            GL11.glTranslated((double)0.0F, (double)0.5F, (double)0.0F);
+            GL11.glTranslated(0.0F, 0.5F, 0.0F);
          }
 
          if (type != ItemRenderType.INVENTORY) {
             if (type == ItemRenderType.ENTITY) {
                if (staff) {
-                  GL11.glTranslated((double)0.0F, (double)1.5F, (double)0.0F);
+                  GL11.glTranslated(0.0F, 1.5F, 0.0F);
                   GL11.glScaled(0.9, 0.9, 0.9);
                } else {
-                  GL11.glTranslated((double)0.0F, (double)1.0F, (double)0.0F);
+                  GL11.glTranslated(0.0F, 1.0F, 0.0F);
                }
             } else {
-               GL11.glTranslated((double)0.5F, (double)1.5F, (double)0.5F);
+               GL11.glTranslated(0.5F, 1.5F, 0.5F);
                if (type == ItemRenderType.EQUIPPED_FIRST_PERSON) {
-                  GL11.glScaled((double)1.0F, 1.1, (double)1.0F);
+                  GL11.glScaled(1.0F, 1.1, 1.0F);
                }
             }
          } else {
@@ -65,20 +65,20 @@ public class ItemWandRenderer implements IItemRenderer {
             }
 
             GL11.glRotatef(66.0F, 0.0F, 0.0F, 1.0F);
-            GL11.glTranslated((double)0.0F, 0.6, (double)0.0F);
+            GL11.glTranslated(0.0F, 0.6, 0.0F);
             if (staff) {
-               GL11.glTranslated(-0.7, 0.6, (double)0.0F);
+               GL11.glTranslated(-0.7, 0.6, 0.0F);
             }
          }
 
          GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
-         if (wielder != null && wielder instanceof EntityPlayer && ((EntityPlayer)wielder).getItemInUse() != null) {
+         if (wielder instanceof EntityPlayer && ((EntityPlayer) wielder).getItemInUse() != null) {
             float t = (float)((EntityPlayer)wielder).getItemInUseDuration() + pt;
             if (t > 3.0F) {
                t = 3.0F;
             }
 
-            GL11.glTranslated((double)0.0F, (double)1.0F, (double)0.0F);
+            GL11.glTranslated(0.0F, 1.0F, 0.0F);
             if (type != ItemRenderType.EQUIPPED_FIRST_PERSON) {
                GL11.glRotatef(33.0F, 0.0F, 0.0F, 1.0F);
             } else {
@@ -101,7 +101,7 @@ public class ItemWandRenderer implements IItemRenderer {
                GL11.glRotatef(wave, 1.0F, 0.0F, 0.0F);
             }
 
-            GL11.glTranslated((double)0.0F, (double)-1.0F, (double)0.0F);
+            GL11.glTranslated(0.0F, -1.0F, 0.0F);
          }
 
          GL11.glEnable(3042);

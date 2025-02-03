@@ -53,7 +53,7 @@ public class BlockCustomPlantItem extends ItemBlock {
       } else if (player.canPlayerEdit(x, y, z, side, stack) && player.canPlayerEdit(x, y + 1, z, side, stack)) {
          if (world.getBlock(x, y, z).canSustainPlant(world, x, y, z, ForgeDirection.UP, new CustomPlantTypes(stack.getItemDamage())) && world.isAirBlock(x, y + 1, z)) {
             world.setBlock(x, y + 1, z, ConfigBlocks.blockCustomPlant, stack.getItemDamage(), 3);
-            world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 1.5F), (double)((float)z + 0.5F), ConfigBlocks.blockCustomPlant.stepSound.getStepResourcePath(), (ConfigBlocks.blockCustomPlant.stepSound.getVolume() + 1.0F) / 2.0F, ConfigBlocks.blockCustomPlant.stepSound.getPitch() * 0.8F);
+            world.playSoundEffect((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F, ConfigBlocks.blockCustomPlant.stepSound.getStepResourcePath(), (ConfigBlocks.blockCustomPlant.stepSound.getVolume() + 1.0F) / 2.0F, ConfigBlocks.blockCustomPlant.stepSound.getPitch() * 0.8F);
             --stack.stackSize;
             return true;
          } else {
@@ -64,7 +64,7 @@ public class BlockCustomPlantItem extends ItemBlock {
       }
    }
 
-   private class CustomPlantTypes implements IPlantable {
+   private static class CustomPlantTypes implements IPlantable {
       int md = 0;
 
       public CustomPlantTypes(int md) {

@@ -25,14 +25,14 @@ public class EntityMindSpider extends EntitySpider {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)1.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)1.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(1.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1.0F);
    }
 
    protected void entityInit() {
       super.entityInit();
-      this.dataWatcher.addObject(22, new Byte((byte)0));
-      this.dataWatcher.addObject(23, new String(""));
+      this.dataWatcher.addObject(22, (byte) 0);
+      this.dataWatcher.addObject(23, "");
    }
 
    public String getViewer() {
@@ -60,7 +60,7 @@ public class EntityMindSpider extends EntitySpider {
    }
 
    protected Entity findPlayerToAttack() {
-      double d0 = (double)12.0F;
+      double d0 = 12.0F;
       return this.worldObj.getClosestVulnerablePlayerToEntity(this, d0);
    }
 

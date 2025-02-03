@@ -72,30 +72,30 @@ public class PacketAspectCombinationToServer implements IMessage, IMessageHandle
       World world = DimensionManager.getWorld(message.dim);
       if (world != null && (ctx.getServerHandler().playerEntity == null || ctx.getServerHandler().playerEntity.getEntityId() == message.playerid)) {
          Entity player = world.getEntityByID(message.playerid);
-         if (player != null && player instanceof EntityPlayer && message.aspect1 != null && message.aspect1 != null) {
+         if (player instanceof EntityPlayer && message.aspect1 != null) {
             Aspect combo = ResearchManager.getCombinationResult(message.aspect1, message.aspect2);
-            if ((Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(((EntityPlayer)player).getCommandSenderName(), message.aspect1) > 0 || message.ab1) && (Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(((EntityPlayer)player).getCommandSenderName(), message.aspect2) > 0 || message.ab2)) {
+            if ((Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), message.aspect1) > 0 || message.ab1) && (Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), message.aspect2) > 0 || message.ab2)) {
                TileEntity rt = player.worldObj.getTileEntity(message.x, message.y, message.z);
-               if (Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(((EntityPlayer)player).getCommandSenderName(), message.aspect1) <= 0 && message.ab1) {
-                  if (rt != null && rt instanceof TileResearchTable) {
+               if (Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), message.aspect1) <= 0 && message.ab1) {
+                  if (rt instanceof TileResearchTable) {
                      ((TileResearchTable)rt).bonusAspects.remove(message.aspect1, 1);
                      player.worldObj.markBlockForUpdate(message.x, message.y, message.z);
                      rt.markDirty();
                   }
                } else {
-                  Thaumcraft.proxy.playerKnowledge.addAspectPool(((EntityPlayer)player).getCommandSenderName(), message.aspect1, (short)-1);
-                  PacketHandler.INSTANCE.sendTo(new PacketAspectPool(message.aspect1.getTag(), Short.valueOf((short)0), Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(((EntityPlayer)player).getCommandSenderName(), message.aspect1)), (EntityPlayerMP)player);
+                  Thaumcraft.proxy.playerKnowledge.addAspectPool(player.getCommandSenderName(), message.aspect1, (short)-1);
+                  PacketHandler.INSTANCE.sendTo(new PacketAspectPool(message.aspect1.getTag(), (short) 0, Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), message.aspect1)), (EntityPlayerMP)player);
                }
 
-               if (Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(((EntityPlayer)player).getCommandSenderName(), message.aspect2) <= 0 && message.ab2) {
-                  if (rt != null && rt instanceof TileResearchTable) {
+               if (Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), message.aspect2) <= 0 && message.ab2) {
+                  if (rt instanceof TileResearchTable) {
                      ((TileResearchTable)rt).bonusAspects.remove(message.aspect2, 1);
                      player.worldObj.markBlockForUpdate(message.x, message.y, message.z);
                      rt.markDirty();
                   }
                } else {
-                  Thaumcraft.proxy.playerKnowledge.addAspectPool(((EntityPlayer)player).getCommandSenderName(), message.aspect2, (short)-1);
-                  PacketHandler.INSTANCE.sendTo(new PacketAspectPool(message.aspect2.getTag(), Short.valueOf((short)0), Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(((EntityPlayer)player).getCommandSenderName(), message.aspect2)), (EntityPlayerMP)player);
+                  Thaumcraft.proxy.playerKnowledge.addAspectPool(player.getCommandSenderName(), message.aspect2, (short)-1);
+                  PacketHandler.INSTANCE.sendTo(new PacketAspectPool(message.aspect2.getTag(), (short) 0, Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), message.aspect2)), (EntityPlayerMP)player);
                }
 
                if (combo != null) {

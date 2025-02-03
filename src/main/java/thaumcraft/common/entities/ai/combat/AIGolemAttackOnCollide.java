@@ -25,7 +25,7 @@ public class AIGolemAttackOnCollide extends EntityAIBase {
       if (var1 == null) {
          return false;
       } else if (!this.theGolem.isValidTarget(var1)) {
-         this.theGolem.setAttackTarget((EntityLivingBase)null);
+         this.theGolem.setAttackTarget(null);
          return false;
       } else {
          this.entityTarget = var1;
@@ -39,7 +39,7 @@ public class AIGolemAttackOnCollide extends EntityAIBase {
    }
 
    public void startExecuting() {
-      this.theGolem.getNavigator().setPath(this.entityPathEntity, (double)this.theGolem.getAIMoveSpeed());
+      this.theGolem.getNavigator().setPath(this.entityPathEntity, this.theGolem.getAIMoveSpeed());
       this.counter = 0;
    }
 
@@ -52,7 +52,7 @@ public class AIGolemAttackOnCollide extends EntityAIBase {
       this.theGolem.getLookHelper().setLookPositionWithEntity(this.entityTarget, 30.0F, 30.0F);
       if (this.theGolem.getEntitySenses().canSee(this.entityTarget) && --this.counter <= 0) {
          this.counter = 4 + this.theGolem.getRNG().nextInt(7);
-         this.theGolem.getNavigator().tryMoveToEntityLiving(this.entityTarget, (double)this.theGolem.getAIMoveSpeed());
+         this.theGolem.getNavigator().tryMoveToEntityLiving(this.entityTarget, this.theGolem.getAIMoveSpeed());
       }
 
       this.attackTick = Math.max(this.attackTick - 1, 0);

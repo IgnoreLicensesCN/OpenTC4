@@ -17,7 +17,7 @@ public class FXWispArcing extends EntityFX {
    public int blendmode;
 
    public FXWispArcing(World world, double d, double d1, double d2, float f, float red, float green, float blue) {
-      super(world, d, d1, d2, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, d, d1, d2, 0.0F, 0.0F, 0.0F);
       this.tinkle = false;
       this.blendmode = 1;
       if (red == 0.0F) {
@@ -79,10 +79,10 @@ public class FXWispArcing extends EntityFX {
       float var11 = 1.0F;
       tessellator.setBrightness(240);
       tessellator.setColorRGBA_F(this.particleRed, this.particleGreen, this.particleBlue, 0.5F);
-      tessellator.addVertexWithUV((double)(f11 - f1 * f10 - f4 * f10), (double)(f12 - f2 * f10), (double)(f13 - f3 * f10 - f5 * f10), (double)var9, (double)var10);
-      tessellator.addVertexWithUV((double)(f11 - f1 * f10 + f4 * f10), (double)(f12 + f2 * f10), (double)(f13 - f3 * f10 + f5 * f10), (double)var9, (double)var11);
-      tessellator.addVertexWithUV((double)(f11 + f1 * f10 + f4 * f10), (double)(f12 + f2 * f10), (double)(f13 + f3 * f10 + f5 * f10), (double)var8, (double)var10);
-      tessellator.addVertexWithUV((double)(f11 + f1 * f10 - f4 * f10), (double)(f12 - f2 * f10), (double)(f13 + f3 * f10 - f5 * f10), (double)var8, (double)var11);
+      tessellator.addVertexWithUV(f11 - f1 * f10 - f4 * f10, f12 - f2 * f10, f13 - f3 * f10 - f5 * f10, var9, var10);
+      tessellator.addVertexWithUV(f11 - f1 * f10 + f4 * f10, f12 + f2 * f10, f13 - f3 * f10 + f5 * f10, var9, var11);
+      tessellator.addVertexWithUV(f11 + f1 * f10 + f4 * f10, f12 + f2 * f10, f13 + f3 * f10 + f5 * f10, var8, var10);
+      tessellator.addVertexWithUV(f11 + f1 * f10 - f4 * f10, f12 - f2 * f10, f13 + f3 * f10 - f5 * f10, var8, var11);
    }
 
    public int getFXLayer() {

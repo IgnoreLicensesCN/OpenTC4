@@ -80,7 +80,7 @@ public class ClientTickEventsFML {
    public void playerTick(TickEvent.PlayerTickEvent event) {
       if (event.side != Side.SERVER) {
          if (event.phase == Phase.START) {
-            if (!this.startThread && GuiResearchRecipe.cache.size() <= 0) {
+            if (!this.startThread && GuiResearchRecipe.cache.size() == 0) {
                Map<String, Integer> idMappings = Maps.newHashMap();
                GameData.getBlockRegistry().serializeInto(idMappings);
                GameData.getItemRegistry().serializeInto(idMappings);
@@ -117,7 +117,7 @@ public class ClientTickEventsFML {
                      }
                   }
                }
-            } catch (Exception var4) {
+            } catch (Exception ignored) {
             }
          }
 
@@ -130,7 +130,7 @@ public class ClientTickEventsFML {
          if (!RenderEventHandler.shaderGroups.containsKey(0)) {
             try {
                this.setShader(new ShaderGroup(mc.getTextureManager(), mc.getResourceManager(), mc.getFramebuffer(), this.shader_resources[0]), 0);
-            } catch (JsonException var7) {
+            } catch (JsonException ignored) {
             }
          }
       } else if (RenderEventHandler.shaderGroups.containsKey(0)) {
@@ -141,7 +141,7 @@ public class ClientTickEventsFML {
          if (!RenderEventHandler.shaderGroups.containsKey(1)) {
             try {
                this.setShader(new ShaderGroup(mc.getTextureManager(), mc.getResourceManager(), mc.getFramebuffer(), this.shader_resources[1]), 1);
-            } catch (JsonException var6) {
+            } catch (JsonException ignored) {
             }
          }
       } else if (RenderEventHandler.shaderGroups.containsKey(1)) {
@@ -152,7 +152,7 @@ public class ClientTickEventsFML {
          if (!RenderEventHandler.shaderGroups.containsKey(2)) {
             try {
                this.setShader(new ShaderGroup(mc.getTextureManager(), mc.getResourceManager(), mc.getFramebuffer(), this.shader_resources[2]), 2);
-            } catch (JsonException var5) {
+            } catch (JsonException ignored) {
             }
          }
       } else if (RenderEventHandler.shaderGroups.containsKey(2)) {
@@ -163,7 +163,7 @@ public class ClientTickEventsFML {
          if (!RenderEventHandler.shaderGroups.containsKey(3)) {
             try {
                this.setShader(new ShaderGroup(mc.getTextureManager(), mc.getResourceManager(), mc.getFramebuffer(), this.shader_resources[3]), 3);
-            } catch (JsonException var4) {
+            } catch (JsonException ignored) {
             }
          }
       } else if (RenderEventHandler.shaderGroups.containsKey(3)) {
@@ -176,7 +176,7 @@ public class ClientTickEventsFML {
       if (OpenGlHelper.shadersSupported) {
          Minecraft mc = Minecraft.getMinecraft();
          if (RenderEventHandler.shaderGroups.containsKey(shaderId)) {
-            ((ShaderGroup)RenderEventHandler.shaderGroups.get(shaderId)).deleteShaderGroup();
+            RenderEventHandler.shaderGroups.get(shaderId).deleteShaderGroup();
             RenderEventHandler.shaderGroups.remove(shaderId);
          }
 
@@ -196,7 +196,7 @@ public class ClientTickEventsFML {
 
    public void deactivateShader(int shaderId) {
       if (RenderEventHandler.shaderGroups.containsKey(shaderId)) {
-         ((ShaderGroup)RenderEventHandler.shaderGroups.get(shaderId)).deleteShaderGroup();
+         RenderEventHandler.shaderGroups.get(shaderId).deleteShaderGroup();
       }
 
       RenderEventHandler.shaderGroups.remove(shaderId);
@@ -211,14 +211,14 @@ public class ClientTickEventsFML {
          if (event.phase == Phase.START) {
             ++this.tickCount;
 
-            for(String fxk : (String[])EssentiaHandler.sourceFX.keySet().toArray(new String[0])) {
-               EssentiaHandler.EssentiaSourceFX fx = (EssentiaHandler.EssentiaSourceFX)EssentiaHandler.sourceFX.get(fxk);
+            for(String fxk : EssentiaHandler.sourceFX.keySet().toArray(new String[0])) {
+               EssentiaHandler.EssentiaSourceFX fx = EssentiaHandler.sourceFX.get(fxk);
                if (fx.ticks <= 0) {
                   EssentiaHandler.sourceFX.remove(fxk);
                } else if (world != null) {
                   int mod = 0;
                   TileEntity tile = world.getTileEntity(fx.start.posX, fx.start.posY, fx.start.posZ);
-                  if (tile != null && tile instanceof TileInfusionMatrix) {
+                  if (tile instanceof TileInfusionMatrix) {
                      mod = -1;
                   }
 
@@ -267,7 +267,7 @@ public class ClientTickEventsFML {
                this.renderHoverHUD(event.renderTickTime, player, time, player.inventory.armorItemInSlot(2));
             }
 
-            if (!player.capabilities.isCreativeMode && Thaumcraft.instance.runicEventHandler.runicCharge.containsKey(player.getEntityId()) && (Integer)Thaumcraft.instance.runicEventHandler.runicCharge.get(player.getEntityId()) > 0 && Thaumcraft.instance.runicEventHandler.runicInfo.containsKey(player.getEntityId())) {
+            if (!player.capabilities.isCreativeMode && Thaumcraft.instance.runicEventHandler.runicCharge.containsKey(player.getEntityId()) && Thaumcraft.instance.runicEventHandler.runicCharge.get(player.getEntityId()) > 0 && Thaumcraft.instance.runicEventHandler.runicInfo.containsKey(player.getEntityId())) {
                this.renderRunicArmorBar(event.renderTickTime, player, time);
             }
 
@@ -291,7 +291,7 @@ public class ClientTickEventsFML {
       GL11.glClear(256);
       GL11.glMatrixMode(5889);
       GL11.glLoadIdentity();
-      GL11.glOrtho((double)0.0F, sr.getScaledWidth_double(), sr.getScaledHeight_double(), (double)0.0F, (double)1000.0F, (double)3000.0F);
+      GL11.glOrtho(0.0F, sr.getScaledWidth_double(), sr.getScaledHeight_double(), 0.0F, 1000.0F, 3000.0F);
       GL11.glMatrixMode(5888);
       GL11.glLoadIdentity();
       int k = sr.getScaledWidth();
@@ -303,7 +303,7 @@ public class ClientTickEventsFML {
       mc.renderEngine.bindTexture(this.HUD);
       GL11.glPushMatrix();
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-      UtilsFX.drawTexturedQuad(1, 1, 152, 0, 20, 76, (double)-90.0F);
+      UtilsFX.drawTexturedQuad(1, 1, 152, 0, 20, 76, -90.0F);
       GL11.glPopMatrix();
       float tw = (float)Thaumcraft.proxy.getPlayerKnowledge().getWarpTotal(player.getCommandSenderName());
       int p = Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(player.getCommandSenderName());
@@ -321,31 +321,31 @@ public class ClientTickEventsFML {
       if (t > 0) {
          GL11.glPushMatrix();
          GL11.glColor4f(1.0F, 0.5F, 1.0F, 1.0F);
-         UtilsFX.drawTexturedQuad(7, 21 + gap, 200, gap, 8, wt + gap, (double)-90.0F);
+         UtilsFX.drawTexturedQuad(7, 21 + gap, 200, gap, 8, wt + gap, -90.0F);
          GL11.glPopMatrix();
       }
 
       if (s > 0) {
          GL11.glPushMatrix();
          GL11.glColor4f(0.75F, 0.0F, 0.75F, 1.0F);
-         UtilsFX.drawTexturedQuad(7, 21 + wt + gap, 200, wt + gap, 8, wt + ws + gap, (double)-90.0F);
+         UtilsFX.drawTexturedQuad(7, 21 + wt + gap, 200, wt + gap, 8, wt + ws + gap, -90.0F);
          GL11.glPopMatrix();
       }
 
       if (p > 0) {
          GL11.glPushMatrix();
          GL11.glColor4f(0.5F, 0.0F, 0.5F, 1.0F);
-         UtilsFX.drawTexturedQuad(7, 21 + wt + ws + gap, 200, wt + ws + gap, 8, 48, (double)-90.0F);
+         UtilsFX.drawTexturedQuad(7, 21 + wt + ws + gap, 200, wt + ws + gap, 8, 48, -90.0F);
          GL11.glPopMatrix();
       }
 
       GL11.glPushMatrix();
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-      UtilsFX.drawTexturedQuad(1, 1, 176, 0, 20, 76, (double)-90.0F);
+      UtilsFX.drawTexturedQuad(1, 1, 176, 0, 20, 76, -90.0F);
       GL11.glPopMatrix();
       if (tw >= 100.0F) {
          GL11.glPushMatrix();
-         UtilsFX.drawTexturedQuad(1, 1, 216, 0, 20, 16, (double)-90.0F);
+         UtilsFX.drawTexturedQuad(1, 1, 216, 0, 20, 16, -90.0F);
          GL11.glPopMatrix();
       }
 
@@ -369,7 +369,7 @@ public class ClientTickEventsFML {
       GL11.glClear(256);
       GL11.glMatrixMode(5889);
       GL11.glLoadIdentity();
-      GL11.glOrtho((double)0.0F, sr.getScaledWidth_double(), sr.getScaledHeight_double(), (double)0.0F, (double)1000.0F, (double)3000.0F);
+      GL11.glOrtho(0.0F, sr.getScaledWidth_double(), sr.getScaledHeight_double(), 0.0F, 1000.0F, 3000.0F);
       GL11.glMatrixMode(5888);
       GL11.glLoadIdentity();
       int k = sr.getScaledWidth();
@@ -381,8 +381,8 @@ public class ClientTickEventsFML {
       GL11.glBlendFunc(770, 771);
       mc.renderEngine.bindTexture(this.HUD);
       GL11.glPushMatrix();
-      GL11.glScaled((double)0.5F, (double)0.5F, (double)0.5F);
-      UtilsFX.drawTexturedQuad(0, 0, 0, 0, 64, 64, (double)-90.0F);
+      GL11.glScaled(0.5F, 0.5F, 0.5F);
+      UtilsFX.drawTexturedQuad(0, 0, 0, 0, 64, 64, -90.0F);
       GL11.glPopMatrix();
       GL11.glTranslatef(16.0F, 16.0F, 0.0F);
       int max = wand.getMaxVis(wandstack);
@@ -400,32 +400,32 @@ public class ClientTickEventsFML {
 
          GL11.glRotatef((float)(-15 + count * 24), 0.0F, 0.0F, 1.0F);
          GL11.glTranslatef(0.0F, -32.0F, 0.0F);
-         GL11.glScaled((double)0.5F, (double)0.5F, (double)0.5F);
+         GL11.glScaled(0.5F, 0.5F, 0.5F);
          int loc = (int)(30.0F * (float)amt / (float)max);
          GL11.glPushMatrix();
          Color ac = new Color(aspect.getColor());
          GL11.glColor4f((float)ac.getRed() / 255.0F, (float)ac.getGreen() / 255.0F, (float)ac.getBlue() / 255.0F, 0.8F);
-         UtilsFX.drawTexturedQuad(-4, 35 - loc, 104, 0, 8, loc, (double)-90.0F);
+         UtilsFX.drawTexturedQuad(-4, 35 - loc, 104, 0, 8, loc, -90.0F);
          GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
          GL11.glPopMatrix();
          GL11.glPushMatrix();
-         UtilsFX.drawTexturedQuad(-8, -3, 72, 0, 16, 42, (double)-90.0F);
+         UtilsFX.drawTexturedQuad(-8, -3, 72, 0, 16, 42, -90.0F);
          GL11.glPopMatrix();
          int sh = 0;
          if (focus != null && focus.getVisCost(focusStack).getAmount(aspect) > 0) {
             GL11.glPushMatrix();
-            UtilsFX.drawTexturedQuad(-4, -8, 136, 0, 8, 8, (double)-90.0F);
+            UtilsFX.drawTexturedQuad(-4, -8, 136, 0, 8, 8, -90.0F);
             sh = 8;
             GL11.glPopMatrix();
          }
 
-         if (((AspectList)this.oldvals.get(player.inventory.currentItem)).getAmount(aspect) > amt) {
+         if (this.oldvals.get(player.inventory.currentItem).getAmount(aspect) > amt) {
             GL11.glPushMatrix();
-            UtilsFX.drawTexturedQuad(-4, -8 - sh, 128, 0, 8, 8, (double)-90.0F);
+            UtilsFX.drawTexturedQuad(-4, -8 - sh, 128, 0, 8, 8, -90.0F);
             GL11.glPopMatrix();
-         } else if (((AspectList)this.oldvals.get(player.inventory.currentItem)).getAmount(aspect) < amt) {
+         } else if (this.oldvals.get(player.inventory.currentItem).getAmount(aspect) < amt) {
             GL11.glPushMatrix();
-            UtilsFX.drawTexturedQuad(-4, -8 - sh, 120, 0, 8, 8, (double)-90.0F);
+            UtilsFX.drawTexturedQuad(-4, -8 - sh, 120, 0, 8, 8, -90.0F);
             GL11.glPopMatrix();
          }
 
@@ -439,7 +439,7 @@ public class ClientTickEventsFML {
                float mod = wand.getConsumptionModifier(wandstack, player, aspect, false);
                GL11.glPushMatrix();
                GL11.glRotatef(-90.0F, 0.0F, 0.0F, 1.0F);
-               msg = this.myFormatter.format((double)((float)focus.getVisCost(focusStack).getAmount(aspect) * mod / 100.0F));
+               msg = this.myFormatter.format((float)focus.getVisCost(focusStack).getAmount(aspect) * mod / 100.0F);
                mc.ingameGUI.drawString(mc.fontRenderer, msg, 8, -4, 16777215);
                GL11.glPopMatrix();
             }
@@ -472,8 +472,8 @@ public class ClientTickEventsFML {
             if (f > 0.0F) {
                GL11.glPushMatrix();
                GL11.glTranslatef(0.0F, 0.0F, 150.0F);
-               GL11.glScaled((double)0.5F, (double)0.5F, (double)0.5F);
-               String secs = this.myFormatter2.format((double)f) + "s";
+               GL11.glScaled(0.5F, 0.5F, 0.5F);
+               String secs = this.myFormatter2.format(f) + "s";
                int w = mc.fontRenderer.getStringWidth(secs) / 2;
                mc.ingameGUI.drawString(mc.fontRenderer, secs, -w, -4, 16777215);
                GL11.glPopMatrix();
@@ -489,13 +489,13 @@ public class ClientTickEventsFML {
    public void renderRunicArmorBar(float partialTicks, EntityPlayer player, long time) {
       Minecraft mc = Minecraft.getMinecraft();
       float total = (float)((Integer[])Thaumcraft.instance.runicEventHandler.runicInfo.get(player.getEntityId()))[0];
-      float current = (float)(Integer)Thaumcraft.instance.runicEventHandler.runicCharge.get(player.getEntityId());
+      float current = (float) Thaumcraft.instance.runicEventHandler.runicCharge.get(player.getEntityId());
       GL11.glPushMatrix();
       ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft(), mc.displayWidth, mc.displayHeight);
       GL11.glClear(256);
       GL11.glMatrixMode(5889);
       GL11.glLoadIdentity();
-      GL11.glOrtho((double)0.0F, sr.getScaledWidth_double(), sr.getScaledHeight_double(), (double)0.0F, (double)1000.0F, (double)3000.0F);
+      GL11.glOrtho(0.0F, sr.getScaledWidth_double(), sr.getScaledHeight_double(), 0.0F, 1000.0F, 3000.0F);
       GL11.glMatrixMode(5888);
       GL11.glLoadIdentity();
       GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
@@ -512,11 +512,11 @@ public class ClientTickEventsFML {
 
       for(int a = 0; (float)a < fill * 10.0F; ++a) {
          GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-         UtilsFX.drawTexturedQuad(a * 8, 0, 160, 16, 9, 9, (double)-90.0F);
+         UtilsFX.drawTexturedQuad(a * 8, 0, 160, 16, 9, 9, -90.0F);
          GL11.glPushMatrix();
-         GL11.glScaled((double)0.5F, (double)0.5F, (double)0.5F);
+         GL11.glScaled(0.5F, 0.5F, 0.5F);
          GL11.glColor4f(1.0F, 0.75F, 0.24F, MathHelper.sin((float)player.ticksExisted / 4.0F + (float)a) * 0.4F + 0.6F);
-         UtilsFX.drawTexturedQuad(a * 16, 0, a * 16, 96, 16, 16, (double)-90.0F);
+         UtilsFX.drawTexturedQuad(a * 16, 0, a * 16, 96, 16, 16, -90.0F);
          GL11.glPopMatrix();
       }
 
@@ -535,7 +535,7 @@ public class ClientTickEventsFML {
       GL11.glClear(256);
       GL11.glMatrixMode(5889);
       GL11.glLoadIdentity();
-      GL11.glOrtho((double)0.0F, sr.getScaledWidth_double(), sr.getScaledHeight_double(), (double)0.0F, (double)1000.0F, (double)3000.0F);
+      GL11.glOrtho(0.0F, sr.getScaledWidth_double(), sr.getScaledHeight_double(), 0.0F, 1000.0F, 3000.0F);
       GL11.glMatrixMode(5888);
       GL11.glLoadIdentity();
       GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
@@ -560,12 +560,12 @@ public class ClientTickEventsFML {
       int level = Math.round((float)fuel / 64.0F * 48.0F);
       mc.renderEngine.bindTexture(ParticleEngine.particleTexture);
       GL11.glColor4f(0.0F, 1.0F, 0.75F, 1.0F);
-      UtilsFX.drawTexturedQuad(6, l / 2 + 24 - level, 224, 48 - level, 8, level, (double)-91.0F);
+      UtilsFX.drawTexturedQuad(6, l / 2 + 24 - level, 224, 48 - level, 8, level, -91.0F);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-      UtilsFX.drawTexturedQuad(5, l / 2 - 28, 240, 0, 10, 56, (double)-90.0F);
+      UtilsFX.drawTexturedQuad(5, l / 2 - 28, 240, 0, 10, 56, -90.0F);
       if (armor.hasTagCompound() && armor.stackTagCompound.hasKey("hover") && armor.stackTagCompound.getByte("hover") == 1) {
          GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.66F);
-         UtilsFX.drawTexturedQuad(2, l / 2 - 43, 16 * ((int)(Minecraft.getSystemTime() % 700L) / 50), 32, 16, 16, (double)-90.0F);
+         UtilsFX.drawTexturedQuad(2, l / 2 - 43, 16 * ((int)(Minecraft.getSystemTime() % 700L) / 50), 32, 16, 16, -90.0F);
          GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       }
 
@@ -583,7 +583,7 @@ public class ClientTickEventsFML {
          float f1 = (float)(i1 & 255) / 255.0F;
          GL11.glColor4f(f2, f, f1, 1.0F);
          this.ri.renderIcon(2, l / 2 - 43, (IIcon)object, 16, 16);
-      } catch (Exception var18) {
+      } catch (Exception ignored) {
       }
 
       GL11.glDepthMask(true);
@@ -620,7 +620,7 @@ public class ClientTickEventsFML {
 
       try {
          this.ri.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, picked, -8, -8);
-      } catch (Exception var12) {
+      } catch (Exception ignored) {
       }
 
       GL11.glDisable(2896);
@@ -689,20 +689,20 @@ public class ClientTickEventsFML {
                            GL11.glPushMatrix();
                            GL11.glEnable(3042);
                            GL11.glBlendFunc(770, 771);
-                           GL11.glTranslated((double)(x + shiftx - 2), (double)(y + shifty - 2), (double)0.0F);
-                           GL11.glScaled((double)1.25F, (double)1.25F, (double)0.0F);
-                           UtilsFX.drawTexturedQuadFull(0, 0, (double)UtilsFX.getGuiZLevel(gui));
+                           GL11.glTranslated(x + shiftx - 2, y + shifty - 2, 0.0F);
+                           GL11.glScaled(1.25F, 1.25F, 0.0F);
+                           UtilsFX.drawTexturedQuadFull(0, 0, UtilsFX.getGuiZLevel(gui));
                            GL11.glDisable(3042);
                            GL11.glPopMatrix();
                            if (Thaumcraft.proxy.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), tag)) {
-                              UtilsFX.drawTag(x + shiftx, y + shifty, tag, (float)tags.getAmount(tag), 0, (double)UtilsFX.getGuiZLevel(gui));
+                              UtilsFX.drawTag(x + shiftx, y + shifty, tag, (float)tags.getAmount(tag), 0, UtilsFX.getGuiZLevel(gui));
                            } else {
                               UtilsFX.bindTexture("textures/aspects/_unknown.png");
                               GL11.glPushMatrix();
                               GL11.glEnable(3042);
                               GL11.glBlendFunc(770, 771);
-                              GL11.glTranslated((double)(x + shiftx), (double)(y + shifty), (double)0.0F);
-                              UtilsFX.drawTexturedQuadFull(0, 0, (double)UtilsFX.getGuiZLevel(gui));
+                              GL11.glTranslated(x + shiftx, y + shifty, 0.0F);
+                              UtilsFX.drawTexturedQuadFull(0, 0, UtilsFX.getGuiZLevel(gui));
                               GL11.glDisable(3042);
                               GL11.glPopMatrix();
                            }

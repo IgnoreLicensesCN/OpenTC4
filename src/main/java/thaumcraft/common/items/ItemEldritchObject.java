@@ -132,7 +132,7 @@ public class ItemEldritchObject extends Item {
          }
       } else {
          TileEntity te = world.getTileEntity(x, y, z);
-         if (te != null && te instanceof TileNode) {
+         if (te instanceof TileNode) {
             player.swingItem();
             if (!world.isRemote) {
                --itemstack.stackSize;
@@ -163,14 +163,14 @@ public class ItemEldritchObject extends Item {
                if (node.getNodeModifier() == NodeModifier.FADING && world.rand.nextBoolean()) {
                   node.setNodeModifier(NodeModifier.PALE);
                } else if (node.getNodeModifier() == NodeModifier.PALE && world.rand.nextBoolean()) {
-                  node.setNodeModifier((NodeModifier)null);
+                  node.setNodeModifier(null);
                } else if (node.getNodeModifier() == null && world.rand.nextInt(5) == 0) {
                   node.setNodeModifier(NodeModifier.BRIGHT);
                }
 
                world.markBlockForUpdate(x, y, z);
                node.markDirty();
-               world.createExplosion((Entity)null, (double)x + (double)0.5F, (double)y + (double)1.5F, (double)z + (double)0.5F, 3.0F + world.rand.nextFloat() * (float)(research ? 3 : 5), true);
+               world.createExplosion(null, (double)x + (double)0.5F, (double)y + (double)1.5F, (double)z + (double)0.5F, 3.0F + world.rand.nextFloat() * (float)(research ? 3 : 5), true);
 
                for(int a = 0; a < 33; ++a) {
                   int xx = x + world.rand.nextInt(6) - world.rand.nextInt(6);

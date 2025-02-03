@@ -35,8 +35,8 @@ public class TeleporterThaumcraft extends Teleporter {
          int j = this.worldServerInstance.getHeightValue(i, k);
          byte b0 = 1;
          byte b1 = 0;
-         par1Entity.setLocationAndAngles((double)i, (double)j + (double)4.0F, (double)k, par1Entity.rotationYaw, 0.0F);
-         par1Entity.motionX = par1Entity.motionY = par1Entity.motionZ = (double)0.0F;
+         par1Entity.setLocationAndAngles(i, (double)j + (double)4.0F, k, par1Entity.rotationYaw, 0.0F);
+         par1Entity.motionX = par1Entity.motionY = par1Entity.motionZ = 0.0F;
       }
 
    }
@@ -52,11 +52,11 @@ public class TeleporterThaumcraft extends Teleporter {
       int chunkX = l >> 4;
       int chunkZ = i1 >> 4;
       String hs = chunkX + ":" + chunkZ + ":" + this.worldServerInstance.provider.dimensionId;
-      long j1 = (long)hs.hashCode();
+      long j1 = hs.hashCode();
       boolean flag = true;
       if (destinationCoordinateCache.containsItem(j1)) {
          Teleporter.PortalPosition portalposition = (Teleporter.PortalPosition)destinationCoordinateCache.getValueByKey(j1);
-         d3 = (double)0.0F;
+         d3 = 0.0F;
          i = portalposition.posX;
          j = portalposition.posY;
          k = portalposition.posZ;
@@ -96,7 +96,7 @@ public class TeleporterThaumcraft extends Teleporter {
          double d8 = (double)i + (double)0.5F + (double)(this.worldServerInstance.rand.nextBoolean() ? 1 : -1);
          double d9 = j;
          double d4 = (double)k + (double)0.5F + (double)(this.worldServerInstance.rand.nextBoolean() ? 1 : -1);
-         par1Entity.motionX = par1Entity.motionY = par1Entity.motionZ = (double)0.0F;
+         par1Entity.motionX = par1Entity.motionY = par1Entity.motionZ = 0.0F;
          par1Entity.setLocationAndAngles(d8, d9, d4, par1Entity.rotationYaw, par1Entity.rotationPitch);
          return true;
       } else {

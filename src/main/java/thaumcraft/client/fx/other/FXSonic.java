@@ -20,12 +20,12 @@ public class FXSonic extends EntityFX {
    private static final ResourceLocation MODEL = new ResourceLocation("thaumcraft", "textures/models/hemis.obj");
 
    public FXSonic(World world, double d, double d1, double d2, Entity target, int age) {
-      super(world, d, d1, d2, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, d, d1, d2, 0.0F, 0.0F, 0.0F);
       this.particleRed = 1.0F;
       this.particleGreen = 1.0F;
       this.particleBlue = 1.0F;
       this.particleGravity = 0.0F;
-      this.motionX = this.motionY = this.motionZ = (double)0.0F;
+      this.motionX = this.motionY = this.motionZ = 0.0F;
       this.particleMaxAge = age + this.rand.nextInt(age / 2);
       this.noClip = false;
       this.setSize(0.01F, 0.01F);
@@ -53,7 +53,7 @@ public class FXSonic extends EntityFX {
       float xx = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)f - interpPosX);
       float yy = (float)(this.prevPosY + (this.posY - this.prevPosY) * (double)f - interpPosY);
       float zz = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * (double)f - interpPosZ);
-      GL11.glTranslated((double)xx, (double)yy, (double)zz);
+      GL11.glTranslated(xx, yy, zz);
       float b = 1.0F;
       int frame = Math.min(15, (int)(14.0F * fade) + 1);
       UtilsFX.bindTexture("textures/models/ripple" + frame + ".png");
@@ -64,8 +64,8 @@ public class FXSonic extends EntityFX {
       OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) j, (float) k);
       GL11.glRotatef(-this.yaw, 0.0F, 1.0F, 0.0F);
       GL11.glRotatef(this.pitch, 1.0F, 0.0F, 0.0F);
-      GL11.glTranslated((double)0.0F, (double)0.0F, (double)(2.0F * this.target.height + this.target.width / 2.0F));
-      GL11.glScaled((double)0.25F * (double)this.target.height, (double)0.25F * (double)this.target.height, (double)(-1.0F * this.target.height));
+      GL11.glTranslated(0.0F, 0.0F, 2.0F * this.target.height + this.target.width / 2.0F);
+      GL11.glScaled((double)0.25F * (double)this.target.height, (double)0.25F * (double)this.target.height, -1.0F * this.target.height);
       GL11.glColor4f(b, b, b, 1.0F);
       this.model.renderAll();
       GL11.glDisable(3042);

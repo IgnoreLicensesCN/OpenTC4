@@ -89,7 +89,7 @@ public class EventHandlerRunic {
             if (max > 0) {
                this.runicInfo.put(player.getEntityId(), new Integer[]{max, charged, kinetic, healing, emergency});
                if (this.runicCharge.containsKey(player.getEntityId())) {
-                  int charge = (Integer)this.runicCharge.get(player.getEntityId());
+                  int charge = this.runicCharge.get(player.getEntityId());
                   if (charge > max) {
                      this.runicCharge.put(player.getEntityId(), max);
                      PacketHandler.INSTANCE.sendTo(new PacketRunicCharge(player, (short)max, max), (EntityPlayerMP)player);
@@ -98,7 +98,7 @@ public class EventHandlerRunic {
             } else {
                this.runicInfo.remove(player.getEntityId());
                this.runicCharge.put(player.getEntityId(), 0);
-               PacketHandler.INSTANCE.sendTo(new PacketRunicCharge(player, Short.valueOf((short)0), 0), (EntityPlayerMP)player);
+               PacketHandler.INSTANCE.sendTo(new PacketRunicCharge(player, (short) 0, 0), (EntityPlayerMP)player);
             }
          }
 
@@ -118,17 +118,17 @@ public class EventHandlerRunic {
             }
 
             long time = System.currentTimeMillis();
-            int charge = (Integer)this.runicCharge.get(player.getEntityId());
+            int charge = this.runicCharge.get(player.getEntityId());
             if (charge > ((Integer[])this.runicInfo.get(player.getEntityId()))[0]) {
                charge = ((Integer[])this.runicInfo.get(player.getEntityId()))[0];
-            } else if (charge < ((Integer[])this.runicInfo.get(player.getEntityId()))[0] && (Long)this.nextCycle.get(player.getEntityId()) < time && WandManager.consumeVisFromInventory(player, (new AspectList()).add(Aspect.AIR, Config.shieldCost).add(Aspect.EARTH, Config.shieldCost))) {
-               long interval = (long)(Config.shieldRecharge - ((Integer[])this.runicInfo.get(player.getEntityId()))[1] * 500);
+            } else if (charge < ((Integer[])this.runicInfo.get(player.getEntityId()))[0] && this.nextCycle.get(player.getEntityId()) < time && WandManager.consumeVisFromInventory(player, (new AspectList()).add(Aspect.AIR, Config.shieldCost).add(Aspect.EARTH, Config.shieldCost))) {
+               long interval = Config.shieldRecharge - ((Integer[])this.runicInfo.get(player.getEntityId()))[1] * 500;
                this.nextCycle.put(player.getEntityId(), time + interval);
                ++charge;
                this.runicCharge.put(player.getEntityId(), charge);
             }
 
-            if ((Integer)this.lastCharge.get(player.getEntityId()) != charge) {
+            if (this.lastCharge.get(player.getEntityId()) != charge) {
                PacketHandler.INSTANCE.sendTo(new PacketRunicCharge(player, (short)charge, ((Integer[])this.runicInfo.get(player.getEntityId()))[0]), (EntityPlayerMP)player);
                this.lastCharge.put(player.getEntityId(), charge);
             }
@@ -156,7 +156,7 @@ public class EventHandlerRunic {
             if (helm != null && helm.getItem() instanceof ItemFortressArmor && helm.hasTagCompound() && helm.stackTagCompound.hasKey("mask") && helm.stackTagCompound.getInteger("mask") == 1 && player.worldObj.rand.nextFloat() < event.ammount / 10.0F) {
                try {
                   attacker.addPotionEffect(new PotionEffect(Potion.wither.getId(), 80));
-               } catch (Exception var13) {
+               } catch (Exception ignored) {
                }
             }
          }
@@ -165,7 +165,7 @@ public class EventHandlerRunic {
             return;
          }
 
-         if (this.runicInfo.containsKey(player.getEntityId()) && this.runicCharge.containsKey(player.getEntityId()) && (Integer)this.runicCharge.get(player.getEntityId()) > 0) {
+         if (this.runicInfo.containsKey(player.getEntityId()) && this.runicCharge.containsKey(player.getEntityId()) && this.runicCharge.get(player.getEntityId()) > 0) {
             int target = -1;
             if (event.source.getEntity() != null) {
                target = event.source.getEntity().getEntityId();
@@ -179,8 +179,8 @@ public class EventHandlerRunic {
                target = -3;
             }
 
-            PacketHandler.INSTANCE.sendToAllAround(new PacketFXShield(event.entity.getEntityId(), target), new NetworkRegistry.TargetPoint(event.entity.worldObj.provider.dimensionId, event.entity.posX, event.entity.posY, event.entity.posZ, (double)64.0F));
-            int charge = (Integer)this.runicCharge.get(player.getEntityId());
+            PacketHandler.INSTANCE.sendToAllAround(new PacketFXShield(event.entity.getEntityId(), target), new NetworkRegistry.TargetPoint(event.entity.worldObj.provider.dimensionId, event.entity.posX, event.entity.posY, event.entity.posZ, 64.0F));
+            int charge = this.runicCharge.get(player.getEntityId());
             if ((float)charge > event.ammount) {
                charge = (int)((float)charge - event.ammount);
                event.ammount = 0.0F;
@@ -190,18 +190,18 @@ public class EventHandlerRunic {
             }
 
             String key = player.getEntityId() + ":" + 2;
-            if (charge <= 0 && ((Integer[])this.runicInfo.get(player.getEntityId()))[2] > 0 && (!this.upgradeCooldown.containsKey(key) || (Long)this.upgradeCooldown.get(key) < time)) {
+            if (charge <= 0 && ((Integer[])this.runicInfo.get(player.getEntityId()))[2] > 0 && (!this.upgradeCooldown.containsKey(key) || this.upgradeCooldown.get(key) < time)) {
                this.upgradeCooldown.put(key, time + 20000L);
                player.worldObj.newExplosion(player, player.posX, player.posY + (double)(player.height / 2.0F), player.posZ, 1.5F + (float)((Integer[])this.runicInfo.get(player.getEntityId()))[2] * 0.5F, false, false);
             }
 
             key = player.getEntityId() + ":" + 3;
-            if (charge <= 0 && ((Integer[])this.runicInfo.get(player.getEntityId()))[3] > 0 && (!this.upgradeCooldown.containsKey(key) || (Long)this.upgradeCooldown.get(key) < time)) {
+            if (charge <= 0 && ((Integer[])this.runicInfo.get(player.getEntityId()))[3] > 0 && (!this.upgradeCooldown.containsKey(key) || this.upgradeCooldown.get(key) < time)) {
                this.upgradeCooldown.put(key, time + 20000L);
                synchronized(player) {
                   try {
                      player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 240, ((Integer[])this.runicInfo.get(player.getEntityId()))[3]));
-                  } catch (Exception var11) {
+                  } catch (Exception ignored) {
                   }
                }
 
@@ -209,7 +209,7 @@ public class EventHandlerRunic {
             }
 
             key = player.getEntityId() + ":" + 4;
-            if (charge <= 0 && ((Integer[])this.runicInfo.get(player.getEntityId()))[4] > 0 && (!this.upgradeCooldown.containsKey(key) || (Long)this.upgradeCooldown.get(key) < time)) {
+            if (charge <= 0 && ((Integer[])this.runicInfo.get(player.getEntityId()))[4] > 0 && (!this.upgradeCooldown.containsKey(key) || this.upgradeCooldown.get(key) < time)) {
                this.upgradeCooldown.put(key, time + 60000L);
                int t = 8 * ((Integer[])this.runicInfo.get(player.getEntityId()))[4];
                charge = Math.min(((Integer[])this.runicInfo.get(player.getEntityId()))[0], t);
@@ -241,7 +241,7 @@ public class EventHandlerRunic {
                target = -3;
             }
 
-            PacketHandler.INSTANCE.sendToAllAround(new PacketFXShield(mob.getEntityId(), target), new NetworkRegistry.TargetPoint(event.entity.worldObj.provider.dimensionId, event.entity.posX, event.entity.posY, event.entity.posZ, (double)32.0F));
+            PacketHandler.INSTANCE.sendToAllAround(new PacketFXShield(mob.getEntityId(), target), new NetworkRegistry.TargetPoint(event.entity.worldObj.provider.dimensionId, event.entity.posX, event.entity.posY, event.entity.posZ, 32.0F));
             event.entity.worldObj.playSoundEffect(event.entity.posX, event.entity.posY, event.entity.posZ, "thaumcraft:runicShieldEffect", 0.66F, 1.1F + event.entity.worldObj.rand.nextFloat() * 0.1F);
          } else if (t >= 0 && ChampionModifier.mods[t].type == 2 && event.source.getSourceOfDamage() != null && event.source.getSourceOfDamage() instanceof EntityLivingBase) {
             EntityLivingBase attacker = (EntityLivingBase)event.source.getSourceOfDamage();

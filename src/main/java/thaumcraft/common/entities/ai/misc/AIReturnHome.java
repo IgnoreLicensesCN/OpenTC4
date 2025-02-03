@@ -30,7 +30,7 @@ public class AIReturnHome extends EntityAIBase {
          --this.pathingDelay;
       }
 
-      if (this.pathingDelay <= 0 && !(this.theGolem.getDistanceSq((double)((float)home.posX + 0.5F), (double)((float)home.posY + 0.5F), (double)((float)home.posZ + 0.5F)) < (double)3.0F)) {
+      if (this.pathingDelay <= 0 && !(this.theGolem.getDistanceSq((float)home.posX + 0.5F, (float)home.posY + 0.5F, (float)home.posZ + 0.5F) < (double)3.0F)) {
          this.movePosX = (double)home.posX + (double)0.5F;
          this.movePosY = (double)home.posY + (double)0.5F;
          this.movePosZ = (double)home.posZ + (double)0.5F;
@@ -42,7 +42,7 @@ public class AIReturnHome extends EntityAIBase {
 
    public boolean continueExecuting() {
       ChunkCoordinates home = this.theGolem.getHomePosition();
-      return this.pathingDelay <= 0 && this.count > 0 && !this.theGolem.getNavigator().noPath() && this.theGolem.getDistanceSq((double)((float)home.posX + 0.5F), (double)((float)home.posY + 0.5F), (double)((float)home.posZ + 0.5F)) >= (double)3.0F;
+      return this.pathingDelay <= 0 && this.count > 0 && !this.theGolem.getNavigator().noPath() && this.theGolem.getDistanceSq((float)home.posX + 0.5F, (float)home.posY + 0.5F, (float)home.posZ + 0.5F) >= (double)3.0F;
    }
 
    public void resetTask() {
@@ -54,7 +54,7 @@ public class AIReturnHome extends EntityAIBase {
          Vec3 var2 = RandomPositionGenerator.findRandomTarget(this.theGolem, 2, 1);
          if (var2 != null) {
             this.count = 20;
-            boolean path = this.theGolem.getNavigator().tryMoveToXYZ(var2.xCoord + (double)0.5F, var2.yCoord + (double)0.5F, var2.zCoord + (double)0.5F, (double)this.theGolem.getAIMoveSpeed());
+            boolean path = this.theGolem.getNavigator().tryMoveToXYZ(var2.xCoord + (double)0.5F, var2.yCoord + (double)0.5F, var2.zCoord + (double)0.5F, this.theGolem.getAIMoveSpeed());
             if (!path) {
                this.pathingDelay = this.pathingDelayInc;
                if (this.pathingDelayInc < 50) {
@@ -74,7 +74,7 @@ public class AIReturnHome extends EntityAIBase {
       this.prevX = MathHelper.floor_double(this.theGolem.posX);
       this.prevY = MathHelper.floor_double(this.theGolem.posY);
       this.prevZ = MathHelper.floor_double(this.theGolem.posZ);
-      boolean path = this.theGolem.getNavigator().tryMoveToXYZ(this.movePosX, this.movePosY, this.movePosZ, (double)this.theGolem.getAIMoveSpeed());
+      boolean path = this.theGolem.getNavigator().tryMoveToXYZ(this.movePosX, this.movePosY, this.movePosZ, this.theGolem.getAIMoveSpeed());
       if (!path) {
          this.pathingDelay = this.pathingDelayInc;
          if (this.pathingDelayInc < 50) {

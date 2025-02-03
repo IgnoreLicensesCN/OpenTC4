@@ -37,9 +37,9 @@ public class EntityTaintacle extends EntityMob implements ITaintedMob {
       int var3 = MathHelper.floor_double(this.posZ);
       this.worldObj.getBlockLightValue(var2, var1, var3);
       byte var5 = 7;
-      List ents = this.worldObj.getEntitiesWithinAABB(EntityTaintacle.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ).expand((double)24.0F, (double)8.0F, (double)24.0F));
+      List ents = this.worldObj.getEntitiesWithinAABB(EntityTaintacle.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ).expand(24.0F, 8.0F, 24.0F));
       boolean onTaint = (this.worldObj.getBlock(var2, var1, var3) == ConfigBlocks.blockTaintFibres && this.worldObj.getBlockMetadata(var2, var1, var3) == 0 || this.worldObj.getBlock(var2, var1, var3) == ConfigBlocks.blockTaint && this.worldObj.getBlockMetadata(var2, var1, var3) == 1) && this.worldObj.getBiomeGenForCoords(var2, var3).biomeID == Config.biomeTaintID;
-      return ents.size() <= 0 && onTaint ? super.getCanSpawnHere() : false;
+      return ents.size() == 0 && onTaint && super.getCanSpawnHere();
    }
 
    public float getShadowSize() {
@@ -48,8 +48,8 @@ public class EntityTaintacle extends EntityMob implements ITaintedMob {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)50.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)7.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(7.0F);
    }
 
    public boolean canBeCollidedWith() {
@@ -62,7 +62,7 @@ public class EntityTaintacle extends EntityMob implements ITaintedMob {
 
    protected Entity findPlayerToAttack() {
       Entity entity = null;
-      List ents = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ).expand((double)(this.height * 6.0F), (double)(this.height * 3.0F), (double)(this.height * 6.0F)));
+      List ents = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ).expand(this.height * 6.0F, this.height * 3.0F, this.height * 6.0F));
       if (ents.size() > 0) {
          double distance = Double.MAX_VALUE;
 
@@ -82,10 +82,10 @@ public class EntityTaintacle extends EntityMob implements ITaintedMob {
    }
 
    public void moveEntity(double par1, double par3, double par5) {
-      par1 = (double)0.0F;
-      par5 = (double)0.0F;
+      par1 = 0.0F;
+      par5 = 0.0F;
       if (par3 > (double)0.0F) {
-         par3 = (double)0.0F;
+         par3 = 0.0F;
       }
 
       super.moveEntity(par1, par3, par5);
@@ -163,7 +163,7 @@ public class EntityTaintacle extends EntityMob implements ITaintedMob {
       boolean flag = par1Entity.attackEntityFrom(DamageSourceThaumcraft.causeTentacleDamage(this), i);
       if (flag) {
          if (j > 0) {
-            par1Entity.addVelocity((double)(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * (float)j * 0.5F), 0.1, (double)(MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * (float)j * 0.5F));
+            par1Entity.addVelocity(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * (float)j * 0.5F, 0.1, MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * (float)j * 0.5F);
             this.motionX *= 0.6;
             this.motionZ *= 0.6;
          }

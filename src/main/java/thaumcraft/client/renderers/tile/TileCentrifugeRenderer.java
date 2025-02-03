@@ -18,7 +18,7 @@ public class TileCentrifugeRenderer extends TileEntitySpecialRenderer {
       GL11.glPushMatrix();
       GL11.glTranslated(x + (double)0.5F, y + (double)0.5F, z + (double)0.5F);
       this.model.renderBoxes();
-      GL11.glRotated((double)cf.rotation, (double)0.0F, (double)1.0F, (double)0.0F);
+      GL11.glRotated(cf.rotation, 0.0F, 1.0F, 0.0F);
       this.model.renderSpinnyBit();
       GL11.glPopMatrix();
    }

@@ -53,12 +53,12 @@ public class EntityThaumcraftBoss extends EntityMob implements IBossDisplayData 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
       this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(0.95);
-      this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue((double)40.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(40.0F);
    }
 
    protected void entityInit() {
       super.entityInit();
-      this.getDataWatcher().addObject(14, new Short((short)0));
+      this.getDataWatcher().addObject(14, (short) 0);
    }
 
    protected void updateAITasks() {
@@ -67,7 +67,7 @@ public class EntityThaumcraftBoss extends EntityMob implements IBossDisplayData 
       }
 
       if (this.getAttackTarget() != null && this.getAttackTarget().isDead) {
-         this.setAttackTarget((EntityLivingBase)null);
+         this.setAttackTarget(null);
       }
 
    }
@@ -115,12 +115,12 @@ public class EntityThaumcraftBoss extends EntityMob implements IBossDisplayData 
             ArrayList<Integer> dl = new ArrayList<>();
             int players = 0;
             int hei = this.getAttackTarget().getEntityId();
-            int ad = this.aggro.containsKey(hei) ? (Integer)this.aggro.get(hei) : 0;
+            int ad = this.aggro.containsKey(hei) ? this.aggro.get(hei) : 0;
             int ld = ad;
             Entity newTarget = null;
 
             for(Integer ei : this.aggro.keySet()) {
-               int ca = (Integer)this.aggro.get(ei);
+               int ca = this.aggro.get(ei);
                if (ca > ad + 25 && (double)ca > (double)ad * 1.1 && ca > ld) {
                   newTarget = this.worldObj.getEntityByID(hei);
                   if (newTarget != null && !newTarget.isDead && !(this.getDistanceSqToEntity(newTarget) > (double)16384.0F)) {
@@ -157,7 +157,7 @@ public class EntityThaumcraftBoss extends EntityMob implements IBossDisplayData 
                iattributeinstance2.applyModifier(EntityUtils.DMGBUFF[a]);
             }
 
-            double mm = (double)(this.getMaxHealth() / om);
+            double mm = this.getMaxHealth() / om;
             this.setHealth((float)((double)this.getHealth() * mm));
          }
       }
@@ -220,7 +220,7 @@ public class EntityThaumcraftBoss extends EntityMob implements IBossDisplayData 
             int target = source.getEntity().getEntityId();
             int ad = (int)damage;
             if (this.aggro.containsKey(target)) {
-               ad += (Integer)this.aggro.get(target);
+               ad += this.aggro.get(target);
             }
 
             this.aggro.put(target, ad);
@@ -233,7 +233,7 @@ public class EntityThaumcraftBoss extends EntityMob implements IBossDisplayData 
                   this.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 200, (int)(damage / 40.0F)));
                   this.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 200, (int)(damage / 40.0F)));
                   this.setAnger(200);
-               } catch (Exception var5) {
+               } catch (Exception ignored) {
                }
 
                if (source.getEntity() != null && source.getEntity() instanceof EntityPlayer) {

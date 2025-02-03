@@ -101,7 +101,7 @@ public class HexUtils {
       }
 
       public Pixel toPixel(int size) {
-         return new Pixel((double)size * (double)1.5F * (double)this.q, (double)size * Math.sqrt((double)3.0F) * ((double)this.r + (double)this.q / (double)2.0F));
+         return new Pixel((double)size * (double)1.5F * (double)this.q, (double)size * Math.sqrt(3.0F) * ((double)this.r + (double)this.q / (double)2.0F));
       }
 
       public Hex getNeighbour(int direction) {
@@ -135,8 +135,8 @@ public class HexUtils {
    }
 
    public static class Pixel {
-      public double x = (double)0.0F;
-      public double y = (double)0.0F;
+      public double x = 0.0F;
+      public double y = 0.0F;
 
       public Pixel(double x, double y) {
          this.x = x;
@@ -145,7 +145,7 @@ public class HexUtils {
 
       public Hex toHex(int size) {
          double qq = 0.6666666666666666 * this.x / (double)size;
-         double rr = (0.3333333333333333 * Math.sqrt((double)3.0F) * -this.y - 0.3333333333333333 * this.x) / (double)size;
+         double rr = (0.3333333333333333 * Math.sqrt(3.0F) * -this.y - 0.3333333333333333 * this.x) / (double)size;
          return HexUtils.getRoundedHex(qq, rr);
       }
    }

@@ -17,10 +17,10 @@ public class WorldGenBigMagicTree extends WorldGenAbstractTree {
    int heightLimit;
    int height;
    double heightAttenuation = 0.6618;
-   double branchDensity = (double)1.0F;
+   double branchDensity = 1.0F;
    double branchSlope = 0.381;
-   double scaleWidth = (double)1.0F;
-   double leafDensity = (double)1.0F;
+   double scaleWidth = 1.0F;
+   double leafDensity = 1.0F;
    int trunkSize = 1;
    int heightLimitLimit = 12;
    int leafDistanceLimit = 3;
@@ -36,7 +36,7 @@ public class WorldGenBigMagicTree extends WorldGenAbstractTree {
          this.height = this.heightLimit - 1;
       }
 
-      int i = (int)(1.382 + Math.pow(this.leafDensity * (double)this.heightLimit / (double)13.0F, (double)2.0F));
+      int i = (int)(1.382 + Math.pow(this.leafDensity * (double)this.heightLimit / (double)13.0F, 2.0F));
       if (i < 1) {
          i = 1;
       }
@@ -56,7 +56,7 @@ public class WorldGenBigMagicTree extends WorldGenAbstractTree {
          int j1 = 0;
          float f = this.layerSize(i1);
           if (!(f < 0.0F)) {
-              for (double d0 = (double) 0.5F; j1 < i; ++j1) {
+              for (double d0 = 0.5F; j1 < i; ++j1) {
                   double d1 = this.scaleWidth * (double) f * ((double) this.rand.nextFloat() + 0.328);
                   double d2 = (double) this.rand.nextFloat() * (double) 2.0F * Math.PI;
                   int k1 = MathHelper.floor_double(d1 * Math.sin(d2) + (double) this.basePos[0] + d0);
@@ -65,7 +65,7 @@ public class WorldGenBigMagicTree extends WorldGenAbstractTree {
                   int[] aint2 = new int[]{k1, j + this.leafDistanceLimit, l1};
                   if (this.checkBlockLine(aint1, aint2) == -1) {
                       int[] aint3 = new int[]{this.basePos[0], this.basePos[1], this.basePos[2]};
-                      double d3 = Math.sqrt(Math.pow((double) Math.abs(this.basePos[0] - aint1[0]), (double) 2.0F) + Math.pow((double) Math.abs(this.basePos[2] - aint1[2]), (double) 2.0F));
+                      double d3 = Math.sqrt(Math.pow(Math.abs(this.basePos[0] - aint1[0]), 2.0F) + Math.pow(Math.abs(this.basePos[2] - aint1[2]), 2.0F));
                       double d4 = d3 * this.branchSlope;
                       if ((double) aint1[1] - d4 > (double) l) {
                           aint3[1] = l;
@@ -106,7 +106,7 @@ public class WorldGenBigMagicTree extends WorldGenAbstractTree {
          k1 = -i1;
 
          while(k1 <= i1) {
-            double d0 = Math.pow((double)Math.abs(j1) + (double)0.5F, (double)2.0F) + Math.pow((double)Math.abs(k1) + (double)0.5F, (double)2.0F);
+            double d0 = Math.pow((double)Math.abs(j1) + (double)0.5F, 2.0F) + Math.pow((double)Math.abs(k1) + (double)0.5F, 2.0F);
             if (d0 > (double)(par4 * par4)) {
                ++k1;
             } else {
@@ -118,7 +118,7 @@ public class WorldGenBigMagicTree extends WorldGenAbstractTree {
                        this.setBlockAndNotifyAdequately(this.worldObj, aint1[0], aint1[1], aint1[2], par6, 0);
                    }
                    ++k1;
-               } catch (Exception var17) {
+               } catch (Exception ignored) {
                }
             }
          }
@@ -138,7 +138,7 @@ public class WorldGenBigMagicTree extends WorldGenAbstractTree {
          } else if (Math.abs(f1) >= f) {
             f2 = 0.0F;
          } else {
-            f2 = (float)Math.sqrt(Math.pow((double)Math.abs(f), (double)2.0F) - Math.pow((double)Math.abs(f1), (double)2.0F));
+            f2 = (float)Math.sqrt(Math.pow(Math.abs(f), 2.0F) - Math.pow(Math.abs(f1), 2.0F));
          }
 
          f2 *= 0.5F;
@@ -219,7 +219,7 @@ public class WorldGenBigMagicTree extends WorldGenAbstractTree {
             int i1 = this.leafNodes[i][2];
             this.generateLeafNode(k, l, i1);
          }
-      } catch (Exception var6) {
+      } catch (Exception ignored) {
       }
 
    }
@@ -306,7 +306,7 @@ public class WorldGenBigMagicTree extends WorldGenAbstractTree {
                   break;
                }
             }
-         } catch (Exception var17) {
+         } catch (Exception ignored) {
          }
 
          return i == j ? -1 : Math.abs(i);

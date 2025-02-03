@@ -14,7 +14,7 @@ public class TileMagicWorkbenchCharger extends TileVisRelay {
 
    @SideOnly(Side.CLIENT)
    public AxisAlignedBB getRenderBoundingBox() {
-      return AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)(this.yCoord - 1), (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1));
+      return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord - 1, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1);
    }
 
    public boolean isSource() {
@@ -25,7 +25,7 @@ public class TileMagicWorkbenchCharger extends TileVisRelay {
       super.updateEntity();
       if (!this.worldObj.isRemote) {
          TileEntity te = this.worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord);
-         if (te != null && te instanceof TileMagicWorkbench) {
+         if (te instanceof TileMagicWorkbench) {
             TileMagicWorkbench tm = (TileMagicWorkbench)te;
             ItemStack wand = tm.getStackInSlot(10);
             if (wand != null && wand.getItem() instanceof ItemWandCasting) {

@@ -16,7 +16,7 @@ public class AINearestAttackableTargetSorter implements Comparator {
    public int compareDistanceSq(Entity par1Entity, Entity par2Entity) {
       double var3 = this.theEntity.getDistanceSqToEntity(par1Entity);
       double var5 = this.theEntity.getDistanceSqToEntity(par2Entity);
-      return var3 < var5 ? -1 : (var3 > var5 ? 1 : 0);
+      return Double.compare(var3, var5);
    }
 
    public int compare(Object par1Obj, Object par2Obj) {

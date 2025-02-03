@@ -29,13 +29,13 @@ import thaumcraft.common.entities.monster.boss.EntityThaumcraftBoss;
 import thaumcraft.common.entities.monster.mods.ChampionModifier;
 
 public class EntityUtils {
-   public static final IAttribute CHAMPION_MOD = (new RangedAttribute("tc.mobmod", (double)-2.0F, (double)-2.0F, (double)100.0F)).setDescription("Champion modifier").setShouldWatch(true);
-   public static final AttributeModifier CHAMPION_HEALTH = new AttributeModifier(UUID.fromString("a62bef38-48cc-42a6-ac5e-ef913841c4fd"), "Champion health buff", (double)30.0F, 0);
-   public static final AttributeModifier CHAMPION_DAMAGE = new AttributeModifier(UUID.fromString("a340d2db-d881-4c25-ac62-f0ad14cd63b0"), "Champion damage buff", (double)2.0F, 2);
+   public static final IAttribute CHAMPION_MOD = (new RangedAttribute("tc.mobmod", -2.0F, -2.0F, 100.0F)).setDescription("Champion modifier").setShouldWatch(true);
+   public static final AttributeModifier CHAMPION_HEALTH = new AttributeModifier(UUID.fromString("a62bef38-48cc-42a6-ac5e-ef913841c4fd"), "Champion health buff", 30.0F, 0);
+   public static final AttributeModifier CHAMPION_DAMAGE = new AttributeModifier(UUID.fromString("a340d2db-d881-4c25-ac62-f0ad14cd63b0"), "Champion damage buff", 2.0F, 2);
    public static final AttributeModifier BOLDBUFF = new AttributeModifier(UUID.fromString("4b1edd33-caa9-47ae-a702-d86c05701037"), "Bold speed boost", 0.3, 1);
-   public static final AttributeModifier MIGHTYBUFF = new AttributeModifier(UUID.fromString("7163897f-07f5-49b3-9ce4-b74beb83d2d3"), "Mighty damage boost", (double)3.0F, 2);
-   public static final AttributeModifier[] HPBUFF = new AttributeModifier[]{new AttributeModifier(UUID.fromString("54d621c1-dd4d-4b43-8bd2-5531c8875797"), "HEALTH BUFF 1", (double)50.0F, 0), new AttributeModifier(UUID.fromString("f51257dc-b7fa-4f7a-92d7-75d68e8592c4"), "HEALTH BUFF 2", (double)50.0F, 0), new AttributeModifier(UUID.fromString("3d6b2e42-4141-4364-b76d-0e8664bbd0bb"), "HEALTH BUFF 3", (double)50.0F, 0), new AttributeModifier(UUID.fromString("02c97a08-801c-4131-afa2-1427a6151934"), "HEALTH BUFF 4", (double)50.0F, 0), new AttributeModifier(UUID.fromString("0f354f6a-33c5-40be-93be-81b1338567f1"), "HEALTH BUFF 5", (double)50.0F, 0)};
-   public static final AttributeModifier[] DMGBUFF = new AttributeModifier[]{new AttributeModifier(UUID.fromString("534f8c57-929a-48cf-bbd6-0fd851030748"), "DAMAGE BUFF 1", (double)0.5F, 0), new AttributeModifier(UUID.fromString("d317a76e-0e7c-4c61-acfd-9fa286053b32"), "DAMAGE BUFF 2", (double)0.5F, 0), new AttributeModifier(UUID.fromString("ff462d63-26a2-4363-830e-143ed97e2a4f"), "DAMAGE BUFF 3", (double)0.5F, 0), new AttributeModifier(UUID.fromString("cf1eb39e-0c67-495f-887c-0d3080828d2f"), "DAMAGE BUFF 4", (double)0.5F, 0), new AttributeModifier(UUID.fromString("3cfab9da-2701-43d8-ac07-885f16fa4117"), "DAMAGE BUFF 5", (double)0.5F, 0)};
+   public static final AttributeModifier MIGHTYBUFF = new AttributeModifier(UUID.fromString("7163897f-07f5-49b3-9ce4-b74beb83d2d3"), "Mighty damage boost", 3.0F, 2);
+   public static final AttributeModifier[] HPBUFF = new AttributeModifier[]{new AttributeModifier(UUID.fromString("54d621c1-dd4d-4b43-8bd2-5531c8875797"), "HEALTH BUFF 1", 50.0F, 0), new AttributeModifier(UUID.fromString("f51257dc-b7fa-4f7a-92d7-75d68e8592c4"), "HEALTH BUFF 2", 50.0F, 0), new AttributeModifier(UUID.fromString("3d6b2e42-4141-4364-b76d-0e8664bbd0bb"), "HEALTH BUFF 3", 50.0F, 0), new AttributeModifier(UUID.fromString("02c97a08-801c-4131-afa2-1427a6151934"), "HEALTH BUFF 4", 50.0F, 0), new AttributeModifier(UUID.fromString("0f354f6a-33c5-40be-93be-81b1338567f1"), "HEALTH BUFF 5", 50.0F, 0)};
+   public static final AttributeModifier[] DMGBUFF = new AttributeModifier[]{new AttributeModifier(UUID.fromString("534f8c57-929a-48cf-bbd6-0fd851030748"), "DAMAGE BUFF 1", 0.5F, 0), new AttributeModifier(UUID.fromString("d317a76e-0e7c-4c61-acfd-9fa286053b32"), "DAMAGE BUFF 2", 0.5F, 0), new AttributeModifier(UUID.fromString("ff462d63-26a2-4363-830e-143ed97e2a4f"), "DAMAGE BUFF 3", 0.5F, 0), new AttributeModifier(UUID.fromString("cf1eb39e-0c67-495f-887c-0d3080828d2f"), "DAMAGE BUFF 4", 0.5F, 0), new AttributeModifier(UUID.fromString("3cfab9da-2701-43d8-ac07-885f16fa4117"), "DAMAGE BUFF 5", 0.5F, 0)};
 
    public static Entity getPointedEntity(World world, Entity entityplayer, double minrange, double range, float padding) {
       return getPointedEntity(world, entityplayer, minrange, range, padding, false);
@@ -46,29 +46,29 @@ public class EntityUtils {
       Vec3 vec3d = Vec3.createVectorHelper(entityplayer.posX, entityplayer.posY + (double)entityplayer.getEyeHeight(), entityplayer.posZ);
       Vec3 vec3d1 = entityplayer.getLookVec();
       Vec3 vec3d2 = vec3d.addVector(vec3d1.xCoord * range, vec3d1.yCoord * range, vec3d1.zCoord * range);
-      List list = world.getEntitiesWithinAABBExcludingEntity(entityplayer, entityplayer.boundingBox.addCoord(vec3d1.xCoord * range, vec3d1.yCoord * range, vec3d1.zCoord * range).expand((double)padding, (double)padding, (double)padding));
-      double d2 = (double)0.0F;
+      List list = world.getEntitiesWithinAABBExcludingEntity(entityplayer, entityplayer.boundingBox.addCoord(vec3d1.xCoord * range, vec3d1.yCoord * range, vec3d1.zCoord * range).expand(padding, padding, padding));
+      double d2 = 0.0F;
 
-      for(int i = 0; i < list.size(); ++i) {
-         Entity entity = (Entity)list.get(i);
-         if (!((double)entity.getDistanceToEntity(entityplayer) < minrange) && (entity.canBeCollidedWith() || nonCollide) && world.func_147447_a(Vec3.createVectorHelper(entityplayer.posX, entityplayer.posY + (double)entityplayer.getEyeHeight(), entityplayer.posZ), Vec3.createVectorHelper(entity.posX, entity.posY + (double)entity.getEyeHeight(), entity.posZ), false, true, false) == null) {
-            float f2 = Math.max(0.8F, entity.getCollisionBorderSize());
-            AxisAlignedBB axisalignedbb = entity.boundingBox.expand((double)f2, (double)f2, (double)f2);
-            MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3d, vec3d2);
-            if (axisalignedbb.isVecInside(vec3d)) {
-               if ((double)0.0F < d2 || d2 == (double)0.0F) {
-                  pointedEntity = entity;
-                  d2 = (double)0.0F;
+       for (Object o : list) {
+           Entity entity = (Entity) o;
+           if (!((double) entity.getDistanceToEntity(entityplayer) < minrange) && (entity.canBeCollidedWith() || nonCollide) && world.func_147447_a(Vec3.createVectorHelper(entityplayer.posX, entityplayer.posY + (double) entityplayer.getEyeHeight(), entityplayer.posZ), Vec3.createVectorHelper(entity.posX, entity.posY + (double) entity.getEyeHeight(), entity.posZ), false, true, false) == null) {
+               float f2 = Math.max(0.8F, entity.getCollisionBorderSize());
+               AxisAlignedBB axisalignedbb = entity.boundingBox.expand(f2, f2, f2);
+               MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3d, vec3d2);
+               if (axisalignedbb.isVecInside(vec3d)) {
+                   if ((double) 0.0F < d2 || d2 == (double) 0.0F) {
+                       pointedEntity = entity;
+                       d2 = 0.0F;
+                   }
+               } else if (movingobjectposition != null) {
+                   double d3 = vec3d.distanceTo(movingobjectposition.hitVec);
+                   if (d3 < d2 || d2 == (double) 0.0F) {
+                       pointedEntity = entity;
+                       d2 = d3;
+                   }
                }
-            } else if (movingobjectposition != null) {
-               double d3 = vec3d.distanceTo(movingobjectposition.hitVec);
-               if (d3 < d2 || d2 == (double)0.0F) {
-                  pointedEntity = entity;
-                  d2 = d3;
-               }
-            }
-         }
-      }
+           }
+       }
 
       return pointedEntity;
    }
@@ -79,29 +79,29 @@ public class EntityUtils {
       Vec3 vec3d1 = entityplayer.getLookVec();
       Vec3 vec3d2 = vec3d.addVector(vec3d1.xCoord * range, vec3d1.yCoord * range, vec3d1.zCoord * range);
       float f1 = 1.1F;
-      List list = world.getEntitiesWithinAABBExcludingEntity(entityplayer, entityplayer.boundingBox.addCoord(vec3d1.xCoord * range, vec3d1.yCoord * range, vec3d1.zCoord * range).expand((double)f1, (double)f1, (double)f1));
-      double d2 = (double)0.0F;
+      List list = world.getEntitiesWithinAABBExcludingEntity(entityplayer, entityplayer.boundingBox.addCoord(vec3d1.xCoord * range, vec3d1.yCoord * range, vec3d1.zCoord * range).expand(f1, f1, f1));
+      double d2 = 0.0F;
 
-      for(int i = 0; i < list.size(); ++i) {
-         Entity entity = (Entity)list.get(i);
-         if (entity.canBeCollidedWith() && world.func_147447_a(Vec3.createVectorHelper(entityplayer.posX, entityplayer.posY + (double)entityplayer.getEyeHeight(), entityplayer.posZ), Vec3.createVectorHelper(entity.posX, entity.posY + (double)entity.getEyeHeight(), entity.posZ), false, true, false) == null && !clazz.isInstance(entity)) {
-            float f2 = Math.max(0.8F, entity.getCollisionBorderSize());
-            AxisAlignedBB axisalignedbb = entity.boundingBox.expand((double)f2, (double)f2, (double)f2);
-            MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3d, vec3d2);
-            if (axisalignedbb.isVecInside(vec3d)) {
-               if ((double)0.0F < d2 || d2 == (double)0.0F) {
-                  pointedEntity = entity;
-                  d2 = (double)0.0F;
+       for (Object o : list) {
+           Entity entity = (Entity) o;
+           if (entity.canBeCollidedWith() && world.func_147447_a(Vec3.createVectorHelper(entityplayer.posX, entityplayer.posY + (double) entityplayer.getEyeHeight(), entityplayer.posZ), Vec3.createVectorHelper(entity.posX, entity.posY + (double) entity.getEyeHeight(), entity.posZ), false, true, false) == null && !clazz.isInstance(entity)) {
+               float f2 = Math.max(0.8F, entity.getCollisionBorderSize());
+               AxisAlignedBB axisalignedbb = entity.boundingBox.expand(f2, f2, f2);
+               MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3d, vec3d2);
+               if (axisalignedbb.isVecInside(vec3d)) {
+                   if ((double) 0.0F < d2 || d2 == (double) 0.0F) {
+                       pointedEntity = entity;
+                       d2 = 0.0F;
+                   }
+               } else if (movingobjectposition != null) {
+                   double d3 = vec3d.distanceTo(movingobjectposition.hitVec);
+                   if (d3 < d2 || d2 == (double) 0.0F) {
+                       pointedEntity = entity;
+                       d2 = d3;
+                   }
                }
-            } else if (movingobjectposition != null) {
-               double d3 = vec3d.distanceTo(movingobjectposition.hitVec);
-               if (d3 < d2 || d2 == (double)0.0F) {
-                  pointedEntity = entity;
-                  d2 = d3;
-               }
-            }
-         }
-      }
+           }
+       }
 
       return pointedEntity;
    }
@@ -120,8 +120,8 @@ public class EntityUtils {
 
    public static void setRecentlyHit(EntityLivingBase ent, int hit) {
       try {
-         ObfuscationReflectionHelper.setPrivateValue(EntityLivingBase.class, ent, hit, new String[]{"recentlyHit", "field_70718_bc"});
-      } catch (Exception var3) {
+         ObfuscationReflectionHelper.setPrivateValue(EntityLivingBase.class, ent, hit, "recentlyHit", "field_70718_bc");
+      } catch (Exception ignored) {
       }
 
    }
@@ -148,7 +148,7 @@ public class EntityUtils {
       float f6 = MathHelper.sin(-f1 * ((float)Math.PI / 180F));
       float f7 = f4 * f5;
       float f8 = f3 * f5;
-      double d3 = (double)5.0F;
+      double d3 = 5.0F;
       if (par2EntityPlayer instanceof EntityPlayerMP) {
          d3 = ((EntityPlayerMP)par2EntityPlayer).theItemInWorldManager.getBlockReachDistance();
       }
@@ -175,9 +175,9 @@ public class EntityUtils {
       double[] x = new double[]{ent2.posX, ent2.boundingBox.minY + (double)(ent2.height / 2.0F), ent2.posZ};
       double[] t = new double[]{ent.posX, ent.boundingBox.minY + (double)ent.getEyeHeight(), ent.posZ};
       Vec3 q = ent.getLookVec();
-      q.xCoord *= (double)range;
-      q.yCoord *= (double)range;
-      q.zCoord *= (double)range;
+      q.xCoord *= range;
+      q.yCoord *= range;
+      q.zCoord *= range;
       Vec3 l = q.addVector(ent.posX, ent.boundingBox.minY + (double)ent.getEyeHeight(), ent.posZ);
       double[] b = new double[]{l.xCoord, l.yCoord, l.zCoord};
       return Utils.isLyingInCone(x, t, b, fov);
@@ -187,9 +187,9 @@ public class EntityUtils {
       double[] x = new double[]{xx, yy, zz};
       double[] t = new double[]{ent.posX, ent.boundingBox.minY + (double)ent.getEyeHeight(), ent.posZ};
       Vec3 q = ent.getLookVec();
-      q.xCoord *= (double)range;
-      q.yCoord *= (double)range;
-      q.zCoord *= (double)range;
+      q.xCoord *= range;
+      q.yCoord *= range;
+      q.zCoord *= range;
       Vec3 l = q.addVector(ent.posX, ent.boundingBox.minY + (double)ent.getEyeHeight(), ent.posZ);
       double[] b = new double[]{l.xCoord, l.yCoord, l.zCoord};
       return Utils.isLyingInCone(x, t, b, fov);
@@ -199,9 +199,9 @@ public class EntityUtils {
       if (stack.stackSize != 0 && stack.getItem() != null) {
          EntitySpecialItem entityitem = new EntitySpecialItem(entity.worldObj, entity.posX, entity.posY + (double)dropheight, entity.posZ, stack);
          entityitem.delayBeforeCanPickup = 10;
-         entityitem.motionY = (double)0.1F;
-         entityitem.motionX = (double)0.0F;
-         entityitem.motionZ = (double)0.0F;
+         entityitem.motionY = 0.1F;
+         entityitem.motionX = 0.0F;
+         entityitem.motionZ = 0.0F;
          if (entity.captureDrops) {
             entity.capturedDrops.add(entityitem);
          } else {

@@ -42,14 +42,14 @@ public class TileEssentiaCrystalizerRenderer extends TileEntitySpecialRenderer {
 
       for(int q = 0; q < 4; ++q) {
          GL11.glPushMatrix();
-         GL11.glScaled((double)0.75F, (double)0.75F, (double)0.75F);
+         GL11.glScaled(0.75F, 0.75F, 0.75F);
          float glow = MathHelper.sin(((float)ticks + par8 + (float)(q * 10)) / 2.0F) * 0.05F + 0.95F;
          int j = 50 + (int)(150.0F * glow);
          int k = j % 65536;
          int l = j / 65536;
          OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) k, (float) l);
          GL11.glRotatef((float)(90 * q), 0.0F, 0.0F, 1.0F);
-         GL11.glTranslated(0.34, (double)0.0F, 1.2125);
+         GL11.glTranslated(0.34, 0.0F, 1.2125);
          GL11.glRotatef(tile.spin + tile.spinInc * par8, 0.0F, 0.0F, 1.0F);
          this.model2.renderPart("Crystal");
          GL11.glPopMatrix();
@@ -76,7 +76,7 @@ public class TileEssentiaCrystalizerRenderer extends TileEntitySpecialRenderer {
          }
       }
 
-      GL11.glTranslated((double)0.0F, (double)0.0F, (double)-0.5F);
+      GL11.glTranslated(0.0F, 0.0F, -0.5F);
    }
 
    public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {

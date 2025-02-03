@@ -58,7 +58,7 @@ public class PacketFXInfusionSource implements IMessage, IMessageHandler<PacketF
       int tz = message.z - message.dz;
       String key = tx + ":" + ty + ":" + tz + ":" + message.color;
       TileEntity tile = Thaumcraft.proxy.getClientWorld().getTileEntity(message.x, message.y, message.z);
-      if (tile != null && tile instanceof TileInfusionMatrix) {
+      if (tile instanceof TileInfusionMatrix) {
          int count = 15;
          if (Thaumcraft.proxy.getClientWorld().getTileEntity(tx, ty, tz) != null && Thaumcraft.proxy.getClientWorld().getTileEntity(tx, ty, tz) instanceof TilePedestal) {
             count = 60;
@@ -70,7 +70,7 @@ public class PacketFXInfusionSource implements IMessage, IMessageHandler<PacketF
             sf.ticks = count;
             is.sourceFX.put(key, sf);
          } else {
-            is.sourceFX.put(key, is.new SourceFX(new ChunkCoordinates(tx, ty, tz), count, message.color));
+            is.sourceFX.put(key, new TileInfusionMatrix.SourceFX(new ChunkCoordinates(tx, ty, tz), count, message.color));
          }
       }
 

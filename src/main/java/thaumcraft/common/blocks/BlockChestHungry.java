@@ -65,12 +65,12 @@ public class BlockChestHungry extends BlockContainer {
 
    public int getComparatorInputOverride(World world, int x, int y, int z, int rs) {
       TileEntity te = world.getTileEntity(x, y, z);
-      return te != null && te instanceof IInventory ? Container.calcRedstoneFromInventory((IInventory)te) : 0;
+      return te instanceof IInventory ? Container.calcRedstoneFromInventory((IInventory)te) : 0;
    }
 
    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLiving, ItemStack is) {
       int var6 = par1World.getBlockMetadata(par2, par3, par4) & 3;
-      int var7 = BlockPistonBase.determineOrientation(par1World, par2, par3, par4, (EntityPlayer)par5EntityLiving);
+      int var7 = BlockPistonBase.determineOrientation(par1World, par2, par3, par4, par5EntityLiving);
       par1World.setBlock(par2, par3, par4, this, var7, 3);
    }
 
@@ -91,11 +91,11 @@ public class BlockChestHungry extends BlockContainer {
                   }
 
                   var9.stackSize -= var13;
-                  var14 = new EntityItem(par1World, (double)((float)par2 + var10), (double)((float)par3 + var11), (double)((float)par4 + var12), new ItemStack(var9.getItem(), var13, var9.getItemDamage()));
+                  var14 = new EntityItem(par1World, (float)par2 + var10, (float)par3 + var11, (float)par4 + var12, new ItemStack(var9.getItem(), var13, var9.getItemDamage()));
                   float var15 = 0.05F;
-                  var14.motionX = (double)((float)this.random.nextGaussian() * var15);
-                  var14.motionY = (double)((float)this.random.nextGaussian() * var15 + 0.2F);
-                  var14.motionZ = (double)((float)this.random.nextGaussian() * var15);
+                  var14.motionX = (float)this.random.nextGaussian() * var15;
+                  var14.motionY = (float)this.random.nextGaussian() * var15 + 0.2F;
+                  var14.motionZ = (float)this.random.nextGaussian() * var15;
                   if (var9.hasTagCompound()) {
                      var14.getEntityItem().setTagCompound((NBTTagCompound)var9.getTagCompound().copy());
                   }
@@ -109,7 +109,7 @@ public class BlockChestHungry extends BlockContainer {
 
    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
       float var5 = 0.0625F;
-      return AxisAlignedBB.getBoundingBox((double)((float)par2 + var5), (double)par3, (double)((float)par4 + var5), (double)((float)(par2 + 1) - var5), (double)((float)(par3 + 1) - var5), (double)((float)(par4 + 1) - var5));
+      return AxisAlignedBB.getBoundingBox((float)par2 + var5, par3, (float)par4 + var5, (float)(par2 + 1) - var5, (float)(par3 + 1) - var5, (float)(par4 + 1) - var5);
    }
 
    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
@@ -117,7 +117,7 @@ public class BlockChestHungry extends BlockContainer {
    }
 
    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
-      Object var10 = (TileChestHungry)world.getTileEntity(x, y, z);
+      Object var10 = world.getTileEntity(x, y, z);
       if (var10 != null) {
          if (!world.isRemote) {
             if (entity instanceof EntityItem && !entity.isDead) {
@@ -141,7 +141,7 @@ public class BlockChestHungry extends BlockContainer {
    }
 
    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
-      Object var10 = (TileChestHungry)par1World.getTileEntity(par2, par3, par4);
+      Object var10 = par1World.getTileEntity(par2, par3, par4);
       if (var10 == null) {
          return true;
       } else if (par1World.isRemote) {

@@ -40,9 +40,9 @@ public class EntityTaintCreeper extends EntityMob implements ITaintedMob {
       super(par1World);
       this.tasks.addTask(1, new EntityAISwimming(this));
       this.tasks.addTask(2, new AICreeperSwell(this));
-      this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityOcelot.class, 6.0F, (double)1.0F, 1.2));
-      this.tasks.addTask(4, new AIAttackOnCollide(this, (double)1.0F, false));
-      this.tasks.addTask(5, new EntityAIWander(this, (double)1.0F));
+      this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityOcelot.class, 6.0F, 1.0F, 1.2));
+      this.tasks.addTask(4, new AIAttackOnCollide(this, 1.0F, false));
+      this.tasks.addTask(5, new EntityAIWander(this, 1.0F));
       this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
       this.tasks.addTask(6, new EntityAILookIdle(this));
       this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
@@ -51,10 +51,10 @@ public class EntityTaintCreeper extends EntityMob implements ITaintedMob {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue((double)0.25F);
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)30.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)2.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue((double)0.25F);
+      this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(30.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25F);
    }
 
    public boolean isAIEnabled() {
@@ -137,7 +137,7 @@ public class EntityTaintCreeper extends EntityMob implements ITaintedMob {
             this.timeSinceIgnited = 30;
             if (!this.worldObj.isRemote) {
                this.worldObj.createExplosion(this, this.posX, this.posY + (double)(this.height / 2.0F), this.posZ, 1.5F, false);
-               List ents = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ).expand((double)6.0F, (double)6.0F, (double)6.0F));
+               List ents = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ).expand(6.0F, 6.0F, 6.0F));
                if (ents.size() > 0) {
                   for(Object ent : ents) {
                      EntityLivingBase el = (EntityLivingBase)ent;

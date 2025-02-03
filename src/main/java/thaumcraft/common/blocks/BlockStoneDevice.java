@@ -154,7 +154,7 @@ public class BlockStoneDevice extends BlockContainer {
       if (metadata == 0) {
          TileEntity te = iblockaccess.getTileEntity(i, j, k);
          if (side == 1) {
-            if (te != null && te instanceof TileAlchemyFurnace && ((TileAlchemyFurnace)te).vis > 0) {
+            if (te instanceof TileAlchemyFurnace && ((TileAlchemyFurnace) te).vis > 0) {
                return this.iconFurnace[4];
             }
 
@@ -162,7 +162,7 @@ public class BlockStoneDevice extends BlockContainer {
          }
 
          if (side > 1) {
-            if (te != null && te instanceof TileAlchemyFurnace && ((TileAlchemyFurnace)te).isBurning()) {
+            if (te instanceof TileAlchemyFurnace && ((TileAlchemyFurnace) te).isBurning()) {
                return this.iconFurnace[3];
             }
 
@@ -193,20 +193,20 @@ public class BlockStoneDevice extends BlockContainer {
    @SideOnly(Side.CLIENT)
    public void randomDisplayTick(World w, int i, int j, int k, Random r) {
       TileEntity te = w.getTileEntity(i, j, k);
-      if (te != null && te instanceof TileAlchemyFurnace && ((TileAlchemyFurnace)te).isBurning()) {
+      if (te instanceof TileAlchemyFurnace && ((TileAlchemyFurnace) te).isBurning()) {
          float f = (float)i + 0.5F;
          float f1 = (float)j + 0.2F + r.nextFloat() * 5.0F / 16.0F;
          float f2 = (float)k + 0.5F;
          float f3 = 0.52F;
          float f4 = r.nextFloat() * 0.5F - 0.25F;
-         w.spawnParticle("smoke", (double)(f - f3), (double)f1, (double)(f2 + f4), (double)0.0F, (double)0.0F, (double)0.0F);
-         w.spawnParticle("flame", (double)(f - f3), (double)f1, (double)(f2 + f4), (double)0.0F, (double)0.0F, (double)0.0F);
-         w.spawnParticle("smoke", (double)(f + f3), (double)f1, (double)(f2 + f4), (double)0.0F, (double)0.0F, (double)0.0F);
-         w.spawnParticle("flame", (double)(f + f3), (double)f1, (double)(f2 + f4), (double)0.0F, (double)0.0F, (double)0.0F);
-         w.spawnParticle("smoke", (double)(f + f4), (double)f1, (double)(f2 - f3), (double)0.0F, (double)0.0F, (double)0.0F);
-         w.spawnParticle("flame", (double)(f + f4), (double)f1, (double)(f2 - f3), (double)0.0F, (double)0.0F, (double)0.0F);
-         w.spawnParticle("smoke", (double)(f + f4), (double)f1, (double)(f2 + f3), (double)0.0F, (double)0.0F, (double)0.0F);
-         w.spawnParticle("flame", (double)(f + f4), (double)f1, (double)(f2 + f3), (double)0.0F, (double)0.0F, (double)0.0F);
+         w.spawnParticle("smoke", f - f3, f1, f2 + f4, 0.0F, 0.0F, 0.0F);
+         w.spawnParticle("flame", f - f3, f1, f2 + f4, 0.0F, 0.0F, 0.0F);
+         w.spawnParticle("smoke", f + f3, f1, f2 + f4, 0.0F, 0.0F, 0.0F);
+         w.spawnParticle("flame", f + f3, f1, f2 + f4, 0.0F, 0.0F, 0.0F);
+         w.spawnParticle("smoke", f + f4, f1, f2 - f3, 0.0F, 0.0F, 0.0F);
+         w.spawnParticle("flame", f + f4, f1, f2 - f3, 0.0F, 0.0F, 0.0F);
+         w.spawnParticle("smoke", f + f4, f1, f2 + f3, 0.0F, 0.0F, 0.0F);
+         w.spawnParticle("flame", f + f4, f1, f2 + f3, 0.0F, 0.0F, 0.0F);
       }
 
    }
@@ -215,7 +215,7 @@ public class BlockStoneDevice extends BlockContainer {
       int meta = world.getBlockMetadata(x, y, z);
       if (meta == 0) {
          TileEntity te = world.getTileEntity(x, y, z);
-         if (te != null && te instanceof TileAlchemyFurnace && ((TileAlchemyFurnace)te).isBurning()) {
+         if (te instanceof TileAlchemyFurnace && ((TileAlchemyFurnace) te).isBurning()) {
             return 12;
          }
       } else if (meta == 2) {
@@ -252,7 +252,7 @@ public class BlockStoneDevice extends BlockContainer {
          } else if (metadata == 13) {
             return new TileFocalManipulator();
          } else {
-            return (TileEntity)(metadata == 14 ? new TileFluxScrubber() : super.createTileEntity(world, metadata));
+            return metadata == 14 ? new TileFluxScrubber() : super.createTileEntity(world, metadata);
          }
       } else {
          return new TileNodeStabilizer();
@@ -265,8 +265,8 @@ public class BlockStoneDevice extends BlockContainer {
 
    public int getComparatorInputOverride(World world, int x, int y, int z, int rs) {
       TileEntity te = world.getTileEntity(x, y, z);
-      if (te == null || !(te instanceof TilePedestal) && !(te instanceof TileAlchemyFurnace)) {
-         if (te != null && te instanceof TileWandPedestal && ((TileWandPedestal)te).getAspects() != null && ((TileWandPedestal)te).getStackInSlot(0) != null && ((TileWandPedestal)te).getStackInSlot(0).getItem() instanceof ItemWandCasting) {
+      if (!(te instanceof TilePedestal) && !(te instanceof TileAlchemyFurnace)) {
+         if (te instanceof TileWandPedestal && ((TileWandPedestal) te).getAspects() != null && ((TileWandPedestal) te).getStackInSlot(0) != null && ((TileWandPedestal) te).getStackInSlot(0).getItem() instanceof ItemWandCasting) {
             ItemWandCasting wand = (ItemWandCasting)((TileWandPedestal)te).getStackInSlot(0).getItem();
             float r = (float)wand.getAllVis(((TileWandPedestal)te).getStackInSlot(0)).visSize() / ((float)wand.getMaxVis(((TileWandPedestal)te).getStackInSlot(0)) * 6.0F);
             return MathHelper.floor_float(r * 14.0F) + 1;
@@ -285,8 +285,8 @@ public class BlockStoneDevice extends BlockContainer {
    public void breakBlock(World par1World, int par2, int par3, int par4, Block par5, int par6) {
       InventoryUtils.dropItems(par1World, par2, par3, par4);
       TileEntity tileEntity = par1World.getTileEntity(par2, par3, par4);
-      if (tileEntity != null && tileEntity instanceof TileInfusionMatrix && ((TileInfusionMatrix)tileEntity).crafting) {
-         par1World.createExplosion((Entity)null, (double)par2 + (double)0.5F, (double)par3 + (double)0.5F, (double)par4 + (double)0.5F, 2.0F, true);
+      if (tileEntity instanceof TileInfusionMatrix && ((TileInfusionMatrix) tileEntity).crafting) {
+         par1World.createExplosion(null, (double)par2 + (double)0.5F, (double)par3 + (double)0.5F, (double)par4 + (double)0.5F, 2.0F, true);
       }
 
       super.breakBlock(par1World, par2, par3, par4, par5, par6);
@@ -294,9 +294,9 @@ public class BlockStoneDevice extends BlockContainer {
 
    public void onNeighborBlockChange(World world, int x, int y, int z, Block par5) {
       TileEntity te = world.getTileEntity(x, y, z);
-      if (te != null && te instanceof TileAlchemyFurnace) {
+      if (te instanceof TileAlchemyFurnace) {
          ((TileAlchemyFurnace)te).getBellows();
-      } else if (te != null && te instanceof TileNodeConverter) {
+      } else if (te instanceof TileNodeConverter) {
          ((TileNodeConverter)te).checkStatus();
       } else {
          int metadata = world.getBlockMetadata(x, y, z);
@@ -335,7 +335,7 @@ public class BlockStoneDevice extends BlockContainer {
                TilePedestal ped = (TilePedestal)tileEntity;
                if (ped.getStackInSlot(0) != null) {
                   InventoryUtils.dropItemsAtEntity(world, x, y, z, player);
-                  world.playSoundEffect((double)x, (double)y, (double)z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.5F);
+                  world.playSoundEffect(x, y, z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.5F);
                   return true;
                }
 
@@ -345,11 +345,11 @@ public class BlockStoneDevice extends BlockContainer {
                   ped.setInventorySlotContents(0, i);
                   --player.getCurrentEquippedItem().stackSize;
                   if (player.getCurrentEquippedItem().stackSize == 0) {
-                     player.setCurrentItemOrArmor(0, (ItemStack)null);
+                     player.setCurrentItemOrArmor(0, null);
                   }
 
                   player.inventory.markDirty();
-                  world.playSoundEffect((double)x, (double)y, (double)z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.6F);
+                  world.playSoundEffect(x, y, z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.6F);
                   return true;
                }
             }
@@ -370,7 +370,7 @@ public class BlockStoneDevice extends BlockContainer {
                   InventoryUtils.dropItemsAtEntity(world, x, y, z, player);
                   world.markBlockForUpdate(x, y, z);
                   ped.markDirty();
-                  world.playSoundEffect((double)x, (double)y, (double)z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.5F);
+                  world.playSoundEffect(x, y, z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.5F);
                   return true;
                }
 
@@ -380,13 +380,13 @@ public class BlockStoneDevice extends BlockContainer {
                   ped.setInventorySlotContents(0, i);
                   --player.getCurrentEquippedItem().stackSize;
                   if (player.getCurrentEquippedItem().stackSize == 0) {
-                     player.setCurrentItemOrArmor(0, (ItemStack)null);
+                     player.setCurrentItemOrArmor(0, null);
                   }
 
                   player.inventory.markDirty();
                   world.markBlockForUpdate(x, y, z);
                   ped.markDirty();
-                  world.playSoundEffect((double)x, (double)y, (double)z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.6F);
+                  world.playSoundEffect(x, y, z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.6F);
                   return true;
                }
             }
@@ -490,7 +490,7 @@ public class BlockStoneDevice extends BlockContainer {
       if (meta == 11 && side == ForgeDirection.UP) {
          return true;
       } else {
-         return meta == 12 ? true : super.isSideSolid(world, x, y, z, side);
+         return meta == 12 || super.isSideSolid(world, x, y, z, side);
       }
    }
 }

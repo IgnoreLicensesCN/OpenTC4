@@ -19,9 +19,9 @@ import thaumcraft.common.config.ConfigItems;
 public class EntityInhabitedZombie extends EntityZombie {
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)30.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)5.0F);
-      this.getEntityAttribute(field_110186_bp).setBaseValue((double)0.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(30.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(5.0F);
+      this.getEntityAttribute(field_110186_bp).setBaseValue(0.0F);
    }
 
    public EntityInhabitedZombie(World world) {
@@ -93,7 +93,7 @@ public class EntityInhabitedZombie extends EntityZombie {
    }
 
    public boolean getCanSpawnHere() {
-      List ents = this.worldObj.getEntitiesWithinAABB(EntityInhabitedZombie.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX + (double)1.0F, this.posY + (double)1.0F, this.posZ + (double)1.0F).expand((double)32.0F, (double)16.0F, (double)32.0F));
-      return ents.size() > 0 ? false : super.getCanSpawnHere();
+      List ents = this.worldObj.getEntitiesWithinAABB(EntityInhabitedZombie.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX + (double)1.0F, this.posY + (double)1.0F, this.posZ + (double)1.0F).expand(32.0F, 16.0F, 32.0F));
+      return ents.size() <= 0 && super.getCanSpawnHere();
    }
 }

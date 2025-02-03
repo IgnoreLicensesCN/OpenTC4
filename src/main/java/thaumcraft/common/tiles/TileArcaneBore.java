@@ -137,7 +137,7 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
       }
 
       if (!this.worldObj.isRemote && this.fakePlayer == null) {
-         this.fakePlayer = FakePlayerFactory.get((WorldServer)this.worldObj, new GameProfile((UUID)null, "FakeThaumcraftBore"));
+         this.fakePlayer = FakePlayerFactory.get((WorldServer)this.worldObj, new GameProfile(null, "FakeThaumcraftBore"));
       }
 
       if (this.worldObj.isRemote && this.first) {
@@ -209,7 +209,7 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
 
          try {
             this.getStackInSlot(1).updateAnimation(this.worldObj, this.fakePlayer, 0, true);
-         } catch (Exception var5) {
+         } catch (Exception ignored) {
          }
       }
 
@@ -232,7 +232,7 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
 
             for(Aspect a : cost.getAspects()) {
                if (a != null) {
-                  this.repairCost.merge(a, (int)Math.sqrt((double)(cost.getAmount(a) * 2)) * level);
+                  this.repairCost.merge(a, (int)Math.sqrt(cost.getAmount(a) * 2) * level);
                }
             }
 
@@ -266,12 +266,9 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
    }
 
    private boolean areItemsValid() {
-      boolean notNearBroken = true;
-      if (this.hasPickaxe && this.getStackInSlot(1).getItemDamage() + 1 >= this.getStackInSlot(1).getMaxDamage()) {
-         notNearBroken = false;
-      }
+      boolean notNearBroken = !this.hasPickaxe || this.getStackInSlot(1).getItemDamage() + 1 < this.getStackInSlot(1).getMaxDamage();
 
-      return this.hasFocus && this.hasPickaxe && this.getStackInSlot(1).isItemStackDamageable() && notNearBroken;
+       return this.hasFocus && this.hasPickaxe && this.getStackInSlot(1).isItemStackDamageable() && notNearBroken;
    }
 
    public void markDirty() {
@@ -321,12 +318,12 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
                if (!bi.isAir(this.worldObj, this.digX, this.digY, this.digZ)) {
                   int tfortune = this.fortune;
                   boolean silktouch = false;
-                  if (this.getStackInSlot(1) != null && EnchantmentHelper.getEnchantmentLevel(Enchantment.silkTouch.effectId, this.getStackInSlot(1)) > 0 && bi.canSilkHarvest(this.worldObj, (EntityPlayer)null, this.digX, this.digY, this.digZ, md)) {
+                  if (this.getStackInSlot(1) != null && EnchantmentHelper.getEnchantmentLevel(Enchantment.silkTouch.effectId, this.getStackInSlot(1)) > 0 && bi.canSilkHarvest(this.worldObj, null, this.digX, this.digY, this.digZ, md)) {
                      silktouch = true;
                      tfortune = 0;
                   }
 
-                  if (!silktouch && this.getStackInSlot(0) != null && ((ItemFocusExcavation)this.getStackInSlot(0).getItem()).isUpgradedWith(this.getStackInSlot(0), FocusUpgradeType.silktouch) && bi.canSilkHarvest(this.worldObj, (EntityPlayer)null, this.digX, this.digY, this.digZ, md)) {
+                  if (!silktouch && this.getStackInSlot(0) != null && ((ItemFocusExcavation)this.getStackInSlot(0).getItem()).isUpgradedWith(this.getStackInSlot(0), FocusUpgradeType.silktouch) && bi.canSilkHarvest(this.worldObj, null, this.digX, this.digY, this.digZ, md)) {
                      silktouch = true;
                      tfortune = 0;
                   }
@@ -342,7 +339,7 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
                      items = bi.getDrops(this.worldObj, this.digX, this.digY, this.digZ, md, tfortune);
                   }
 
-                  List<EntityItem> targets = this.worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox((double)this.digX, (double)this.digY, (double)this.digZ, (double)(this.digX + 1), (double)(this.digY + 1), (double)(this.digZ + 1)).expand((double)1.0F, (double)1.0F, (double)1.0F));
+                  List<EntityItem> targets = this.worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(this.digX, this.digY, this.digZ, this.digX + 1, this.digY + 1, this.digZ + 1).expand(1.0F, 1.0F, 1.0F));
                   if (targets.size() > 0) {
                      for(EntityItem e : targets) {
                         items.add(e.getEntityItem().copy());
@@ -359,15 +356,15 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
 
                         if (this.base != null && this.base instanceof TileArcaneBoreBase) {
                            TileEntity inventory = this.worldObj.getTileEntity(this.base.xCoord + this.base.orientation.offsetX, this.base.yCoord, this.base.zCoord + this.base.orientation.offsetZ);
-                           if (inventory != null && inventory instanceof IInventory) {
+                           if (inventory instanceof IInventory) {
                               dropped = InventoryUtils.placeItemStackIntoInventory(dropped, (IInventory)inventory, this.base.orientation.getOpposite().ordinal(), true);
                            }
 
                            if (dropped != null) {
                               EntityItem ei = new EntityItem(this.worldObj, (double)this.xCoord + (double)0.5F + (double)this.base.orientation.offsetX * 0.66, (double)this.yCoord + 0.4 + (double)this.baseOrientation.getOpposite().offsetY, (double)this.zCoord + (double)0.5F + (double)this.base.orientation.offsetZ * 0.66, dropped.copy());
-                              ei.motionX = (double)(0.075F * (float)this.base.orientation.offsetX);
-                              ei.motionY = (double)0.025F;
-                              ei.motionZ = (double)(0.075F * (float)this.base.orientation.offsetZ);
+                              ei.motionX = 0.075F * (float)this.base.orientation.offsetX;
+                              ei.motionY = 0.025F;
+                              ei.motionZ = 0.075F * (float)this.base.orientation.offsetZ;
                               this.worldObj.spawnEntityInWorld(ei);
                            }
                         }
@@ -377,7 +374,7 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
 
                this.setInventorySlotContents(1, InventoryUtils.damageItem(1, this.getStackInSlot(1), this.worldObj));
                if (this.getStackInSlot(1).stackSize <= 0) {
-                  this.setInventorySlotContents(1, (ItemStack)null);
+                  this.setInventorySlotContents(1, null);
                }
 
                this.worldObj.setBlockToAir(this.digX, this.digY, this.digZ);
@@ -385,7 +382,7 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
                   for(int lb = 2; lb < 6; ++lb) {
                      ForgeDirection lbd = ForgeDirection.getOrientation(lb);
                      TileEntity lbte = this.worldObj.getTileEntity(this.base.xCoord + lbd.offsetX, this.base.yCoord, this.base.zCoord + lbd.offsetZ);
-                     if (lbte != null && lbte instanceof TileArcaneLamp) {
+                     if (lbte instanceof TileArcaneLamp) {
                         int d = this.worldObj.rand.nextInt(32) * 2;
                         int xx = this.xCoord + this.orientation.offsetX + this.orientation.offsetX * d;
                         int yy = this.yCoord + this.orientation.offsetY + this.orientation.offsetY * d;
@@ -450,7 +447,7 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
                double xd = (double)this.xCoord + (double)0.5F - ((double)this.digX + (double)0.5F);
                double yd = (double)this.yCoord + (double)0.5F - ((double)this.digY + (double)0.5F);
                double zd = (double)this.zCoord + (double)0.5F - ((double)this.digZ + (double)0.5F);
-               double var12 = (double)MathHelper.sqrt_double(xd * xd + zd * zd);
+               double var12 = MathHelper.sqrt_double(xd * xd + zd * zd);
                float rx = (float)(Math.atan2(zd, xd) * (double)180.0F / Math.PI);
                float rz = (float)(-(Math.atan2(yd, var12) * (double)180.0F / Math.PI)) + 90.0F;
                this.tRadX = MathHelper.wrapAngleTo180_float((float)this.rotX) + rx;
@@ -537,7 +534,7 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
             this.beam1 = Thaumcraft.proxy.beamBore(this.worldObj, (double)this.xCoord + (double)0.5F, (double)this.yCoord + (double)0.5F, (double)this.zCoord + (double)0.5F, bx, by, bz, 1, 65382, true, impact > 0 ? 2.0F : 0.0F, this.beam1, impact);
             this.beam2 = Thaumcraft.proxy.beamBore(this.worldObj, (double)this.xCoord + (double)0.5F, (double)this.yCoord + (double)0.5F, (double)this.zCoord + (double)0.5F, bx, by, bz, 2, 16746581, false, impact > 0 ? 2.0F : 0.0F, this.beam2, impact);
             if (this.worldObj.isAirBlock(this.digX, this.digY, this.digZ) && this.digBlock != Blocks.air) {
-               this.worldObj.playSound((double)((float)this.digX + 0.5F), (double)((float)this.digY + 0.5F), (double)((float)this.digZ + 0.5F), this.digBlock.stepSound.getBreakSound(), (this.digBlock.stepSound.getVolume() + 1.0F) / 2.0F, this.digBlock.stepSound.getPitch() * 0.8F, false);
+               this.worldObj.playSound((float)this.digX + 0.5F, (float)this.digY + 0.5F, (float)this.digZ + 0.5F, this.digBlock.stepSound.getBreakSound(), (this.digBlock.stepSound.getVolume() + 1.0F) / 2.0F, this.digBlock.stepSound.getPitch() * 0.8F, false);
 
                for(int a = 0; a < Thaumcraft.proxy.particleCount(10); ++a) {
                   Thaumcraft.proxy.boreDigFx(this.worldObj, this.digX, this.digY, this.digZ, this.xCoord + this.orientation.offsetX, this.yCoord + this.orientation.offsetY, this.zCoord + this.orientation.offsetZ, this.digBlock, this.digMd >> 12 & 255);
@@ -582,7 +579,7 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
          }
 
          TCVec3 vsource = TCVec3.createVectorHelper((double)(this.xCoord + this.orientation.offsetX) + (double)0.5F, (double)(this.yCoord + this.orientation.offsetY) + (double)0.5F, (double)(this.zCoord + this.orientation.offsetZ) + (double)0.5F);
-         TCVec3 vtar = TCVec3.createVectorHelper((double)0.0F, (double)this.currentRadius, (double)0.0F);
+         TCVec3 vtar = TCVec3.createVectorHelper(0.0F, this.currentRadius, 0.0F);
          vtar.rotateAroundZ((float)this.spiral / 180.0F * (float)Math.PI);
          vtar.rotateAroundY(((float)Math.PI / 2F) * (float)this.orientation.offsetX);
          vtar.rotateAroundX(((float)Math.PI / 2F) * (float)this.orientation.offsetY);
@@ -704,7 +701,7 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
 
    public void readFromNBT(NBTTagCompound nbttagcompound) {
       super.readFromNBT(nbttagcompound);
-      this.speedyTime = (float)nbttagcompound.getShort("SpeedyTime");
+      this.speedyTime = nbttagcompound.getShort("SpeedyTime");
       this.setOrientation(this.orientation, true);
    }
 
@@ -755,14 +752,14 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
             if (this.worldObj.isRemote && (j & 4095) > 0) {
                Block var40 = Block.getBlockById(j & 4095);
                if (var40 != null) {
-                  this.worldObj.playSound((double)((float)this.digX + 0.5F), (double)((float)this.digY + 0.5F), (double)((float)this.digZ + 0.5F), var40.stepSound.getBreakSound(), (var40.stepSound.getVolume() + 1.0F) / 2.0F, var40.stepSound.getPitch() * 0.8F, false);
+                  this.worldObj.playSound((float)this.digX + 0.5F, (float)this.digY + 0.5F, (float)this.digZ + 0.5F, var40.stepSound.getBreakSound(), (var40.stepSound.getVolume() + 1.0F) / 2.0F, var40.stepSound.getPitch() * 0.8F, false);
 
                   for(int a = 0; a < Thaumcraft.proxy.particleCount(10); ++a) {
                      Thaumcraft.proxy.boreDigFx(this.worldObj, this.digX, this.digY, this.digZ, this.xCoord + this.orientation.offsetX, this.yCoord + this.orientation.offsetY, this.zCoord + this.orientation.offsetZ, var40, j >> 12 & 255);
                   }
                }
             }
-         } catch (Exception var5) {
+         } catch (Exception ignored) {
          }
 
          return true;
@@ -786,7 +783,7 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
       int y = this.digY - this.yCoord + 64;
       int z = this.digZ - this.zCoord + 64;
       int c = (x & 255) << 16 | (y & 255) << 8 | z & 255;
-      PacketHandler.INSTANCE.sendToAllAround(new PacketBoreDig(this.xCoord, this.yCoord, this.zCoord, c), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, (double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)64.0F));
+      PacketHandler.INSTANCE.sendToAllAround(new PacketBoreDig(this.xCoord, this.yCoord, this.zCoord, c), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 64.0F));
    }
 
    public int getSizeInventory() {
@@ -845,7 +842,7 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
    }
 
    public boolean isUseableByPlayer(EntityPlayer var1) {
-      return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : var1.getDistanceSq((double)this.xCoord + (double)0.5F, (double)this.yCoord + (double)0.5F, (double)this.zCoord + (double)0.5F) <= (double)64.0F;
+      return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && var1.getDistanceSq((double) this.xCoord + (double) 0.5F, (double) this.yCoord + (double) 0.5F, (double) this.zCoord + (double) 0.5F) <= (double) 64.0F;
    }
 
    public void openInventory() {

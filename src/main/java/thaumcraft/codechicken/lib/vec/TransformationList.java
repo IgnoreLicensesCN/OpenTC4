@@ -26,7 +26,7 @@ public class TransformationList extends Transformation {
          this.mat = new Matrix4();
 
          for(int i = this.transformations.size() - 1; i >= 0; --i) {
-            ((Transformation)this.transformations.get(i)).apply(this.mat);
+            this.transformations.get(i).apply(this.mat);
          }
       }
 
@@ -47,9 +47,9 @@ public class TransformationList extends Transformation {
       if (this.mat != null) {
          this.mat.apply(vec);
       } else {
-         for(int i = 0; i < this.transformations.size(); ++i) {
-            ((Transformation)this.transformations.get(i)).apply(vec);
-         }
+          for (Transformation transformation : this.transformations) {
+              ((Transformation) transformation).apply(vec);
+          }
       }
 
    }
@@ -58,9 +58,9 @@ public class TransformationList extends Transformation {
       if (this.mat != null) {
          this.mat.applyN(normal);
       } else {
-         for(int i = 0; i < this.transformations.size(); ++i) {
-            ((Transformation)this.transformations.get(i)).applyN(normal);
-         }
+          for (Transformation transformation : this.transformations) {
+              ((Transformation) transformation).applyN(normal);
+          }
       }
 
    }
@@ -107,10 +107,10 @@ public class TransformationList extends Transformation {
       Transformation prev = null;
 
       while(iterator.hasNext()) {
-         Transformation t = (Transformation)iterator.next();
+         Transformation t = iterator.next();
          if (!t.isRedundant()) {
             if (prev != null) {
-               Transformation m = (Transformation)prev.merge(t);
+               Transformation m = prev.merge(t);
                if (m == null) {
                   newList.add(prev);
                } else if (m.isRedundant()) {
@@ -146,16 +146,16 @@ public class TransformationList extends Transformation {
    @SideOnly(Side.CLIENT)
    public void glApply() {
       for(int i = this.transformations.size() - 1; i >= 0; --i) {
-         ((Transformation)this.transformations.get(i)).glApply();
+         this.transformations.get(i).glApply();
       }
 
    }
 
    public Transformation inverse() {
-      TransformationList rev = new TransformationList(new Transformation[0]);
+      TransformationList rev = new TransformationList();
 
       for(int i = this.transformations.size() - 1; i >= 0; --i) {
-         rev.with((Transformation)((Transformation)this.transformations.get(i)).inverse());
+         rev.with(this.transformations.get(i).inverse());
       }
 
       return rev;

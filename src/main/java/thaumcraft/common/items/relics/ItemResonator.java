@@ -57,7 +57,7 @@ public class ItemResonator extends Item {
 
    public boolean onItemUseFirst(ItemStack itemstack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10) {
       TileEntity tile = world.getTileEntity(x, y, z);
-      if (tile != null && tile instanceof IEssentiaTransport) {
+      if (tile instanceof IEssentiaTransport) {
          if (world.isRemote) {
             player.swingItem();
             return super.onItemUseFirst(itemstack, player, world, x, y, z, side, par8, par9, par10);
@@ -70,10 +70,10 @@ public class ItemResonator extends Item {
             }
 
             if (!(tile instanceof TileTubeBuffer) && et.getEssentiaType(face) != null) {
-               player.addChatMessage(new ChatComponentTranslation("tc.resonator1", new Object[]{"" + et.getEssentiaAmount(face), et.getEssentiaType(face).getName()}));
+               player.addChatMessage(new ChatComponentTranslation("tc.resonator1", "" + et.getEssentiaAmount(face), et.getEssentiaType(face).getName()));
             } else if (tile instanceof TileTubeBuffer && ((IAspectContainer)tile).getAspects().size() > 0) {
                for(Aspect aspect : ((IAspectContainer)tile).getAspects().getAspectsSorted()) {
-                  player.addChatMessage(new ChatComponentTranslation("tc.resonator1", new Object[]{"" + ((IAspectContainer)tile).getAspects().getAmount(aspect), aspect.getName()}));
+                  player.addChatMessage(new ChatComponentTranslation("tc.resonator1", "" + ((IAspectContainer)tile).getAspects().getAmount(aspect), aspect.getName()));
                }
             }
 
@@ -82,8 +82,8 @@ public class ItemResonator extends Item {
                s = et.getSuctionType(face).getName();
             }
 
-            player.addChatMessage(new ChatComponentTranslation("tc.resonator2", new Object[]{"" + et.getSuctionAmount(face), s}));
-            world.playSoundEffect((double)x, (double)y, (double)z, "thaumcraft:alembicknock", 0.5F, 1.9F + world.rand.nextFloat() * 0.1F);
+            player.addChatMessage(new ChatComponentTranslation("tc.resonator2", "" + et.getSuctionAmount(face), s));
+            world.playSoundEffect(x, y, z, "thaumcraft:alembicknock", 0.5F, 1.9F + world.rand.nextFloat() * 0.1F);
             return true;
          }
       } else {

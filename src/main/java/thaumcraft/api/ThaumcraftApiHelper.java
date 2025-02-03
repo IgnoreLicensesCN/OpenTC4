@@ -123,20 +123,18 @@ public class ThaumcraftApiHelper {
     	if (recipeItem == null || slotItem == null) return false;
     	if (recipeItem.stackTagCompound!=null && slotItem.stackTagCompound==null ) return false;
     	if (recipeItem.stackTagCompound==null ) return true;
-    	
-    	Iterator iterator = recipeItem.stackTagCompound.func_150296_c().iterator();
-        while (iterator.hasNext())
-        {
-            String s = (String)iterator.next();
+
+        for (Object o : recipeItem.stackTagCompound.func_150296_c()) {
+            String s = (String) o;
             if (slotItem.stackTagCompound.hasKey(s)) {
-            	if (!slotItem.stackTagCompound.getTag(s).toString().equals(
-            			recipeItem.stackTagCompound.getTag(s).toString())) {
-            		return false;
-            	}
+                if (!slotItem.stackTagCompound.getTag(s).toString().equals(
+                        recipeItem.stackTagCompound.getTag(s).toString())) {
+                    return false;
+                }
             } else {
-        		return false;
+                return false;
             }
-            
+
         }
         return true;
     }
@@ -168,8 +166,8 @@ public class ThaumcraftApiHelper {
 			return null;
 	}
     
-    private static HashMap<Integer, AspectList> allAspects= new HashMap<Integer, AspectList>();
-    private static HashMap<Integer, AspectList> allCompoundAspects= new HashMap<Integer, AspectList>();
+    private static HashMap<Integer, AspectList> allAspects= new HashMap<>();
+    private static HashMap<Integer, AspectList> allCompoundAspects= new HashMap<>();
     
     public static AspectList getAllAspects(int amount) {
     	if (allAspects.get(amount)==null) {
@@ -407,7 +405,7 @@ public class ThaumcraftApiHelper {
 	                }
 	
 	                Vec3 vec32 = Vec3.createVectorHelper(v1.xCoord, v1.yCoord, v1.zCoord);
-	                l = (int)(vec32.xCoord = (double)MathHelper.floor_double(v1.xCoord));
+	                l = (int)(vec32.xCoord = MathHelper.floor_double(v1.xCoord));
 	
 	                if (b0 == 5)
 	                {
@@ -415,7 +413,7 @@ public class ThaumcraftApiHelper {
 	                    ++vec32.xCoord;
 	                }
 	
-	                i1 = (int)(vec32.yCoord = (double)MathHelper.floor_double(v1.yCoord));
+	                i1 = (int)(vec32.yCoord = MathHelper.floor_double(v1.yCoord));
 	
 	                if (b0 == 1)
 	                {
@@ -423,7 +421,7 @@ public class ThaumcraftApiHelper {
 	                    ++vec32.yCoord;
 	                }
 	
-	                j1 = (int)(vec32.zCoord = (double)MathHelper.floor_double(v1.zCoord));
+	                j1 = (int)(vec32.zCoord = MathHelper.floor_double(v1.zCoord));
 	
 	                if (b0 == 3)
 	                {

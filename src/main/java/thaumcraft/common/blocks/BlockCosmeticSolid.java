@@ -138,8 +138,8 @@ public class BlockCosmeticSolid extends Block {
 
          return super.getIcon(ba, x, y, z, side);
       } else {
-         String l = x + "" + y + "" + z;
-         Random r1 = new Random((long)(Math.abs(l.hashCode() * 100) + 1));
+         String l = x + "" + y + z;
+         Random r1 = new Random(Math.abs(l.hashCode() * 100) + 1);
          int i = r1.nextInt(12345 + side) % 4;
          return this.icon[17 + i];
       }
@@ -155,7 +155,7 @@ public class BlockCosmeticSolid extends Block {
 
    public boolean canCreatureSpawn(EnumCreatureType type, IBlockAccess world, int x, int y, int z) {
       int md = world.getBlockMetadata(x, y, z);
-      return md != 2 && md != 3 && md != 13 ? super.canCreatureSpawn(type, world, x, y, z) : false;
+      return md != 2 && md != 3 && md != 13 && super.canCreatureSpawn(type, world, x, y, z);
    }
 
    @SideOnly(Side.CLIENT)
@@ -243,7 +243,7 @@ public class BlockCosmeticSolid extends Block {
       if (metadata == 3) {
          return true;
       } else {
-         return metadata == 8 ? true : super.hasTileEntity(metadata);
+         return metadata == 8 || super.hasTileEntity(metadata);
       }
    }
 
@@ -251,7 +251,7 @@ public class BlockCosmeticSolid extends Block {
       if (metadata == 3) {
          return new TileWardingStone();
       } else {
-         return (TileEntity)(metadata == 8 ? new TileNode() : super.createTileEntity(world, metadata));
+         return metadata == 8 ? new TileNode() : super.createTileEntity(world, metadata);
       }
    }
 
@@ -268,7 +268,7 @@ public class BlockCosmeticSolid extends Block {
       if (par1World.getBlock(par2, par3, par4) == this) {
          if (par5 == 8 && !par1World.isRemote) {
             TileEntity te = par1World.getTileEntity(par2, par3, par4);
-            if (te != null && te instanceof INode && ((INode)te).getAspects().size() > 0) {
+            if (te instanceof INode && ((INode) te).getAspects().size() > 0) {
                for(Aspect aspect : ((INode)te).getAspects().getAspects()) {
                   for(int a = 0; a <= ((INode)te).getAspects().getAmount(aspect) / 10; ++a) {
                      if (((INode)te).getAspects().getAmount(aspect) >= 5) {
@@ -292,18 +292,18 @@ public class BlockCosmeticSolid extends Block {
          if (md == 3) {
             if (world.isBlockIndirectlyGettingPowered(x, y, z)) {
                for(int a = 0; a < Thaumcraft.proxy.particleCount(2); ++a) {
-                  Thaumcraft.proxy.blockRunes(world, (double)x, (double)((float)y + 0.7F), (double)z, 0.2F + world.rand.nextFloat() * 0.4F, world.rand.nextFloat() * 0.3F, 0.8F + world.rand.nextFloat() * 0.2F, 20, -0.02F);
+                  Thaumcraft.proxy.blockRunes(world, x, (float)y + 0.7F, z, 0.2F + world.rand.nextFloat() * 0.4F, world.rand.nextFloat() * 0.3F, 0.8F + world.rand.nextFloat() * 0.2F, 20, -0.02F);
                }
             } else if (world.getBlock(x, y + 1, z) != ConfigBlocks.blockAiry && world.getBlock(x, y + 1, z).getBlocksMovement(world, x, y + 1, z) || world.getBlock(x, y + 2, z) != ConfigBlocks.blockAiry && world.getBlock(x, y + 1, z).getBlocksMovement(world, x, y + 1, z)) {
                for(int a = 0; a < Thaumcraft.proxy.particleCount(3); ++a) {
-                  Thaumcraft.proxy.blockRunes(world, (double)x, (double)((float)y + 0.7F), (double)z, 0.9F + world.rand.nextFloat() * 0.1F, world.rand.nextFloat() * 0.3F, world.rand.nextFloat() * 0.3F, 24, -0.02F);
+                  Thaumcraft.proxy.blockRunes(world, x, (float)y + 0.7F, z, 0.9F + world.rand.nextFloat() * 0.1F, world.rand.nextFloat() * 0.3F, world.rand.nextFloat() * 0.3F, 24, -0.02F);
                }
             } else {
-               List<Entity> list = (List<Entity>)world.getEntitiesWithinAABBExcludingEntity((Entity)null, AxisAlignedBB.getBoundingBox((double)x, (double)y, (double)z, (double)(x + 1), (double)(y + 1), (double)(z + 1)).expand((double)1.0F, (double)1.0F, (double)1.0F));
+               List<Entity> list = (List<Entity>)world.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(1.0F, 1.0F, 1.0F));
                if (!list.isEmpty()) {
                   for(Entity entity : list) {
                      if (entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer)) {
-                        Thaumcraft.proxy.blockRunes(world, (double)x, (double)((float)y + 0.6F + world.rand.nextFloat() * Math.max(0.8F, entity.getEyeHeight())), (double)z, 0.6F + world.rand.nextFloat() * 0.4F, 0.0F, 0.3F + world.rand.nextFloat() * 0.7F, 20, 0.0F);
+                        Thaumcraft.proxy.blockRunes(world, x, (float)y + 0.6F + world.rand.nextFloat() * Math.max(0.8F, entity.getEyeHeight()), z, 0.6F + world.rand.nextFloat() * 0.4F, 0.0F, 0.3F + world.rand.nextFloat() * 0.7F, 20, 0.0F);
                         break;
                      }
                   }

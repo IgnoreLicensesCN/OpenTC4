@@ -6,13 +6,13 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 public class FXBlockRunes extends EntityFX {
-   double ofx = (double)0.0F;
-   double ofy = (double)0.0F;
+   double ofx = 0.0F;
+   double ofy = 0.0F;
    float rotation = 0.0F;
    int runeIndex = 0;
 
    public FXBlockRunes(World world, double d, double d1, double d2, float f1, float f2, float f3, int m) {
-      super(world, d, d1, d2, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, d, d1, d2, 0.0F, 0.0F, 0.0F);
       if (f1 == 0.0F) {
          f1 = 1.0F;
       }
@@ -22,7 +22,7 @@ public class FXBlockRunes extends EntityFX {
       this.particleGreen = f2;
       this.particleBlue = f3;
       this.particleGravity = 0.0F;
-      this.motionX = this.motionY = this.motionZ = (double)0.0F;
+      this.motionX = this.motionY = this.motionZ = 0.0F;
       this.particleMaxAge = 3 * m;
       this.noClip = false;
       this.setSize(0.01F, 0.01F);
@@ -44,7 +44,7 @@ public class FXBlockRunes extends EntityFX {
       float var13 = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)f - interpPosX);
       float var14 = (float)(this.prevPosY + (this.posY - this.prevPosY) * (double)f - interpPosY);
       float var15 = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * (double)f - interpPosZ);
-      GL11.glTranslated((double)var13, (double)var14, (double)var15);
+      GL11.glTranslated(var13, var14, var15);
       GL11.glRotatef(this.rotation, 0.0F, 1.0F, 0.0F);
       GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
       GL11.glTranslated(this.ofx, this.ofy, -0.51);
@@ -57,10 +57,10 @@ public class FXBlockRunes extends EntityFX {
       tessellator.startDrawingQuads();
       tessellator.setBrightness(240);
       tessellator.setColorRGBA_F(this.particleRed * var16, this.particleGreen * var16, this.particleBlue * var16, this.particleAlpha / 2.0F);
-      tessellator.addVertexWithUV((double)-0.5F * (double)var12, (double)0.5F * (double)var12, (double)0.0F, (double)var9, (double)var11);
-      tessellator.addVertexWithUV((double)0.5F * (double)var12, (double)0.5F * (double)var12, (double)0.0F, (double)var9, (double)var10);
-      tessellator.addVertexWithUV((double)0.5F * (double)var12, (double)-0.5F * (double)var12, (double)0.0F, (double)var8, (double)var10);
-      tessellator.addVertexWithUV((double)-0.5F * (double)var12, (double)-0.5F * (double)var12, (double)0.0F, (double)var8, (double)var11);
+      tessellator.addVertexWithUV((double)-0.5F * (double)var12, (double)0.5F * (double)var12, 0.0F, var9, var11);
+      tessellator.addVertexWithUV((double)0.5F * (double)var12, (double)0.5F * (double)var12, 0.0F, var9, var10);
+      tessellator.addVertexWithUV((double)0.5F * (double)var12, (double)-0.5F * (double)var12, 0.0F, var8, var10);
+      tessellator.addVertexWithUV((double)-0.5F * (double)var12, (double)-0.5F * (double)var12, 0.0F, var8, var11);
       tessellator.draw();
       GL11.glPopMatrix();
       tessellator.startDrawingQuads();

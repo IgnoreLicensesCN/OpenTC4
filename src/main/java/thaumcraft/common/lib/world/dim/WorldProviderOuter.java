@@ -82,7 +82,7 @@ public class WorldProviderOuter extends WorldProvider {
       f3 *= f2 * 0.0F + 0.15F;
       f4 *= f2 * 0.0F + 0.15F;
       f5 *= f2 * 0.0F + 0.15F;
-      return Vec3.createVectorHelper((double)f3, (double)f4, (double)f5);
+      return Vec3.createVectorHelper(f3, f4, f5);
    }
 
    @SideOnly(Side.CLIENT)

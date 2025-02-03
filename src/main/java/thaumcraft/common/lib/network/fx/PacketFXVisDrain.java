@@ -49,7 +49,7 @@ public class PacketFXVisDrain implements IMessage, IMessageHandler<PacketFXVisDr
       this.x = buffer.readShort();
       this.y = buffer.readShort();
       this.z = buffer.readShort();
-      this.color = ((Aspect)Aspect.getPrimalAspects().get(buffer.readByte())).getColor();
+      this.color = Aspect.getPrimalAspects().get(buffer.readByte()).getColor();
       this.dx = this.x + buffer.readByte();
       this.dy = this.y + buffer.readByte();
       this.dz = this.z + buffer.readByte();
@@ -58,7 +58,7 @@ public class PacketFXVisDrain implements IMessage, IMessageHandler<PacketFXVisDr
    @SideOnly(Side.CLIENT)
    public IMessage onMessage(PacketFXVisDrain message, MessageContext ctx) {
       World worldObj = Thaumcraft.proxy.getClientWorld();
-      FXVisSparkle fb = new FXVisSparkle(worldObj, (double)message.dx + 0.4 + (double)(worldObj.rand.nextFloat() * 0.2F), (double)message.dy + 0.4 + (double)(worldObj.rand.nextFloat() * 0.2F), (double)message.dz + 0.4 + (double)(worldObj.rand.nextFloat() * 0.2F), (double)((float)message.x + worldObj.rand.nextFloat()), (double)((float)message.y + worldObj.rand.nextFloat()), (double)((float)message.z + worldObj.rand.nextFloat()));
+      FXVisSparkle fb = new FXVisSparkle(worldObj, (double)message.dx + 0.4 + (double)(worldObj.rand.nextFloat() * 0.2F), (double)message.dy + 0.4 + (double)(worldObj.rand.nextFloat() * 0.2F), (double)message.dz + 0.4 + (double)(worldObj.rand.nextFloat() * 0.2F), (float)message.x + worldObj.rand.nextFloat(), (float)message.y + worldObj.rand.nextFloat(), (float)message.z + worldObj.rand.nextFloat());
       Color c = new Color(message.color);
       fb.setRBGColorF((float)c.getRed() / 255.0F, (float)c.getGreen() / 255.0F, (float)c.getBlue() / 255.0F);
       ParticleEngine.instance.addEffect(worldObj, fb);

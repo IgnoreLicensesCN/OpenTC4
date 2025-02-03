@@ -55,10 +55,10 @@ public abstract class Colour implements Copyable {
       int ir = (this.r & 255) - (colour2.r & 255);
       int ig = (this.g & 255) - (colour2.g & 255);
       int ib = (this.b & 255) - (colour2.b & 255);
-      this.a = (byte)(ia < 0 ? 0 : ia);
-      this.r = (byte)(ir < 0 ? 0 : ir);
-      this.g = (byte)(ig < 0 ? 0 : ig);
-      this.b = (byte)(ib < 0 ? 0 : ib);
+      this.a = (byte)(Math.max(ia, 0));
+      this.r = (byte)(Math.max(ir, 0));
+      this.g = (byte)(Math.max(ig, 0));
+      this.b = (byte)(Math.max(ib, 0));
       return this;
    }
 
@@ -91,9 +91,9 @@ public abstract class Colour implements Copyable {
    }
 
    public Colour multiplyC(double d) {
-      this.r = (byte)((int)MathHelper.clip((double)(this.r & 255) * d, (double)0.0F, (double)255.0F));
-      this.g = (byte)((int)MathHelper.clip((double)(this.g & 255) * d, (double)0.0F, (double)255.0F));
-      this.b = (byte)((int)MathHelper.clip((double)(this.b & 255) * d, (double)0.0F, (double)255.0F));
+      this.r = (byte)((int)MathHelper.clip((double)(this.r & 255) * d, 0.0F, 255.0F));
+      this.g = (byte)((int)MathHelper.clip((double)(this.g & 255) * d, 0.0F, 255.0F));
+      this.b = (byte)((int)MathHelper.clip((double)(this.b & 255) * d, 0.0F, 255.0F));
       return this;
    }
 

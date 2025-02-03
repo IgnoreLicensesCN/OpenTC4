@@ -30,8 +30,7 @@ public class ScanResult {
 				return false;
 			if (type == 2 && entity.getEntityId() != sr.entity.getEntityId())
 				return false;
-			if (type == 3 && !phenomena.equals(sr.phenomena))
-				return false;
+            return type != 3 || phenomena.equals(sr.phenomena);
 		}
 		return true;
 	}

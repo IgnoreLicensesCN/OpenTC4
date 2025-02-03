@@ -45,7 +45,7 @@ public class AIHarvestLogs extends EntityAIBase {
       this.setMutexBits(3);
       this.distance = (float)MathHelper.ceiling_float_int(this.theGolem.getRange() / 3.0F);
       if (this.theWorld instanceof WorldServer) {
-         this.player = FakePlayerFactory.get((WorldServer)this.theWorld, new GameProfile((UUID)null, "FakeThaumcraftGolem"));
+         this.player = FakePlayerFactory.get((WorldServer)this.theWorld, new GameProfile(null, "FakeThaumcraftGolem"));
       }
 
    }
@@ -85,7 +85,7 @@ public class AIHarvestLogs extends EntityAIBase {
          if (this.delay > 0) {
             if (--this.delay > 0 && this.delay % this.mod == 0 && this.theGolem.getNavigator().noPath()) {
                this.theGolem.startActionTimer();
-               this.theWorld.playSoundEffect((double)((float)this.xx + 0.5F), (double)((float)this.yy + 0.5F), (double)((float)this.zz + 0.5F), this.block.stepSound.getBreakSound(), (this.block.stepSound.getVolume() + 0.7F) / 8.0F, this.block.stepSound.getPitch() * 0.5F);
+               this.theWorld.playSoundEffect((float)this.xx + 0.5F, (float)this.yy + 0.5F, (float)this.zz + 0.5F, this.block.stepSound.getBreakSound(), (this.block.stepSound.getVolume() + 0.7F) / 8.0F, this.block.stepSound.getPitch() * 0.5F);
                BlockUtils.destroyBlockPartially(this.theWorld, this.theGolem.getEntityId(), this.xx, this.yy, this.zz, (int)(9.0F * (1.0F - (float)this.delay / (float)this.maxDelay)));
             }
 
@@ -113,7 +113,7 @@ public class AIHarvestLogs extends EntityAIBase {
                int y = this.yy + y2;
                int z = this.zz + z2;
                if (!((float)Math.abs(this.theGolem.getHomePosition().posX - x) > this.distance) && !((float)Math.abs(this.theGolem.getHomePosition().posY - y) > this.distance) && !((float)Math.abs(this.theGolem.getHomePosition().posZ - z) > this.distance) && Utils.isWoodLog(this.theWorld, x, y, z)) {
-                  Vec3 var1 = Vec3.createVectorHelper((double)x, (double)y, (double)z);
+                  Vec3 var1 = Vec3.createVectorHelper(x, y, z);
                   if (var1 != null) {
                      this.xx = (int)var1.xCoord;
                      this.yy = (int)var1.yCoord;
@@ -138,7 +138,7 @@ public class AIHarvestLogs extends EntityAIBase {
 
    public void startExecuting() {
       this.count = 200;
-      this.theGolem.getNavigator().tryMoveToXYZ((double)this.xx + (double)0.5F, (double)this.yy + (double)0.5F, (double)this.zz + (double)0.5F, (double)this.theGolem.getAIMoveSpeed());
+      this.theGolem.getNavigator().tryMoveToXYZ((double)this.xx + (double)0.5F, (double)this.yy + (double)0.5F, (double)this.zz + (double)0.5F, this.theGolem.getAIMoveSpeed());
    }
 
    void harvest() {
@@ -156,11 +156,11 @@ public class AIHarvestLogs extends EntityAIBase {
          int y = (int)((float)(this.theGolem.getHomePosition().posY + rand.nextInt((int)(1.0F + this.distance))) - this.distance / 2.0F);
          int z = (int)((float)(this.theGolem.getHomePosition().posZ + rand.nextInt((int)(1.0F + this.distance * 2.0F))) - this.distance);
          if (Utils.isWoodLog(this.theWorld, x, y, z)) {
-            Vec3 v = Vec3.createVectorHelper((double)x, (double)y, (double)z);
+            Vec3 v = Vec3.createVectorHelper(x, y, z);
             double dist = this.theGolem.getDistanceSq((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F);
 
             for(int yy = 1; Utils.isWoodLog(this.theWorld, x, y - yy, z) && this.theGolem.getDistanceSq((double)x + (double)0.5F, (double)(y - yy) + (double)0.5F, (double)z + (double)0.5F) < dist; ++yy) {
-               v = Vec3.createVectorHelper((double)x, (double)(y - yy), (double)z);
+               v = Vec3.createVectorHelper(x, y - yy, z);
                dist = this.theGolem.getDistanceSq((double)x + (double)0.5F, (double)(y - yy) + (double)0.5F, (double)z + (double)0.5F);
             }
 

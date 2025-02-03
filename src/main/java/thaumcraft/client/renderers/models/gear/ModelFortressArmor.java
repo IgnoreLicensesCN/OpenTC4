@@ -552,11 +552,7 @@ public class ModelFortressArmor extends ModelBiped {
       this.Goggles.isHidden = !hasGoggles.containsKey(entity.getEntityId());
 
       for(int a = 0; a < 3; ++a) {
-         if (mask == a) {
-            this.Mask[a].isHidden = false;
-         } else {
-            this.Mask[a].isHidden = true;
-         }
+          this.Mask[a].isHidden = mask != a;
       }
 
       this.Scroll.isHidden = set < 3;

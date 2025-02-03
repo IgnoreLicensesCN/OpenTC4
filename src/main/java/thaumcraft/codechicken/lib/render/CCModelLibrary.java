@@ -13,8 +13,8 @@ public class CCModelLibrary {
    private static int i;
 
    private static void generateIcosahedron() {
-      Vector3[] verts = new Vector3[]{new Vector3((double)-1.0F, 1.618033988749894, (double)0.0F), new Vector3((double)1.0F, 1.618033988749894, (double)0.0F), new Vector3((double)1.0F, -1.618033988749894, (double)0.0F), new Vector3((double)-1.0F, -1.618033988749894, (double)0.0F), new Vector3((double)0.0F, (double)-1.0F, 1.618033988749894), new Vector3((double)0.0F, (double)1.0F, 1.618033988749894), new Vector3((double)0.0F, (double)1.0F, -1.618033988749894), new Vector3((double)0.0F, (double)-1.0F, -1.618033988749894), new Vector3(1.618033988749894, (double)0.0F, (double)-1.0F), new Vector3(1.618033988749894, (double)0.0F, (double)1.0F), new Vector3(-1.618033988749894, (double)0.0F, (double)1.0F), new Vector3(-1.618033988749894, (double)0.0F, (double)-1.0F)};
-      Quat quat = Quat.aroundAxis((double)0.0F, (double)0.0F, (double)1.0F, Math.atan(0.6180339887498951));
+      Vector3[] verts = new Vector3[]{new Vector3(-1.0F, 1.618033988749894, 0.0F), new Vector3(1.0F, 1.618033988749894, 0.0F), new Vector3(1.0F, -1.618033988749894, 0.0F), new Vector3(-1.0F, -1.618033988749894, 0.0F), new Vector3(0.0F, -1.0F, 1.618033988749894), new Vector3(0.0F, 1.0F, 1.618033988749894), new Vector3(0.0F, 1.0F, -1.618033988749894), new Vector3(0.0F, -1.0F, -1.618033988749894), new Vector3(1.618033988749894, 0.0F, -1.0F), new Vector3(1.618033988749894, 0.0F, 1.0F), new Vector3(-1.618033988749894, 0.0F, 1.0F), new Vector3(-1.618033988749894, 0.0F, -1.0F)};
+      Quat quat = Quat.aroundAxis(0.0F, 0.0F, 1.0F, Math.atan(0.6180339887498951));
 
       for(Vector3 vec : verts) {
          quat.rotate(vec);
@@ -23,26 +23,26 @@ public class CCModelLibrary {
       icosahedron4 = CCModel.newModel(4, 60);
       icosahedron7 = CCModel.newModel(7, 80);
       i = 0;
-      addIcosahedronTriangle(verts[1], (double)0.5F, (double)0.0F, verts[0], (double)0.0F, (double)0.25F, verts[5], (double)1.0F, (double)0.25F);
-      addIcosahedronTriangle(verts[1], (double)0.5F, (double)0.0F, verts[5], (double)0.0F, (double)0.25F, verts[9], (double)1.0F, (double)0.25F);
-      addIcosahedronTriangle(verts[1], (double)0.5F, (double)0.0F, verts[9], (double)0.0F, (double)0.25F, verts[8], (double)1.0F, (double)0.25F);
-      addIcosahedronTriangle(verts[1], (double)0.5F, (double)0.0F, verts[8], (double)0.0F, (double)0.25F, verts[6], (double)1.0F, (double)0.25F);
-      addIcosahedronTriangle(verts[1], (double)0.5F, (double)0.0F, verts[6], (double)0.0F, (double)0.25F, verts[0], (double)1.0F, (double)0.25F);
-      addIcosahedronTriangle(verts[0], (double)0.5F, (double)0.25F, verts[11], (double)0.0F, (double)0.75F, verts[10], (double)1.0F, (double)0.75F);
-      addIcosahedronTriangle(verts[5], (double)0.5F, (double)0.25F, verts[10], (double)0.0F, (double)0.75F, verts[4], (double)1.0F, (double)0.75F);
-      addIcosahedronTriangle(verts[9], (double)0.5F, (double)0.25F, verts[4], (double)0.0F, (double)0.75F, verts[2], (double)1.0F, (double)0.75F);
-      addIcosahedronTriangle(verts[8], (double)0.5F, (double)0.25F, verts[2], (double)0.0F, (double)0.75F, verts[7], (double)1.0F, (double)0.75F);
-      addIcosahedronTriangle(verts[6], (double)0.5F, (double)0.25F, verts[7], (double)0.0F, (double)0.75F, verts[11], (double)1.0F, (double)0.75F);
-      addIcosahedronTriangle(verts[2], (double)0.5F, (double)0.75F, verts[8], (double)0.0F, (double)0.25F, verts[9], (double)1.0F, (double)0.25F);
-      addIcosahedronTriangle(verts[7], (double)0.5F, (double)0.75F, verts[6], (double)0.0F, (double)0.25F, verts[8], (double)1.0F, (double)0.25F);
-      addIcosahedronTriangle(verts[11], (double)0.5F, (double)0.75F, verts[0], (double)0.0F, (double)0.25F, verts[6], (double)1.0F, (double)0.25F);
-      addIcosahedronTriangle(verts[10], (double)0.5F, (double)0.75F, verts[5], (double)0.0F, (double)0.25F, verts[0], (double)1.0F, (double)0.25F);
-      addIcosahedronTriangle(verts[4], (double)0.5F, (double)0.75F, verts[9], (double)0.0F, (double)0.25F, verts[5], (double)1.0F, (double)0.25F);
-      addIcosahedronTriangle(verts[3], (double)0.5F, (double)1.0F, verts[2], (double)0.0F, (double)0.75F, verts[4], (double)1.0F, (double)0.75F);
-      addIcosahedronTriangle(verts[3], (double)0.5F, (double)1.0F, verts[7], (double)0.0F, (double)0.75F, verts[2], (double)1.0F, (double)0.75F);
-      addIcosahedronTriangle(verts[3], (double)0.5F, (double)1.0F, verts[11], (double)0.0F, (double)0.75F, verts[7], (double)1.0F, (double)0.75F);
-      addIcosahedronTriangle(verts[3], (double)0.5F, (double)1.0F, verts[10], (double)0.0F, (double)0.75F, verts[11], (double)1.0F, (double)0.75F);
-      addIcosahedronTriangle(verts[3], (double)0.5F, (double)1.0F, verts[4], (double)0.0F, (double)0.75F, verts[10], (double)1.0F, (double)0.75F);
+      addIcosahedronTriangle(verts[1], 0.5F, 0.0F, verts[0], 0.0F, 0.25F, verts[5], 1.0F, 0.25F);
+      addIcosahedronTriangle(verts[1], 0.5F, 0.0F, verts[5], 0.0F, 0.25F, verts[9], 1.0F, 0.25F);
+      addIcosahedronTriangle(verts[1], 0.5F, 0.0F, verts[9], 0.0F, 0.25F, verts[8], 1.0F, 0.25F);
+      addIcosahedronTriangle(verts[1], 0.5F, 0.0F, verts[8], 0.0F, 0.25F, verts[6], 1.0F, 0.25F);
+      addIcosahedronTriangle(verts[1], 0.5F, 0.0F, verts[6], 0.0F, 0.25F, verts[0], 1.0F, 0.25F);
+      addIcosahedronTriangle(verts[0], 0.5F, 0.25F, verts[11], 0.0F, 0.75F, verts[10], 1.0F, 0.75F);
+      addIcosahedronTriangle(verts[5], 0.5F, 0.25F, verts[10], 0.0F, 0.75F, verts[4], 1.0F, 0.75F);
+      addIcosahedronTriangle(verts[9], 0.5F, 0.25F, verts[4], 0.0F, 0.75F, verts[2], 1.0F, 0.75F);
+      addIcosahedronTriangle(verts[8], 0.5F, 0.25F, verts[2], 0.0F, 0.75F, verts[7], 1.0F, 0.75F);
+      addIcosahedronTriangle(verts[6], 0.5F, 0.25F, verts[7], 0.0F, 0.75F, verts[11], 1.0F, 0.75F);
+      addIcosahedronTriangle(verts[2], 0.5F, 0.75F, verts[8], 0.0F, 0.25F, verts[9], 1.0F, 0.25F);
+      addIcosahedronTriangle(verts[7], 0.5F, 0.75F, verts[6], 0.0F, 0.25F, verts[8], 1.0F, 0.25F);
+      addIcosahedronTriangle(verts[11], 0.5F, 0.75F, verts[0], 0.0F, 0.25F, verts[6], 1.0F, 0.25F);
+      addIcosahedronTriangle(verts[10], 0.5F, 0.75F, verts[5], 0.0F, 0.25F, verts[0], 1.0F, 0.25F);
+      addIcosahedronTriangle(verts[4], 0.5F, 0.75F, verts[9], 0.0F, 0.25F, verts[5], 1.0F, 0.25F);
+      addIcosahedronTriangle(verts[3], 0.5F, 1.0F, verts[2], 0.0F, 0.75F, verts[4], 1.0F, 0.75F);
+      addIcosahedronTriangle(verts[3], 0.5F, 1.0F, verts[7], 0.0F, 0.75F, verts[2], 1.0F, 0.75F);
+      addIcosahedronTriangle(verts[3], 0.5F, 1.0F, verts[11], 0.0F, 0.75F, verts[7], 1.0F, 0.75F);
+      addIcosahedronTriangle(verts[3], 0.5F, 1.0F, verts[10], 0.0F, 0.75F, verts[11], 1.0F, 0.75F);
+      addIcosahedronTriangle(verts[3], 0.5F, 1.0F, verts[4], 0.0F, 0.75F, verts[10], 1.0F, 0.75F);
       icosahedron4.computeNormals().smoothNormals();
       icosahedron7.computeNormals().smoothNormals();
    }
@@ -55,7 +55,7 @@ public class CCModelLibrary {
    }
 
    public static Matrix4 getRenderMatrix(Vector3 position, Rotation rotation, double scale) {
-      return (new Matrix4()).translate(position).apply((Transformation)(new Scale(scale))).apply((Transformation)rotation);
+      return (new Matrix4()).translate(position).apply(new Scale(scale)).apply(rotation);
    }
 
    static {

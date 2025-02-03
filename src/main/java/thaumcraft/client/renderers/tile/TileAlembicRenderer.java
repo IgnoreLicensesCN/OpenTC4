@@ -84,7 +84,7 @@ public class TileAlembicRenderer extends TileEntitySpecialRenderer {
 
          GL11.glPushMatrix();
          GL11.glTranslatef(0.0F, 0.468F, -0.409F);
-         UtilsFX.renderQuadCenteredFromTexture((String)"textures/models/label.png", 0.27F, 1.0F, 1.0F, 1.0F, -99, 771, 1.0F);
+         UtilsFX.renderQuadCenteredFromTexture("textures/models/label.png", 0.27F, 1.0F, 1.0F, 1.0F, -99, 771, 1.0F);
          GL11.glPopMatrix();
          GL11.glPushMatrix();
          GL11.glTranslatef(0.0F, 0.468F, -0.41F);
@@ -102,7 +102,7 @@ public class TileAlembicRenderer extends TileEntitySpecialRenderer {
          for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             if (tile.canOutputTo(dir)) {
                TileEntity te = ThaumcraftApiHelper.getConnectableTile(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, dir);
-               if (te != null && te instanceof IEssentiaTransport && !(te instanceof TileTube)) {
+               if (te instanceof IEssentiaTransport && !(te instanceof TileTube)) {
                   GL11.glPushMatrix();
                   GL11.glTranslatef((float)par2 + 0.5F, (float)par4, (float)par6 + 0.5F);
                   switch (dir.ordinal()) {

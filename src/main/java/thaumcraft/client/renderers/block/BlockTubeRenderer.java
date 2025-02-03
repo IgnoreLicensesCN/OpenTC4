@@ -47,13 +47,13 @@ public class BlockTubeRenderer extends BlockRenderer implements ISimpleBlockRend
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
             TileTubeValve tc = new TileTubeValve();
             tc.facing = ForgeDirection.EAST;
-            TileEntityRendererDispatcher.instance.renderTileEntityAt(tc, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(tc, 0.0F, 0.0F, 0.0F, 0.0F);
             GL11.glEnable(32826);
          }
 
          if (metadata == 2) {
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileCentrifuge(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileCentrifuge(), 0.0F, 0.0F, 0.0F, 0.0F);
             GL11.glEnable(32826);
          }
 
@@ -77,10 +77,10 @@ public class BlockTubeRenderer extends BlockRenderer implements ISimpleBlockRend
 
          if (metadata == 7) {
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileEssentiaCrystalizer(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileEssentiaCrystalizer(), 0.0F, 0.0F, 0.0F, 0.0F);
             GL11.glEnable(32826);
          }
-      } catch (Exception var6) {
+      } catch (Exception ignored) {
       }
 
    }
@@ -205,7 +205,7 @@ public class BlockTubeRenderer extends BlockRenderer implements ISimpleBlockRend
             float r = 1.0F;
             float g = 1.0F;
             float b = 1.0F;
-            if (te != null && te instanceof TileTubeFilter && ((TileTubeFilter)te).aspectFilter != null) {
+            if (te instanceof TileTubeFilter && ((TileTubeFilter) te).aspectFilter != null) {
                Color c = new Color(((TileTubeFilter)te).aspectFilter.getColor());
                r = (float)c.getRed() / 255.0F;
                g = (float)c.getGreen() / 255.0F;

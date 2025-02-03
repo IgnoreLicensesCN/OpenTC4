@@ -60,7 +60,7 @@ public class ItemElementalAxe extends ItemAxe implements IRepairable {
    }
 
    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
-      return par2ItemStack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 2)) ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
+      return par2ItemStack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 2)) || super.getIsRepairable(par1ItemStack, par2ItemStack);
    }
 
    public EnumAction getItemUseAction(ItemStack itemstack) {
@@ -77,14 +77,14 @@ public class ItemElementalAxe extends ItemAxe implements IRepairable {
    }
 
    public void onUsingTick(ItemStack stack, EntityPlayer player, int count) {
-      ArrayList<Entity> stuff = EntityUtils.getEntitiesInRange(player.worldObj, player.posX, player.posY, player.posZ, player, EntityItem.class, (double)10.0F);
+      ArrayList<Entity> stuff = EntityUtils.getEntitiesInRange(player.worldObj, player.posX, player.posY, player.posZ, player, EntityItem.class, 10.0F);
       if (stuff != null && stuff.size() > 0) {
          for(Entity e : stuff) {
             if ((!(e instanceof EntityFollowingItem) || ((EntityFollowingItem)e).target == null) && !e.isDead && e instanceof EntityItem) {
                double d6 = e.posX - player.posX;
                double d8 = e.posY - player.posY + (double)(player.height / 2.0F);
                double d10 = e.posZ - player.posZ;
-               double d11 = (double)MathHelper.sqrt_double(d6 * d6 + d8 * d8 + d10 * d10);
+               double d11 = MathHelper.sqrt_double(d6 * d6 + d8 * d8 + d10 * d10);
                d6 /= d11;
                d8 /= d11;
                d10 /= d11;
@@ -129,8 +129,8 @@ public class ItemElementalAxe extends ItemAxe implements IRepairable {
       if (!player.isSneaking() && Utils.isWoodLog(world, x, y, z)) {
          if (!world.isRemote) {
             BlockUtils.breakFurthestBlock(world, x, y, z, bi, player, true, 10);
-            PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockBubble(x, y, z, (new Color(0.33F, 0.33F, 1.0F)).getRGB()), new NetworkRegistry.TargetPoint(world.provider.dimensionId, (double)x, (double)y, (double)z, (double)32.0F));
-            world.playSoundEffect((double)x, (double)y, (double)z, "thaumcraft:bubble", 0.15F, 1.0F);
+            PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockBubble(x, y, z, (new Color(0.33F, 0.33F, 1.0F)).getRGB()), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, y, z, 32.0F));
+            world.playSoundEffect(x, y, z, "thaumcraft:bubble", 0.15F, 1.0F);
          }
 
          itemstack.damageItem(1, player);

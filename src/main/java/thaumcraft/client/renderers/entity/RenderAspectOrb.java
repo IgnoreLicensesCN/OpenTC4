@@ -55,10 +55,10 @@ public class RenderAspectOrb extends Render {
       }
 
       tessellator.setNormal(0.0F, 1.0F, 0.0F);
-      tessellator.addVertexWithUV((double)(0.0F - f7), (double)(0.0F - f8), (double)0.0F, (double)f2, (double)f5);
-      tessellator.addVertexWithUV((double)(f6 - f7), (double)(0.0F - f8), (double)0.0F, (double)f3, (double)f5);
-      tessellator.addVertexWithUV((double)(f6 - f7), (double)(1.0F - f8), (double)0.0F, (double)f3, (double)f4);
-      tessellator.addVertexWithUV((double)(0.0F - f7), (double)(1.0F - f8), (double)0.0F, (double)f2, (double)f4);
+      tessellator.addVertexWithUV(0.0F - f7, 0.0F - f8, 0.0F, f2, f5);
+      tessellator.addVertexWithUV(f6 - f7, 0.0F - f8, 0.0F, f3, f5);
+      tessellator.addVertexWithUV(f6 - f7, 1.0F - f8, 0.0F, f3, f4);
+      tessellator.addVertexWithUV(0.0F - f7, 1.0F - f8, 0.0F, f2, f4);
       tessellator.draw();
       GL11.glDisable(3042);
       GL11.glDisable(32826);

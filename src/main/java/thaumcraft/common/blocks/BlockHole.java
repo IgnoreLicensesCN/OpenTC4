@@ -64,7 +64,7 @@ public class BlockHole extends BlockContainer {
    }
 
    public AxisAlignedBB getSelectedBoundingBoxFromPool(World w, int i, int j, int k) {
-      return AxisAlignedBB.getBoundingBox((double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F);
+      return AxisAlignedBB.getBoundingBox(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
    }
 
    public boolean renderAsNormalBlock() {

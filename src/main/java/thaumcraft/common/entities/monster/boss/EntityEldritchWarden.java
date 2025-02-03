@@ -52,10 +52,10 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements IRange
       super(p_i1745_1_);
       this.getNavigator().setBreakDoors(true);
       this.tasks.addTask(0, new EntityAISwimming(this));
-      this.tasks.addTask(2, new AILongRangeAttack(this, (double)3.0F, (double)1.0F, 20, 40, 24.0F));
+      this.tasks.addTask(2, new AILongRangeAttack(this, 3.0F, 1.0F, 20, 40, 24.0F));
       this.tasks.addTask(3, new AIAttackOnCollide(this, EntityLivingBase.class, 1.1, false));
       this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 0.8));
-      this.tasks.addTask(7, new EntityAIWander(this, (double)1.0F));
+      this.tasks.addTask(7, new EntityAIWander(this, 1.0F));
       this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
       this.tasks.addTask(8, new EntityAILookIdle(this));
       this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
@@ -82,9 +82,9 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements IRange
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)200.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(200.0F);
       this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.33);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)10.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(10.0F);
    }
 
    protected void entityInit() {
@@ -137,7 +137,7 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements IRange
 
          float x = (float)(this.posX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F));
          float z = (float)(this.posZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F));
-         Thaumcraft.proxy.wispFXEG(this.worldObj, (double)x, (double)((float)(this.posY + (double)0.25F * (double)this.height)), (double)z, this);
+         Thaumcraft.proxy.wispFXEG(this.worldObj, x, (float)(this.posY + (double)0.25F * (double)this.height), z, this);
          if (this.spawnTimer > 0) {
             float he = Math.max(1.0F, this.height * ((float)(150 - this.spawnTimer) / 150.0F));
 
@@ -184,16 +184,16 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements IRange
          int k = MathHelper.floor_double(this.posZ);
 
          for(int q = 0; q < 180 / d; ++q) {
-            double radians = Math.toRadians((double)(q * 2 * d));
+            double radians = Math.toRadians(q * 2 * d);
             int deltaX = (int)(radius * Math.cos(radians));
             int deltaZ = (int)(radius * Math.sin(radians));
             if (this.worldObj.isAirBlock(i + deltaX, j, k + deltaZ) && this.worldObj.isBlockNormalCubeDefault(i + deltaX, j - 1, k + deltaZ, false)) {
                this.worldObj.setBlock(i + deltaX, j, k + deltaZ, ConfigBlocks.blockAiry, 11, 3);
                this.worldObj.scheduleBlockUpdate(i + deltaX, j, k + deltaZ, ConfigBlocks.blockAiry, 250 + this.rand.nextInt(150));
                if (this.rand.nextFloat() < 0.3F) {
-                  PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockArc(i + deltaX, j, k + deltaZ, this.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, (double)(i + deltaX), (double)j, (double)(k + deltaZ), (double)32.0F));
+                  PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockArc(i + deltaX, j, k + deltaZ, this.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, i + deltaX, j, k + deltaZ, 32.0F));
                } else {
-                  PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(i + deltaX, j, k + deltaZ, 8388736), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, (double)(i + deltaX), (double)j, (double)(k + deltaZ), (double)32.0F));
+                  PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(i + deltaX, j, k + deltaZ, 8388736), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, i + deltaX, j, k + deltaZ, 32.0F));
                }
             }
          }
@@ -205,7 +205,7 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements IRange
    }
 
    protected void teleportHome() {
-      EnderTeleportEvent event = new EnderTeleportEvent(this, (double)this.getHomePosition().posX, (double)this.getHomePosition().posY, (double)this.getHomePosition().posZ, 0.0F);
+      EnderTeleportEvent event = new EnderTeleportEvent(this, this.getHomePosition().posX, this.getHomePosition().posY, this.getHomePosition().posZ, 0.0F);
       if (!MinecraftForge.EVENT_BUS.post(event)) {
          double d3 = this.posX;
          double d4 = this.posY;
@@ -254,7 +254,7 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements IRange
                double d7 = d3 + (this.posX - d3) * d6 + (this.rand.nextDouble() - (double)0.5F) * (double)this.width * (double)2.0F;
                double d8 = d4 + (this.posY - d4) * d6 + this.rand.nextDouble() * (double)this.height;
                double d9 = d5 + (this.posZ - d5) * d6 + (this.rand.nextDouble() - (double)0.5F) * (double)this.width * (double)2.0F;
-               this.worldObj.spawnParticle("portal", d7, d8, d9, (double)f, (double)f1, (double)f2);
+               this.worldObj.spawnParticle("portal", d7, d8, d9, f, f1, f2);
             }
 
             this.worldObj.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0F, 1.0F);
@@ -298,9 +298,9 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements IRange
          this.lastBlast = !this.lastBlast;
          this.worldObj.setEntityState(this, (byte)(this.lastBlast ? 16 : 15));
          int rr = this.lastBlast ? 90 : 180;
-         double xx = (double)(MathHelper.cos((this.rotationYaw + (float)rr) % 360.0F / 180.0F * (float)Math.PI) * 0.5F);
+         double xx = MathHelper.cos((this.rotationYaw + (float)rr) % 360.0F / 180.0F * (float)Math.PI) * 0.5F;
          double yy = 0.13;
-         double zz = (double)(MathHelper.sin((this.rotationYaw + (float)rr) % 360.0F / 180.0F * (float)Math.PI) * 0.5F);
+         double zz = MathHelper.sin((this.rotationYaw + (float)rr) % 360.0F / 180.0F * (float)Math.PI) * 0.5F;
          blast.setPosition(blast.posX - xx, blast.posY - yy, blast.posZ - zz);
          double d0 = entitylivingbase.posX + entitylivingbase.motionX - this.posX;
          double d1 = entitylivingbase.posY - this.posY - (double)(entitylivingbase.height / 2.0F);
@@ -309,13 +309,13 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements IRange
          this.playSound("thaumcraft:egattack", 2.0F, 1.0F + this.rand.nextFloat() * 0.1F);
          this.worldObj.spawnEntityInWorld(blast);
       } else if (this.canEntityBeSeen(entitylivingbase)) {
-         PacketHandler.INSTANCE.sendToAllAround(new PacketFXSonic(this.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.posX, this.posY, this.posZ, (double)32.0F));
-         entitylivingbase.addVelocity((double)(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * 1.5F), 0.1, (double)(MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * 1.5F));
+         PacketHandler.INSTANCE.sendToAllAround(new PacketFXSonic(this.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.posX, this.posY, this.posZ, 32.0F));
+         entitylivingbase.addVelocity(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * 1.5F, 0.1, MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * 1.5F);
 
          try {
             entitylivingbase.addPotionEffect(new PotionEffect(Potion.wither.id, 400, 0));
             entitylivingbase.addPotionEffect(new PotionEffect(Potion.weakness.id, 400, 0));
-         } catch (Exception var17) {
+         } catch (Exception ignored) {
          }
 
          if (entitylivingbase instanceof EntityPlayer) {
@@ -349,7 +349,7 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements IRange
    }
 
    public boolean canAttackClass(Class clazz) {
-      return clazz == EntityEldritchGuardian.class ? false : super.canAttackClass(clazz);
+      return clazz != EntityEldritchGuardian.class && super.canAttackClass(clazz);
    }
 
    protected String getLivingSound() {

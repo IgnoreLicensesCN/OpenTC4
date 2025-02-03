@@ -68,7 +68,7 @@ public class ContainerArcaneWorkbench extends Container {
    }
 
    public boolean canInteractWith(EntityPlayer par1EntityPlayer) {
-      return this.tileEntity.getWorldObj().getTileEntity(this.tileEntity.xCoord, this.tileEntity.yCoord, this.tileEntity.zCoord) != this.tileEntity ? false : par1EntityPlayer.getDistanceSq((double)this.tileEntity.xCoord + (double)0.5F, (double)this.tileEntity.yCoord + (double)0.5F, (double)this.tileEntity.zCoord + (double)0.5F) <= (double)64.0F;
+      return this.tileEntity.getWorldObj().getTileEntity(this.tileEntity.xCoord, this.tileEntity.yCoord, this.tileEntity.zCoord) == this.tileEntity && par1EntityPlayer.getDistanceSq((double) this.tileEntity.xCoord + (double) 0.5F, (double) this.tileEntity.yCoord + (double) 0.5F, (double) this.tileEntity.zCoord + (double) 0.5F) <= (double) 64.0F;
    }
 
    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par1) {
@@ -108,7 +108,7 @@ public class ContainerArcaneWorkbench extends Container {
          }
 
          if (var4.stackSize == 0) {
-            var3.putStack((ItemStack)null);
+            var3.putStack(null);
          } else {
             var3.onSlotChanged();
          }

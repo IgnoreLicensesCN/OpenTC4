@@ -71,13 +71,13 @@ public class ItemHandMirror extends Item {
             return super.onItemUseFirst(itemstack, player, world, x, y, z, par7, par8, par9, par10);
          } else {
             TileEntity tm = world.getTileEntity(x, y, z);
-            if (tm != null && tm instanceof TileMirror) {
+            if (tm instanceof TileMirror) {
                itemstack.setTagInfo("linkX", new NBTTagInt(tm.xCoord));
                itemstack.setTagInfo("linkY", new NBTTagInt(tm.yCoord));
                itemstack.setTagInfo("linkZ", new NBTTagInt(tm.zCoord));
                itemstack.setTagInfo("linkDim", new NBTTagInt(world.provider.dimensionId));
                itemstack.setTagInfo("dimname", new NBTTagString(DimensionManager.getProvider(world.provider.dimensionId).getDimensionName()));
-               world.playSoundEffect((double)x, (double)y, (double)z, "thaumcraft:jar", 1.0F, 2.0F);
+               world.playSoundEffect(x, y, z, "thaumcraft:jar", 1.0F, 2.0F);
                player.addChatMessage(new ChatComponentText("§5§o" + StatCollector.translateToLocal("tc.handmirrorlinked")));
                player.inventoryContainer.detectAndSendChanges();
             }
@@ -101,8 +101,8 @@ public class ItemHandMirror extends Item {
          }
 
          TileEntity te = targetWorld.getTileEntity(lx, ly, lz);
-         if (te == null || !(te instanceof TileMirror)) {
-            par1ItemStack.setTagCompound((NBTTagCompound)null);
+         if (!(te instanceof TileMirror)) {
+            par1ItemStack.setTagCompound(null);
             par2World.playSoundAtEntity(par3EntityPlayer, "thaumcraft:zap", 1.0F, 0.8F);
             par3EntityPlayer.addChatMessage(new ChatComponentText("§5§o" + StatCollector.translateToLocal("tc.handmirrorerror")));
             return super.onItemRightClick(par1ItemStack, par2World, par3EntityPlayer);
@@ -138,13 +138,13 @@ public class ItemHandMirror extends Item {
             return false;
          } else {
             TileEntity te = targetWorld.getTileEntity(lx, ly, lz);
-            if (te != null && te instanceof TileMirror) {
+            if (te instanceof TileMirror) {
                TileMirror tm = (TileMirror)te;
                ForgeDirection linkedFacing = ForgeDirection.getOrientation(targetWorld.getBlockMetadata(lx, ly, lz));
                EntityItem ie2 = new EntityItem(targetWorld, (double)lx + (double)0.5F - (double)linkedFacing.offsetX * 0.3, (double)ly + (double)0.5F - (double)linkedFacing.offsetY * 0.3, (double)lz + (double)0.5F - (double)linkedFacing.offsetZ * 0.3, items.copy());
-               ie2.motionX = (double)((float)linkedFacing.offsetX * 0.15F);
-               ie2.motionY = (double)((float)linkedFacing.offsetY * 0.15F);
-               ie2.motionZ = (double)((float)linkedFacing.offsetZ * 0.15F);
+               ie2.motionX = (float)linkedFacing.offsetX * 0.15F;
+               ie2.motionY = (float)linkedFacing.offsetY * 0.15F;
+               ie2.motionZ = (float)linkedFacing.offsetZ * 0.15F;
                ie2.timeUntilPortal = 20;
                targetWorld.spawnEntityInWorld(ie2);
                ItemStack var13 = null;
@@ -152,7 +152,7 @@ public class ItemHandMirror extends Item {
                targetWorld.addBlockEvent(lx, ly, lz, ConfigBlocks.blockMirror, 1, 0);
                return true;
             } else {
-               mirror.setTagCompound((NBTTagCompound)null);
+               mirror.setTagCompound(null);
                worldObj.playSoundAtEntity(player, "thaumcraft:zap", 1.0F, 0.8F);
                player.addChatMessage(new ChatComponentText("§5§o" + StatCollector.translateToLocal("tc.handmirrorerror")));
                return false;

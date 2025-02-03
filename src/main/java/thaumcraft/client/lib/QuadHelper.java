@@ -17,9 +17,9 @@ public class QuadHelper {
    }
 
    public static QuadHelper setAxis(Vec3 vec, double angle) {
-      angle *= (double)0.5F;
-      double d4 = (double)MathHelper.sin((float)angle);
-      return new QuadHelper((double)MathHelper.cos((float)angle), vec.xCoord * d4, vec.yCoord * d4, vec.zCoord * d4);
+      angle *= 0.5F;
+      double d4 = MathHelper.sin((float)angle);
+      return new QuadHelper(MathHelper.cos((float)angle), vec.xCoord * d4, vec.yCoord * d4, vec.zCoord * d4);
    }
 
    public void rotate(Vec3 vec) {

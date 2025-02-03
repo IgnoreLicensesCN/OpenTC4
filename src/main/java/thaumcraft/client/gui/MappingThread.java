@@ -34,7 +34,7 @@ public class MappingThread implements Runnable {
                   GuiResearchRecipe.putToCache(ScanManager.generateItemHash(Item.getItemFromBlock(b), a), new ItemStack(b, 1, a));
                }
             }
-         } catch (Exception var7) {
+         } catch (Exception ignored) {
          }
       }
 

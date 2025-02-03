@@ -36,10 +36,10 @@ public class TileDeconstructionTableRenderer extends TileEntitySpecialRenderer {
       GL11.glPushMatrix();
       GL11.glTranslatef((float)par2 + 0.5F, (float)par4 + 0.92F, (float)par6 + 0.5F);
       GL11.glScaled(0.8, 0.8, 0.8);
-      EntityItem entityitem = new EntityItem(table.getWorldObj(), (double)0.0F, (double)0.0F, (double)0.0F, this.tm);
+      EntityItem entityitem = new EntityItem(table.getWorldObj(), 0.0F, 0.0F, 0.0F, this.tm);
       entityitem.hoverStart = 0.0F;
       RenderItem.renderInFrame = true;
-      RenderManager.instance.renderEntityWithPosYaw(entityitem, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F, 0.0F);
+      RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
       RenderItem.renderInFrame = false;
       GL11.glPopMatrix();
       float ticks = (float)Minecraft.getMinecraft().renderViewEntity.ticksExisted + par8;
@@ -52,10 +52,10 @@ public class TileDeconstructionTableRenderer extends TileEntitySpecialRenderer {
          GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.75F);
          ItemStack is = table.getStackInSlot(0).copy();
          is.stackSize = 1;
-         entityitem = new EntityItem(table.getWorldObj(), (double)0.0F, (double)0.0F, (double)0.0F, is);
+         entityitem = new EntityItem(table.getWorldObj(), 0.0F, 0.0F, 0.0F, is);
          entityitem.hoverStart = MathHelper.sin(ticks / 14.0F) * 0.2F + 0.2F;
          RenderItem.renderInFrame = true;
-         RenderManager.instance.renderEntityWithPosYaw(entityitem, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F, 0.0F);
+         RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
          RenderItem.renderInFrame = false;
          GL11.glDisable(3042);
          GL11.glPopMatrix();
@@ -67,7 +67,7 @@ public class TileDeconstructionTableRenderer extends TileEntitySpecialRenderer {
          GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
          GL11.glRotatef(ticks % 360.0F, 0.0F, 0.0F, 1.0F);
          GL11.glScaled(0.024, 0.024, 0.024);
-         UtilsFX.drawTag(-8, -8, table.aspect, 0.0F, 0, (double)0.0F, 1, 0.8F, false);
+         UtilsFX.drawTag(-8, -8, table.aspect, 0.0F, 0, 0.0F, 1, 0.8F, false);
          GL11.glPopMatrix();
       }
 

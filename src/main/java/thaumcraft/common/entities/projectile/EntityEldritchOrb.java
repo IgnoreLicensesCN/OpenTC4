@@ -51,19 +51,19 @@ public class EntityEldritchOrb extends EntityThrowable {
 
    protected void onImpact(MovingObjectPosition mop) {
       if (!this.worldObj.isRemote && this.getThrower() != null) {
-         List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this.getThrower(), this.boundingBox.expand((double)2.0F, (double)2.0F, (double)2.0F));
+         List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this.getThrower(), this.boundingBox.expand(2.0F, 2.0F, 2.0F));
 
-         for(int i = 0; i < list.size(); ++i) {
-            Entity entity1 = (Entity)list.get(i);
-            if (entity1 instanceof EntityLivingBase && !((EntityLivingBase)entity1).isEntityUndead()) {
-               ((EntityLivingBase)entity1).attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, this.getThrower()), (float)this.getThrower().getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue() * 0.666F);
+          for (Object o : list) {
+              Entity entity1 = (Entity) o;
+              if (entity1 instanceof EntityLivingBase && !((EntityLivingBase) entity1).isEntityUndead()) {
+                  entity1.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, this.getThrower()), (float) this.getThrower().getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue() * 0.666F);
 
-               try {
-                  ((EntityLivingBase)entity1).addPotionEffect(new PotionEffect(Potion.weakness.id, 160, 0));
-               } catch (Exception var6) {
-               }
-            }
-         }
+                  try {
+                      ((EntityLivingBase) entity1).addPotionEffect(new PotionEffect(Potion.weakness.id, 160, 0));
+                  } catch (Exception ignored) {
+                  }
+              }
+          }
 
          this.worldObj.playSoundAtEntity(this, "random.fizz", 0.5F, 2.6F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.8F);
          this.ticksExisted = 100;

@@ -6,7 +6,7 @@ import thaumcraft.codechicken.lib.vec.Vector3;
 
 public class LightModel implements CCRenderState.IVertexOperation {
    public static final int operationIndex = CCRenderState.registerOperation();
-   public static LightModel standardLightModel = (new LightModel()).setAmbient(new Vector3(0.4, 0.4, 0.4)).addLight((new Light(new Vector3(0.2, (double)1.0F, -0.7))).setDiffuse(new Vector3(0.6, 0.6, 0.6))).addLight((new Light(new Vector3(-0.2, (double)1.0F, 0.7))).setDiffuse(new Vector3(0.6, 0.6, 0.6)));
+   public static LightModel standardLightModel = (new LightModel()).setAmbient(new Vector3(0.4, 0.4, 0.4)).addLight((new Light(new Vector3(0.2, 1.0F, -0.7))).setDiffuse(new Vector3(0.6, 0.6, 0.6))).addLight((new Light(new Vector3(-0.2, 1.0F, 0.7))).setDiffuse(new Vector3(0.6, 0.6, 0.6)));
    private Vector3 ambient = new Vector3();
    private Light[] lights = new Light[8];
    private int lightCount;
@@ -34,15 +34,15 @@ public class LightModel implements CCRenderState.IVertexOperation {
       }
 
       if (n_colour.x > (double)1.0F) {
-         n_colour.x = (double)1.0F;
+         n_colour.x = 1.0F;
       }
 
       if (n_colour.y > (double)1.0F) {
-         n_colour.y = (double)1.0F;
+         n_colour.y = 1.0F;
       }
 
       if (n_colour.z > (double)1.0F) {
-         n_colour.z = (double)1.0F;
+         n_colour.z = 1.0F;
       }
 
       n_colour.multiply((double)(colour >>> 24) / (double)255.0F, (double)(colour >> 16 & 255) / (double)255.0F, (double)(colour >> 8 & 255) / (double)255.0F);

@@ -30,8 +30,8 @@ public class EntityShockOrb extends EntityThrowable {
 
    protected void onImpact(MovingObjectPosition mop) {
       if (!this.worldObj.isRemote) {
-         for(Entity e : EntityUtils.getEntitiesInRange(this.worldObj, this.posX, this.posY, this.posZ, this, Entity.class, (double)this.area)) {
-            if (EntityUtils.canEntityBeSeen(this, (Entity)e)) {
+         for(Entity e : EntityUtils.getEntitiesInRange(this.worldObj, this.posX, this.posY, this.posZ, this, Entity.class, this.area)) {
+            if (EntityUtils.canEntityBeSeen(this, e)) {
                e.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, this.getThrower()), (float)this.damage);
             }
          }

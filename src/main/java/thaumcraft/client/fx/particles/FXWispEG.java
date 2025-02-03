@@ -12,13 +12,13 @@ import org.lwjgl.opengl.GL11;
 
 public class FXWispEG extends EntityFX {
    Entity target = null;
-   double rx = (double)0.0F;
-   double ry = (double)0.0F;
-   double rz = (double)0.0F;
+   double rx = 0.0F;
+   double ry = 0.0F;
+   double rz = 0.0F;
    public int blendmode = 1;
 
    public FXWispEG(World worldObj, double posX, double posY, double posZ, Entity target2) {
-      super(worldObj, posX, posY, posZ, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(worldObj, posX, posY, posZ, 0.0F, 0.0F, 0.0F);
       this.target = target2;
       this.motionX = this.rand.nextGaussian() * 0.03;
       this.motionY = -0.05;
@@ -50,7 +50,7 @@ public class FXWispEG extends EntityFX {
       Entity e = Minecraft.getMinecraft().renderViewEntity;
       float agescale = 1.0F - (float)this.particleAge / (float)this.particleMaxAge;
       float d6 = 1024.0F;
-      float base = (float)((double)1.0F - Math.min((double)d6, this.getDistanceSq(e.posX, e.posY, e.posZ)) / (double)d6);
+      float base = (float)((double)1.0F - Math.min(d6, this.getDistanceSq(e.posX, e.posY, e.posZ)) / (double)d6);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.75F * base);
       float f10 = 0.5F * this.particleScale;
       float f11 = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)f - interpPosX);
@@ -62,10 +62,10 @@ public class FXWispEG extends EntityFX {
       float var11 = var10 + 0.0624375F;
       tessellator.setBrightness(240);
       tessellator.setColorRGBA_F(this.particleRed, this.particleGreen, this.particleBlue, 0.2F * agescale * base);
-      tessellator.addVertexWithUV((double)(f11 - f1 * f10 - f4 * f10), (double)(f12 - f2 * f10), (double)(f13 - f3 * f10 - f5 * f10), (double)var9, (double)var11);
-      tessellator.addVertexWithUV((double)(f11 - f1 * f10 + f4 * f10), (double)(f12 + f2 * f10), (double)(f13 - f3 * f10 + f5 * f10), (double)var9, (double)var10);
-      tessellator.addVertexWithUV((double)(f11 + f1 * f10 + f4 * f10), (double)(f12 + f2 * f10), (double)(f13 + f3 * f10 + f5 * f10), (double)var8, (double)var10);
-      tessellator.addVertexWithUV((double)(f11 + f1 * f10 - f4 * f10), (double)(f12 - f2 * f10), (double)(f13 + f3 * f10 - f5 * f10), (double)var8, (double)var11);
+      tessellator.addVertexWithUV(f11 - f1 * f10 - f4 * f10, f12 - f2 * f10, f13 - f3 * f10 - f5 * f10, var9, var11);
+      tessellator.addVertexWithUV(f11 - f1 * f10 + f4 * f10, f12 + f2 * f10, f13 - f3 * f10 + f5 * f10, var9, var10);
+      tessellator.addVertexWithUV(f11 + f1 * f10 + f4 * f10, f12 + f2 * f10, f13 + f3 * f10 + f5 * f10, var8, var10);
+      tessellator.addVertexWithUV(f11 + f1 * f10 - f4 * f10, f12 - f2 * f10, f13 + f3 * f10 - f5 * f10, var8, var11);
    }
 
    public int getFXLayer() {
@@ -83,9 +83,9 @@ public class FXWispEG extends EntityFX {
 
       this.pushOutOfBlocks(this.posX, this.posY, this.posZ);
       this.moveEntity(this.motionX, this.motionY, this.motionZ);
-      this.motionX *= (double)0.98F;
-      this.motionY *= (double)0.98F;
-      this.motionZ *= (double)0.98F;
+      this.motionX *= 0.98F;
+      this.motionY *= 0.98F;
+      this.motionZ *= 0.98F;
       if (this.onGround) {
          this.motionX *= 0.8500000190734863;
          this.motionZ *= 0.8500000190734863;
@@ -112,7 +112,7 @@ public class FXWispEG extends EntityFX {
          boolean var20 = !this.worldObj.isBlockNormalCubeDefault(var7, var8, var9 - 1, true);
          boolean var21 = !this.worldObj.isBlockNormalCubeDefault(var7, var8, var9 + 1, true);
          byte var22 = -1;
-         double var23 = (double)9999.0F;
+         double var23 = 9999.0F;
          if (var16 && var10 < var23) {
             var23 = var10;
             var22 = 0;
@@ -146,33 +146,33 @@ public class FXWispEG extends EntityFX {
          float var25 = this.rand.nextFloat() * 0.05F + 0.025F;
          float var26 = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F;
          if (var22 == 0) {
-            this.motionX = (double)(-var25);
-            this.motionY = this.motionZ = (double)var26;
+            this.motionX = -var25;
+            this.motionY = this.motionZ = var26;
          }
 
          if (var22 == 1) {
-            this.motionX = (double)var25;
-            this.motionY = this.motionZ = (double)var26;
+            this.motionX = var25;
+            this.motionY = this.motionZ = var26;
          }
 
          if (var22 == 2) {
-            this.motionY = (double)(-var25);
-            this.motionX = this.motionZ = (double)var26;
+            this.motionY = -var25;
+            this.motionX = this.motionZ = var26;
          }
 
          if (var22 == 3) {
-            this.motionY = (double)var25;
-            this.motionX = this.motionZ = (double)var26;
+            this.motionY = var25;
+            this.motionX = this.motionZ = var26;
          }
 
          if (var22 == 4) {
-            this.motionZ = (double)(-var25);
-            this.motionY = this.motionX = (double)var26;
+            this.motionZ = -var25;
+            this.motionY = this.motionX = var26;
          }
 
          if (var22 == 5) {
-            this.motionZ = (double)var25;
-            this.motionY = this.motionX = (double)var26;
+            this.motionZ = var25;
+            this.motionY = this.motionX = var26;
          }
 
          return true;

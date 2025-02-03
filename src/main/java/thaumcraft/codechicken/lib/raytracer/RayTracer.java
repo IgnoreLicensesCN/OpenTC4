@@ -153,7 +153,7 @@ public class RayTracer {
          mop.blockY = pos.y;
          mop.blockZ = pos.z;
          if (block != null) {
-            this.c_cuboid.add(new Vector3((double)(-pos.x), (double)(-pos.y), (double)(-pos.z))).setBlockBounds(block);
+            this.c_cuboid.add(new Vector3(-pos.x, -pos.y, -pos.z)).setBlockBounds(block);
          }
       }
 
@@ -190,7 +190,7 @@ public class RayTracer {
 
    @SideOnly(Side.CLIENT)
    private static double getBlockReachDistance_client() {
-      return (double)Minecraft.getMinecraft().playerController.getBlockReachDistance();
+      return Minecraft.getMinecraft().playerController.getBlockReachDistance();
    }
 
    public static MovingObjectPosition reTrace(World world, EntityPlayer player) {
@@ -207,9 +207,9 @@ public class RayTracer {
    public static Vec3 getCorrectedHeadVec(EntityPlayer player) {
       Vec3 v = Vec3.createVectorHelper(player.posX, player.posY, player.posZ);
       if (player.worldObj.isRemote) {
-         v.yCoord += (double)(player.getEyeHeight() - player.getDefaultEyeHeight());
+         v.yCoord += player.getEyeHeight() - player.getDefaultEyeHeight();
       } else {
-         v.yCoord += (double)player.getEyeHeight();
+         v.yCoord += player.getEyeHeight();
          if (player instanceof EntityPlayerMP && player.isSneaking()) {
             v.yCoord -= 0.08;
          }

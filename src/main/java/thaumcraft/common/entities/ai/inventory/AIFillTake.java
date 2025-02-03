@@ -49,7 +49,7 @@ public class AIFillTake extends EntityAIBase {
                            if (Config.golemChestInteract) {
                               this.inv.openInventory();
                            }
-                        } catch (Exception var18) {
+                        } catch (Exception ignored) {
                         }
 
                         this.countChest = 5;
@@ -84,7 +84,7 @@ public class AIFillTake extends EntityAIBase {
          if (this.inv != null && Config.golemChestInteract) {
             this.inv.closeInventory();
          }
-      } catch (Exception var2) {
+      } catch (Exception ignored) {
       }
 
    }

@@ -33,7 +33,7 @@ public class EntityTaintSpore extends EntityMob implements ITaintedMob, IEntityA
 
    protected void entityInit() {
       super.entityInit();
-      this.dataWatcher.addObject(16, new Byte((byte)1));
+      this.dataWatcher.addObject(16, (byte) 1);
    }
 
    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
@@ -47,7 +47,7 @@ public class EntityTaintSpore extends EntityMob implements ITaintedMob, IEntityA
    }
 
    public void setSporeSize(int par1) {
-      this.dataWatcher.updateObject(16, new Byte((byte)par1));
+      this.dataWatcher.updateObject(16, (byte) par1);
       float size = Math.max(0.15F * (float)par1, 0.5F);
       this.setSize(size, size);
       this.setPosition(this.posX, this.posY, this.posZ);
@@ -60,8 +60,8 @@ public class EntityTaintSpore extends EntityMob implements ITaintedMob, IEntityA
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)1.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)1.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(1.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1.0F);
    }
 
    public float getShadowSize() {
@@ -77,10 +77,10 @@ public class EntityTaintSpore extends EntityMob implements ITaintedMob, IEntityA
    }
 
    public void moveEntity(double par1, double par3, double par5) {
-      par1 = (double)0.0F;
-      par5 = (double)0.0F;
+      par1 = 0.0F;
+      par5 = 0.0F;
       if (par3 > (double)0.0F) {
-         par3 = (double)0.0F;
+         par3 = 0.0F;
       }
 
       int x = MathHelper.floor_double(this.posX);
@@ -195,7 +195,7 @@ public class EntityTaintSpore extends EntityMob implements ITaintedMob, IEntityA
    public void readSpawnData(ByteBuf data) {
       try {
          this.displaySize = data.readFloat();
-      } catch (Exception var3) {
+      } catch (Exception ignored) {
       }
 
    }

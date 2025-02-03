@@ -34,8 +34,8 @@ public class TileTubeBufferRenderer extends TileEntitySpecialRenderer {
                   GL11.glColor3f(0.3F, 0.3F, 1.0F);
                }
 
-               GL11.glScaled(1.2, (double)1.0F, 1.2);
-               GL11.glTranslated((double)0.0F, (double)-0.5F, (double)0.0F);
+               GL11.glScaled(1.2, 1.0F, 1.2);
+               GL11.glTranslated(0.0F, -0.5F, 0.0F);
                this.model.render();
                GL11.glPopMatrix();
                GL11.glPopMatrix();

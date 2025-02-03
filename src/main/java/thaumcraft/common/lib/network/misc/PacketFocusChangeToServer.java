@@ -42,7 +42,7 @@ public class PacketFocusChangeToServer implements IMessage, IMessageHandler<Pack
       World world = DimensionManager.getWorld(message.dim);
       if (world != null && (ctx.getServerHandler().playerEntity == null || ctx.getServerHandler().playerEntity.getEntityId() == message.playerid)) {
          Entity player = world.getEntityByID(message.playerid);
-         if (player != null && player instanceof EntityPlayer && ((EntityPlayer)player).getHeldItem() != null && ((EntityPlayer)player).getHeldItem().getItem() instanceof ItemWandCasting && !((ItemWandCasting)((EntityPlayer)player).getHeldItem().getItem()).isSceptre(((EntityPlayer)player).getHeldItem())) {
+         if (player instanceof EntityPlayer && ((EntityPlayer) player).getHeldItem() != null && ((EntityPlayer) player).getHeldItem().getItem() instanceof ItemWandCasting && !((ItemWandCasting) ((EntityPlayer) player).getHeldItem().getItem()).isSceptre(((EntityPlayer) player).getHeldItem())) {
             WandManager.changeFocus(((EntityPlayer)player).getHeldItem(), world, (EntityPlayer)player, message.focus);
          }
 

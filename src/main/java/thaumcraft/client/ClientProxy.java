@@ -334,11 +334,11 @@ public class ClientProxy extends CommonProxy {
       if (world instanceof WorldClient) {
          switch (ID) {
             case 0:
-               return new GuiGolem(player, (EntityGolemBase)((WorldClient)world).getEntityByID(x));
+               return new GuiGolem(player, (EntityGolemBase) world.getEntityByID(x));
             case 1:
-               return new GuiPech(player.inventory, world, (EntityPech)((WorldClient)world).getEntityByID(x));
+               return new GuiPech(player.inventory, world, (EntityPech) world.getEntityByID(x));
             case 2:
-               return new GuiTravelingTrunk(player, (EntityTravelingTrunk)((WorldClient)world).getEntityByID(x));
+               return new GuiTravelingTrunk(player, (EntityTravelingTrunk) world.getEntityByID(x));
             case 3:
                return new GuiThaumatorium(player.inventory, (TileThaumatorium)world.getTileEntity(x, y, z));
             case 4:
@@ -580,14 +580,14 @@ public class ClientProxy extends CommonProxy {
             b = 0.33F + world.rand.nextFloat() * 0.67F;
          }
 
-         Thaumcraft.proxy.drawGenericParticles(world, (double)((float)x - 0.1F + world.rand.nextFloat() * 1.2F), (double)((float)y - 0.1F + world.rand.nextFloat() * 1.2F), (double)((float)z - 0.1F + world.rand.nextFloat() * 1.2F), (double)0.0F, (double)world.rand.nextFloat() * 0.02, (double)0.0F, r - 0.2F + world.rand.nextFloat() * 0.4F, g - 0.2F + world.rand.nextFloat() * 0.4F, b - 0.2F + world.rand.nextFloat() * 0.4F, 0.9F, false, 112, 9, 1, 5 + world.rand.nextInt(8), world.rand.nextInt(10), 0.7F + world.rand.nextFloat() * 0.4F);
+         Thaumcraft.proxy.drawGenericParticles(world, (float)x - 0.1F + world.rand.nextFloat() * 1.2F, (float)y - 0.1F + world.rand.nextFloat() * 1.2F, (float)z - 0.1F + world.rand.nextFloat() * 1.2F, 0.0F, (double)world.rand.nextFloat() * 0.02, 0.0F, r - 0.2F + world.rand.nextFloat() * 0.4F, g - 0.2F + world.rand.nextFloat() * 0.4F, b - 0.2F + world.rand.nextFloat() * 0.4F, 0.9F, false, 112, 9, 1, 5 + world.rand.nextInt(8), world.rand.nextInt(10), 0.7F + world.rand.nextFloat() * 0.4F);
       }
 
    }
 
    public void sparkle(float x, float y, float z, float size, int color, float gravity) {
       if (this.getClientWorld() != null && this.getClientWorld().rand.nextInt(6) < this.particleCount(2)) {
-         FXSparkle fx = new FXSparkle(this.getClientWorld(), (double)x, (double)y, (double)z, size, color, 6);
+         FXSparkle fx = new FXSparkle(this.getClientWorld(), x, y, z, size, color, 6);
          fx.noClip = true;
          fx.setGravity(gravity);
          ParticleEngine.instance.addEffect(this.getClientWorld(), fx);
@@ -597,7 +597,7 @@ public class ClientProxy extends CommonProxy {
 
    public void sparkle(float x, float y, float z, int color) {
       if (this.getClientWorld() != null && this.getClientWorld().rand.nextInt(6) < this.particleCount(2)) {
-         FXSparkle fx = new FXSparkle(this.getClientWorld(), (double)x, (double)y, (double)z, 1.5F, color, 6);
+         FXSparkle fx = new FXSparkle(this.getClientWorld(), x, y, z, 1.5F, color, 6);
          fx.noClip = true;
          ParticleEngine.instance.addEffect(this.getClientWorld(), fx);
       }
@@ -606,7 +606,7 @@ public class ClientProxy extends CommonProxy {
 
    public void spark(float x, float y, float z, float size, float r, float g, float b, float a) {
       if (this.getClientWorld() != null) {
-         FXSpark fx = new FXSpark(this.getClientWorld(), (double)x, (double)y, (double)z, size);
+         FXSpark fx = new FXSpark(this.getClientWorld(), x, y, z, size);
          fx.setRBGColorF(r, g, b);
          fx.setAlphaF(a);
          ParticleEngine.instance.addEffect(this.getClientWorld(), fx);
@@ -622,12 +622,12 @@ public class ClientProxy extends CommonProxy {
    }
 
    public void crucibleBoilSound(World world, int xCoord, int yCoord, int zCoord) {
-      world.playSound((double)((float)xCoord + 0.5F), (double)((float)yCoord + 0.5F), (double)((float)zCoord + 0.5F), "thaumcraft:spill", 0.2F, 1.0F, false);
+      world.playSound((float)xCoord + 0.5F, (float)yCoord + 0.5F, (float)zCoord + 0.5F, "thaumcraft:spill", 0.2F, 1.0F, false);
    }
 
    public void crucibleBoil(World world, int xCoord, int yCoord, int zCoord, TileCrucible tile, int j) {
       for(int a = 0; a < this.particleCount(1); ++a) {
-         FXBubble fb = new FXBubble(world, (double)((float)xCoord + 0.2F + world.rand.nextFloat() * 0.6F), (double)((float)yCoord + 0.1F + tile.getFluidHeight()), (double)((float)zCoord + 0.2F + world.rand.nextFloat() * 0.6F), (double)0.0F, (double)0.0F, (double)0.0F, 3);
+         FXBubble fb = new FXBubble(world, (float)xCoord + 0.2F + world.rand.nextFloat() * 0.6F, (float)yCoord + 0.1F + tile.getFluidHeight(), (float)zCoord + 0.2F + world.rand.nextFloat() * 0.6F, 0.0F, 0.0F, 0.0F, 3);
          if (tile.aspects.size() == 0) {
             fb.setRBGColorF(1.0F, 1.0F, 1.0F);
          } else {
@@ -642,20 +642,20 @@ public class ClientProxy extends CommonProxy {
    }
 
    public void crucibleBubble(World world, float x, float y, float z, float cr, float cg, float cb) {
-      FXBubble fb = new FXBubble(world, (double)x, (double)y, (double)z, (double)0.0F, (double)0.0F, (double)0.0F, 1);
+      FXBubble fb = new FXBubble(world, x, y, z, 0.0F, 0.0F, 0.0F, 1);
       fb.setRBGColorF(cr, cg, cb);
       ParticleEngine.instance.addEffect(world, fb);
    }
 
    public void crucibleFroth(World world, float x, float y, float z) {
-      FXBubble fb = new FXBubble(world, (double)x, (double)y, (double)z, (double)0.0F, (double)0.0F, (double)0.0F, -4);
+      FXBubble fb = new FXBubble(world, x, y, z, 0.0F, 0.0F, 0.0F, -4);
       fb.setRBGColorF(0.5F, 0.5F, 0.7F);
       fb.setFroth();
       ParticleEngine.instance.addEffect(world, fb);
    }
 
    public void crucibleFrothDown(World world, float x, float y, float z) {
-      FXBubble fb = new FXBubble(world, (double)x, (double)y, (double)z, (double)0.0F, (double)0.0F, (double)0.0F, -4);
+      FXBubble fb = new FXBubble(world, x, y, z, 0.0F, 0.0F, 0.0F, -4);
       fb.setRBGColorF(0.5F, 0.5F, 0.7F);
       fb.setFroth2();
       ParticleEngine.instance.addEffect(world, fb);
@@ -704,7 +704,7 @@ public class ClientProxy extends CommonProxy {
 
    public void sourceStreamFX(World worldObj, double sx, double sy, double sz, float tx, float ty, float tz, int tagColor) {
       Color c = new Color(tagColor);
-      FXWispArcing ef = new FXWispArcing(worldObj, (double)tx, (double)ty, (double)tz, sx, sy, sz, 0.1F, (float)c.getRed() / 255.0F, (float)c.getGreen() / 255.0F, (float)c.getBlue() / 255.0F);
+      FXWispArcing ef = new FXWispArcing(worldObj, tx, ty, tz, sx, sy, sz, 0.1F, (float)c.getRed() / 255.0F, (float)c.getGreen() / 255.0F, (float)c.getBlue() / 255.0F);
       ef.setGravity(0.0F);
       ParticleEngine.instance.addEffect(worldObj, ef);
    }
@@ -717,14 +717,14 @@ public class ClientProxy extends CommonProxy {
    }
 
    public void nodeBolt(World worldObj, float x, float y, float z, Entity targetedEntity) {
-      FXLightningBolt bolt = new FXLightningBolt(worldObj, (double)x, (double)y, (double)z, targetedEntity.posX, targetedEntity.posY, targetedEntity.posZ, worldObj.rand.nextLong(), 10, 4.0F, 5);
+      FXLightningBolt bolt = new FXLightningBolt(worldObj, x, y, z, targetedEntity.posX, targetedEntity.posY, targetedEntity.posZ, worldObj.rand.nextLong(), 10, 4.0F, 5);
       bolt.defaultFractal();
       bolt.setType(3);
       bolt.finalizeBolt();
    }
 
    public void nodeBolt(World worldObj, float x, float y, float z, float x2, float y2, float z2) {
-      FXLightningBolt bolt = new FXLightningBolt(worldObj, (double)x, (double)y, (double)z, (double)x2, (double)y2, (double)z2, worldObj.rand.nextLong(), 10, 4.0F, 5);
+      FXLightningBolt bolt = new FXLightningBolt(worldObj, x, y, z, x2, y2, z2, worldObj.rand.nextLong(), 10, 4.0F, 5);
       bolt.defaultFractal();
       bolt.setType(0);
       bolt.finalizeBolt();
@@ -792,10 +792,10 @@ public class ClientProxy extends CommonProxy {
 
    public void boreDigFx(World worldObj, int x, int y, int z, int x2, int y2, int z2, Block bi, int md) {
       if (worldObj.rand.nextInt(10) == 0) {
-         FXBoreSparkle fb = new FXBoreSparkle(worldObj, (double)((float)x + worldObj.rand.nextFloat()), (double)((float)y + worldObj.rand.nextFloat()), (double)((float)z + worldObj.rand.nextFloat()), (double)x2 + (double)0.5F, (double)y2 + (double)0.5F, (double)z2 + (double)0.5F);
+         FXBoreSparkle fb = new FXBoreSparkle(worldObj, (float)x + worldObj.rand.nextFloat(), (float)y + worldObj.rand.nextFloat(), (float)z + worldObj.rand.nextFloat(), (double)x2 + (double)0.5F, (double)y2 + (double)0.5F, (double)z2 + (double)0.5F);
          ParticleEngine.instance.addEffect(worldObj, fb);
       } else {
-         FXBoreParticles fb = (new FXBoreParticles(worldObj, (double)((float)x + worldObj.rand.nextFloat()), (double)((float)y + worldObj.rand.nextFloat()), (double)((float)z + worldObj.rand.nextFloat()), (double)x2 + (double)0.5F, (double)y2 + (double)0.5F, (double)z2 + (double)0.5F, bi, worldObj.rand.nextInt(6), md)).applyColourMultiplier(x, y, z);
+         FXBoreParticles fb = (new FXBoreParticles(worldObj, (float)x + worldObj.rand.nextFloat(), (float)y + worldObj.rand.nextFloat(), (float)z + worldObj.rand.nextFloat(), (double)x2 + (double)0.5F, (double)y2 + (double)0.5F, (double)z2 + (double)0.5F, bi, worldObj.rand.nextInt(6), md)).applyColourMultiplier(x, y, z);
          FMLClientHandler.instance().getClient().effectRenderer.addEffect(fb);
       }
 
@@ -830,12 +830,12 @@ public class ClientProxy extends CommonProxy {
    }
 
    public void furnaceLavaFx(World worldObj, int x, int y, int z, int facingX, int facingZ) {
-      EntityLavaFX fb = new EntityLavaFX(worldObj, (double)((float)x + 0.5F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.3F + (float) facingX), (double)((float)y + 0.3F), (double)((float)z + 0.5F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.3F + (float) facingZ));
-      fb.motionY = (double)(0.2F * worldObj.rand.nextFloat());
+      EntityLavaFX fb = new EntityLavaFX(worldObj, (float)x + 0.5F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.3F + (float) facingX, (float)y + 0.3F, (float)z + 0.5F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.3F + (float) facingZ);
+      fb.motionY = 0.2F * worldObj.rand.nextFloat();
       float qx = facingX == 0 ? (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.5F : (float)facingX * worldObj.rand.nextFloat();
       float qz = facingZ == 0 ? (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.5F : (float)facingZ * worldObj.rand.nextFloat();
-      fb.motionX = (double)(0.15F * qx);
-      fb.motionZ = (double)(0.15F * qz);
+      fb.motionX = 0.15F * qx;
+      fb.motionZ = 0.15F * qz;
       FMLClientHandler.instance().getClient().effectRenderer.addEffect(fb);
    }
 
@@ -879,7 +879,7 @@ public class ClientProxy extends CommonProxy {
       float f1 = worldObj.rand.nextFloat() * 0.5F + 0.5F;
       float f2 = MathHelper.sin(f) * 2.0F * 0.5F * f1;
       float f3 = MathHelper.cos(f) * 2.0F * 0.5F * f1;
-      FXBreaking fx = new FXBreaking(worldObj, (double)x + (double)f2 + (double)0.5F, (double)((float)y + worldObj.rand.nextFloat()), (double)z + (double)f3 + (double)0.5F, Items.slime_ball);
+      FXBreaking fx = new FXBreaking(worldObj, (double)x + (double)f2 + (double)0.5F, (float)y + worldObj.rand.nextFloat(), (double)z + (double)f3 + (double)0.5F, Items.slime_ball);
       if (worldObj.rand.nextBoolean()) {
          fx.setRBGColorF(0.6F, 0.0F, 0.3F);
          fx.setAlphaF(0.4F);
@@ -902,9 +902,9 @@ public class ClientProxy extends CommonProxy {
          fx.setAlphaF(0.6F);
       }
 
-      fx.motionX = (double)((float)(Math.random() * (double)2.0F - (double)1.0F));
-      fx.motionY = (double)((float)(Math.random() * (double)2.0F - (double)1.0F));
-      fx.motionZ = (double)((float)(Math.random() * (double)2.0F - (double)1.0F));
+      fx.motionX = (float)(Math.random() * (double)2.0F - (double)1.0F);
+      fx.motionY = (float)(Math.random() * (double)2.0F - (double)1.0F);
+      fx.motionZ = (float)(Math.random() * (double)2.0F - (double)1.0F);
       float f = (float)(Math.random() + Math.random() + (double)1.0F) * 0.15F;
       float f1 = MathHelper.sqrt_double(fx.motionX * fx.motionX + fx.motionY * fx.motionY + fx.motionZ * fx.motionZ);
       fx.motionX = fx.motionX / (double)f1 * (double)f * 0.9640000000596046;
@@ -934,7 +934,7 @@ public class ClientProxy extends CommonProxy {
             f1 = e.worldObj.rand.nextFloat() * 0.5F + 0.5F;
             f2 = MathHelper.sin(f) * e.height * 0.25F * f1;
             f3 = MathHelper.cos(f) * e.height * 0.25F * f1;
-            EntityDiggingFX fx2 = (new EntityDiggingFX(e.worldObj, e.posX + (double)f2, e.posY, e.posZ + (double)f3, (double)0.0F, (double)0.0F, (double)0.0F, e.worldObj.getBlock(xx, yy, zz), e.worldObj.getBlockMetadata(xx, yy, zz), 1)).applyColourMultiplier(xx, yy, zz);
+            EntityDiggingFX fx2 = (new EntityDiggingFX(e.worldObj, e.posX + (double)f2, e.posY, e.posZ + (double)f3, 0.0F, 0.0F, 0.0F, e.worldObj.getBlock(xx, yy, zz), e.worldObj.getBlockMetadata(xx, yy, zz), 1)).applyColourMultiplier(xx, yy, zz);
             FMLClientHandler.instance().getClient().effectRenderer.addEffect(fx2);
          }
       }
@@ -954,7 +954,7 @@ public class ClientProxy extends CommonProxy {
    }
 
    public void dropletFX(World world, float i, float j, float k, float r, float g, float b) {
-      FXDrop obj = new FXDrop(world, (double)i, (double)j, (double)k, r, g, b);
+      FXDrop obj = new FXDrop(world, i, j, k, r, g, b);
       FMLClientHandler.instance().getClient().effectRenderer.addEffect(obj);
    }
 
@@ -974,16 +974,16 @@ public class ClientProxy extends CommonProxy {
    }
 
    public void hungryNodeFX(World worldObj, int sourceX, int sourceY, int sourceZ, int targetX, int targetY, int targetZ, Block block, int md) {
-      FXBoreParticles fb = (new FXBoreParticles(worldObj, (double)((float)sourceX + worldObj.rand.nextFloat()), (double)((float)sourceY + worldObj.rand.nextFloat()), (double)((float)sourceZ + worldObj.rand.nextFloat()), (double)targetX + (double)0.5F, (double)targetY + (double)0.5F, (double)targetZ + (double)0.5F, block, worldObj.rand.nextInt(6), md)).applyColourMultiplier(sourceX, sourceY, sourceZ);
+      FXBoreParticles fb = (new FXBoreParticles(worldObj, (float)sourceX + worldObj.rand.nextFloat(), (float)sourceY + worldObj.rand.nextFloat(), (float)sourceZ + worldObj.rand.nextFloat(), (double)targetX + (double)0.5F, (double)targetY + (double)0.5F, (double)targetZ + (double)0.5F, block, worldObj.rand.nextInt(6), md)).applyColourMultiplier(sourceX, sourceY, sourceZ);
       FMLClientHandler.instance().getClient().effectRenderer.addEffect(fb);
    }
 
    public void drawInfusionParticles1(World worldObj, double x, double y, double z, int x2, int y2, int z2, Item id, int md) {
       FXBoreParticles fb = (new FXBoreParticles(worldObj, x, y, z, (double)x2 + (double)0.5F, (double)y2 - (double)0.5F, (double)z2 + (double)0.5F, id, worldObj.rand.nextInt(6), md)).applyColourMultiplier(x2, y2, z2);
       fb.setAlphaF(0.3F);
-      fb.motionX = (double)((float)worldObj.rand.nextGaussian() * 0.03F);
-      fb.motionY = (double)((float)worldObj.rand.nextGaussian() * 0.03F);
-      fb.motionZ = (double)((float)worldObj.rand.nextGaussian() * 0.03F);
+      fb.motionX = (float)worldObj.rand.nextGaussian() * 0.03F;
+      fb.motionY = (float)worldObj.rand.nextGaussian() * 0.03F;
+      fb.motionZ = (float)worldObj.rand.nextGaussian() * 0.03F;
       FMLClientHandler.instance().getClient().effectRenderer.addEffect(fb);
    }
 
@@ -1066,7 +1066,7 @@ public class ClientProxy extends CommonProxy {
       ef2.noClip = true;
       ef2.setRBGColorF(r, g, b);
       ParticleEngine.instance.addEffect(world, ef2);
-      FXArc efa = new FXArc(world, x, y, z, tx, ty, tz, r, g, b, (double)h);
+      FXArc efa = new FXArc(world, x, y, z, tx, ty, tz, r, g, b, h);
       FMLClientHandler.instance().getClient().effectRenderer.addEffect(efa);
    }
 }

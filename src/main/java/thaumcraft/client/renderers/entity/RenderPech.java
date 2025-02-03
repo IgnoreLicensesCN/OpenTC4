@@ -44,7 +44,7 @@ public class RenderPech extends RenderLiving {
       this.func_82420_a(par1EntityLiving, itemstack);
       double d3 = par4 - (double)par1EntityLiving.yOffset;
       if (par1EntityLiving.isSneaking()) {
-         d3 -= (double)0.125F;
+         d3 -= 0.125F;
       }
 
       super.doRender(par1EntityLiving, par2, d3, par6, par8, par9);

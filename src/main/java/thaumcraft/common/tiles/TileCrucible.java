@@ -56,7 +56,7 @@ public class TileCrucible extends TileThaumcraft implements IFluidHandler, IWand
       this.heat = nbttagcompound.getShort("Heat");
       this.tank.readFromNBT(nbttagcompound);
       if (nbttagcompound.hasKey("Empty")) {
-         this.tank.setFluid((FluidStack)null);
+         this.tank.setFluid(null);
       }
 
       this.aspects.readFromNBT(nbttagcompound);
@@ -205,7 +205,7 @@ public class TileCrucible extends TileThaumcraft implements IFluidHandler, IWand
 
    public void spillRemnants() {
       if (this.tank.getFluidAmount() > 0 || this.aspects.visSize() > 0) {
-         this.tank.setFluid((FluidStack)null);
+         this.tank.setFluid(null);
 
          for(int a = 0; a < this.aspects.visSize() / 2; ++a) {
             this.spill();
@@ -230,8 +230,8 @@ public class TileCrucible extends TileThaumcraft implements IFluidHandler, IWand
          }
 
          items.stackSize -= spitout.stackSize;
-         EntitySpecialItem entityitem = new EntitySpecialItem(this.worldObj, (double)((float)this.xCoord + 0.5F), (double)((float)this.yCoord + 0.71F), (double)((float)this.zCoord + 0.5F), spitout);
-         entityitem.motionY = (double)0.1F;
+         EntitySpecialItem entityitem = new EntitySpecialItem(this.worldObj, (float)this.xCoord + 0.5F, (float)this.yCoord + 0.71F, (float)this.zCoord + 0.5F, spitout);
+         entityitem.motionY = 0.1F;
          entityitem.motionX = first ? (double)0.0F : (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.01F);
          entityitem.motionZ = first ? (double)0.0F : (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.01F);
          this.worldObj.spawnEntityInWorld(entityitem);
@@ -267,9 +267,9 @@ public class TileCrucible extends TileThaumcraft implements IFluidHandler, IWand
             AspectList ot = ThaumcraftCraftingManager.getObjectTags(item);
             ot = ThaumcraftCraftingManager.getBonusTags(item, ot);
             if (ot == null || ot.size() == 0) {
-               entity.motionY = (double)0.35F;
-               entity.motionX = (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F);
-               entity.motionZ = (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F);
+               entity.motionY = 0.35F;
+               entity.motionX = (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F;
+               entity.motionZ = (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F;
                this.worldObj.playSoundAtEntity(entity, "random.pop", 0.2F, (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.7F + 1.0F);
                return;
             }
@@ -446,7 +446,7 @@ public class TileCrucible extends TileThaumcraft implements IFluidHandler, IWand
 
    @SideOnly(Side.CLIENT)
    public AxisAlignedBB getRenderBoundingBox() {
-      return AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1));
+      return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1);
    }
 
    public AspectList getAspects() {

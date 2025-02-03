@@ -46,7 +46,7 @@ public class TileBellows extends TileThaumcraft {
             this.delay = 0;
             ForgeDirection dir = ForgeDirection.getOrientation(this.orientation);
             TileEntity tile = this.worldObj.getTileEntity(this.xCoord + dir.offsetX, this.yCoord, this.zCoord + dir.offsetZ);
-            if (tile != null && tile instanceof TileEntityFurnace) {
+            if (tile instanceof TileEntityFurnace) {
                TileEntityFurnace tf = (TileEntityFurnace)tile;
                if (tf.furnaceCookTime > 0 && tf.furnaceCookTime < 199) {
                   ++tf.furnaceCookTime;
@@ -69,7 +69,7 @@ public class TileBellows extends TileThaumcraft {
          int yy = y + dir.offsetY;
          int zz = z + dir.offsetZ;
          TileEntity tile = world.getTileEntity(xx, yy, zz);
-         if (tile != null && tile instanceof TileBellows && ((TileBellows)tile).orientation == dir.getOpposite().ordinal() && !world.isBlockIndirectlyGettingPowered(xx, yy, zz)) {
+         if (tile instanceof TileBellows && ((TileBellows) tile).orientation == dir.getOpposite().ordinal() && !world.isBlockIndirectlyGettingPowered(xx, yy, zz)) {
             ++bellows;
          }
       }

@@ -8,6 +8,6 @@ public class TileEldritchCap extends TileEntity {
    }
 
    public double getMaxRenderDistanceSquared() {
-      return (double)9216.0F;
+      return 9216.0F;
    }
 }

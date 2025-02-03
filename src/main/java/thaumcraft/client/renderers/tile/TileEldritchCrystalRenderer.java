@@ -58,7 +58,7 @@ public class TileEldritchCrystalRenderer extends TileEntitySpecialRenderer {
          }
       }
 
-      GL11.glTranslated((double)0.0F, (double)0.0F, (double)-0.5F);
+      GL11.glTranslated(0.0F, 0.0F, -0.5F);
       GL11.glRotatef(90.0F * (float)r, 0.0F, 0.0F, 1.0F);
    }
 

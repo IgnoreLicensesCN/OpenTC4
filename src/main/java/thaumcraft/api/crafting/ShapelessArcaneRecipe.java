@@ -49,13 +49,13 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe
             }
             else
             {
-                String ret = "Invalid shapeless ore recipe: ";
+                StringBuilder ret = new StringBuilder("Invalid shapeless ore recipe: ");
                 for (Object tmp :  recipe)
                 {
-                    ret += tmp + ", ";
+                    ret.append(tmp).append(", ");
                 }
-                ret += output;
-                throw new RuntimeException(ret);
+                ret.append(output);
+                throw new RuntimeException(ret.toString());
             }
         }
     }
@@ -85,28 +85,21 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe
             if (slot != null)
             {
                 boolean inRecipe = false;
-                Iterator req = required.iterator();
 
-                while (req.hasNext())
-                {
+                for (Object o : required) {
                     boolean match = false;
 
-                    Object next = req.next();
+                    Object next = o;
 
-                    if (next instanceof ItemStack)
-                    {
-                        match = checkItemEquals((ItemStack)next, slot);
-                    }
-                    else if (next instanceof ArrayList)
-                    {
-                        for (ItemStack item : (ArrayList<ItemStack>)next)
-                        {
+                    if (next instanceof ItemStack) {
+                        match = checkItemEquals((ItemStack) next, slot);
+                    } else if (next instanceof ArrayList) {
+                        for (ItemStack item : (ArrayList<ItemStack>) next) {
                             match = match || checkItemEquals(item, slot);
                         }
                     }
 
-                    if (match)
-                    {
+                    if (match) {
                         inRecipe = true;
                         required.remove(next);
                         break;

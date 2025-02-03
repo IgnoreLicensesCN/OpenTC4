@@ -15,7 +15,7 @@ public class FXBoreSparkle extends EntityFX {
    public int particle = 24;
 
    public FXBoreSparkle(World par1World, double par2, double par4, double par6, double tx, double ty, double tz) {
-      super(par1World, par2, par4, par6, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(par1World, par2, par4, par6, 0.0F, 0.0F, 0.0F);
       this.particleRed = this.particleGreen = this.particleBlue = 0.6F;
       this.particleScale = this.rand.nextFloat() * 0.5F + 0.5F;
       this.targetX = tx;
@@ -31,9 +31,9 @@ public class FXBoreSparkle extends EntityFX {
 
       this.particleMaxAge = base / 2 + this.rand.nextInt(base);
       float f3 = 0.01F;
-      this.motionX = (double)((float)this.rand.nextGaussian() * f3);
-      this.motionY = (double)((float)this.rand.nextGaussian() * f3);
-      this.motionZ = (double)((float)this.rand.nextGaussian() * f3);
+      this.motionX = (float)this.rand.nextGaussian() * f3;
+      this.motionY = (float)this.rand.nextGaussian() * f3;
+      this.motionZ = (float)this.rand.nextGaussian() * f3;
       this.particleRed = 0.2F;
       this.particleGreen = 0.6F + this.rand.nextFloat() * 0.3F;
       this.particleBlue = 0.2F;
@@ -66,10 +66,10 @@ public class FXBoreSparkle extends EntityFX {
       float var16 = 1.0F;
       tessellator.setBrightness(240);
       tessellator.setColorRGBA_F(this.particleRed * var16, this.particleGreen * var16, this.particleBlue * var16, 1.0F);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 - f3 * var12 - f5 * var12), (double)var9, (double)var11);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 - f3 * var12 + f5 * var12), (double)var9, (double)var10);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 + f3 * var12 + f5 * var12), (double)var8, (double)var10);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 + f3 * var12 - f5 * var12), (double)var8, (double)var11);
+      tessellator.addVertexWithUV(var13 - f1 * var12 - f4 * var12, var14 - f2 * var12, var15 - f3 * var12 - f5 * var12, var9, var11);
+      tessellator.addVertexWithUV(var13 - f1 * var12 + f4 * var12, var14 + f2 * var12, var15 - f3 * var12 + f5 * var12, var9, var10);
+      tessellator.addVertexWithUV(var13 + f1 * var12 + f4 * var12, var14 + f2 * var12, var15 + f3 * var12 + f5 * var12, var8, var10);
+      tessellator.addVertexWithUV(var13 + f1 * var12 - f4 * var12, var14 - f2 * var12, var15 + f3 * var12 - f5 * var12, var8, var11);
    }
 
    public void onUpdate() {
@@ -89,7 +89,7 @@ public class FXBoreSparkle extends EntityFX {
          double dy = this.targetY - this.posY;
          double dz = this.targetZ - this.posZ;
          double d13 = 0.3;
-         double d11 = (double)MathHelper.sqrt_double(dx * dx + dy * dy + dz * dz);
+         double d11 = MathHelper.sqrt_double(dx * dx + dy * dy + dz * dz);
          if (d11 < (double)4.0F) {
             this.particleScale *= 0.9F;
             d13 = 0.6;
@@ -101,9 +101,9 @@ public class FXBoreSparkle extends EntityFX {
          this.motionX += dx * d13;
          this.motionY += dy * d13;
          this.motionZ += dz * d13;
-         this.motionX = (double)MathHelper.clamp_float((float)this.motionX, -0.35F, 0.35F);
-         this.motionY = (double)MathHelper.clamp_float((float)this.motionY, -0.35F, 0.35F);
-         this.motionZ = (double)MathHelper.clamp_float((float)this.motionZ, -0.35F, 0.35F);
+         this.motionX = MathHelper.clamp_float((float)this.motionX, -0.35F, 0.35F);
+         this.motionY = MathHelper.clamp_float((float)this.motionY, -0.35F, 0.35F);
+         this.motionZ = MathHelper.clamp_float((float)this.motionZ, -0.35F, 0.35F);
       } else {
          this.setDead();
       }
@@ -128,7 +128,7 @@ public class FXBoreSparkle extends EntityFX {
          boolean var20 = !this.worldObj.isBlockNormalCubeDefault(var7, var8, var9 - 1, true);
          boolean var21 = !this.worldObj.isBlockNormalCubeDefault(var7, var8, var9 + 1, true);
          byte var22 = -1;
-         double var23 = (double)9999.0F;
+         double var23 = 9999.0F;
          if (var16 && var10 < var23) {
             var23 = var10;
             var22 = 0;
@@ -162,33 +162,33 @@ public class FXBoreSparkle extends EntityFX {
          float var25 = this.rand.nextFloat() * 0.05F + 0.025F;
          float var26 = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F;
          if (var22 == 0) {
-            this.motionX = (double)(-var25);
-            this.motionY = this.motionZ = (double)var26;
+            this.motionX = -var25;
+            this.motionY = this.motionZ = var26;
          }
 
          if (var22 == 1) {
-            this.motionX = (double)var25;
-            this.motionY = this.motionZ = (double)var26;
+            this.motionX = var25;
+            this.motionY = this.motionZ = var26;
          }
 
          if (var22 == 2) {
-            this.motionY = (double)(-var25);
-            this.motionX = this.motionZ = (double)var26;
+            this.motionY = -var25;
+            this.motionX = this.motionZ = var26;
          }
 
          if (var22 == 3) {
-            this.motionY = (double)var25;
-            this.motionX = this.motionZ = (double)var26;
+            this.motionY = var25;
+            this.motionX = this.motionZ = var26;
          }
 
          if (var22 == 4) {
-            this.motionZ = (double)(-var25);
-            this.motionY = this.motionX = (double)var26;
+            this.motionZ = -var25;
+            this.motionY = this.motionX = var26;
          }
 
          if (var22 == 5) {
-            this.motionZ = (double)var25;
-            this.motionY = this.motionX = (double)var26;
+            this.motionZ = var25;
+            this.motionY = this.motionX = var26;
          }
 
          return true;

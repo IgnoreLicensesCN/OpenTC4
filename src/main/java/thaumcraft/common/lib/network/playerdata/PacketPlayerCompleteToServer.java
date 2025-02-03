@@ -78,7 +78,7 @@ public class PacketPlayerCompleteToServer implements IMessage, IMessageHandler<P
 
                world.playSoundAtEntity(player, "thaumcraft:learn", 0.75F, 1.0F);
             } else {
-               player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("tc.researcherror"), new Object[0]));
+               player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("tc.researcherror")));
             }
          }
 

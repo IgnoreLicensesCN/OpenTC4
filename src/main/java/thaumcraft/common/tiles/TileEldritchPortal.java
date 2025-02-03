@@ -24,12 +24,12 @@ public class TileEldritchPortal extends TileEntity {
    }
 
    public double getMaxRenderDistanceSquared() {
-      return (double)9216.0F;
+      return 9216.0F;
    }
 
    @SideOnly(Side.CLIENT)
    public AxisAlignedBB getRenderBoundingBox() {
-      return AxisAlignedBB.getBoundingBox((double)(this.xCoord - 1), (double)(this.yCoord - 1), (double)(this.zCoord - 1), (double)(this.xCoord + 2), (double)(this.yCoord + 2), (double)(this.zCoord + 2));
+      return AxisAlignedBB.getBoundingBox(this.xCoord - 1, this.yCoord - 1, this.zCoord - 1, this.xCoord + 2, this.yCoord + 2, this.zCoord + 2);
    }
 
    public void updateEntity() {
@@ -43,7 +43,7 @@ public class TileEldritchPortal extends TileEntity {
       }
 
       if (!this.worldObj.isRemote && this.count % 5 == 0) {
-         List ents = this.worldObj.getEntitiesWithinAABB(EntityPlayerMP.class, AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1)).expand((double)0.5F, (double)1.0F, (double)0.5F));
+         List ents = this.worldObj.getEntitiesWithinAABB(EntityPlayerMP.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(0.5F, 1.0F, 0.5F));
          if (ents.size() > 0) {
             for(Object e : ents) {
                EntityPlayerMP player = (EntityPlayerMP)e;

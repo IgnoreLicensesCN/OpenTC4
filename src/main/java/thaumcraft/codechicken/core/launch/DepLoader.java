@@ -125,17 +125,15 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
               this.setMessageType(1);
               this.setMessage(this.makeProgressPanel());
               this.setOptions(new Object[]{"Stop"});
-              this.addPropertyChangeListener(new PropertyChangeListener() {
-                  public void propertyChange(PropertyChangeEvent evt) {
-                      if (evt.getSource() == Downloader.this && evt.getPropertyName() == "value") {
-                          Downloader.this.requestClose("This will stop minecraft from launching\nAre you sure you want to do this?");
-                      }
-
+              this.addPropertyChangeListener(evt -> {
+                  if (evt.getSource() == Downloader.this && evt.getPropertyName() == "value") {
+                      Downloader.this.requestClose("This will stop minecraft from launching\nAre you sure you want to do this?");
                   }
+
               });
-              this.container = new JDialog((Window) null, "Hello", ModalityType.MODELESS);
+              this.container = new JDialog(null, "Hello", ModalityType.MODELESS);
               this.container.setResizable(false);
-              this.container.setLocationRelativeTo((Component) null);
+              this.container.setLocationRelativeTo(null);
               this.container.add(this);
               this.updateUI();
               this.container.pack();
@@ -197,18 +195,16 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
          JEditorPane ep = new JEditorPane("text/html", "<html>CB's DepLoader was unable to download required library " + name + "<br>Check your internet connection and try restarting or download it manually from" + "<br><a href=\"" + url + "\">" + url + "</a> and put it in your mods folder" + "</html>");
          ep.setEditable(false);
          ep.setOpaque(false);
-         ep.addHyperlinkListener(new HyperlinkListener() {
-            public void hyperlinkUpdate(HyperlinkEvent event) {
-               try {
-                  if (event.getEventType().equals(EventType.ACTIVATED)) {
-                     Desktop.getDesktop().browse(event.getURL().toURI());
-                  }
-               } catch (Exception var3) {
+         ep.addHyperlinkListener(event -> {
+            try {
+               if (event.getEventType().equals(EventType.ACTIVATED)) {
+                  Desktop.getDesktop().browse(event.getURL().toURI());
                }
-
+            } catch (Exception ignored) {
             }
+
          });
-         JOptionPane.showMessageDialog((Component)null, ep, "A download error has occured", 0);
+         JOptionPane.showMessageDialog(null, ep, "A download error has occured", 0);
       }
    }
 
@@ -328,7 +324,7 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
                String msg = "CB's DepLoader was unable to delete file " + mod.getPath() + " the game will now try to delete it on exit. If this dialog appears again, delete it manually.";
                System.err.println(msg);
                if (!GraphicsEnvironment.isHeadless()) {
-                  JOptionPane.showMessageDialog((Component)null, msg, "An update error has occured", 0);
+                  JOptionPane.showMessageDialog(null, msg, "An update error has occured", 0);
                }
 
                System.exit(1);
@@ -344,7 +340,7 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
          try {
             URL libDownload = new URL(dep.url + '/' + dep.file.filename);
             this.downloadMonitor.updateProgressString("Downloading file %s", libDownload.toString());
-            System.out.format("Downloading file %s\n", libDownload.toString());
+            System.out.format("Downloading file %s\n", libDownload);
             URLConnection connection = libDownload.openConnection();
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
@@ -390,7 +386,7 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
                }
 
                is.close();
-               this.downloadMonitor.setPokeThread((Thread)null);
+               this.downloadMonitor.setPokeThread(null);
                DepLoader.downloadBuffer.limit(fullLength);
                DepLoader.downloadBuffer.position(0);
             } catch (InterruptedIOException var8) {
@@ -463,12 +459,12 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
       }
 
       private void loadDeps() {
-         this.downloadMonitor = (IDownloadDisplay)(FMLLaunchHandler.side().isClient() ? new Downloader() : new DummyDownloader());
+         this.downloadMonitor = FMLLaunchHandler.side().isClient() ? new Downloader() : new DummyDownloader();
 
          try {
             while(!this.depSet.isEmpty()) {
                Iterator<String> it = this.depSet.iterator();
-               Dependency dep = (Dependency)this.depMap.get(it.next());
+               Dependency dep = this.depMap.get(it.next());
                it.remove();
                this.load(dep);
             }
@@ -595,7 +591,7 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
       }
 
       private void addDep(Dependency newDep) {
-         if (this.mergeNew((Dependency)this.depMap.get(newDep.file.name), newDep)) {
+         if (this.mergeNew(this.depMap.get(newDep.file.name), newDep)) {
             this.depMap.put(newDep.file.name, newDep);
             this.depSet.add(newDep.file.name);
          }

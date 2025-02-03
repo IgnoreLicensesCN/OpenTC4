@@ -72,15 +72,15 @@ public class ItemTrunkSpawner extends Item {
            par4 += Facing.offsetsXForSide[par7];
            par5 += Facing.offsetsYForSide[par7];
            par6 += Facing.offsetsZForSide[par7];
-           double d0 = (double) 0.0F;
+           double d0 = 0.0F;
            if (par7 == 1 && !i1.isAir(par3World, par4, par5, par6) && i1.getRenderType() == 11) {
-               d0 = (double) 0.5F;
+               d0 = 0.5F;
            }
 
            Entity entity = new EntityTravelingTrunk(par3World);
            if (entity != null && entity instanceof EntityLivingBase) {
                EntityLiving entityliving = (EntityLiving) entity;
-               entity.setLocationAndAngles((double) par4, (double) par5 + d0, (double) par6, MathHelper.wrapAngleTo180_float(par3World.rand.nextFloat() * 360.0F), 0.0F);
+               entity.setLocationAndAngles(par4, (double) par5 + d0, par6, MathHelper.wrapAngleTo180_float(par3World.rand.nextFloat() * 360.0F), 0.0F);
                entityliving.rotationYawHead = entityliving.rotationYaw;
                entityliving.renderYawOffset = entityliving.rotationYaw;
                ((EntityTravelingTrunk) entity).setOwner(par2EntityPlayer.getCommandSenderName());
@@ -98,7 +98,7 @@ public class ItemTrunkSpawner extends Item {
                    ((EntityTravelingTrunk) entity).inventory.readFromNBT(nbttaglist);
                }
 
-               entityliving.onSpawnWithEgg((IEntityLivingData) null);
+               entityliving.onSpawnWithEgg(null);
                par3World.spawnEntityInWorld(entity);
                entityliving.playLivingSound();
                if (!par2EntityPlayer.capabilities.isCreativeMode) {

@@ -27,7 +27,7 @@ public class TileAlchemyFurnaceAdvancedNozzle extends TileThaumcraft implements 
 
          for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             TileEntity tile = this.worldObj.getTileEntity(this.xCoord + dir.offsetX, this.yCoord + dir.offsetY, this.zCoord + dir.offsetZ);
-            if (tile != null && tile instanceof TileAlchemyFurnaceAdvanced) {
+            if (tile instanceof TileAlchemyFurnaceAdvanced) {
                this.facing = dir.getOpposite();
                this.furnace = (TileAlchemyFurnaceAdvanced)tile;
                break;

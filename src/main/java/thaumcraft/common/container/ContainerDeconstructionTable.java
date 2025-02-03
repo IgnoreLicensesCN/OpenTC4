@@ -46,7 +46,7 @@ public class ContainerDeconstructionTable extends Container {
       if (button == 1 && this.table.aspect != null) {
          Thaumcraft.proxy.playerKnowledge.addAspectPool(p.getCommandSenderName(), this.table.aspect, (short)1);
          ResearchManager.scheduleSave(p);
-         PacketHandler.INSTANCE.sendTo(new PacketAspectPool(this.table.aspect.getTag(), Short.valueOf((short)1), Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(p.getCommandSenderName(), this.table.aspect)), (EntityPlayerMP)p);
+         PacketHandler.INSTANCE.sendTo(new PacketAspectPool(this.table.aspect.getTag(), (short) 1, Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(p.getCommandSenderName(), this.table.aspect)), (EntityPlayerMP)p);
          this.table.aspect = null;
          this.table.getWorldObj().markBlockForUpdate(this.table.xCoord, this.table.yCoord, this.table.zCoord);
       }
@@ -57,12 +57,12 @@ public class ContainerDeconstructionTable extends Container {
    public void detectAndSendChanges() {
       super.detectAndSendChanges();
 
-      for(int i = 0; i < this.crafters.size(); ++i) {
-         ICrafting icrafting = (ICrafting)this.crafters.get(i);
-         if (this.lastBreakTime != this.table.breaktime) {
-            icrafting.sendProgressBarUpdate(this, 0, this.table.breaktime);
-         }
-      }
+       for (Object crafter : this.crafters) {
+           ICrafting icrafting = (ICrafting) crafter;
+           if (this.lastBreakTime != this.table.breaktime) {
+               icrafting.sendProgressBarUpdate(this, 0, this.table.breaktime);
+           }
+       }
 
       this.lastBreakTime = this.table.breaktime;
    }
@@ -104,7 +104,7 @@ public class ContainerDeconstructionTable extends Container {
          }
 
          if (itemstack1.stackSize == 0) {
-            slot.putStack((ItemStack)null);
+            slot.putStack(null);
          } else {
             slot.onSlotChanged();
          }

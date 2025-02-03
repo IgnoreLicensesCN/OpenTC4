@@ -49,7 +49,7 @@ public class TileFocalManipulator extends TileThaumcraftInventory {
 
    @SideOnly(Side.CLIENT)
    public AxisAlignedBB getRenderBoundingBox() {
-      return AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)(this.yCoord - 1), (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1));
+      return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord - 1, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1);
    }
 
    public boolean canUpdate() {
@@ -77,7 +77,7 @@ public class TileFocalManipulator extends TileThaumcraftInventory {
          if (this.ticks % 5 == 0) {
             if (this.size > 0 && (this.aspects.visSize() <= 0 || this.getStackInSlot(0) == null)) {
                complete = true;
-               this.worldObj.playSoundEffect((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, "thaumcraft:craftfail", 0.33F, 1.0F);
+               this.worldObj.playSoundEffect(this.xCoord, this.yCoord, this.zCoord, "thaumcraft:craftfail", 0.33F, 1.0F);
             }
 
             if (this.size > 0) {
@@ -94,12 +94,12 @@ public class TileFocalManipulator extends TileThaumcraftInventory {
                   complete = true;
                   ItemFocusBasic focus = (ItemFocusBasic)this.getStackInSlot(0).getItem();
                   focus.applyUpgrade(this.getStackInSlot(0), FocusUpgradeType.types[this.upgrade], this.rank);
-                  this.worldObj.playSoundEffect((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, "thaumcraft:wand", 1.0F, 1.0F);
+                  this.worldObj.playSoundEffect(this.xCoord, this.yCoord, this.zCoord, "thaumcraft:wand", 1.0F, 1.0F);
                }
             }
          }
       } else if (this.size > 0) {
-         Thaumcraft.proxy.drawGenericParticles(this.getWorldObj(), (double)this.xCoord + (double)0.5F + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.3F), (double)this.yCoord + (double)1.25F + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.3F), (double)this.zCoord + (double)0.5F + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.3F), (double)0.0F, (double)0.0F, (double)0.0F, 0.5F + this.getWorldObj().rand.nextFloat() * 0.4F, 1.0F - this.getWorldObj().rand.nextFloat() * 0.4F, 1.0F - this.getWorldObj().rand.nextFloat() * 0.4F, 0.8F, false, 112, 9, 1, 6 + this.worldObj.rand.nextInt(5), 0, 0.7F + this.getWorldObj().rand.nextFloat() * 0.4F);
+         Thaumcraft.proxy.drawGenericParticles(this.getWorldObj(), (double)this.xCoord + (double)0.5F + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.3F), (double)this.yCoord + (double)1.25F + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.3F), (double)this.zCoord + (double)0.5F + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.3F), 0.0F, 0.0F, 0.0F, 0.5F + this.getWorldObj().rand.nextFloat() * 0.4F, 1.0F - this.getWorldObj().rand.nextFloat() * 0.4F, 1.0F - this.getWorldObj().rand.nextFloat() * 0.4F, 0.8F, false, 112, 9, 1, 6 + this.worldObj.rand.nextInt(5), 0, 0.7F + this.getWorldObj().rand.nextFloat() * 0.4F);
       }
 
       if (complete) {
@@ -130,12 +130,12 @@ public class TileFocalManipulator extends TileThaumcraftInventory {
             } else {
                boolean b = false;
 
-               for(int a = 0; a < ut.length; ++a) {
-                  if (ut[a].id == id) {
-                     b = true;
-                     break;
-                  }
-               }
+                for (FocusUpgradeType focusUpgradeType : ut) {
+                    if (focusUpgradeType.id == id) {
+                        b = true;
+                        break;
+                    }
+                }
 
                if (!b) {
                   return false;
@@ -161,7 +161,7 @@ public class TileFocalManipulator extends TileThaumcraftInventory {
 
                   this.markDirty();
                   this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-                  this.worldObj.playSoundEffect((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, "thaumcraft:craftstart", 0.25F, 1.0F);
+                  this.worldObj.playSoundEffect(this.xCoord, this.yCoord, this.zCoord, "thaumcraft:craftstart", 0.25F, 1.0F);
                   return true;
                } else {
                   return false;

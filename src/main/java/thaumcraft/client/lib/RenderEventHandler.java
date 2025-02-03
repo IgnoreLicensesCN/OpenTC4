@@ -132,7 +132,7 @@ public class RenderEventHandler {
 
                try {
                   sg.loadShaderGroup(event.partialTicks);
-               } catch (Exception var8) {
+               } catch (Exception ignored) {
                }
 
                GL11.glPopMatrix();
@@ -173,7 +173,7 @@ public class RenderEventHandler {
                tagscale += 0.031F - tagscale / 10.0F;
             }
 
-            this.drawTagsOnContainer((double)((float)target.blockX + (float)dir.offsetX / 2.0F), (double)((float)target.blockY + (float)dir.offsetY / 2.0F), (double)((float)target.blockZ + (float)dir.offsetZ / 2.0F), ot, 220, dir, event.partialTicks);
+            this.drawTagsOnContainer((float)target.blockX + (float)dir.offsetX / 2.0F, (float)target.blockY + (float)dir.offsetY / 2.0F, (float)target.blockZ + (float)dir.offsetZ / 2.0F, ot, 220, dir, event.partialTicks);
          }
       }
 
@@ -196,7 +196,7 @@ public class RenderEventHandler {
                   tagscale += 0.031F - tagscale / 10.0F;
                }
 
-               this.drawTagsOnContainer((double)target.blockX, (double)((float)target.blockY + (spaceAbove ? 0.4F : 0.0F) + shift), (double)target.blockZ, ((IAspectContainer)te).getAspects(), 220, spaceAbove ? ForgeDirection.UP : ForgeDirection.getOrientation(event.target.sideHit), event.partialTicks);
+               this.drawTagsOnContainer(target.blockX, (float)target.blockY + (spaceAbove ? 0.4F : 0.0F) + shift, target.blockZ, ((IAspectContainer)te).getAspects(), 220, spaceAbove ? ForgeDirection.UP : ForgeDirection.getOrientation(event.target.sideHit), event.partialTicks);
             }
 
             if (note >= 0) {
@@ -204,7 +204,7 @@ public class RenderEventHandler {
                   PacketHandler.INSTANCE.sendToServer(new PacketNote(target.blockX, target.blockY, target.blockZ, event.player.worldObj.provider.dimensionId));
                }
 
-               this.drawTextInAir((double)target.blockX, (double)(target.blockY + 1), (double)target.blockZ, event.partialTicks, "Note: " + note);
+               this.drawTextInAir(target.blockX, target.blockY + 1, target.blockZ, event.partialTicks, "Note: " + note);
             }
          }
       }
@@ -292,26 +292,26 @@ public class RenderEventHandler {
             GL11.glTranslated(-iPX + x + (double)0.5F + (double)(tagscale * 2.0F * (float)dir.offsetX), -iPY + y - (double)shifty + (double)0.5F + (double)(tagscale * 2.0F * (float)dir.offsetY), -iPZ + z + (double)0.5F + (double)(tagscale * 2.0F * (float)dir.offsetZ));
             float xd = (float)(iPX - (x + (double)0.5F));
             float zd = (float)(iPZ - (z + (double)0.5F));
-            float rotYaw = (float)(Math.atan2((double)xd, (double)zd) * (double)180.0F / Math.PI);
+            float rotYaw = (float)(Math.atan2(xd, zd) * (double)180.0F / Math.PI);
             GL11.glRotatef(rotYaw + 180.0F, 0.0F, 1.0F, 0.0F);
-            GL11.glTranslated((double)shift, (double)0.0F, (double)0.0F);
+            GL11.glTranslated(shift, 0.0F, 0.0F);
             GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
             GL11.glScalef(tagscale, tagscale, tagscale);
             if (!Thaumcraft.proxy.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), tag)) {
-               UtilsFX.renderQuadCenteredFromTexture((String)"textures/aspects/_unknown.png", 1.0F, (float)color.getRed() / 255.0F, (float)color.getGreen() / 255.0F, (float)color.getBlue() / 255.0F, bright, 771, 0.75F);
+               UtilsFX.renderQuadCenteredFromTexture("textures/aspects/_unknown.png", 1.0F, (float)color.getRed() / 255.0F, (float)color.getGreen() / 255.0F, (float)color.getBlue() / 255.0F, bright, 771, 0.75F);
                new Color(11184810);
             } else {
-               UtilsFX.renderQuadCenteredFromTexture((ResourceLocation)tag.getImage(), 1.0F, (float)color.getRed() / 255.0F, (float)color.getGreen() / 255.0F, (float)color.getBlue() / 255.0F, bright, 771, 0.75F);
+               UtilsFX.renderQuadCenteredFromTexture(tag.getImage(), 1.0F, (float)color.getRed() / 255.0F, (float)color.getGreen() / 255.0F, (float)color.getBlue() / 255.0F, bright, 771, 0.75F);
             }
 
             if (tags.getAmount(tag) >= 0) {
                String am = "" + tags.getAmount(tag);
                GL11.glScalef(0.04F, 0.04F, 0.04F);
-               GL11.glTranslated((double)0.0F, (double)6.0F, -0.1);
+               GL11.glTranslated(0.0F, 6.0F, -0.1);
                int sw = Minecraft.getMinecraft().fontRenderer.getStringWidth(am);
                GL11.glEnable(3042);
                Minecraft.getMinecraft().fontRenderer.drawString(am, 14 - sw, 1, 1118481);
-               GL11.glTranslated((double)0.0F, (double)0.0F, -0.1);
+               GL11.glTranslated(0.0F, 0.0F, -0.1);
                Minecraft.getMinecraft().fontRenderer.drawString(am, 13 - sw, 0, 16777215);
             }
 
@@ -333,14 +333,14 @@ public class RenderEventHandler {
          GL11.glTranslated(-iPX + x + (double)0.5F, -iPY + y + (double)0.5F, -iPZ + z + (double)0.5F);
          float xd = (float)(iPX - (x + (double)0.5F));
          float zd = (float)(iPZ - (z + (double)0.5F));
-         float rotYaw = (float)(Math.atan2((double)xd, (double)zd) * (double)180.0F / Math.PI);
+         float rotYaw = (float)(Math.atan2(xd, zd) * (double)180.0F / Math.PI);
          GL11.glRotatef(rotYaw + 180.0F, 0.0F, 1.0F, 0.0F);
          GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
          GL11.glScalef(0.02F, 0.02F, 0.02F);
          int sw = Minecraft.getMinecraft().fontRenderer.getStringWidth(text);
          GL11.glEnable(3042);
          Minecraft.getMinecraft().fontRenderer.drawString(text, 1 - sw / 2, 1, 1118481);
-         GL11.glTranslated((double)0.0F, (double)0.0F, -0.1);
+         GL11.glTranslated(0.0F, 0.0F, -0.1);
          Minecraft.getMinecraft().fontRenderer.drawString(text, -sw / 2, 0, 16777215);
          GL11.glPopMatrix();
       }
@@ -380,13 +380,13 @@ public class RenderEventHandler {
 
                      if (ore) {
                         try {
-                           ScanResult scan = new ScanResult((byte)1, Block.getIdFromBlock(bi), md, (Entity)null, "");
+                           ScanResult scan = new ScanResult((byte)1, Block.getIdFromBlock(bi), md, null, "");
                            value = ScanManager.getScanAspects(scan, player.worldObj).visSize();
                         } catch (Exception var21) {
                            try {
-                              ScanResult scan = new ScanResult((byte)1, Item.getIdFromItem(bi.getItem(player.worldObj, x + xx, y + yy, z + zz)), bi.getDamageValue(player.worldObj, x + xx, y + yy, z + zz), (Entity)null, "");
+                              ScanResult scan = new ScanResult((byte)1, Item.getIdFromItem(bi.getItem(player.worldObj, x + xx, y + yy, z + zz)), bi.getDamageValue(player.worldObj, x + xx, y + yy, z + zz), null, "");
                               value = ScanManager.getScanAspects(scan, player.worldObj).visSize();
-                           } catch (Exception var20) {
+                           } catch (Exception ignored) {
                            }
                         }
                      }
@@ -423,9 +423,9 @@ public class RenderEventHandler {
                float dist = 1.0F - (float)(xx * xx + yy * yy + zz * zz) / 64.0F;
                alpha *= dist;
                if (value == -5) {
-                  this.drawSpecialBlockoverlay((double)(this.scanX + xx), (double)(this.scanY + yy), (double)(this.scanZ + zz), partialTicks, 3986684, alpha);
+                  this.drawSpecialBlockoverlay(this.scanX + xx, this.scanY + yy, this.scanZ + zz, partialTicks, 3986684, alpha);
                } else if (value == -10) {
-                  this.drawSpecialBlockoverlay((double)(this.scanX + xx), (double)(this.scanY + yy), (double)(this.scanZ + zz), partialTicks, 16734721, alpha);
+                  this.drawSpecialBlockoverlay(this.scanX + xx, this.scanY + yy, this.scanZ + zz, partialTicks, 16734721, alpha);
                } else if (value >= 0) {
                   GL11.glPushMatrix();
                   GL11.glEnable(3042);
@@ -433,7 +433,7 @@ public class RenderEventHandler {
                   GL11.glAlphaFunc(516, 0.003921569F);
                   GL11.glDisable(2884);
                   UtilsFX.bindTexture(TileNodeRenderer.nodetex);
-                  this.drawPickScannedObject((double)(this.scanX + xx), (double)(this.scanY + yy), (double)(this.scanZ + zz), partialTicks, alpha, (int)(time / 50L % 32L), (float)value / 7.0F);
+                  this.drawPickScannedObject(this.scanX + xx, this.scanY + yy, this.scanZ + zz, partialTicks, alpha, (int)(time / 50L % 32L), (float)value / 7.0F);
                   GL11.glAlphaFunc(516, 0.1F);
                   GL11.glDisable(3042);
                   GL11.glEnable(2884);
@@ -478,13 +478,13 @@ public class RenderEventHandler {
          GL11.glTranslated(-iPX + x + (double)0.5F, -iPY + y + (double)0.5F, -iPZ + z + (double)0.5F);
          GL11.glRotatef(90.0F, (float)(-dir.offsetY), (float)dir.offsetX, (float)(-dir.offsetZ));
          if (dir.offsetZ < 0) {
-            GL11.glTranslated((double)0.0F, (double)0.0F, (double)0.5F);
+            GL11.glTranslated(0.0F, 0.0F, 0.5F);
          } else {
-            GL11.glTranslated((double)0.0F, (double)0.0F, (double)-0.5F);
+            GL11.glTranslated(0.0F, 0.0F, -0.5F);
          }
 
          GL11.glRotatef(0.0F, 0.0F, 0.0F, 1.0F);
-         UtilsFX.renderQuadCenteredFromTexture((String)"textures/blocks/wardedglass.png", 1.0F, r, g, b, 200, 1, alpha);
+         UtilsFX.renderQuadCenteredFromTexture("textures/blocks/wardedglass.png", 1.0F, r, g, b, 200, 1, alpha);
          GL11.glPopMatrix();
       }
 
@@ -505,16 +505,16 @@ public class RenderEventHandler {
                golem = player.worldObj.getEntityByID(gid);
             }
 
-            if (golem == null || !(golem instanceof EntityGolemBase)) {
+            if (!(golem instanceof EntityGolemBase)) {
                return;
             }
          }
 
          GL11.glPushMatrix();
          GL11.glAlphaFunc(516, 0.003921569F);
-         if (golem != null && cc != null && face > -1 && player.getDistanceSq((double)cc.posX, (double)cc.posY, (double)cc.posZ) < (double)4096.0F) {
+         if (golem != null && cc != null && face > -1 && player.getDistanceSq(cc.posX, cc.posY, cc.posZ) < (double)4096.0F) {
             GL11.glPushMatrix();
-            this.drawGolemHomeOverlay((double)cc.posX, (double)cc.posY, (double)cc.posZ, face, partialTicks);
+            this.drawGolemHomeOverlay(cc.posX, cc.posY, cc.posZ, face, partialTicks);
             GL11.glPopMatrix();
          }
 
@@ -522,18 +522,18 @@ public class RenderEventHandler {
 
          for(int q = 0; q < tl.tagCount(); ++q) {
             NBTTagCompound nbttagcompound1 = tl.getCompoundTagAt(q);
-            double x = (double)nbttagcompound1.getInteger("x");
-            double y = (double)nbttagcompound1.getInteger("y");
-            double z = (double)nbttagcompound1.getInteger("z");
+            double x = nbttagcompound1.getInteger("x");
+            double y = nbttagcompound1.getInteger("y");
+            double z = nbttagcompound1.getInteger("z");
             int ox = nbttagcompound1.getInteger("x");
             int oy = nbttagcompound1.getInteger("y");
             int oz = nbttagcompound1.getInteger("z");
             int dim = nbttagcompound1.getInteger("dim");
             byte s = nbttagcompound1.getByte("side");
             byte c = nbttagcompound1.getByte("color");
-            x += (double)ForgeDirection.getOrientation(s).offsetX;
-            y += (double)ForgeDirection.getOrientation(s).offsetY;
-            z += (double)ForgeDirection.getOrientation(s).offsetZ;
+            x += ForgeDirection.getOrientation(s).offsetX;
+            y += ForgeDirection.getOrientation(s).offsetY;
+            z += ForgeDirection.getOrientation(s).offsetZ;
             if (dim == player.worldObj.provider.dimensionId && player.getDistanceSq(x, y, z) < (double)4096.0F) {
                GL11.glPushMatrix();
                this.drawMarkerOverlay(x, y, z, s, partialTicks, c);
@@ -542,7 +542,7 @@ public class RenderEventHandler {
                   GL11.glPushMatrix();
 
                   for(int a = 0; a < 6; ++a) {
-                     this.drawAirBlockoverlay((double)(ox + ForgeDirection.getOrientation(a).offsetX), (double)(oy + ForgeDirection.getOrientation(a).offsetY), (double)(oz + ForgeDirection.getOrientation(a).offsetZ), a, partialTicks, c);
+                     this.drawAirBlockoverlay(ox + ForgeDirection.getOrientation(a).offsetX, oy + ForgeDirection.getOrientation(a).offsetY, oz + ForgeDirection.getOrientation(a).offsetZ, a, partialTicks, c);
                   }
 
                   GL11.glPopMatrix();
@@ -596,14 +596,14 @@ public class RenderEventHandler {
       GL11.glRotatef(90.0F, (float)(-dir.offsetY), (float)dir.offsetX, (float)(-dir.offsetZ));
       GL11.glPushMatrix();
       if (dir.offsetZ < 0) {
-         GL11.glTranslated((double)0.0F, (double)0.0F, (double)0.5F);
+         GL11.glTranslated(0.0F, 0.0F, 0.5F);
       } else {
-         GL11.glTranslated((double)0.0F, (double)0.0F, (double)-0.5F);
+         GL11.glTranslated(0.0F, 0.0F, -0.5F);
       }
 
       GL11.glRotatef(0.0F, 0.0F, 0.0F, 1.0F);
       GL11.glScalef(0.98F, 0.98F, 0.98F);
-      UtilsFX.renderQuadCenteredFromTexture((String)"textures/blocks/empty.png", 1.0F, r, g, b, 200, 1, 1.0F);
+      UtilsFX.renderQuadCenteredFromTexture("textures/blocks/empty.png", 1.0F, r, g, b, 200, 1, 1.0F);
       GL11.glPopMatrix();
       GL11.glDisable(3042);
       GL11.glEnable(2884);
@@ -641,14 +641,14 @@ public class RenderEventHandler {
       GL11.glRotatef(90.0F, (float)(-dir.offsetY), (float)dir.offsetX, (float)(-dir.offsetZ));
       GL11.glPushMatrix();
       if (dir.offsetZ < 0) {
-         GL11.glTranslated((double)0.0F, (double)0.0F, (double)0.5F);
+         GL11.glTranslated(0.0F, 0.0F, 0.5F);
       } else {
-         GL11.glTranslated((double)0.0F, (double)0.0F, (double)-0.5F);
+         GL11.glTranslated(0.0F, 0.0F, -0.5F);
       }
 
       GL11.glRotatef(0.0F, 0.0F, 0.0F, 1.0F);
       GL11.glScalef(0.4F, 0.4F, 0.4F);
-      UtilsFX.renderQuadCenteredFromTexture((String)"textures/misc/mark.png", 1.0F, r, g, b, 200, 1, 1.0F);
+      UtilsFX.renderQuadCenteredFromTexture("textures/misc/mark.png", 1.0F, r, g, b, 200, 1, 1.0F);
       GL11.glPopMatrix();
       GL11.glDisable(3042);
       GL11.glEnable(2884);
@@ -678,14 +678,14 @@ public class RenderEventHandler {
       GL11.glRotatef(90.0F, (float)(-dir.offsetY), (float)dir.offsetX, (float)(-dir.offsetZ));
       GL11.glPushMatrix();
       if (dir.offsetZ < 0) {
-         GL11.glTranslated((double)0.0F, (double)0.0F, (double)0.5F);
+         GL11.glTranslated(0.0F, 0.0F, 0.5F);
       } else {
-         GL11.glTranslated((double)0.0F, (double)0.0F, (double)-0.5F);
+         GL11.glTranslated(0.0F, 0.0F, -0.5F);
       }
 
       GL11.glRotatef(0.0F, 0.0F, 0.0F, 1.0F);
       GL11.glScalef(0.65F, 0.65F, 0.65F);
-      UtilsFX.renderQuadCenteredFromTexture((String)"textures/misc/home.png", 1.0F, r, g, b, 200, 1, 1.0F);
+      UtilsFX.renderQuadCenteredFromTexture("textures/misc/home.png", 1.0F, r, g, b, 200, 1, 1.0F);
       GL11.glPopMatrix();
       GL11.glDisable(3042);
       GL11.glEnable(2884);
@@ -721,22 +721,22 @@ public class RenderEventHandler {
       double dd1x = x + (double)0.5F + (double)ForgeDirection.getOrientation(side).offsetX * (double)0.5F;
       double dd1y = y + (double)0.5F + (double)ForgeDirection.getOrientation(side).offsetY * (double)0.5F;
       double dd1z = z + (double)0.5F + (double)ForgeDirection.getOrientation(side).offsetZ * (double)0.5F;
-      double dc1x = (double)((float)(dd1x - ePX));
-      double dc1y = (double)((float)(dd1y - ds1y));
-      double dc1z = (double)((float)(dd1z - ePZ));
+      double dc1x = (float)(dd1x - ePX);
+      double dc1y = (float)(dd1y - ds1y);
+      double dc1z = (float)(dd1z - ePZ);
       double ds2x = x + (double)0.5F;
       double ds2y = y + (double)0.5F;
       double ds2z = z + (double)0.5F;
-      double dc22x = (double)((float)(ds2x - ePX));
-      double dc22y = (double)((float)(ds2y - ds1y));
-      double dc22z = (double)((float)(ds2z - ePZ));
+      double dc22x = (float)(ds2x - ePX);
+      double dc22y = (float)(ds2y - ds1y);
+      double dc22z = (float)(ds2z - ePZ);
       UtilsFX.bindTexture("textures/misc/script.png");
       GL11.glDisable(2884);
       tessellator.startDrawing(5);
       float f4 = 0.0F;
-      double dx2 = (double)0.0F;
-      double dy2 = (double)0.0F;
-      double dz2 = (double)0.0F;
+      double dx2 = 0.0F;
+      double dy2 = 0.0F;
+      double dz2 = 0.0F;
       double d3 = x - ePX;
       double d4 = y - ePY;
       double d5 = z - ePZ;
@@ -775,8 +775,8 @@ public class RenderEventHandler {
 
          tessellator.setColorRGBA_F(r, g, b, f2a * (1.0F - f4));
          float f13 = (1.0F - f2) * dist - time * 0.005F;
-         tessellator.addVertexWithUV(dx * (double)f2, dy * (double)f2 - 0.05, dz * (double)f2, (double)f13, (double)f10);
-         tessellator.addVertexWithUV(dx * (double)f2, dy * (double)f2 + 0.05, dz * (double)f2, (double)f13, (double)f9);
+         tessellator.addVertexWithUV(dx * (double)f2, dy * (double)f2 - 0.05, dz * (double)f2, f13, f10);
+         tessellator.addVertexWithUV(dx * (double)f2, dy * (double)f2 + 0.05, dz * (double)f2, f13, f9);
       }
 
       tessellator.draw();
@@ -796,7 +796,7 @@ public class RenderEventHandler {
          GL11.glClear(256);
          GL11.glMatrixMode(5889);
          GL11.glLoadIdentity();
-         GL11.glOrtho((double)0.0F, sw, sh, (double)0.0F, (double)1000.0F, (double)3000.0F);
+         GL11.glOrtho(0.0F, sw, sh, 0.0F, 1000.0F, 3000.0F);
          Minecraft.getMinecraft().getTextureManager().bindTexture(vignetteTexPath);
          GL11.glMatrixMode(5888);
          GL11.glLoadIdentity();
@@ -807,10 +807,10 @@ public class RenderEventHandler {
          GL11.glColor4f(b, b, b, 1.0F);
          Tessellator tessellator = Tessellator.instance;
          tessellator.startDrawingQuads();
-         tessellator.addVertexWithUV((double)0.0F, (double)l, (double)-90.0F, (double)0.0F, (double)1.0F);
-         tessellator.addVertexWithUV((double)k, (double)l, (double)-90.0F, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV((double)k, (double)0.0F, (double)-90.0F, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV((double)0.0F, (double)0.0F, (double)-90.0F, (double)0.0F, (double)0.0F);
+         tessellator.addVertexWithUV(0.0F, l, -90.0F, 0.0F, 1.0F);
+         tessellator.addVertexWithUV(k, l, -90.0F, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(k, 0.0F, -90.0F, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(0.0F, 0.0F, -90.0F, 0.0F, 0.0F);
          tessellator.draw();
          GL11.glDepthMask(true);
          GL11.glEnable(2929);

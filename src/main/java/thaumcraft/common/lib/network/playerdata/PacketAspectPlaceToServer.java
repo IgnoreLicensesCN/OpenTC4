@@ -65,7 +65,7 @@ public class PacketAspectPlaceToServer implements IMessage, IMessageHandler<Pack
          Entity player = world.getEntityByID(message.playerid);
           if (player != null) {
               TileEntity rt = world.getTileEntity(message.x, message.y, message.z);
-              if (rt != null && rt instanceof TileResearchTable) {
+              if (rt instanceof TileResearchTable) {
                   ((TileResearchTable) rt).placeAspect(message.q, message.r, message.aspect, (EntityPlayer) player);
               }
 

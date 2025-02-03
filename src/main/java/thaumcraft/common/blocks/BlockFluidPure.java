@@ -39,10 +39,10 @@ public class BlockFluidPure extends BlockFluidClassic {
 
    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
       if (!world.isRemote && this.isSourceBlock(world, x, y, z) && entity instanceof EntityPlayer && !((EntityPlayer)entity).isPotionActive(Config.potionWarpWardID)) {
-         int warp = Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(((EntityPlayer)entity).getCommandSenderName());
+         int warp = Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(entity.getCommandSenderName());
          int div = 1;
          if (warp > 0) {
-            div = (int)Math.sqrt((double)warp);
+            div = (int)Math.sqrt(warp);
             if (div < 1) {
                div = 1;
             }
@@ -57,14 +57,14 @@ public class BlockFluidPure extends BlockFluidClassic {
    @SideOnly(Side.CLIENT)
    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
       int meta = world.getBlockMetadata(x, y, z);
-      FXBubble fb = new FXBubble(world, (double)((float)x + rand.nextFloat()), (double)((float)y + 0.125F * (float)(8 - meta)), (double)((float)z + rand.nextFloat()), (double)0.0F, (double)0.0F, (double)0.0F, 0);
+      FXBubble fb = new FXBubble(world, (float)x + rand.nextFloat(), (float)y + 0.125F * (float)(8 - meta), (float)z + rand.nextFloat(), 0.0F, 0.0F, 0.0F, 0);
       fb.setAlphaF(0.25F);
       fb.setRGB(1.0F, 1.0F, 1.0F);
       ParticleEngine.instance.addEffect(world, fb);
       if (rand.nextInt(25) == 0) {
-         double var21 = (double)((float)x + rand.nextFloat());
+         double var21 = (float)x + rand.nextFloat();
          double var22 = (double)y + this.maxY;
-         double var23 = (double)((float)z + rand.nextFloat());
+         double var23 = (float)z + rand.nextFloat();
          world.playSound(var21, var22, var23, "liquid.lavapop", 0.1F + rand.nextFloat() * 0.1F, 0.9F + rand.nextFloat() * 0.15F, false);
       }
 

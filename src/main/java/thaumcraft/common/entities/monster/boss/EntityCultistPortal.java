@@ -60,9 +60,9 @@ public class EntityCultistPortal extends EntityMob implements IBossDisplayData {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)500.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)0.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue((double)1.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(500.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(0.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(1.0F);
    }
 
    public float getShadowSize() {
@@ -100,7 +100,7 @@ public class EntityCultistPortal extends EntityMob implements IBossDisplayData {
       super.onUpdate();
       if (!this.worldObj.isRemote) {
          if (this.stagecounter <= 0) {
-            if (this.worldObj.getClosestPlayerToEntity(this, (double)48.0F) != null) {
+            if (this.worldObj.getClosestPlayerToEntity(this, 48.0F) != null) {
                this.worldObj.setEntityState(this, (byte)16);
                switch (this.stage) {
                   case 0:
@@ -141,7 +141,7 @@ public class EntityCultistPortal extends EntityMob implements IBossDisplayData {
                   ForgeDirection dir = ForgeDirection.getOrientation(a);
                   this.worldObj.setBlock((int)this.posX - dir.offsetX * 6, (int)this.posY, (int)this.posZ + dir.offsetZ * 6, ConfigBlocks.blockWoodenDevice, 8, 3);
                   TileEntity te = this.worldObj.getTileEntity((int)this.posX - dir.offsetX * 6, (int)this.posY, (int)this.posZ + dir.offsetZ * 6);
-                  if (te != null && te instanceof TileBanner) {
+                  if (te instanceof TileBanner) {
                      int face = 0;
                      switch (a) {
                         case 2:
@@ -158,7 +158,7 @@ public class EntityCultistPortal extends EntityMob implements IBossDisplayData {
                      }
 
                      ((TileBanner)te).setFacing((byte)face);
-                     PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockArc((int)this.posX - dir.offsetX * 6, (int)this.posY, (int)this.posZ + dir.offsetZ * 6, this.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.posX, this.posY, this.posZ, (double)32.0F));
+                     PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockArc((int)this.posX - dir.offsetX * 6, (int)this.posY, (int)this.posZ + dir.offsetZ * 6, this.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.posX, this.posY, this.posZ, 32.0F));
                      this.playSound("thaumcraft:wandfail", 1.0F, 1.0F);
                   }
                }
@@ -172,7 +172,7 @@ public class EntityCultistPortal extends EntityMob implements IBossDisplayData {
                   float rr = this.worldObj.rand.nextFloat();
                   int md = rr < 0.05F ? 2 : (rr < 0.2F ? 1 : 0);
                   this.worldObj.setBlock(a, (int)this.posY, b, ConfigBlocks.blockLootCrate, md, 3);
-                  PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockArc(a, (int)this.posY, b, this.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.posX, this.posY, this.posZ, (double)32.0F));
+                  PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockArc(a, (int)this.posY, b, this.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.posX, this.posY, this.posZ, 32.0F));
                   this.playSound("thaumcraft:wandfail", 1.0F, 1.0F);
                }
             }
@@ -190,7 +190,7 @@ public class EntityCultistPortal extends EntityMob implements IBossDisplayData {
    }
 
    int getTiming() {
-      List<Entity> l = EntityUtils.getEntitiesInRange(this.worldObj, this.posX, this.posY, this.posZ, this, EntityCultist.class, (double)32.0F);
+      List<Entity> l = EntityUtils.getEntitiesInRange(this.worldObj, this.posX, this.posY, this.posZ, this, EntityCultist.class, 32.0F);
       return l.size() * 20;
    }
 
@@ -203,7 +203,7 @@ public class EntityCultistPortal extends EntityMob implements IBossDisplayData {
       }
 
       cultist.setPosition(this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)0.25F, this.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat());
-      cultist.onSpawnWithEgg((IEntityLivingData)null);
+      cultist.onSpawnWithEgg(null);
       cultist.spawnExplosionParticle();
       cultist.setHomeArea((int)this.posX, (int)this.posY, (int)this.posZ, 32);
       this.worldObj.spawnEntityInWorld(cultist);
@@ -217,7 +217,7 @@ public class EntityCultistPortal extends EntityMob implements IBossDisplayData {
    void spawnBoss() {
       EntityCultistLeader cultist = new EntityCultistLeader(this.worldObj);
       cultist.setPosition(this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)0.25F, this.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat());
-      cultist.onSpawnWithEgg((IEntityLivingData)null);
+      cultist.onSpawnWithEgg(null);
       cultist.setHomeArea((int)this.posX, (int)this.posY, (int)this.posZ, 32);
       cultist.spawnExplosionParticle();
       this.worldObj.spawnEntityInWorld(cultist);

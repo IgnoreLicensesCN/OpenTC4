@@ -78,30 +78,22 @@ public class ParticleEngine {
                Tessellator tessellator = Tessellator.instance;
                tessellator.startDrawingQuads();
 
-               for(int j = 0; j < parts.size(); ++j) {
-                  final EntityFX entityfx = (EntityFX)parts.get(j);
-                  if (entityfx != null) {
-                     tessellator.setBrightness(entityfx.getBrightnessForRender(frame));
+                for (EntityFX part : parts) {
+                    final EntityFX entityfx = (EntityFX) part;
+                    if (entityfx != null) {
+                        tessellator.setBrightness(entityfx.getBrightnessForRender(frame));
 
-                     try {
-                        entityfx.renderParticle(tessellator, frame, f1, f5, f2, f3, f4);
-                     } catch (Throwable throwable) {
-                        CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Rendering Particle");
-                        CrashReportCategory crashreportcategory = crashreport.makeCategory("Particle being rendered");
-                        crashreportcategory.addCrashSectionCallable("Particle", new Callable() {
-                           public String call() {
-                              return entityfx.toString();
-                           }
-                        });
-                        crashreportcategory.addCrashSectionCallable("Particle Type", new Callable() {
-                           public String call() {
-                              return "ENTITY_PARTICLE_TEXTURE";
-                           }
-                        });
-                        throw new ReportedException(crashreport);
-                     }
-                  }
-               }
+                        try {
+                            entityfx.renderParticle(tessellator, frame, f1, f5, f2, f3, f4);
+                        } catch (Throwable throwable) {
+                            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Rendering Particle");
+                            CrashReportCategory crashreportcategory = crashreport.makeCategory("Particle being rendered");
+                            crashreportcategory.addCrashSectionCallable("Particle", entityfx::toString);
+                            crashreportcategory.addCrashSectionCallable("Particle Type", () -> "ENTITY_PARTICLE_TEXTURE");
+                            throw new ReportedException(crashreport);
+                        }
+                    }
+                }
 
                tessellator.draw();
                GL11.glPopMatrix();
@@ -140,10 +132,10 @@ public class ParticleEngine {
             if (event.phase == Phase.START) {
                for(int layer = 0; layer < 4; ++layer) {
                   if (this.particles[layer].containsKey(dim)) {
-                     ArrayList<EntityFX> parts = (ArrayList)this.particles[layer].get(dim);
+                     ArrayList<EntityFX> parts = this.particles[layer].get(dim);
 
                      for(int j = 0; j < parts.size(); ++j) {
-                        final EntityFX entityfx = (EntityFX)parts.get(j);
+                        final EntityFX entityfx = parts.get(j);
 
                         try {
                            if (entityfx != null) {
@@ -152,16 +144,8 @@ public class ParticleEngine {
                         } catch (Throwable throwable) {
                            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Ticking Particle");
                            CrashReportCategory crashreportcategory = crashreport.makeCategory("Particle being ticked");
-                           crashreportcategory.addCrashSectionCallable("Particle", new Callable() {
-                              public String call() {
-                                 return entityfx.toString();
-                              }
-                           });
-                           crashreportcategory.addCrashSectionCallable("Particle Type", new Callable() {
-                              public String call() {
-                                 return "ENTITY_PARTICLE_TEXTURE";
-                              }
-                           });
+                           crashreportcategory.addCrashSectionCallable("Particle", entityfx::toString);
+                           crashreportcategory.addCrashSectionCallable("Particle Type", () -> "ENTITY_PARTICLE_TEXTURE");
                            throw new ReportedException(crashreport);
                         }
 

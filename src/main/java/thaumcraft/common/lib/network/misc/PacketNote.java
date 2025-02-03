@@ -60,9 +60,9 @@ public class PacketNote implements IMessage, IMessageHandler<PacketNote,IMessage
       if (ctx.side == Side.CLIENT) {
          if (message.note >= 0) {
             TileEntity tile = Thaumcraft.proxy.getClientWorld().getTileEntity(message.x, message.y, message.z);
-            if (tile != null && tile instanceof TileEntityNote) {
+            if (tile instanceof TileEntityNote) {
                ((TileEntityNote)tile).note = message.note;
-            } else if (tile != null && tile instanceof TileSensor) {
+            } else if (tile instanceof TileSensor) {
                ((TileSensor)tile).note = message.note;
             }
          }
@@ -74,14 +74,14 @@ public class PacketNote implements IMessage, IMessageHandler<PacketNote,IMessage
 
          TileEntity tile = world.getTileEntity(message.x, message.y, message.z);
          byte note = -1;
-         if (tile != null && tile instanceof TileEntityNote) {
+         if (tile instanceof TileEntityNote) {
             note = ((TileEntityNote)tile).note;
-         } else if (tile != null && tile instanceof TileSensor) {
+         } else if (tile instanceof TileSensor) {
             note = ((TileSensor)tile).note;
          }
 
          if (note >= 0) {
-            PacketHandler.INSTANCE.sendToAllAround(new PacketNote(message.x, message.y, message.z, message.dim, note), new NetworkRegistry.TargetPoint(message.dim, (double)message.x, (double)message.y, (double)message.z, (double)8.0F));
+            PacketHandler.INSTANCE.sendToAllAround(new PacketNote(message.x, message.y, message.z, message.dim, note), new NetworkRegistry.TargetPoint(message.dim, message.x, message.y, message.z, 8.0F));
          }
       }
 

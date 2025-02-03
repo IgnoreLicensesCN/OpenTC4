@@ -51,7 +51,7 @@ public class BiomeHandler {
                return (Float)((List)biomeInfo.get(type)).get(3);
             }
          }
-      } catch (Exception var6) {
+      } catch (Exception ignored) {
       }
 
       return 0.0F;

@@ -22,7 +22,7 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {
       double var10002 = (double)te.xCoord + (double)0.5F;
       double var10003 = (double)te.yCoord + (double)0.5F;
-      double var10004 = (double)te.zCoord;
+      double var10004 = te.zCoord;
       this.inrange = Minecraft.getMinecraft().renderViewEntity.getDistanceSq(var10002, var10003, var10004 + (double)0.5F) < (double)512.0F;
       GL11.glDisable(2912);
       if (!te.getWorldObj().getBlock(te.xCoord, te.yCoord + 1, te.zCoord).isOpaqueCube()) {
@@ -137,10 +137,10 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
          Tessellator tessellator = Tessellator.instance;
          tessellator.startDrawingQuads();
          tessellator.setBrightness(180);
-         tessellator.addVertexWithUV(x, y + (double)offset, z + (double)1.0F, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV(x, y + (double)offset, z, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)offset, z, (double)0.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)offset, z + (double)1.0F, (double)0.0F, (double)1.0F);
+         tessellator.addVertexWithUV(x, y + (double)offset, z + (double)1.0F, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(x, y + (double)offset, z, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)offset, z, 0.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)offset, z + (double)1.0F, 0.0F, 1.0F);
          tessellator.draw();
          GL11.glPopMatrix();
       }
@@ -238,10 +238,10 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
          Tessellator tessellator = Tessellator.instance;
          tessellator.startDrawingQuads();
          tessellator.setBrightness(180);
-         tessellator.addVertexWithUV(x, y + (double)offset, z, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV(x, y + (double)offset, z + (double)1.0F, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)offset, z + (double)1.0F, (double)0.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)offset, z, (double)0.0F, (double)1.0F);
+         tessellator.addVertexWithUV(x, y + (double)offset, z, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(x, y + (double)offset, z + (double)1.0F, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)offset, z + (double)1.0F, 0.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)offset, z, 0.0F, 1.0F);
          tessellator.draw();
          GL11.glPopMatrix();
       }
@@ -339,10 +339,10 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
          Tessellator tessellator = Tessellator.instance;
          tessellator.startDrawingQuads();
          tessellator.setBrightness(180);
-         tessellator.addVertexWithUV(x, y + (double)1.0F, z + (double)offset, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV(x, y, z + (double)offset, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)1.0F, y, z + (double)offset, (double)0.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)1.0F, z + (double)offset, (double)0.0F, (double)1.0F);
+         tessellator.addVertexWithUV(x, y + (double)1.0F, z + (double)offset, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(x, y, z + (double)offset, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)1.0F, y, z + (double)offset, 0.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)1.0F, z + (double)offset, 0.0F, 1.0F);
          tessellator.draw();
          GL11.glPopMatrix();
       }
@@ -440,10 +440,10 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
          Tessellator tessellator = Tessellator.instance;
          tessellator.startDrawingQuads();
          tessellator.setBrightness(180);
-         tessellator.addVertexWithUV(x, y, z + (double)offset, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV(x, y + (double)1.0F, z + (double)offset, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)1.0F, z + (double)offset, (double)0.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)1.0F, y, z + (double)offset, (double)0.0F, (double)1.0F);
+         tessellator.addVertexWithUV(x, y, z + (double)offset, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(x, y + (double)1.0F, z + (double)offset, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)1.0F, z + (double)offset, 0.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)1.0F, y, z + (double)offset, 0.0F, 1.0F);
          tessellator.draw();
          GL11.glPopMatrix();
       }
@@ -541,10 +541,10 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
          Tessellator tessellator = Tessellator.instance;
          tessellator.startDrawingQuads();
          tessellator.setBrightness(180);
-         tessellator.addVertexWithUV(x + (double)offset, y + (double)1.0F, z, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y + (double)1.0F, z + (double)1.0F, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y, z + (double)1.0F, (double)0.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y, z, (double)0.0F, (double)1.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y + (double)1.0F, z, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y + (double)1.0F, z + (double)1.0F, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y, z + (double)1.0F, 0.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y, z, 0.0F, 1.0F);
          tessellator.draw();
          GL11.glPopMatrix();
       }
@@ -642,10 +642,10 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
          Tessellator tessellator = Tessellator.instance;
          tessellator.startDrawingQuads();
          tessellator.setBrightness(180);
-         tessellator.addVertexWithUV(x + (double)offset, y, z, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y, z + (double)1.0F, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y + (double)1.0F, z + (double)1.0F, (double)0.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y + (double)1.0F, z, (double)0.0F, (double)1.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y, z, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y, z + (double)1.0F, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y + (double)1.0F, z + (double)1.0F, 0.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y + (double)1.0F, z, 0.0F, 1.0F);
          tessellator.draw();
          GL11.glPopMatrix();
       }

@@ -33,7 +33,7 @@ public class ItemTrunkSpawnerRenderer implements IItemRenderer {
          }
       }
 
-      GL11.glRotatef((float)var11, 0.0F, 1.0F, 0.0F);
+      GL11.glRotatef(var11, 0.0F, 1.0F, 0.0F);
       GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
       this.chest.renderAll();
       GL11.glPopMatrix();

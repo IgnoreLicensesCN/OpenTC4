@@ -21,19 +21,19 @@ public class AIItemPickup extends EntityAIBase {
    }
 
    public boolean shouldExecute() {
-      return this.theGolem.ticksExisted % Config.golemDelay > 0 ? false : this.findItem();
+      return this.theGolem.ticksExisted % Config.golemDelay <= 0 && this.findItem();
    }
 
    private boolean findItem() {
       double range = Double.MAX_VALUE;
       float dmod = this.theGolem.getRange();
-      List<Entity> targets = this.theGolem.worldObj.getEntitiesWithinAABBExcludingEntity(this.theGolem, AxisAlignedBB.getBoundingBox((double)this.theGolem.getHomePosition().posX, (double)this.theGolem.getHomePosition().posY, (double)this.theGolem.getHomePosition().posZ, (double)(this.theGolem.getHomePosition().posX + 1), (double)(this.theGolem.getHomePosition().posY + 1), (double)(this.theGolem.getHomePosition().posZ + 1)).expand((double)dmod, (double)dmod, (double)dmod));
-      if (targets.size() == 0) {
+      List<Entity> targets = this.theGolem.worldObj.getEntitiesWithinAABBExcludingEntity(this.theGolem, AxisAlignedBB.getBoundingBox(this.theGolem.getHomePosition().posX, this.theGolem.getHomePosition().posY, this.theGolem.getHomePosition().posZ, this.theGolem.getHomePosition().posX + 1, this.theGolem.getHomePosition().posY + 1, this.theGolem.getHomePosition().posZ + 1).expand(dmod, dmod, dmod));
+      if (targets.isEmpty()) {
          return false;
       } else {
          for(Entity e : targets) {
             if (e instanceof EntityItem && ((EntityItem)e).delayBeforeCanPickup < 5 && (this.theGolem.inventory.allEmpty() || this.theGolem.inventory.getAmountNeededSmart(((EntityItem)e).getEntityItem(), this.theGolem.getUpgradeAmount(5) > 0) > 0) && (this.theGolem.getCarried() == null || InventoryUtils.areItemStacksEqualStrict(this.theGolem.getCarried(), ((EntityItem)e).getEntityItem()) && ((EntityItem)e).getEntityItem().stackSize <= this.theGolem.getCarrySpace())) {
-               double distance = e.getDistanceSq((double)((float)this.theGolem.getHomePosition().posX + 0.5F), (double)((float)this.theGolem.getHomePosition().posY + 0.5F), (double)((float)this.theGolem.getHomePosition().posZ + 0.5F));
+               double distance = e.getDistanceSq((float)this.theGolem.getHomePosition().posX + 0.5F, (float)this.theGolem.getHomePosition().posY + 0.5F, (float)this.theGolem.getHomePosition().posZ + 0.5F);
                double distance2 = e.getDistanceSq(this.theGolem.posX, this.theGolem.posY, this.theGolem.posZ);
                if (distance2 < range && distance <= (double)(dmod * dmod)) {
                   range = distance2;
@@ -42,11 +42,7 @@ public class AIItemPickup extends EntityAIBase {
             }
          }
 
-         if (this.targetEntity == null) {
-            return false;
-         } else {
-            return true;
-         }
+          return this.targetEntity != null;
       }
    }
 
@@ -97,6 +93,6 @@ public class AIItemPickup extends EntityAIBase {
 
    public void startExecuting() {
       this.count = 200;
-      this.theGolem.getNavigator().tryMoveToEntityLiving(this.targetEntity, (double)this.theGolem.getAIMoveSpeed());
+      this.theGolem.getNavigator().tryMoveToEntityLiving(this.targetEntity, this.theGolem.getAIMoveSpeed());
    }
 }

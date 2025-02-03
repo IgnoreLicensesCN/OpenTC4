@@ -38,7 +38,7 @@ public class TileBannerRenderer extends TileEntitySpecialRenderer {
       if (!banner.getWall()) {
          this.model.renderPole();
       } else {
-         GL11.glTranslated((double)0.0F, (double)0.0F, -0.4125);
+         GL11.glTranslated(0.0F, 0.0F, -0.4125);
       }
 
       this.model.renderBeam();
@@ -59,7 +59,7 @@ public class TileBannerRenderer extends TileEntitySpecialRenderer {
          GL11.glScaled(0.0375, 0.0375, 0.0375);
          GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
          GL11.glRotatef(-rx * (180F / (float)Math.PI) * 2.0F, 1.0F, 0.0F, 0.0F);
-         UtilsFX.drawTag(-8, 4, banner.getAspect(), 0.0F, 0, (double)0.0F, 771, 0.75F, false);
+         UtilsFX.drawTag(-8, 4, banner.getAspect(), 0.0F, 0, 0.0F, 771, 0.75F, false);
          GL11.glPopMatrix();
       }
 

@@ -61,7 +61,7 @@ public class BlockMirrorItem extends ItemBlock {
 
          if (stack.getItemDamage() <= 5) {
             TileEntity tm = world.getTileEntity(x, y, z);
-            if (tm != null && tm instanceof TileMirror && !((TileMirror)tm).isLinkValid()) {
+            if (tm instanceof TileMirror && !((TileMirror) tm).isLinkValid()) {
                ItemStack st = stack.copy();
                st.stackSize = 1;
                st.setItemDamage(1);
@@ -70,7 +70,7 @@ public class BlockMirrorItem extends ItemBlock {
                st.setTagInfo("linkZ", new NBTTagInt(tm.zCoord));
                st.setTagInfo("linkDim", new NBTTagInt(world.provider.dimensionId));
                st.setTagInfo("dimname", new NBTTagString(DimensionManager.getProvider(world.provider.dimensionId).getDimensionName()));
-               world.playSoundEffect((double)x, (double)y, (double)z, "thaumcraft:jar", 1.0F, 2.0F);
+               world.playSoundEffect(x, y, z, "thaumcraft:jar", 1.0F, 2.0F);
                if (!player.inventory.addItemStackToInventory(st) && !world.isRemote) {
                   world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, st));
                }
@@ -80,12 +80,12 @@ public class BlockMirrorItem extends ItemBlock {
                }
 
                player.inventoryContainer.detectAndSendChanges();
-            } else if (tm != null && tm instanceof TileMirror) {
-               player.addChatMessage(new ChatComponentTranslation("§5§oThat mirror is already linked to a valid destination.", new Object[0]));
+            } else if (tm instanceof TileMirror) {
+               player.addChatMessage(new ChatComponentTranslation("§5§oThat mirror is already linked to a valid destination."));
             }
          } else {
             TileEntity tm = world.getTileEntity(x, y, z);
-            if (tm != null && tm instanceof TileMirrorEssentia && !((TileMirrorEssentia)tm).isLinkValid()) {
+            if (tm instanceof TileMirrorEssentia && !((TileMirrorEssentia) tm).isLinkValid()) {
                ItemStack st = stack.copy();
                st.stackSize = 1;
                st.setItemDamage(7);
@@ -94,7 +94,7 @@ public class BlockMirrorItem extends ItemBlock {
                st.setTagInfo("linkZ", new NBTTagInt(tm.zCoord));
                st.setTagInfo("linkDim", new NBTTagInt(world.provider.dimensionId));
                st.setTagInfo("dimname", new NBTTagString(DimensionManager.getProvider(world.provider.dimensionId).getDimensionName()));
-               world.playSoundEffect((double)x, (double)y, (double)z, "thaumcraft:jar", 1.0F, 2.0F);
+               world.playSoundEffect(x, y, z, "thaumcraft:jar", 1.0F, 2.0F);
                if (!player.inventory.addItemStackToInventory(st) && !world.isRemote) {
                   world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, st));
                }
@@ -104,8 +104,8 @@ public class BlockMirrorItem extends ItemBlock {
                }
 
                player.inventoryContainer.detectAndSendChanges();
-            } else if (tm != null && tm instanceof TileMirrorEssentia) {
-               player.addChatMessage(new ChatComponentTranslation("§5§oThat mirror is already linked to a valid destination.", new Object[0]));
+            } else if (tm instanceof TileMirrorEssentia) {
+               player.addChatMessage(new ChatComponentTranslation("§5§oThat mirror is already linked to a valid destination."));
             }
          }
       }
@@ -118,7 +118,7 @@ public class BlockMirrorItem extends ItemBlock {
       if (ret && !world.isRemote) {
          if (metadata <= 5) {
             TileEntity te = world.getTileEntity(x, y, z);
-            if (te != null && te instanceof TileMirror && stack.hasTagCompound()) {
+            if (te instanceof TileMirror && stack.hasTagCompound()) {
                ((TileMirror)te).linkX = stack.stackTagCompound.getInteger("linkX");
                ((TileMirror)te).linkY = stack.stackTagCompound.getInteger("linkY");
                ((TileMirror)te).linkZ = stack.stackTagCompound.getInteger("linkZ");
@@ -127,7 +127,7 @@ public class BlockMirrorItem extends ItemBlock {
             }
          } else {
             TileEntity te = world.getTileEntity(x, y, z);
-            if (te != null && te instanceof TileMirrorEssentia && stack.hasTagCompound()) {
+            if (te instanceof TileMirrorEssentia && stack.hasTagCompound()) {
                ((TileMirrorEssentia)te).linkX = stack.stackTagCompound.getInteger("linkX");
                ((TileMirrorEssentia)te).linkY = stack.stackTagCompound.getInteger("linkY");
                ((TileMirrorEssentia)te).linkZ = stack.stackTagCompound.getInteger("linkZ");

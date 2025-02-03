@@ -58,12 +58,12 @@ public class ServerTickEventsFML {
       if (chunks != null && chunks.size() > 0) {
          for(int a = 0; a < 10; ++a) {
             chunks = (ArrayList)chunksToGenerate.get(dim);
-            if (chunks == null || chunks.size() <= 0) {
+            if (chunks == null || chunks.size() == 0) {
                break;
             }
 
             ++count;
-            ChunkLoc loc = (ChunkLoc)chunks.get(0);
+            ChunkLoc loc = chunks.get(0);
             long worldSeed = event.world.getSeed();
             Random fmlRandom = new Random(worldSeed);
             long xSeed = fmlRandom.nextLong() >> 3;
@@ -88,7 +88,7 @@ public class ServerTickEventsFML {
          boolean didSomething = false;
 
          while(!didSomething) {
-            VirtualSwapper vs = (VirtualSwapper)queue.poll();
+            VirtualSwapper vs = queue.poll();
             if (vs != null) {
                Block bi = world.getBlock(vs.x, vs.y, vs.z);
                int md = world.getBlockMetadata(vs.x, vs.y, vs.z);
@@ -136,7 +136,7 @@ public class ServerTickEventsFML {
 
                      world.setBlock(vs.x, vs.y, vs.z, Block.getBlockFromItem(vs.target.getItem()), vs.target.getItemDamage(), 3);
                      Block.getBlockFromItem(vs.target.getItem()).onBlockPlacedBy(world, vs.x, vs.y, vs.z, vs.player, vs.target);
-                     PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(vs.x, vs.y, vs.z, 12632319), new NetworkRegistry.TargetPoint(world.provider.dimensionId, (double)vs.x, (double)vs.y, (double)vs.z, (double)32.0F));
+                     PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(vs.x, vs.y, vs.z, 12632319), new NetworkRegistry.TargetPoint(world.provider.dimensionId, vs.x, vs.y, vs.z, 32.0F));
                      world.playAuxSFX(2001, vs.x, vs.y, vs.z, Block.getIdFromBlock(vs.bSource) + (vs.mSource << 12));
                      if (vs.lifespan > 0) {
                         for(int xx = -1; xx <= 1; ++xx) {

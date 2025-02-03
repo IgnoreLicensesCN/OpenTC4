@@ -30,13 +30,13 @@ public class AIPechItemEntityGoto extends EntityAIBase {
          return false;
       } else {
          double range = Double.MAX_VALUE;
-         List<Entity> targets = this.pech.worldObj.getEntitiesWithinAABBExcludingEntity(this.pech, this.pech.boundingBox.expand((double)this.maxTargetDistance, (double)this.maxTargetDistance, (double)this.maxTargetDistance));
+         List<Entity> targets = this.pech.worldObj.getEntitiesWithinAABBExcludingEntity(this.pech, this.pech.boundingBox.expand(this.maxTargetDistance, this.maxTargetDistance, this.maxTargetDistance));
          if (targets.size() == 0) {
             return false;
          } else {
             for(Entity e : targets) {
                if (e instanceof EntityItem && this.pech.canPickup(((EntityItem)e).getEntityItem())) {
-                  NBTTagCompound itemData = ((EntityItem)e).getEntityData();
+                  NBTTagCompound itemData = e.getEntityData();
                   String username = ((EntityItem)e).func_145800_j();
                   if (username == null || !username.equals("PechDrop")) {
                      double distance = e.getDistanceSq(this.pech.posX, this.pech.posY, this.pech.posZ);
@@ -48,17 +48,13 @@ public class AIPechItemEntityGoto extends EntityAIBase {
                }
             }
 
-            if (this.targetEntity == null) {
-               return false;
-            } else {
-               return true;
-            }
+             return this.targetEntity != null;
          }
       }
    }
 
    public boolean continueExecuting() {
-      return this.targetEntity == null ? false : (!this.targetEntity.isEntityAlive() ? false : !this.pech.getNavigator().noPath() && this.targetEntity.getDistanceSqToEntity(this.pech) < (double)(this.maxTargetDistance * this.maxTargetDistance));
+      return this.targetEntity != null && (this.targetEntity.isEntityAlive() && !this.pech.getNavigator().noPath() && this.targetEntity.getDistanceSqToEntity(this.pech) < (double) (this.maxTargetDistance * this.maxTargetDistance));
    }
 
    public void resetTask() {
@@ -77,7 +73,7 @@ public class AIPechItemEntityGoto extends EntityAIBase {
          this.pech.getNavigator().tryMoveToEntityLiving(this.targetEntity, this.pech.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue() * (double)1.5F);
          if (this.pech.getNavigator().getPath() != null) {
             PathPoint finalPathPoint = this.pech.getNavigator().getPath().getFinalPathPoint();
-            if (finalPathPoint != null && this.targetEntity.getDistanceSq((double)finalPathPoint.xCoord, (double)finalPathPoint.yCoord, (double)finalPathPoint.zCoord) < (double)1.0F) {
+            if (finalPathPoint != null && this.targetEntity.getDistanceSq(finalPathPoint.xCoord, finalPathPoint.yCoord, finalPathPoint.zCoord) < (double)1.0F) {
                this.failedPathFindingPenalty = 0;
             } else {
                this.failedPathFindingPenalty += 10;

@@ -71,8 +71,8 @@ public class GuiResearchBrowser extends GuiScreen {
    public GuiResearchBrowser() {
       short var2 = 141;
       short var3 = 141;
-      this.field_74117_m = this.guiMapX = this.field_74124_q = (double)(lastX * 24 - var2 / 2 - 12);
-      this.field_74115_n = this.guiMapY = this.field_74123_r = (double)(lastY * 24 - var3 / 2);
+      this.field_74117_m = this.guiMapX = this.field_74124_q = lastX * 24 - var2 / 2 - 12;
+      this.field_74115_n = this.guiMapY = this.field_74123_r = lastY * 24 - var3 / 2;
       this.updateResearch();
       this.galFontRenderer = FMLClientHandler.instance().getClient().standardGalacticFontRenderer;
       this.player = Minecraft.getMinecraft().thePlayer.getCommandSenderName();
@@ -99,7 +99,7 @@ public class GuiResearchBrowser extends GuiScreen {
       }
 
       for(Object res : ResearchCategories.getResearchList(selectedCategory).research.values()) {
-         this.research.add((ResearchItem)res);
+         this.research.add(res);
       }
 
       if (ResearchManager.consumeInkFromPlayer(this.mc.thePlayer, false) && InventoryUtils.isPlayerCarrying(this.mc.thePlayer, new ItemStack(Items.paper)) >= 0) {
@@ -130,7 +130,7 @@ public class GuiResearchBrowser extends GuiScreen {
    protected void keyTyped(char par1, int par2) {
       if (par2 == this.mc.gameSettings.keyBindInventory.getKeyCode()) {
          highlightedItem.clear();
-         this.mc.displayGuiScreen((GuiScreen)null);
+         this.mc.displayGuiScreen(null);
          this.mc.setIngameFocus();
       } else {
          if (par2 == 1) {
@@ -152,8 +152,8 @@ public class GuiResearchBrowser extends GuiScreen {
             if (this.isMouseButtonDown == 0) {
                this.isMouseButtonDown = 1;
             } else {
-               this.guiMapX -= (double)(mx - this.mouseX);
-               this.guiMapY -= (double)(my - this.mouseY);
+               this.guiMapX -= mx - this.mouseX;
+               this.guiMapY -= my - this.mouseY;
                this.field_74124_q = this.field_74117_m = this.guiMapX;
                this.field_74123_r = this.field_74115_n = this.guiMapY;
             }
@@ -163,19 +163,19 @@ public class GuiResearchBrowser extends GuiScreen {
          }
 
          if (this.field_74124_q < (double)guiMapTop) {
-            this.field_74124_q = (double)guiMapTop;
+            this.field_74124_q = guiMapTop;
          }
 
          if (this.field_74123_r < (double)guiMapLeft) {
-            this.field_74123_r = (double)guiMapLeft;
+            this.field_74123_r = guiMapLeft;
          }
 
          if (this.field_74124_q >= (double)guiMapBottom) {
-            this.field_74124_q = (double)(guiMapBottom - 1);
+            this.field_74124_q = guiMapBottom - 1;
          }
 
          if (this.field_74123_r >= (double)guiMapRight) {
-            this.field_74123_r = (double)(guiMapRight - 1);
+            this.field_74123_r = guiMapRight - 1;
          }
       } else {
          this.isMouseButtonDown = 0;
@@ -202,7 +202,7 @@ public class GuiResearchBrowser extends GuiScreen {
          }
 
          ResearchCategoryList rcl = ResearchCategories.getResearchList((String)obj);
-         if (!((String)obj).equals("ELDRITCH") || ResearchManager.isResearchComplete(this.player, "ELDRITCHMINOR")) {
+         if (!obj.equals("ELDRITCH") || ResearchManager.isResearchComplete(this.player, "ELDRITCHMINOR")) {
             int mposx = mx - (var4 - 24 + (swop ? 280 : 0));
             int mposy = my - (var5 + count * 24);
             if (mposx >= 0 && mposx < 24 && mposy >= 0 && mposy < 24) {
@@ -275,59 +275,59 @@ public class GuiResearchBrowser extends GuiScreen {
       GL11.glEnable(2929);
       GL11.glDepthFunc(515);
       if (completedResearch.get(this.player) != null) {
-         for(int var22 = 0; var22 < this.research.size(); ++var22) {
-            ResearchItem var33 = (ResearchItem)this.research.get(var22);
-            if (var33.parents != null && var33.parents.length > 0) {
-               for(int a = 0; a < var33.parents.length; ++a) {
-                  if (var33.parents[a] != null && ResearchCategories.getResearch(var33.parents[a]).category.equals(selectedCategory)) {
-                     ResearchItem parent = ResearchCategories.getResearch(var33.parents[a]);
-                     if (!parent.isVirtual()) {
-                        int var24 = var33.displayColumn * 24 - var4 + 11 + var10;
-                        int var25 = var33.displayRow * 24 - var5 + 11 + var11;
-                        int var26 = parent.displayColumn * 24 - var4 + 11 + var10;
-                        int var27 = parent.displayRow * 24 - var5 + 11 + var11;
-                        boolean var28 = ((ArrayList)completedResearch.get(this.player)).contains(var33.key);
-                        boolean var29 = ((ArrayList)completedResearch.get(this.player)).contains(parent.key);
-                        int var30 = Math.sin((double)(Minecraft.getSystemTime() % 600L) / (double)600.0F * Math.PI * (double)2.0F) > 0.6 ? 255 : 130;
-                        if (var28) {
-                           this.drawLine(var24, var25, var26, var27, 0.1F, 0.1F, 0.1F, par3, false);
-                        } else if (!var33.isLost() && (!var33.isHidden() && !var33.isLost() || ((ArrayList)completedResearch.get(this.player)).contains("@" + var33.key)) && (!var33.isConcealed() || this.canUnlockResearch(var33))) {
-                           if (var29) {
-                              this.drawLine(var24, var25, var26, var27, 0.0F, 1.0F, 0.0F, par3, true);
-                           } else if ((!parent.isHidden() && !var33.isLost() || ((ArrayList)completedResearch.get(this.player)).contains("@" + parent.key)) && (!parent.isConcealed() || this.canUnlockResearch(parent))) {
-                              this.drawLine(var24, var25, var26, var27, 0.0F, 0.0F, 1.0F, par3, true);
-                           }
-                        }
-                     }
+          for (Object o : this.research) {
+              ResearchItem var33 = (ResearchItem) o;
+              if (var33.parents != null && var33.parents.length > 0) {
+                  for (int a = 0; a < var33.parents.length; ++a) {
+                      if (var33.parents[a] != null && ResearchCategories.getResearch(var33.parents[a]).category.equals(selectedCategory)) {
+                          ResearchItem parent = ResearchCategories.getResearch(var33.parents[a]);
+                          if (!parent.isVirtual()) {
+                              int var24 = var33.displayColumn * 24 - var4 + 11 + var10;
+                              int var25 = var33.displayRow * 24 - var5 + 11 + var11;
+                              int var26 = parent.displayColumn * 24 - var4 + 11 + var10;
+                              int var27 = parent.displayRow * 24 - var5 + 11 + var11;
+                              boolean var28 = completedResearch.get(this.player).contains(var33.key);
+                              boolean var29 = completedResearch.get(this.player).contains(parent.key);
+                              int var30 = Math.sin((double) (Minecraft.getSystemTime() % 600L) / (double) 600.0F * Math.PI * (double) 2.0F) > 0.6 ? 255 : 130;
+                              if (var28) {
+                                  this.drawLine(var24, var25, var26, var27, 0.1F, 0.1F, 0.1F, par3, false);
+                              } else if (!var33.isLost() && (!var33.isHidden() && !var33.isLost() || completedResearch.get(this.player).contains("@" + var33.key)) && (!var33.isConcealed() || this.canUnlockResearch(var33))) {
+                                  if (var29) {
+                                      this.drawLine(var24, var25, var26, var27, 0.0F, 1.0F, 0.0F, par3, true);
+                                  } else if ((!parent.isHidden() && !var33.isLost() || completedResearch.get(this.player).contains("@" + parent.key)) && (!parent.isConcealed() || this.canUnlockResearch(parent))) {
+                                      this.drawLine(var24, var25, var26, var27, 0.0F, 0.0F, 1.0F, par3, true);
+                                  }
+                              }
+                          }
+                      }
                   }
-               }
-            }
+              }
 
-            if (var33.siblings != null && var33.siblings.length > 0) {
-               for(int a = 0; a < var33.siblings.length; ++a) {
-                  if (var33.siblings[a] != null && ResearchCategories.getResearch(var33.siblings[a]).category.equals(selectedCategory)) {
-                     ResearchItem sibling = ResearchCategories.getResearch(var33.siblings[a]);
-                     if (!sibling.isVirtual() && (sibling.parents == null || sibling.parents != null && !Arrays.asList(sibling.parents).contains(var33.key))) {
-                        int var24 = var33.displayColumn * 24 - var4 + 11 + var10;
-                        int var25 = var33.displayRow * 24 - var5 + 11 + var11;
-                        int var26 = sibling.displayColumn * 24 - var4 + 11 + var10;
-                        int var27 = sibling.displayRow * 24 - var5 + 11 + var11;
-                        boolean var28 = ((ArrayList)completedResearch.get(this.player)).contains(var33.key);
-                        boolean var29 = ((ArrayList)completedResearch.get(this.player)).contains(sibling.key);
-                        if (var28) {
-                           this.drawLine(var24, var25, var26, var27, 0.1F, 0.1F, 0.2F, par3, false);
-                        } else if (!var33.isLost() && (!var33.isHidden() || ((ArrayList)completedResearch.get(this.player)).contains("@" + var33.key)) && (!var33.isConcealed() || this.canUnlockResearch(var33))) {
-                           if (var29) {
-                              this.drawLine(var24, var25, var26, var27, 0.0F, 1.0F, 0.0F, par3, true);
-                           } else if ((!sibling.isHidden() || ((ArrayList)completedResearch.get(this.player)).contains("@" + sibling.key)) && (!sibling.isConcealed() || this.canUnlockResearch(sibling))) {
-                              this.drawLine(var24, var25, var26, var27, 0.0F, 0.0F, 1.0F, par3, true);
-                           }
-                        }
-                     }
+              if (var33.siblings != null && var33.siblings.length > 0) {
+                  for (int a = 0; a < var33.siblings.length; ++a) {
+                      if (var33.siblings[a] != null && ResearchCategories.getResearch(var33.siblings[a]).category.equals(selectedCategory)) {
+                          ResearchItem sibling = ResearchCategories.getResearch(var33.siblings[a]);
+                          if (!sibling.isVirtual() && (sibling.parents == null || sibling.parents != null && !Arrays.asList(sibling.parents).contains(var33.key))) {
+                              int var24 = var33.displayColumn * 24 - var4 + 11 + var10;
+                              int var25 = var33.displayRow * 24 - var5 + 11 + var11;
+                              int var26 = sibling.displayColumn * 24 - var4 + 11 + var10;
+                              int var27 = sibling.displayRow * 24 - var5 + 11 + var11;
+                              boolean var28 = completedResearch.get(this.player).contains(var33.key);
+                              boolean var29 = completedResearch.get(this.player).contains(sibling.key);
+                              if (var28) {
+                                  this.drawLine(var24, var25, var26, var27, 0.1F, 0.1F, 0.2F, par3, false);
+                              } else if (!var33.isLost() && (!var33.isHidden() || completedResearch.get(this.player).contains("@" + var33.key)) && (!var33.isConcealed() || this.canUnlockResearch(var33))) {
+                                  if (var29) {
+                                      this.drawLine(var24, var25, var26, var27, 0.0F, 1.0F, 0.0F, par3, true);
+                                  } else if ((!sibling.isHidden() || completedResearch.get(this.player).contains("@" + sibling.key)) && (!sibling.isConcealed() || this.canUnlockResearch(sibling))) {
+                                      this.drawLine(var24, var25, var26, var27, 0.0F, 0.0F, 1.0F, par3, true);
+                                  }
+                              }
+                          }
+                      }
                   }
-               }
-            }
-         }
+              }
+          }
       }
 
       this.currentHighlight = null;
@@ -335,119 +335,119 @@ public class GuiResearchBrowser extends GuiScreen {
       GL11.glEnable(32826);
       GL11.glEnable(2903);
       if (completedResearch.get(this.player) != null) {
-         for(int var24 = 0; var24 < this.research.size(); ++var24) {
-            ResearchItem var35 = (ResearchItem)this.research.get(var24);
-            int var26 = var35.displayColumn * 24 - var4;
-            int var27 = var35.displayRow * 24 - var5;
-            if (!var35.isVirtual() && var26 >= -24 && var27 >= -24 && var26 <= 224 && var27 <= 196) {
-               int var42 = var10 + var26;
-               int var41 = var11 + var27;
-               if (((ArrayList)completedResearch.get(this.player)).contains(var35.key)) {
-                  if (ThaumcraftApi.getWarp(var35.key) > 0) {
-                     this.drawForbidden((double)(var42 + 11), (double)(var41 + 11));
-                  }
+          for (Object o : this.research) {
+              ResearchItem var35 = (ResearchItem) o;
+              int var26 = var35.displayColumn * 24 - var4;
+              int var27 = var35.displayRow * 24 - var5;
+              if (!var35.isVirtual() && var26 >= -24 && var27 >= -24 && var26 <= 224 && var27 <= 196) {
+                  int var42 = var10 + var26;
+                  int var41 = var11 + var27;
+                  if (completedResearch.get(this.player).contains(var35.key)) {
+                      if (ThaumcraftApi.getWarp(var35.key) > 0) {
+                          this.drawForbidden(var42 + 11, var41 + 11);
+                      }
 
-                  float var38 = 1.0F;
-                  GL11.glColor4f(var38, var38, var38, 1.0F);
-               } else {
-                  if (!((ArrayList)completedResearch.get(this.player)).contains("@" + var35.key) && (var35.isLost() || var35.isHidden() && !((ArrayList)completedResearch.get(this.player)).contains("@" + var35.key) || var35.isConcealed() && !this.canUnlockResearch(var35))) {
-                     continue;
-                  }
-
-                  if (ThaumcraftApi.getWarp(var35.key) > 0) {
-                     this.drawForbidden((double)(var42 + 11), (double)(var41 + 11));
-                  }
-
-                  if (this.canUnlockResearch(var35)) {
-                     float var38 = (float)Math.sin((double)(Minecraft.getSystemTime() % 600L) / (double)600.0F * Math.PI * (double)2.0F) * 0.25F + 0.75F;
-                     GL11.glColor4f(var38, var38, var38, 1.0F);
+                      float var38 = 1.0F;
+                      GL11.glColor4f(var38, var38, var38, 1.0F);
                   } else {
-                     float var38 = 0.3F;
-                     GL11.glColor4f(var38, var38, var38, 1.0F);
+                      if (!completedResearch.get(this.player).contains("@" + var35.key) && (var35.isLost() || var35.isHidden() && !completedResearch.get(this.player).contains("@" + var35.key) || var35.isConcealed() && !this.canUnlockResearch(var35))) {
+                          continue;
+                      }
+
+                      if (ThaumcraftApi.getWarp(var35.key) > 0) {
+                          this.drawForbidden(var42 + 11, var41 + 11);
+                      }
+
+                      if (this.canUnlockResearch(var35)) {
+                          float var38 = (float) Math.sin((double) (Minecraft.getSystemTime() % 600L) / (double) 600.0F * Math.PI * (double) 2.0F) * 0.25F + 0.75F;
+                          GL11.glColor4f(var38, var38, var38, 1.0F);
+                      } else {
+                          float var38 = 0.3F;
+                          GL11.glColor4f(var38, var38, var38, 1.0F);
+                      }
                   }
-               }
 
-               UtilsFX.bindTexture("textures/gui/gui_research.png");
-               GL11.glEnable(2884);
-               GL11.glEnable(3042);
-               GL11.glBlendFunc(770, 771);
-               if (var35.isRound()) {
-                  this.drawTexturedModalRect(var42 - 2, var41 - 2, 54, 230, 26, 26);
-               } else if (var35.isHidden()) {
-                  if (Config.researchDifficulty != -1 && (Config.researchDifficulty != 0 || !var35.isSecondary())) {
-                     this.drawTexturedModalRect(var42 - 2, var41 - 2, 86, 230, 26, 26);
-                  } else {
-                     this.drawTexturedModalRect(var42 - 2, var41 - 2, 230, 230, 26, 26);
-                  }
-               } else if (Config.researchDifficulty != -1 && (Config.researchDifficulty != 0 || !var35.isSecondary())) {
-                  this.drawTexturedModalRect(var42 - 2, var41 - 2, 0, 230, 26, 26);
-               } else {
-                  this.drawTexturedModalRect(var42 - 2, var41 - 2, 110, 230, 26, 26);
-               }
-
-               if (var35.isSpecial()) {
-                  this.drawTexturedModalRect(var42 - 2, var41 - 2, 26, 230, 26, 26);
-               }
-
-               if (!this.canUnlockResearch(var35)) {
-                  float var40 = 0.1F;
-                  GL11.glColor4f(var40, var40, var40, 1.0F);
-                  itemRenderer.renderWithColor = false;
-               }
-
-               GL11.glDisable(3042);
-               if (highlightedItem.contains(var35.key)) {
-                  GL11.glPushMatrix();
+                  UtilsFX.bindTexture("textures/gui/gui_research.png");
+                  GL11.glEnable(2884);
                   GL11.glEnable(3042);
                   GL11.glBlendFunc(770, 771);
+                  if (var35.isRound()) {
+                      this.drawTexturedModalRect(var42 - 2, var41 - 2, 54, 230, 26, 26);
+                  } else if (var35.isHidden()) {
+                      if (Config.researchDifficulty != -1 && (Config.researchDifficulty != 0 || !var35.isSecondary())) {
+                          this.drawTexturedModalRect(var42 - 2, var41 - 2, 86, 230, 26, 26);
+                      } else {
+                          this.drawTexturedModalRect(var42 - 2, var41 - 2, 230, 230, 26, 26);
+                      }
+                  } else if (Config.researchDifficulty != -1 && (Config.researchDifficulty != 0 || !var35.isSecondary())) {
+                      this.drawTexturedModalRect(var42 - 2, var41 - 2, 0, 230, 26, 26);
+                  } else {
+                      this.drawTexturedModalRect(var42 - 2, var41 - 2, 110, 230, 26, 26);
+                  }
+
+                  if (var35.isSpecial()) {
+                      this.drawTexturedModalRect(var42 - 2, var41 - 2, 26, 230, 26, 26);
+                  }
+
+                  if (!this.canUnlockResearch(var35)) {
+                      float var40 = 0.1F;
+                      GL11.glColor4f(var40, var40, var40, 1.0F);
+                      itemRenderer.renderWithColor = false;
+                  }
+
+                  GL11.glDisable(3042);
+                  if (highlightedItem.contains(var35.key)) {
+                      GL11.glPushMatrix();
+                      GL11.glEnable(3042);
+                      GL11.glBlendFunc(770, 771);
+                      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+                      this.mc.renderEngine.bindTexture(ParticleEngine.particleTexture);
+                      int px = (int) (t % 16L) * 16;
+                      GL11.glTranslatef((float) (var42 - 5), (float) (var41 - 5), 0.0F);
+                      UtilsFX.drawTexturedQuad(0, 0, px, 80, 16, 16, 0.0F);
+                      GL11.glDisable(3042);
+                      GL11.glPopMatrix();
+                  }
+
+                  if (var35.icon_item != null) {
+                      GL11.glPushMatrix();
+                      GL11.glEnable(3042);
+                      GL11.glBlendFunc(770, 771);
+                      RenderHelper.enableGUIStandardItemLighting();
+                      GL11.glDisable(2896);
+                      GL11.glEnable(32826);
+                      GL11.glEnable(2903);
+                      GL11.glEnable(2896);
+                      itemRenderer.renderItemAndEffectIntoGUI(this.fontRendererObj, this.mc.renderEngine, InventoryUtils.cycleItemStack(var35.icon_item), var42 + 3, var41 + 3);
+                      GL11.glDisable(2896);
+                      GL11.glDepthMask(true);
+                      GL11.glEnable(2929);
+                      GL11.glDisable(3042);
+                      GL11.glPopMatrix();
+                  } else if (var35.icon_resource != null) {
+                      GL11.glPushMatrix();
+                      GL11.glEnable(3042);
+                      GL11.glBlendFunc(770, 771);
+                      this.mc.renderEngine.bindTexture(var35.icon_resource);
+                      if (!itemRenderer.renderWithColor) {
+                          GL11.glColor4f(0.2F, 0.2F, 0.2F, 1.0F);
+                      }
+
+                      UtilsFX.drawTexturedQuadFull(var42 + 3, var41 + 3, this.zLevel);
+                      GL11.glPopMatrix();
+                  }
+
+                  if (!this.canUnlockResearch(var35)) {
+                      itemRenderer.renderWithColor = true;
+                  }
+
+                  if (par1 >= var10 && par2 >= var11 && par1 < var10 + 224 && par2 < var11 + 196 && par1 >= var42 && par1 <= var42 + 22 && par2 >= var41 && par2 <= var41 + 22) {
+                      this.currentHighlight = var35;
+                  }
+
                   GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                  this.mc.renderEngine.bindTexture(ParticleEngine.particleTexture);
-                  int px = (int)(t % 16L) * 16;
-                  GL11.glTranslatef((float)(var42 - 5), (float)(var41 - 5), 0.0F);
-                  UtilsFX.drawTexturedQuad(0, 0, px, 80, 16, 16, (double)0.0F);
-                  GL11.glDisable(3042);
-                  GL11.glPopMatrix();
-               }
-
-               if (var35.icon_item != null) {
-                  GL11.glPushMatrix();
-                  GL11.glEnable(3042);
-                  GL11.glBlendFunc(770, 771);
-                  RenderHelper.enableGUIStandardItemLighting();
-                  GL11.glDisable(2896);
-                  GL11.glEnable(32826);
-                  GL11.glEnable(2903);
-                  GL11.glEnable(2896);
-                  itemRenderer.renderItemAndEffectIntoGUI(this.fontRendererObj, this.mc.renderEngine, InventoryUtils.cycleItemStack(var35.icon_item), var42 + 3, var41 + 3);
-                  GL11.glDisable(2896);
-                  GL11.glDepthMask(true);
-                  GL11.glEnable(2929);
-                  GL11.glDisable(3042);
-                  GL11.glPopMatrix();
-               } else if (var35.icon_resource != null) {
-                  GL11.glPushMatrix();
-                  GL11.glEnable(3042);
-                  GL11.glBlendFunc(770, 771);
-                  this.mc.renderEngine.bindTexture(var35.icon_resource);
-                  if (!itemRenderer.renderWithColor) {
-                     GL11.glColor4f(0.2F, 0.2F, 0.2F, 1.0F);
-                  }
-
-                  UtilsFX.drawTexturedQuadFull(var42 + 3, var41 + 3, (double)this.zLevel);
-                  GL11.glPopMatrix();
-               }
-
-               if (!this.canUnlockResearch(var35)) {
-                  itemRenderer.renderWithColor = true;
-               }
-
-               if (par1 >= var10 && par2 >= var11 && par1 < var10 + 224 && par2 < var11 + 196 && par1 >= var42 && par1 <= var42 + 22 && par2 >= var41 && par2 <= var41 + 22) {
-                  this.currentHighlight = var35;
-               }
-
-               GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            }
-         }
+              }
+          }
       }
 
       GL11.glDisable(2929);
@@ -460,7 +460,7 @@ public class GuiResearchBrowser extends GuiScreen {
 
       for(Object obj : cats) {
          ResearchCategoryList rcl = ResearchCategories.getResearchList((String)obj);
-         if (!((String)obj).equals("ELDRITCH") || ResearchManager.isResearchComplete(this.player, "ELDRITCHMINOR")) {
+         if (!obj.equals("ELDRITCH") || ResearchManager.isResearchComplete(this.player, "ELDRITCHMINOR")) {
             GL11.glPushMatrix();
             if (count == 9) {
                count = 0;
@@ -470,7 +470,7 @@ public class GuiResearchBrowser extends GuiScreen {
             int s0 = !swop ? 0 : 264;
             int s1 = 0;
             int s2 = swop ? 14 : 0;
-            if (!selectedCategory.equals((String)obj)) {
+            if (!selectedCategory.equals(obj)) {
                s1 = 24;
                s2 = swop ? 6 : 8;
             }
@@ -488,16 +488,16 @@ public class GuiResearchBrowser extends GuiScreen {
                this.mc.renderEngine.bindTexture(ParticleEngine.particleTexture);
                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                int px = (int)(16L * (t % 16L));
-               UtilsFX.drawTexturedQuad(var8 - 27 + s2 + s0, var9 - 4 + count * 24, px, 80, 16, 16, (double)-90.0F);
+               UtilsFX.drawTexturedQuad(var8 - 27 + s2 + s0, var9 - 4 + count * 24, px, 80, 16, 16, -90.0F);
                GL11.glPopMatrix();
             }
 
             GL11.glPushMatrix();
             this.mc.renderEngine.bindTexture(rcl.icon);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            UtilsFX.drawTexturedQuadFull(var8 - 19 + s2 + s0, var9 + 4 + count * 24, (double)-80.0F);
+            UtilsFX.drawTexturedQuadFull(var8 - 19 + s2 + s0, var9 + 4 + count * 24, -80.0F);
             GL11.glPopMatrix();
-            if (!selectedCategory.equals((String)obj)) {
+            if (!selectedCategory.equals(obj)) {
                UtilsFX.bindTexture("textures/gui/gui_research.png");
                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                if (swop) {
@@ -527,7 +527,7 @@ public class GuiResearchBrowser extends GuiScreen {
          int var27 = par2 - 4;
          int var99 = 0;
          FontRenderer fr = this.fontRendererObj;
-         if (!((ArrayList)completedResearch.get(this.player)).contains(this.currentHighlight.key) && !this.canUnlockResearch(this.currentHighlight)) {
+         if (!completedResearch.get(this.player).contains(this.currentHighlight.key) && !this.canUnlockResearch(this.currentHighlight)) {
             fr = this.galFontRenderer;
          }
 
@@ -542,8 +542,8 @@ public class GuiResearchBrowser extends GuiScreen {
             this.fontRendererObj.drawSplitString(var39, 0, 0, var42 * 2, -9416624);
             GL11.glPopMatrix();
          } else {
-            boolean secondary = !((ArrayList)completedResearch.get(this.player)).contains(this.currentHighlight.key) && this.currentHighlight.tags != null && this.currentHighlight.tags.size() > 0 && (Config.researchDifficulty == -1 || Config.researchDifficulty == 0 && this.currentHighlight.isSecondary());
-            boolean primary = !secondary && !((ArrayList)completedResearch.get(this.player)).contains(this.currentHighlight.key);
+            boolean secondary = !completedResearch.get(this.player).contains(this.currentHighlight.key) && this.currentHighlight.tags != null && this.currentHighlight.tags.size() > 0 && (Config.researchDifficulty == -1 || Config.researchDifficulty == 0 && this.currentHighlight.isSecondary());
+            boolean primary = !secondary && !completedResearch.get(this.player).contains(this.currentHighlight.key);
             int var42 = (int)Math.max((float)fr.getStringWidth(var34), (float)fr.getStringWidth(this.currentHighlight.getText()) / 1.9F);
             int var41 = fr.splitStringWidth(var34, var42) + 5;
             if (primary) {
@@ -612,7 +612,7 @@ public class GuiResearchBrowser extends GuiScreen {
 
                      GL11.glPushMatrix();
                      GL11.glPushAttrib(1048575);
-                     UtilsFX.drawTag(var26 + cc * 16, var27 + var41 + 8, a, (float)this.currentHighlight.tags.getAmount(a), 0, (double)0.0F, 771, alpha, false);
+                     UtilsFX.drawTag(var26 + cc * 16, var27 + var41 + 8, a, (float)this.currentHighlight.tags.getAmount(a), 0, 0.0F, 771, alpha, false);
                      GL11.glPopAttrib();
                      GL11.glPopMatrix();
                   } else {
@@ -620,8 +620,8 @@ public class GuiResearchBrowser extends GuiScreen {
                      GL11.glPushMatrix();
                      UtilsFX.bindTexture("textures/aspects/_unknown.png");
                      GL11.glColor4f(0.5F, 0.5F, 0.5F, 0.5F);
-                     GL11.glTranslated((double)(var26 + cc * 16), (double)(var27 + var41 + 8), (double)0.0F);
-                     UtilsFX.drawTexturedQuadFull(0, 0, (double)0.0F);
+                     GL11.glTranslated(var26 + cc * 16, var27 + var41 + 8, 0.0F);
+                     UtilsFX.drawTexturedQuadFull(0, 0, 0.0F);
                      GL11.glPopMatrix();
                   }
 
@@ -653,7 +653,7 @@ public class GuiResearchBrowser extends GuiScreen {
 
    protected void mouseClicked(int par1, int par2, int par3) {
       this.popuptime = System.currentTimeMillis() - 1L;
-      if (this.currentHighlight != null && !((ArrayList)completedResearch.get(this.player)).contains(this.currentHighlight.key) && this.canUnlockResearch(this.currentHighlight)) {
+      if (this.currentHighlight != null && !completedResearch.get(this.player).contains(this.currentHighlight.key) && this.canUnlockResearch(this.currentHighlight)) {
          this.updateResearch();
          boolean secondary = this.currentHighlight.tags != null && this.currentHighlight.tags.size() > 0 && (Config.researchDifficulty == -1 || Config.researchDifficulty == 0 && this.currentHighlight.isSecondary());
          if (secondary) {
@@ -672,9 +672,9 @@ public class GuiResearchBrowser extends GuiScreen {
          } else if (this.hasScribestuff && ResearchManager.getResearchSlot(this.mc.thePlayer, this.currentHighlight.key) == -1) {
             PacketHandler.INSTANCE.sendToServer(new PacketPlayerCompleteToServer(this.currentHighlight.key, this.mc.thePlayer.getCommandSenderName(), this.mc.thePlayer.worldObj.provider.dimensionId, (byte)1));
             this.popuptime = System.currentTimeMillis() + 3000L;
-            this.popupmessage = (new ChatComponentTranslation(StatCollector.translateToLocal("tc.research.popup"), new Object[]{"" + this.currentHighlight.getName()})).getUnformattedText();
+            this.popupmessage = (new ChatComponentTranslation(StatCollector.translateToLocal("tc.research.popup"), this.currentHighlight.getName())).getUnformattedText();
          }
-      } else if (this.currentHighlight != null && ((ArrayList)completedResearch.get(this.player)).contains(this.currentHighlight.key)) {
+      } else if (this.currentHighlight != null && completedResearch.get(this.player).contains(this.currentHighlight.key)) {
          this.mc.displayGuiScreen(new GuiResearchRecipe(this.currentHighlight, 0, this.guiMapX, this.guiMapY));
       } else {
          int var4 = (this.width - this.paneWidth) / 2;
@@ -685,7 +685,7 @@ public class GuiResearchBrowser extends GuiScreen {
 
          for(Object obj : cats) {
             ResearchCategoryList rcl = ResearchCategories.getResearchList((String)obj);
-            if (!((String)obj).equals("ELDRITCH") || ResearchManager.isResearchComplete(this.player, "ELDRITCHMINOR")) {
+            if (!obj.equals("ELDRITCH") || ResearchManager.isResearchComplete(this.player, "ELDRITCHMINOR")) {
                if (count == 9) {
                   count = 0;
                   swop = true;
@@ -713,10 +713,10 @@ public class GuiResearchBrowser extends GuiScreen {
       float f1 = 0.00390625F;
       Tessellator tessellator = Tessellator.instance;
       tessellator.startDrawingQuads();
-      tessellator.addVertexWithUV((double)(par1), (double)(par2 + par6), (double)this.zLevel, (double)((float)(par3) * f), (double)((float)(par4 + par6) * f1));
-      tessellator.addVertexWithUV((double)(par1 + par5), (double)(par2 + par6), (double)this.zLevel, (double)((float)(par3 - par5) * f), (double)((float)(par4 + par6) * f1));
-      tessellator.addVertexWithUV((double)(par1 + par5), (double)(par2), (double)this.zLevel, (double)((float)(par3 - par5) * f), (double)((float)(par4) * f1));
-      tessellator.addVertexWithUV((double)(par1), (double)(par2), (double)this.zLevel, (double)((float)(par3) * f), (double)((float)(par4) * f1));
+      tessellator.addVertexWithUV(par1, par2 + par6, this.zLevel, (float)(par3) * f, (float)(par4 + par6) * f1);
+      tessellator.addVertexWithUV(par1 + par5, par2 + par6, this.zLevel, (float)(par3 - par5) * f, (float)(par4 + par6) * f1);
+      tessellator.addVertexWithUV(par1 + par5, par2, this.zLevel, (float)(par3 - par5) * f, (float)(par4) * f1);
+      tessellator.addVertexWithUV(par1, par2, this.zLevel, (float)(par3) * f, (float)(par4) * f1);
       tessellator.draw();
    }
 
@@ -728,7 +728,7 @@ public class GuiResearchBrowser extends GuiScreen {
       if (res.parents != null && res.parents.length > 0) {
          for(String pt : res.parents) {
             ResearchItem parent = ResearchCategories.getResearch(pt);
-            if (parent != null && !((ArrayList)completedResearch.get(this.player)).contains(parent.key)) {
+            if (parent != null && !completedResearch.get(this.player).contains(parent.key)) {
                return false;
             }
          }
@@ -737,7 +737,7 @@ public class GuiResearchBrowser extends GuiScreen {
       if (res.parentsHidden != null && res.parentsHidden.length > 0) {
          for(String pt : res.parentsHidden) {
             ResearchItem parent = ResearchCategories.getResearch(pt);
-            if (parent != null && !((ArrayList)completedResearch.get(this.player)).contains(parent.key)) {
+            if (parent != null && !completedResearch.get(this.player).contains(parent.key)) {
                return false;
             }
          }
@@ -758,8 +758,8 @@ public class GuiResearchBrowser extends GuiScreen {
       GL11.glDisable(3553);
       GL11.glEnable(3042);
       GL11.glBlendFunc(770, 771);
-      double d3 = (double)(x - x2);
-      double d4 = (double)(y - y2);
+      double d3 = x - x2;
+      double d4 = y - y2;
       float dist = MathHelper.sqrt_double(d3 * d3 + d4 * d4);
       int inc = (int)(dist / 2.0F);
       float dx = (float)(d3 / (double)inc);
@@ -793,7 +793,7 @@ public class GuiResearchBrowser extends GuiScreen {
          }
 
          var12.setColorRGBA_F(r2, g2, b2, op);
-         var12.addVertex((double)((float)x - dx * (float)a + mx), (double)((float)y - dy * (float)a + my), (double)0.0F);
+         var12.addVertex((float)x - dx * (float)a + mx, (float)y - dy * (float)a + my, 0.0F);
          if (Math.abs(d3) > Math.abs(d4)) {
             dx *= 1.0F - 1.0F / ((float)inc * 3.0F / 2.0F);
          } else {
@@ -819,7 +819,7 @@ public class GuiResearchBrowser extends GuiScreen {
       UtilsFX.bindTexture(TileNodeRenderer.nodetex);
       int frames = 32;
       int part = count % frames;
-      GL11.glTranslated(x, y, (double)0.0F);
+      GL11.glTranslated(x, y, 0.0F);
       UtilsFX.renderAnimatedQuadStrip(80.0F, 0.66F, frames, 5, frames - 1 - part, 0.0F, 4456533);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       GL11.glDisable(3042);

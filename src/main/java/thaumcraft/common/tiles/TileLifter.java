@@ -36,16 +36,16 @@ public class TileLifter extends TileEntity {
       }
 
       if (this.rangeAbove > 0 && !this.gettingPower()) {
-         List<Entity> targets = this.worldObj.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)(this.yCoord + 1), (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1 + this.rangeAbove), (double)(this.zCoord + 1)));
+         List<Entity> targets = this.worldObj.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord + 1, this.zCoord, this.xCoord + 1, this.yCoord + 1 + this.rangeAbove, this.zCoord + 1));
          if (targets.size() > 0) {
             for(Entity e : targets) {
                if (e instanceof EntityItem || e.canBePushed() || e instanceof EntityHorse) {
                   if (Thaumcraft.proxy.isShiftKeyDown()) {
                      if (e.motionY < (double)0.0F) {
-                        e.motionY *= (double)0.9F;
+                        e.motionY *= 0.9F;
                      }
                   } else if (e.motionY < (double)0.35F) {
-                     e.motionY += (double)0.1F;
+                     e.motionY += 0.1F;
                   }
 
                   e.fallDistance = 0.0F;

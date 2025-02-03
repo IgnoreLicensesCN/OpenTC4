@@ -49,7 +49,7 @@ public class PacketResearchComplete implements IMessage, IMessageHandler<PacketR
          }
 
          if (Minecraft.getMinecraft().currentScreen instanceof GuiResearchBrowser) {
-            ArrayList<String> al = (ArrayList)GuiResearchBrowser.completedResearch.get(Minecraft.getMinecraft().thePlayer.getCommandSenderName());
+            ArrayList<String> al = GuiResearchBrowser.completedResearch.get(Minecraft.getMinecraft().thePlayer.getCommandSenderName());
             if (al == null) {
                al = new ArrayList<>();
             }

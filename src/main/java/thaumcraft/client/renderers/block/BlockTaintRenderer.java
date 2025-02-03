@@ -32,27 +32,27 @@ public class BlockTaintRenderer extends BlockRenderer implements ISimpleBlockRen
          t.setColorOpaque_F(1.0F, 1.0F, 1.0F);
          t.setBrightness(200);
          if (block.shouldSideBeRendered(world, x + 1, y, z, ForgeDirection.EAST.ordinal())) {
-            renderer.renderFaceXPos(block, (double)x, (double)y, (double)z, b.getOverlayBlockTexture(x, y, z, 4));
+            renderer.renderFaceXPos(block, x, y, z, b.getOverlayBlockTexture(x, y, z, 4));
          }
 
          if (block.shouldSideBeRendered(world, x - 1, y, z, ForgeDirection.WEST.ordinal())) {
-            renderer.renderFaceXNeg(block, (double)x, (double)y, (double)z, b.getOverlayBlockTexture(x, y, z, 5));
+            renderer.renderFaceXNeg(block, x, y, z, b.getOverlayBlockTexture(x, y, z, 5));
          }
 
          if (block.shouldSideBeRendered(world, x, y, z + 1, ForgeDirection.SOUTH.ordinal())) {
-            renderer.renderFaceZPos(block, (double)x, (double)y, (double)z, b.getOverlayBlockTexture(x, y, z, 2));
+            renderer.renderFaceZPos(block, x, y, z, b.getOverlayBlockTexture(x, y, z, 2));
          }
 
          if (block.shouldSideBeRendered(world, x, y, z - 1, ForgeDirection.NORTH.ordinal())) {
-            renderer.renderFaceZNeg(block, (double)x, (double)y, (double)z, b.getOverlayBlockTexture(x, y, z, 3));
+            renderer.renderFaceZNeg(block, x, y, z, b.getOverlayBlockTexture(x, y, z, 3));
          }
 
          if (block.shouldSideBeRendered(world, x, y + 1, z, ForgeDirection.UP.ordinal())) {
-            renderer.renderFaceYPos(block, (double)x, (double)y, (double)z, b.getOverlayBlockTexture(x, y, z, 0));
+            renderer.renderFaceYPos(block, x, y, z, b.getOverlayBlockTexture(x, y, z, 0));
          }
 
          if (block.shouldSideBeRendered(world, x, y - 1, z, ForgeDirection.DOWN.ordinal())) {
-            renderer.renderFaceYNeg(block, (double)x, (double)y, (double)z, b.getOverlayBlockTexture(x, y, z, 1));
+            renderer.renderFaceYNeg(block, x, y, z, b.getOverlayBlockTexture(x, y, z, 1));
          }
       }
 

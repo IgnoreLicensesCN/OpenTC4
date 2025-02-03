@@ -20,13 +20,13 @@ public class EntityFollowingItem extends EntitySpecialItem implements IEntityAdd
 
    public EntityFollowingItem(World par1World, double par2, double par4, double par6, ItemStack par8ItemStack) {
       super(par1World);
-      this.targetX = (double)0.0F;
-      this.targetY = (double)0.0F;
-      this.targetZ = (double)0.0F;
+      this.targetX = 0.0F;
+      this.targetY = 0.0F;
+      this.targetZ = 0.0F;
       this.type = 3;
       this.target = null;
       this.age = 20;
-      this.gravity = (double)0.04F;
+      this.gravity = 0.04F;
       this.setSize(0.25F, 0.25F);
       this.yOffset = this.height / 2.0F;
       this.setPosition(par2, par4, par6);
@@ -53,13 +53,13 @@ public class EntityFollowingItem extends EntitySpecialItem implements IEntityAdd
 
    public EntityFollowingItem(World par1World) {
       super(par1World);
-      this.targetX = (double)0.0F;
-      this.targetY = (double)0.0F;
-      this.targetZ = (double)0.0F;
+      this.targetX = 0.0F;
+      this.targetY = 0.0F;
+      this.targetZ = 0.0F;
       this.type = 3;
       this.target = null;
       this.age = 20;
-      this.gravity = (double)0.04F;
+      this.gravity = 0.04F;
       this.setSize(0.25F, 0.25F);
       this.yOffset = this.height / 2.0F;
    }
@@ -81,19 +81,19 @@ public class EntityFollowingItem extends EntitySpecialItem implements IEntityAdd
             --this.age;
          }
 
-         double distance = (double)MathHelper.sqrt_float(xd * xd + yd * yd + zd * zd);
+         double distance = MathHelper.sqrt_float(xd * xd + yd * yd + zd * zd);
          if (distance > (double)0.5F) {
-            distance *= (double)this.age;
+            distance *= this.age;
             this.motionX = (double)xd / distance;
             this.motionY = (double)yd / distance;
             this.motionZ = (double)zd / distance;
          } else {
-            this.motionX *= (double)0.1F;
-            this.motionY *= (double)0.1F;
-            this.motionZ *= (double)0.1F;
-            this.targetX = (double)0.0F;
-            this.targetY = (double)0.0F;
-            this.targetZ = (double)0.0F;
+            this.motionX *= 0.1F;
+            this.motionY *= 0.1F;
+            this.motionZ *= 0.1F;
+            this.targetX = 0.0F;
+            this.targetY = 0.0F;
+            this.targetZ = 0.0F;
             this.target = null;
             this.noClip = false;
          }
@@ -142,7 +142,7 @@ public class EntityFollowingItem extends EntitySpecialItem implements IEntityAdd
          this.targetY = data.readDouble();
          this.targetZ = data.readDouble();
          this.type = data.readByte();
-      } catch (Exception var3) {
+      } catch (Exception ignored) {
       }
 
    }

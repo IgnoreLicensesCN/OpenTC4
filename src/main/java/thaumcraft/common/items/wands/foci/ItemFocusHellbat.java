@@ -63,19 +63,19 @@ public class ItemFocusHellbat extends ItemFocusBasic {
 
    public ItemStack onFocusRightClick(ItemStack itemstack, World world, EntityPlayer player, MovingObjectPosition movingobjectposition) {
       ItemWandCasting wand = (ItemWandCasting)itemstack.getItem();
-      Entity pointedEntity = EntityUtils.getPointedEntity(player.worldObj, player, (double)32.0F, EntityFireBat.class);
+      Entity pointedEntity = EntityUtils.getPointedEntity(player.worldObj, player, 32.0F, EntityFireBat.class);
       double px = player.posX;
       double py = player.posY;
       double pz = player.posZ;
       py = player.boundingBox.minY + (double)(player.height / 2.0F) + (double)0.25F;
-      px -= (double)(MathHelper.cos(player.rotationYaw / 180.0F * 3.141593F) * 0.16F);
+      px -= MathHelper.cos(player.rotationYaw / 180.0F * 3.141593F) * 0.16F;
       py -= 0.05000000014901161;
-      pz -= (double)(MathHelper.sin(player.rotationYaw / 180.0F * 3.141593F) * 0.16F);
+      pz -= MathHelper.sin(player.rotationYaw / 180.0F * 3.141593F) * 0.16F;
       Vec3 vec3d = player.getLook(1.0F);
       px += vec3d.xCoord * (double)0.5F;
       py += vec3d.yCoord * (double)0.5F;
       pz += vec3d.zCoord * (double)0.5F;
-      if (pointedEntity != null && pointedEntity instanceof EntityLivingBase) {
+      if (pointedEntity instanceof EntityLivingBase) {
          if (!world.isRemote) {
             if (pointedEntity instanceof EntityPlayer && !MinecraftServer.getServer().isPVPEnabled()) {
                return itemstack;

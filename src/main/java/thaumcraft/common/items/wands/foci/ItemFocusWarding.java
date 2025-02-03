@@ -101,30 +101,30 @@ public class ItemFocusWarding extends ItemFocusBasic implements IArchitect {
                   int ll = bi.getLightValue(world, c.x, c.y, c.z);
                   world.setBlock(c.x, c.y, c.z, ConfigBlocks.blockWarded, md, 3);
                   TileEntity tile = world.getTileEntity(c.x, c.y, c.z);
-                  if (tile != null && tile instanceof TileWarded) {
+                  if (tile instanceof TileWarded) {
                      TileWarded tw = (TileWarded)tile;
                      tw.block = bi;
                      tw.blockMd = (byte)md;
                      tw.light = (byte)ll;
                      tw.owner = player.getCommandSenderName().hashCode();
                      world.markBlockForUpdate(c.x, c.y, c.z);
-                     PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(c.x, c.y, c.z, 16556032), new NetworkRegistry.TargetPoint(world.provider.dimensionId, (double)c.x, (double)c.y, (double)c.z, (double)32.0F));
+                     PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(c.x, c.y, c.z, 16556032), new NetworkRegistry.TargetPoint(world.provider.dimensionId, c.x, c.y, c.z, 32.0F));
                   }
                }
             }
 
             world.playSoundEffect((double)mop.blockX + (double)0.5F, (double)mop.blockY + (double)0.5F, (double)mop.blockZ + (double)0.5F, "thaumcraft:zap", 0.25F, 1.0F);
-         } else if (tt != null && tt instanceof TileWarded) {
+         } else if (tt instanceof TileWarded) {
             TileWarded tw = (TileWarded)tt;
             if (tw.owner == player.getCommandSenderName().hashCode()) {
                for(BlockCoordinates c : this.getArchitectBlocks(itemstack, world, mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, player)) {
                   TileEntity tile = world.getTileEntity(c.x, c.y, c.z);
-                  if (tile != null && tile instanceof TileWarded) {
+                  if (tile instanceof TileWarded) {
                      TileWarded tw2 = (TileWarded)tile;
                      if (tw2.owner == player.getCommandSenderName().hashCode()) {
                         world.setBlock(c.x, c.y, c.z, tw2.block, tw2.blockMd, 3);
                         world.markBlockForUpdate(c.x, c.y, c.z);
-                        PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(c.x, c.y, c.z, 16556032), new NetworkRegistry.TargetPoint(world.provider.dimensionId, (double)c.x, (double)c.y, (double)c.z, (double)32.0F));
+                        PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(c.x, c.y, c.z, 16556032), new NetworkRegistry.TargetPoint(world.provider.dimensionId, c.x, c.y, c.z, 32.0F));
                      }
                   }
                }
@@ -155,7 +155,7 @@ public class ItemFocusWarding extends ItemFocusBasic implements IArchitect {
    }
 
    public boolean canApplyUpgrade(ItemStack focusstack, EntityPlayer player, FocusUpgradeType type, int rank) {
-      return type.equals(FocusUpgradeType.enlarge) ? this.isUpgradedWith(focusstack, FocusUpgradeType.architect) : true;
+      return !type.equals(FocusUpgradeType.enlarge) || this.isUpgradedWith(focusstack, FocusUpgradeType.architect);
    }
 
    public int getMaxAreaSize(ItemStack focusstack) {
@@ -170,7 +170,7 @@ public class ItemFocusWarding extends ItemFocusBasic implements IArchitect {
       boolean tiles = false;
       TileEntity tt = world.getTileEntity(x, y, z);
       boolean solid = world.isBlockNormalCubeDefault(x, y, z, true);
-      if ((tt != null || !solid) && tt instanceof TileWarded) {
+      if (tt instanceof TileWarded) {
          tiles = true;
       }
 
@@ -241,7 +241,7 @@ public class ItemFocusWarding extends ItemFocusBasic implements IArchitect {
 
          TileEntity tt = world.getTileEntity(pos.x, pos.y, pos.z);
          boolean solid = world.isBlockNormalCubeDefault(pos.x, pos.y, pos.z, true);
-         if (!tiles || tt != null && tt instanceof TileWarded) {
+         if (!tiles || tt instanceof TileWarded) {
             if (tiles || tt == null && solid) {
                if (tiles && tt != null && tt instanceof TileWarded) {
                   TileWarded tw2 = (TileWarded)tt;

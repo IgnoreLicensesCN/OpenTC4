@@ -10,12 +10,12 @@ import thaumcraft.client.renderers.tile.TileNodeRenderer;
 
 public class FXBurst extends EntityFX {
    public FXBurst(World world, double d, double d1, double d2, float f) {
-      super(world, d, d1, d2, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, d, d1, d2, 0.0F, 0.0F, 0.0F);
       this.particleRed = 1.0F;
       this.particleGreen = 1.0F;
       this.particleBlue = 1.0F;
       this.particleGravity = 0.0F;
-      this.motionX = this.motionY = this.motionZ = (double)0.0F;
+      this.motionX = this.motionY = this.motionZ = 0.0F;
       this.particleScale *= f;
       this.particleMaxAge = 31;
       this.noClip = false;
@@ -42,10 +42,10 @@ public class FXBurst extends EntityFX {
       tessellator.startDrawingQuads();
       tessellator.setBrightness(240);
       tessellator.setColorRGBA_F(this.particleRed * var16, this.particleGreen * var16, this.particleBlue * var16, 1.0F);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 - f3 * var12 - f5 * var12), (double)var9, (double)var11);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 - f3 * var12 + f5 * var12), (double)var9, (double)var10);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 + f3 * var12 + f5 * var12), (double)var8, (double)var10);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 + f3 * var12 - f5 * var12), (double)var8, (double)var11);
+      tessellator.addVertexWithUV(var13 - f1 * var12 - f4 * var12, var14 - f2 * var12, var15 - f3 * var12 - f5 * var12, var9, var11);
+      tessellator.addVertexWithUV(var13 - f1 * var12 + f4 * var12, var14 + f2 * var12, var15 - f3 * var12 + f5 * var12, var9, var10);
+      tessellator.addVertexWithUV(var13 + f1 * var12 + f4 * var12, var14 + f2 * var12, var15 + f3 * var12 + f5 * var12, var8, var10);
+      tessellator.addVertexWithUV(var13 + f1 * var12 - f4 * var12, var14 - f2 * var12, var15 + f3 * var12 - f5 * var12, var8, var11);
       tessellator.draw();
       GL11.glDisable(3042);
       GL11.glDepthMask(true);

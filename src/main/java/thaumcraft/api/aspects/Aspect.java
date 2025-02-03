@@ -109,7 +109,7 @@ public class Aspect {
 	
 	///////////////////////////////
 	public static ArrayList<Aspect> getPrimalAspects() {
-		ArrayList<Aspect> primals = new ArrayList<Aspect>();
+		ArrayList<Aspect> primals = new ArrayList<>();
 		Collection<Aspect> pa = aspects.values();
 		for (Aspect aspect:pa) {
 			if (aspect.isPrimal())  primals.add(aspect);
@@ -118,7 +118,7 @@ public class Aspect {
 	}
 	
 	public static ArrayList<Aspect> getCompoundAspects() {
-		ArrayList<Aspect> compounds = new ArrayList<Aspect>();
+		ArrayList<Aspect> compounds = new ArrayList<>();
 		Collection<Aspect> pa = aspects.values();
 		for (Aspect aspect:pa) {
 			if (!aspect.isPrimal())  compounds.add(aspect);
@@ -136,7 +136,7 @@ public class Aspect {
 	
 
 	///////////////////////////////
-	public static LinkedHashMap<String,Aspect> aspects = new LinkedHashMap<String,Aspect>();
+	public static LinkedHashMap<String,Aspect> aspects = new LinkedHashMap<>();
 	
 	//PRIMAL
 		public static final Aspect AIR = new Aspect("aer",0xffff7e,"e",1);

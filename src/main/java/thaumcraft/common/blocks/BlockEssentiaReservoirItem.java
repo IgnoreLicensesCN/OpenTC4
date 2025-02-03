@@ -27,7 +27,7 @@ public class BlockEssentiaReservoirItem extends ItemBlock {
             ts.facing = ForgeDirection.getOrientation(side).getOpposite();
             ts.markDirty();
             world.markBlockForUpdate(x, y, z);
-         } catch (Exception var14) {
+         } catch (Exception ignored) {
          }
       }
 

@@ -19,7 +19,7 @@ public class ContainerGolem extends ContainerGhostSlots {
       this.mobInv = iinventory1;
       this.playerInv = iinventory;
       ((EntityGolemBase)this.mobInv.ent).paused = true;
-      if (ItemGolemCore.hasInventory(((EntityGolemBase)((EntityGolemBase)this.mobInv.ent)).getCore())) {
+      if (ItemGolemCore.hasInventory(((EntityGolemBase) this.mobInv.ent).getCore())) {
          this.bindGolemInventory();
       }
 
@@ -35,11 +35,11 @@ public class ContainerGolem extends ContainerGhostSlots {
       this.maxScroll = slots / 6 - 1;
 
       for(int a = 0; a < Math.min(6, slots); ++a) {
-         if (((EntityGolemBase)((EntityGolemBase)this.mobInv.ent)).getCore() == 0) {
+         if (((EntityGolemBase) this.mobInv.ent).getCore() == 0) {
             this.addSlotToContainer(new SlotGhost(this.mobInv, a + this.currentScroll * 6, 100 + a / 2 * 28, 16 + a % 2 * 31));
          }
 
-         if (((EntityGolemBase)((EntityGolemBase)this.mobInv.ent)).getCore() == 5) {
+         if (((EntityGolemBase) this.mobInv.ent).getCore() == 5) {
             this.addSlotToContainer(new SlotGhostFluid(this.mobInv, a + this.currentScroll * 6, 100 + a / 2 * 28, 16 + a % 2 * 31));
          } else {
             this.addSlotToContainer(new SlotGhost(this.mobInv, a + this.currentScroll * 6, 100 + a / 2 * 28, 16 + a % 2 * 31, 1));
@@ -51,7 +51,7 @@ public class ContainerGolem extends ContainerGhostSlots {
    public void refreshInventory() {
       this.inventoryItemStacks.clear();
       this.inventorySlots.clear();
-      if (ItemGolemCore.hasInventory(((EntityGolemBase)((EntityGolemBase)this.mobInv.ent)).getCore())) {
+      if (ItemGolemCore.hasInventory(((EntityGolemBase) this.mobInv.ent).getCore())) {
          this.bindGolemInventory();
       }
 
@@ -83,26 +83,26 @@ public class ContainerGolem extends ContainerGhostSlots {
       }
 
       if (button >= 50 && button <= 57) {
-         ((EntityGolemBase)((EntityGolemBase)this.mobInv.ent)).setToggle(button - 50, !((EntityGolemBase)((EntityGolemBase)this.mobInv.ent)).getToggles()[button - 50]);
+         ((EntityGolemBase) this.mobInv.ent).setToggle(button - 50, !((EntityGolemBase) this.mobInv.ent).getToggles()[button - 50]);
       }
 
       int slots = this.mobInv.slotCount;
       if (button >= 0 && button < slots) {
-         int c = ((EntityGolemBase)((EntityGolemBase)this.mobInv.ent)).getColors(button) - 1;
+         int c = ((EntityGolemBase) this.mobInv.ent).getColors(button) - 1;
          if (c < -1) {
             c = 15;
          }
 
-         ((EntityGolemBase)((EntityGolemBase)this.mobInv.ent)).setColors(button, c);
+         ((EntityGolemBase) this.mobInv.ent).setColors(button, c);
       }
 
       if (button >= slots && button < slots * 2) {
-         int c = ((EntityGolemBase)((EntityGolemBase)this.mobInv.ent)).getColors(button - slots) + 1;
+         int c = ((EntityGolemBase) this.mobInv.ent).getColors(button - slots) + 1;
          if (c > 15) {
             c = -1;
          }
 
-         ((EntityGolemBase)((EntityGolemBase)this.mobInv.ent)).setColors(button - slots, c);
+         ((EntityGolemBase) this.mobInv.ent).setColors(button - slots, c);
       }
 
       this.mobInv.ent.worldObj.playSoundEffect(this.mobInv.ent.posX, this.mobInv.ent.posY, this.mobInv.ent.posZ, "random.click", 0.2F, 0.8F);
@@ -125,7 +125,7 @@ public class ContainerGolem extends ContainerGhostSlots {
          }
 
          if (stackInSlot.stackSize == 0) {
-            slotObject.putStack((ItemStack)null);
+            slotObject.putStack(null);
          } else {
             slotObject.onSlotChanged();
          }

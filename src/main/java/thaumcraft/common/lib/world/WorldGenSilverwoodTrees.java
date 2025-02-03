@@ -66,9 +66,9 @@ public class WorldGenSilverwoodTrees extends WorldGenAbstractTree {
 
                   for(int xx = x - 5; xx <= x + 5; ++xx) {
                      for(int zz = z - 5; zz <= z + 5; ++zz) {
-                        double d3 = (double)(xx - x);
-                        double d4 = (double)(k2 - cty);
-                        double d5 = (double)(zz - z);
+                        double d3 = xx - x;
+                        double d4 = k2 - cty;
+                        double d5 = zz - z;
                         double dist = d3 * d3 + d4 * d4 + d5 * d5;
                         if (dist < (double)(10 + random.nextInt(8)) && world.getBlock(xx, k2, zz).canBeReplacedByLeaves(world, xx, k2, zz)) {
                            this.setBlockAndNotifyAdequately(world, xx, k2, zz, ConfigBlocks.blockMagicalLeaves, 1);

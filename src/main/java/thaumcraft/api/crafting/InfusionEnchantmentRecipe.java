@@ -47,24 +47,22 @@ public class InfusionEnchantmentRecipe
 		}
 				
 		Map map1 = EnchantmentHelper.getEnchantments(central);
-		Iterator iterator = map1.keySet().iterator();
-        while (iterator.hasNext())
-        {
-        	int j1 = ((Integer)iterator.next()).intValue();
+        for (Object o : map1.keySet()) {
+            int j1 = (Integer) o;
             Enchantment ench = Enchantment.enchantmentsList[j1];
             if (j1 == enchantment.effectId &&
-            		EnchantmentHelper.getEnchantmentLevel(j1, central)>=ench.getMaxLevel())
-            	return false;
-            if (enchantment.effectId != ench.effectId && 
-            	(!enchantment.canApplyTogether(ench) ||
-            	!ench.canApplyTogether(enchantment))) {
-            	return false;
+                    EnchantmentHelper.getEnchantmentLevel(j1, central) >= ench.getMaxLevel())
+                return false;
+            if (enchantment.effectId != ench.effectId &&
+                    (!enchantment.canApplyTogether(ench) ||
+                            !ench.canApplyTogether(enchantment))) {
+                return false;
             }
         }
 		
 		ItemStack i2 = null;
 		
-		ArrayList<ItemStack> ii = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> ii = new ArrayList<>();
 		for (ItemStack is:input) {
 			ii.add(is.copy());
 		}
@@ -85,7 +83,7 @@ public class InfusionEnchantmentRecipe
 			if (!b) return false;
 		}
 //		System.out.println(ii.size());
-		return ii.size()==0?true:false;
+		return ii.size() == 0;
     }
 	
 	protected boolean areItemStacksEqual(ItemStack stack0, ItemStack stack1, boolean fuzzy)
@@ -96,14 +94,14 @@ public class InfusionEnchantmentRecipe
 		boolean t1=ThaumcraftApiHelper.areItemStackTagsEqualForCrafting(stack0, stack1);
 		if (!t1) return false;
 		if (fuzzy) {
-			Integer od = OreDictionary.getOreID(stack0);
+			int od = OreDictionary.getOreID(stack0);
 			if (od!=-1) {
 				ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[]{});
 				if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{stack1}, ores))
 					return true;
 			}
 		}
-        return stack0.getItem() != stack1.getItem() ? false : (stack0.getItemDamage() != stack1.getItemDamage() ? false : stack0.stackSize <= stack0.getMaxStackSize() );
+        return stack0.getItem() == stack1.getItem() && (stack0.getItemDamage() == stack1.getItemDamage() && stack0.stackSize <= stack0.getMaxStackSize());
     }
 	
    
@@ -125,11 +123,9 @@ public class InfusionEnchantmentRecipe
 	public int calcInstability(ItemStack recipeInput) {
 		int i = 0;
 		Map map1 = EnchantmentHelper.getEnchantments(recipeInput);
-		Iterator iterator = map1.keySet().iterator();
-        while (iterator.hasNext())
-        {
-        	int j1 = ((Integer)iterator.next()).intValue();
-        	i += EnchantmentHelper.getEnchantmentLevel(j1, recipeInput);
+        for (Object o : map1.keySet()) {
+            int j1 = (Integer) o;
+            i += EnchantmentHelper.getEnchantmentLevel(j1, recipeInput);
         }
 		return (i/2) + instability;
 	}
@@ -141,12 +137,10 @@ public class InfusionEnchantmentRecipe
 	public float getEssentiaMod(ItemStack recipeInput) {
 		float mod = EnchantmentHelper.getEnchantmentLevel(enchantment.effectId, recipeInput);
 		Map map1 = EnchantmentHelper.getEnchantments(recipeInput);
-		Iterator iterator = map1.keySet().iterator();
-        while (iterator.hasNext())
-        {
-        	int j1 = ((Integer)iterator.next()).intValue();
-        	if (j1 != enchantment.effectId)
-        		mod += EnchantmentHelper.getEnchantmentLevel(j1, recipeInput) * .1f;
+        for (Object o : map1.keySet()) {
+            int j1 = (Integer) o;
+            if (j1 != enchantment.effectId)
+                mod += EnchantmentHelper.getEnchantmentLevel(j1, recipeInput) * .1f;
         }
 		return mod;
 	}

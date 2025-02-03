@@ -43,14 +43,14 @@ public class FXBubbleAlt extends EntityFX {
       this.prevPosX = this.posX;
       this.prevPosY = this.posY;
       this.prevPosZ = this.posZ;
-      this.motionX += (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.001F);
-      this.motionZ += (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.001F);
+      this.motionX += (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.001F;
+      this.motionZ += (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.001F;
       this.posX += this.motionX;
       this.posY += this.motionY;
       this.posZ += this.motionZ;
-      this.motionX *= (double)0.85F;
-      this.motionY *= (double)0.85F;
-      this.motionZ *= (double)0.85F;
+      this.motionX *= 0.85F;
+      this.motionY *= 0.85F;
+      this.motionZ *= 0.85F;
       if (this.particleAge++ >= this.particleMaxAge) {
          this.setDead();
       }
@@ -82,9 +82,9 @@ public class FXBubbleAlt extends EntityFX {
       float var16 = 1.0F;
       tessellator.setBrightness(240);
       tessellator.setColorRGBA_F(this.particleRed * var16, this.particleGreen * var16, this.particleBlue * var16, this.particleAlpha);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 - f3 * var12 - f5 * var12), (double)var9, (double)var11);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 - f3 * var12 + f5 * var12), (double)var9, (double)var10);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 + f3 * var12 + f5 * var12), (double)var8, (double)var10);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 + f3 * var12 - f5 * var12), (double)var8, (double)var11);
+      tessellator.addVertexWithUV(var13 - f1 * var12 - f4 * var12, var14 - f2 * var12, var15 - f3 * var12 - f5 * var12, var9, var11);
+      tessellator.addVertexWithUV(var13 - f1 * var12 + f4 * var12, var14 + f2 * var12, var15 - f3 * var12 + f5 * var12, var9, var10);
+      tessellator.addVertexWithUV(var13 + f1 * var12 + f4 * var12, var14 + f2 * var12, var15 + f3 * var12 + f5 * var12, var8, var10);
+      tessellator.addVertexWithUV(var13 + f1 * var12 - f4 * var12, var14 - f2 * var12, var15 + f3 * var12 - f5 * var12, var8, var11);
    }
 }

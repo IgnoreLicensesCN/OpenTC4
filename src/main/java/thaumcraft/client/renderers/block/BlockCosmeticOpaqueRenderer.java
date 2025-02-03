@@ -16,11 +16,11 @@ public class BlockCosmeticOpaqueRenderer extends BlockRenderer implements ISimpl
    }
 
    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-      if (block != null && block instanceof BlockCosmeticOpaque) {
+      if (block instanceof BlockCosmeticOpaque) {
          setBrightness(world, x, y, z, block);
          int metadata = world.getBlockMetadata(x, y, z);
          if (((BlockCosmeticOpaque)block).currentPass != 1) {
-            renderer.setRenderBounds((double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)1.0F, (double)1.0F);
+            renderer.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
             return false;
          } else {
             if (metadata <= 1) {
@@ -36,22 +36,22 @@ public class BlockCosmeticOpaqueRenderer extends BlockRenderer implements ISimpl
                   if (block.shouldSideBeRendered(world, x + dir1.offsetX, y + dir1.offsetY, z + dir1.offsetZ, d)) {
                      switch (d) {
                         case 0:
-                           renderer.renderFaceYNeg(block, (double)x, (double)y, (double)z, block.getIcon(world, x, y, z, d));
+                           renderer.renderFaceYNeg(block, x, y, z, block.getIcon(world, x, y, z, d));
                            break;
                         case 1:
-                           renderer.renderFaceYPos(block, (double)x, (double)y, (double)z, block.getIcon(world, x, y, z, d));
+                           renderer.renderFaceYPos(block, x, y, z, block.getIcon(world, x, y, z, d));
                            break;
                         case 2:
-                           renderer.renderFaceZNeg(block, (double)x, (double)y, (double)z, block.getIcon(world, x, y, z, d));
+                           renderer.renderFaceZNeg(block, x, y, z, block.getIcon(world, x, y, z, d));
                            break;
                         case 3:
-                           renderer.renderFaceZPos(block, (double)x, (double)y, (double)z, block.getIcon(world, x, y, z, d));
+                           renderer.renderFaceZPos(block, x, y, z, block.getIcon(world, x, y, z, d));
                            break;
                         case 4:
-                           renderer.renderFaceXNeg(block, (double)x, (double)y, (double)z, block.getIcon(world, x, y, z, d));
+                           renderer.renderFaceXNeg(block, x, y, z, block.getIcon(world, x, y, z, d));
                            break;
                         case 5:
-                           renderer.renderFaceXPos(block, (double)x, (double)y, (double)z, block.getIcon(world, x, y, z, d));
+                           renderer.renderFaceXPos(block, x, y, z, block.getIcon(world, x, y, z, d));
                      }
 
                      renderer.flipTexture = false;

@@ -143,23 +143,23 @@ public class MazeGenerator {
 
       List<Integer> directions = Arrays.asList(1, 2, 4, 8);
       Collections.shuffle(directions, this.rand);
-      int xx = px + getDX((Integer)directions.get(0));
-      int yy = py + getDY((Integer)directions.get(0));
+      int xx = px + getDX(directions.get(0));
+      int yy = py + getDY(directions.get(0));
       int[] var10000 = this.grid[py];
-      var10000[px] |= (Integer)directions.get(0);
+      var10000[px] |= directions.get(0);
       if (this.grid[yy][xx] < 0) {
          this.grid[yy][xx] = 0;
       }
 
       var10000 = this.grid[yy];
-      var10000[xx] |= getOPP((Integer)directions.get(0));
+      var10000[xx] |= getOPP(directions.get(0));
       cells.add(new Loc(xx, yy));
       boolean success = false;
 
       while(!cells.isEmpty()) {
          int index = this.getNextIndex(cells.size());
-         int x = ((Loc)cells.get(index)).x;
-         int y = ((Loc)cells.get(index)).y;
+         int x = cells.get(index).x;
+         int y = cells.get(index).y;
          Collections.shuffle(directions, this.rand);
          boolean carved = false;
 
@@ -249,8 +249,8 @@ public class MazeGenerator {
 
                         while(!cells.isEmpty()) {
                            int index = this.getNextIndex(cells.size());
-                           int x = ((Loc)cells.get(index)).x;
-                           int y = ((Loc)cells.get(index)).y;
+                           int x = cells.get(index).x;
+                           int y = cells.get(index).y;
                            Collections.shuffle(directions, this.rand);
                            boolean carved = false;
 
@@ -328,7 +328,7 @@ public class MazeGenerator {
             return false;
          } else {
             int r = this.rand.nextInt(deadEndsloc.size());
-            CellLoc ll = (CellLoc)deadEndsloc.get(r);
+            CellLoc ll = deadEndsloc.get(r);
             Cell c = new Cell((short)this.grid[ll.x][ll.z]);
             c.feature = 6;
             this.grid[ll.x][ll.z] = c.pack();
@@ -338,7 +338,7 @@ public class MazeGenerator {
 
                while(r < deadEndsloc.size() / 2) {
                   int rInternal = this.rand.nextInt(deadEndsloc.size());
-                  CellLoc llInternal = (CellLoc)deadEndsloc.get(rInternal);
+                  CellLoc llInternal = deadEndsloc.get(rInternal);
                   Cell cInternal = new Cell((short)this.grid[llInternal.x][llInternal.z]);
                   if (cInternal.feature == 0) {
                      cInternal.feature = (byte)(7 + this.rand.nextInt(3));
@@ -448,7 +448,7 @@ public class MazeGenerator {
 
    }
 
-   private class Loc {
+   private static class Loc {
       int x;
       int y;
 

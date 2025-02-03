@@ -21,7 +21,7 @@ import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigBlocks;
 
 public class EntityFrostShard extends EntityThrowable implements IEntityAdditionalSpawnData {
-   public double bounce = (double)0.5F;
+   public double bounce = 0.5F;
    public int bounceLimit = 3;
    public boolean fragile = false;
 
@@ -56,11 +56,11 @@ public class EntityFrostShard extends EntityThrowable implements IEntityAddition
          int oy = MathHelper.floor_double(this.posY) - MathHelper.floor_double(mop.entityHit.posY);
          int oz = MathHelper.floor_double(this.posZ) - MathHelper.floor_double(mop.entityHit.posZ);
          if (oz != 0) {
-            this.motionZ *= (double)-1.0F;
+            this.motionZ *= -1.0F;
          }
 
          if (ox != 0) {
-            this.motionX *= (double)-1.0F;
+            this.motionX *= -1.0F;
          }
 
          if (oy != 0) {
@@ -72,16 +72,16 @@ public class EntityFrostShard extends EntityThrowable implements IEntityAddition
          this.motionZ *= 0.66;
 
          for(int a = 0; (float)a < this.getDamage(); ++a) {
-            this.worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(ConfigBlocks.blockCustomOre) + "_15", this.posX, this.posY, this.posZ, (double)4.0F * ((double)this.rand.nextFloat() - (double)0.5F), (double)0.5F, ((double)this.rand.nextFloat() - (double)0.5F) * (double)4.0F);
+            this.worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(ConfigBlocks.blockCustomOre) + "_15", this.posX, this.posY, this.posZ, (double)4.0F * ((double)this.rand.nextFloat() - (double)0.5F), 0.5F, ((double)this.rand.nextFloat() - (double)0.5F) * (double)4.0F);
          }
       } else if (mop.typeOfHit == MovingObjectType.BLOCK) {
          ForgeDirection dir = ForgeDirection.getOrientation(mop.sideHit);
          if (dir.offsetZ != 0) {
-            this.motionZ *= (double)-1.0F;
+            this.motionZ *= -1.0F;
          }
 
          if (dir.offsetX != 0) {
-            this.motionX *= (double)-1.0F;
+            this.motionX *= -1.0F;
          }
 
          if (dir.offsetY != 0) {
@@ -92,11 +92,11 @@ public class EntityFrostShard extends EntityThrowable implements IEntityAddition
 
          try {
             this.playSound(bhit.stepSound.getBreakSound(), 0.3F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-         } catch (Exception var9) {
+         } catch (Exception ignored) {
          }
 
          for(int a = 0; (float)a < this.getDamage(); ++a) {
-            this.worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(bhit) + "_" + this.worldObj.getBlockMetadata(mop.blockX, mop.blockY, mop.blockZ), this.posX, this.posY, this.posZ, (double)4.0F * ((double)this.rand.nextFloat() - (double)0.5F), (double)0.5F, ((double)this.rand.nextFloat() - (double)0.5F) * (double)4.0F);
+            this.worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(bhit) + "_" + this.worldObj.getBlockMetadata(mop.blockX, mop.blockY, mop.blockZ), this.posX, this.posY, this.posZ, (double)4.0F * ((double)this.rand.nextFloat() - (double)0.5F), 0.5F, ((double)this.rand.nextFloat() - (double)0.5F) * (double)4.0F);
          }
       }
 
@@ -132,7 +132,7 @@ public class EntityFrostShard extends EntityThrowable implements IEntityAddition
          this.playSound(Blocks.ice.stepSound.getBreakSound(), 0.3F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
          for(int a = 0; (float)a < 8.0F * this.getDamage(); ++a) {
-            this.worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(ConfigBlocks.blockCustomOre) + "_15", this.posX, this.posY, this.posZ, (double)4.0F * ((double)this.rand.nextFloat() - (double)0.5F), (double)0.5F, ((double)this.rand.nextFloat() - (double)0.5F) * (double)4.0F);
+            this.worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(ConfigBlocks.blockCustomOre) + "_15", this.posX, this.posY, this.posZ, (double)4.0F * ((double)this.rand.nextFloat() - (double)0.5F), 0.5F, ((double)this.rand.nextFloat() - (double)0.5F) * (double)4.0F);
          }
       }
 
@@ -151,7 +151,7 @@ public class EntityFrostShard extends EntityThrowable implements IEntityAddition
       float var20 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
       this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * (double)180.0F / Math.PI);
 
-      for(this.rotationPitch = (float)(Math.atan2(this.motionY, (double)var20) * (double)180.0F / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
+      for(this.rotationPitch = (float)(Math.atan2(this.motionY, var20) * (double)180.0F / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
       }
 
       while(this.rotationPitch - this.prevRotationPitch >= 180.0F) {
@@ -195,8 +195,8 @@ public class EntityFrostShard extends EntityThrowable implements IEntityAddition
 
    public void entityInit() {
       super.entityInit();
-      this.dataWatcher.addObject(16, new Float(0.0F));
-      this.dataWatcher.addObject(17, new Byte((byte)0));
+      this.dataWatcher.addObject(16, 0.0F);
+      this.dataWatcher.addObject(17, (byte) 0);
    }
 
    public void setDamage(float par1) {

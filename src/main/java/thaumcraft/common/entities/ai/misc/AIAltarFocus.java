@@ -6,9 +6,8 @@ import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.entities.monster.EntityCultistCleric;
 
 public class AIAltarFocus extends EntityAIBase {
-   private EntityCultistCleric entity;
-   private World world;
-   int field_48399_a = 0;
+   private final EntityCultistCleric entity;
+   private final World world;
 
    public AIAltarFocus(EntityCultistCleric par1EntityLiving) {
       this.entity = par1EntityLiving;
@@ -20,13 +19,7 @@ public class AIAltarFocus extends EntityAIBase {
       return this.entity.getIsRitualist() && this.entity.getHomePosition() != null;
    }
 
-   public void startExecuting() {
-   }
-
-   public void resetTask() {
-   }
-
-   public boolean continueExecuting() {
+    public boolean continueExecuting() {
       return this.entity.getIsRitualist() && this.entity.getHomePosition() != null;
    }
 

@@ -124,7 +124,7 @@ public class BlockJar extends BlockContainer {
       if (md != 0 && md != 3) {
          if (md == 2) {
             TileEntity te = world.getTileEntity(x, y, z);
-            if (te != null && te instanceof TileJarNode && ((TileJarNode)te).drop && ((TileJarNode)te).getAspects() != null) {
+            if (te instanceof TileJarNode && ((TileJarNode) te).drop && ((TileJarNode) te).getAspects() != null) {
                ItemStack drop = new ItemStack(ConfigItems.itemJarNode);
                ((ItemJarNode)drop.getItem()).setAspects(drop, ((TileJarNode)te).getAspects().copy());
                ((ItemJarNode)drop.getItem()).setNodeAttributes(drop, ((TileJarNode)te).getNodeType(), ((TileJarNode)te).getNodeModifier(), ((TileJarNode)te).getId());
@@ -137,7 +137,7 @@ public class BlockJar extends BlockContainer {
          }
       } else {
          TileEntity te = world.getTileEntity(x, y, z);
-         if (te != null && te instanceof TileJarFillable) {
+         if (te instanceof TileJarFillable) {
             ItemStack drop = new ItemStack(ConfigItems.itemJarFilled);
             if (((TileJarFillable)te).amount <= 0 && ((TileJarFillable)te).aspectFilter == null) {
                drop = new ItemStack(this);
@@ -170,13 +170,13 @@ public class BlockJar extends BlockContainer {
       int md = par1World.getBlockMetadata(par2, par3, par4);
       if (md == 1 && !par1World.isRemote) {
          TileEntity te = par1World.getTileEntity(par2, par3, par4);
-         if (te != null && te instanceof TileJarBrain) {
+         if (te instanceof TileJarBrain) {
             int xp = ((TileJarBrain)te).xp;
 
             while(xp > 0) {
                int var2 = EntityXPOrb.getXPSplit(xp);
                xp -= var2;
-               par1World.spawnEntityInWorld(new EntityXPOrb(par1World, (double)par2, (double)par3, (double)par4, var2));
+               par1World.spawnEntityInWorld(new EntityXPOrb(par1World, par2, par3, par4, var2));
             }
          }
       }
@@ -218,7 +218,7 @@ public class BlockJar extends BlockContainer {
 
    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float what, float these, float are) {
       TileEntity te = world.getTileEntity(x, y, z);
-      if (te != null && te instanceof TileJarBrain) {
+      if (te instanceof TileJarBrain) {
          ((TileJarBrain)te).eatDelay = 40;
          if (!world.isRemote) {
             int var6 = world.rand.nextInt(Math.min(((TileJarBrain)te).xp + 1, 64));
@@ -236,42 +236,42 @@ public class BlockJar extends BlockContainer {
                te.markDirty();
             }
          } else {
-            world.playSound((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "thaumcraft:jar", 0.2F, 1.0F, false);
+            world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "thaumcraft:jar", 0.2F, 1.0F, false);
          }
       }
 
-      if (te != null && te instanceof TileJarFillable && player.isSneaking() && ((TileJarFillable)te).aspectFilter != null && side == ((TileJarFillable)te).facing) {
+      if (te instanceof TileJarFillable && player.isSneaking() && ((TileJarFillable) te).aspectFilter != null && side == ((TileJarFillable) te).facing) {
          ((TileJarFillable)te).aspectFilter = null;
          if (world.isRemote) {
-            world.playSound((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "thaumcraft:page", 1.0F, 1.0F, false);
+            world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
          } else {
             ForgeDirection fd = ForgeDirection.getOrientation(side);
-            world.spawnEntityInWorld(new EntityItem(world, (double)((float)x + 0.5F + (float)fd.offsetX / 3.0F), (double)((float)y + 0.5F), (double)((float)z + 0.5F + (float)fd.offsetZ / 3.0F), new ItemStack(ConfigItems.itemResource, 1, 13)));
+            world.spawnEntityInWorld(new EntityItem(world, (float)x + 0.5F + (float)fd.offsetX / 3.0F, (float)y + 0.5F, (float)z + 0.5F + (float)fd.offsetZ / 3.0F, new ItemStack(ConfigItems.itemResource, 1, 13)));
          }
-      } else if (te != null && te instanceof TileJarFillable && player.isSneaking() && player.getHeldItem() == null) {
+      } else if (te instanceof TileJarFillable && player.isSneaking() && player.getHeldItem() == null) {
          ((TileJarFillable)te).amount = 0;
          if (((TileJarFillable)te).aspectFilter == null) {
             ((TileJarFillable)te).aspect = null;
          }
 
          if (world.isRemote) {
-            world.playSound((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "thaumcraft:jar", 0.4F, 1.0F, false);
-            world.playSound((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "game.neutral.swim", 0.5F, 1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.3F, false);
+            world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "thaumcraft:jar", 0.4F, 1.0F, false);
+            world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "game.neutral.swim", 0.5F, 1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.3F, false);
          }
-      } else if (te != null && te instanceof TileJarFillable && player.getHeldItem() != null && ((TileJarFillable)te).aspectFilter == null && player.getHeldItem().getItem() == ConfigItems.itemResource && player.getHeldItem().getItemDamage() == 13) {
-         if (((TileJarFillable)te).amount == 0 && ((IEssentiaContainerItem)((IEssentiaContainerItem)player.getHeldItem().getItem())).getAspects(player.getHeldItem()) == null) {
+      } else if (te instanceof TileJarFillable && player.getHeldItem() != null && ((TileJarFillable) te).aspectFilter == null && player.getHeldItem().getItem() == ConfigItems.itemResource && player.getHeldItem().getItemDamage() == 13) {
+         if (((TileJarFillable)te).amount == 0 && ((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()) == null) {
             return true;
          }
 
-         if (((TileJarFillable)te).amount == 0 && ((IEssentiaContainerItem)((IEssentiaContainerItem)player.getHeldItem().getItem())).getAspects(player.getHeldItem()) != null) {
-            ((TileJarFillable)te).aspect = ((IEssentiaContainerItem)((IEssentiaContainerItem)player.getHeldItem().getItem())).getAspects(player.getHeldItem()).getAspects()[0];
+         if (((TileJarFillable)te).amount == 0 && ((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()) != null) {
+            ((TileJarFillable)te).aspect = ((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()).getAspects()[0];
          }
 
          --player.getHeldItem().stackSize;
-         this.onBlockPlacedBy(world, x, y, z, player, (ItemStack)null);
+         this.onBlockPlacedBy(world, x, y, z, player, null);
          ((TileJarFillable)te).aspectFilter = ((TileJarFillable)te).aspect;
          if (world.isRemote) {
-            world.playSound((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "thaumcraft:jar", 0.4F, 1.0F, false);
+            world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "thaumcraft:jar", 0.4F, 1.0F, false);
          }
       }
 
@@ -294,7 +294,7 @@ public class BlockJar extends BlockContainer {
 
    public float getEnchantPowerBonus(World world, int x, int y, int z) {
       TileEntity te = world.getTileEntity(x, y, z);
-      return te != null && te instanceof TileJarBrain ? 2.0F : super.getEnchantPowerBonus(world, x, y, z);
+      return te instanceof TileJarBrain ? 2.0F : super.getEnchantPowerBonus(world, x, y, z);
    }
 
    public int getLightValue(IBlockAccess world, int x, int y, int z) {
@@ -305,13 +305,13 @@ public class BlockJar extends BlockContainer {
    @SideOnly(Side.CLIENT)
    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
       TileEntity tile = world.getTileEntity(x, y, z);
-      if (tile != null && tile instanceof TileJarBrain && ((TileJarBrain)tile).xp >= ((TileJarBrain)tile).xpMax) {
+      if (tile instanceof TileJarBrain && ((TileJarBrain) tile).xp >= ((TileJarBrain) tile).xpMax) {
          double xx = (double)x + 0.3 + (double)(rand.nextFloat() * 0.4F);
          double yy = (double)y + 0.9;
          double zz = (double)z + 0.3 + (double)(rand.nextFloat() * 0.4F);
-         EntitySpellParticleFX var21 = new EntitySpellParticleFX(world, xx, yy, zz, (double)0.0F, (double)0.0F, (double)0.0F);
-         ((EntityFX)var21).setAlphaF(0.5F);
-         ((EntityFX)var21).setRBGColorF(0.0F, 0.4F + world.rand.nextFloat() * 0.1F, 0.3F + world.rand.nextFloat() * 0.2F);
+         EntitySpellParticleFX var21 = new EntitySpellParticleFX(world, xx, yy, zz, 0.0F, 0.0F, 0.0F);
+         var21.setAlphaF(0.5F);
+         var21.setRBGColorF(0.0F, 0.4F + world.rand.nextFloat() * 0.1F, 0.3F + world.rand.nextFloat() * 0.2F);
          Minecraft.getMinecraft().effectRenderer.addEffect(var21);
       }
 
@@ -323,10 +323,10 @@ public class BlockJar extends BlockContainer {
 
    public int getComparatorInputOverride(World world, int x, int y, int z, int rs) {
       TileEntity tile = world.getTileEntity(x, y, z);
-      if (tile != null && tile instanceof TileJarBrain) {
+      if (tile instanceof TileJarBrain) {
          float r = (float)((TileJarBrain)tile).xp / (float)((TileJarBrain)tile).xpMax;
          return MathHelper.floor_float(r * 14.0F) + (((TileJarBrain)tile).xp > 0 ? 1 : 0);
-      } else if (tile != null && tile instanceof TileJarFillable) {
+      } else if (tile instanceof TileJarFillable) {
          float r = (float)((TileJarFillable)tile).amount / (float)((TileJarFillable)tile).maxAmount;
          return MathHelper.floor_float(r * 14.0F) + (((TileJarFillable)tile).amount > 0 ? 1 : 0);
       } else {

@@ -80,7 +80,7 @@ public class WorldGenEldritchRing extends WorldGenerator {
                      world.setBlock(x, j, z, ConfigBlocks.blockCosmeticSolid, 1, 3);
                      int r = rand.nextInt(10);
                      TileEntity te = world.getTileEntity(x, j + 1, z);
-                     if (te != null && te instanceof TileEldritchAltar) {
+                     if (te instanceof TileEldritchAltar) {
                         switch (r) {
                            case 1:
                            case 2:
@@ -93,7 +93,7 @@ public class WorldGenEldritchRing extends WorldGenerator {
                                  ForgeDirection dir = ForgeDirection.getOrientation(a);
                                  world.setBlock(x - dir.offsetX * 3, j + 1, z + dir.offsetZ * 3, ConfigBlocks.blockWoodenDevice, 8, 3);
                                  te = world.getTileEntity(x - dir.offsetX * 3, j + 1, z + dir.offsetZ * 3);
-                                 if (te != null && te instanceof TileBanner) {
+                                 if (te instanceof TileBanner) {
                                     int face = 0;
                                     switch (a) {
                                        case 2:

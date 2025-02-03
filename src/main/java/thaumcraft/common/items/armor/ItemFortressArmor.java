@@ -114,7 +114,7 @@ public class ItemFortressArmor extends ItemArmor implements IRepairable, IRunicA
    }
 
    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
-      return par2ItemStack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 2)) ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
+      return par2ItemStack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 2)) || super.getIsRepairable(par1ItemStack, par2ItemStack);
    }
 
    public int getRunicCharge(ItemStack itemstack) {
@@ -130,7 +130,7 @@ public class ItemFortressArmor extends ItemArmor implements IRepairable, IRunicA
       } else if (!source.isFireDamage() && !source.isExplosion()) {
          if (source.isUnblockable()) {
             priority = 0;
-            ratio = (double)0.0F;
+            ratio = 0.0F;
          }
       } else {
          priority = 1;
@@ -138,12 +138,12 @@ public class ItemFortressArmor extends ItemArmor implements IRepairable, IRunicA
       }
 
       if (player instanceof EntityPlayer) {
-         double set = (double)0.875F;
+         double set = 0.875F;
 
          for(int a = 1; a < 4; ++a) {
             ItemStack piece = ((EntityPlayer)player).inventory.armorInventory[a];
             if (piece != null && piece.getItem() instanceof ItemFortressArmor) {
-               set += (double)0.125F;
+               set += 0.125F;
                if (piece.hasTagCompound() && piece.stackTagCompound.hasKey("mask")) {
                   set += 0.05;
                }

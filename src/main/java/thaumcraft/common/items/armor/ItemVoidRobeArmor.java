@@ -66,12 +66,12 @@ public class ItemVoidRobeArmor extends ItemArmor implements IRepairable, IRunicA
    }
 
    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-      list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": " + this.getVisDiscount(stack, player, (Aspect)null) + "%");
+      list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": " + this.getVisDiscount(stack, player, null) + "%");
       super.addInformation(stack, player, list, par4);
    }
 
    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
-      return par2ItemStack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 16)) ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
+      return par2ItemStack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 16)) || super.getIsRepairable(par1ItemStack, par2ItemStack);
    }
 
    public void onUpdate(ItemStack stack, World world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
@@ -208,7 +208,7 @@ public class ItemVoidRobeArmor extends ItemArmor implements IRepairable, IRunicA
          ratio = (double)this.damageReduceAmount / (double)35.0F;
       } else if (source.isUnblockable()) {
          priority = 0;
-         ratio = (double)0.0F;
+         ratio = 0.0F;
       }
 
       return new ISpecialArmor.ArmorProperties(priority, ratio, armor.getMaxDamage() + 1 - armor.getItemDamage());

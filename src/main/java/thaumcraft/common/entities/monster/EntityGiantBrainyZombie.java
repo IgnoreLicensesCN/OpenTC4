@@ -24,12 +24,12 @@ public class EntityGiantBrainyZombie extends EntityBrainyZombie {
          this.setSize(0.6F * (1.2F + this.getAnger()), 1.8F * (1.2F + this.getAnger()));
       }
 
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)(7.0F + (this.getAnger() - 1.0F) * 5.0F));
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(7.0F + (this.getAnger() - 1.0F) * 5.0F);
    }
 
    protected void entityInit() {
       super.entityInit();
-      this.dataWatcher.addObject(20, new Float(1.0F));
+      this.dataWatcher.addObject(20, 1.0F);
    }
 
    public float getAnger() {
@@ -47,8 +47,8 @@ public class EntityGiantBrainyZombie extends EntityBrainyZombie {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)60.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)7.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(60.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(7.0F);
    }
 
    protected void dropFewItems(boolean flag, int i) {

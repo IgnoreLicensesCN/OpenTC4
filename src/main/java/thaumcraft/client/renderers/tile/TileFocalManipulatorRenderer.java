@@ -35,10 +35,10 @@ public class TileFocalManipulatorRenderer extends TileEntitySpecialRenderer {
          GL11.glTranslatef((float)par2 + 0.5F, (float)par4 + 1.0F, (float)par6 + 0.5F);
          GL11.glRotatef(ticks % 360.0F, 0.0F, 1.0F, 0.0F);
          ItemStack is = table.getStackInSlot(0).copy();
-         this.entityitem = new EntityItem(table.getWorldObj(), (double)0.0F, (double)0.0F, (double)0.0F, is);
+         this.entityitem = new EntityItem(table.getWorldObj(), 0.0F, 0.0F, 0.0F, is);
          this.entityitem.hoverStart = MathHelper.sin(ticks / 14.0F) * 0.2F + 0.2F;
          RenderItem.renderInFrame = true;
-         RenderManager.instance.renderEntityWithPosYaw(this.entityitem, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F, 0.0F);
+         RenderManager.instance.renderEntityWithPosYaw(this.entityitem, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
          RenderItem.renderInFrame = false;
          GL11.glPopMatrix();
       }

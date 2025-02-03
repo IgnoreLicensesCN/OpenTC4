@@ -35,7 +35,7 @@ public class AIOpenDoor extends AIDoorInteract {
             }
 
             this.theEntity.worldObj.setBlock(this.entityPosX, this.entityPosY, this.entityPosZ, this.targetDoor, var10 | 4, 3);
-            this.theEntity.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1003, this.entityPosX, this.entityPosY, this.entityPosZ, 0);
+            this.theEntity.worldObj.playAuxSFXAtEntity(null, 1003, this.entityPosX, this.entityPosY, this.entityPosZ, 0);
          }
       }
 
@@ -49,7 +49,7 @@ public class AIOpenDoor extends AIDoorInteract {
             int var10 = this.theEntity.worldObj.getBlockMetadata(this.entityPosX, this.entityPosY, this.entityPosZ);
             if (BlockFenceGate.isFenceGateOpen(var10)) {
                this.theEntity.worldObj.setBlock(this.entityPosX, this.entityPosY, this.entityPosZ, this.targetDoor, var10 & -5, 3);
-               this.theEntity.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1003, this.entityPosX, this.entityPosY, this.entityPosZ, 0);
+               this.theEntity.worldObj.playAuxSFXAtEntity(null, 1003, this.entityPosX, this.entityPosY, this.entityPosZ, 0);
             }
          }
       }

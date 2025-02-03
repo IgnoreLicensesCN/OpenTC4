@@ -188,7 +188,7 @@ public class BlockArcaneFurnace extends BlockContainer {
 
    public AxisAlignedBB getSelectedBoundingBoxFromPool(World w, int i, int j, int k) {
       int meta = w.getBlockMetadata(i, j, k);
-      return meta == 0 ? AxisAlignedBB.getBoundingBox((double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)0.25F, (double)1.0F) : AxisAlignedBB.getBoundingBox((double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)1.0F, (double)1.0F);
+      return meta == 0 ? AxisAlignedBB.getBoundingBox(0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 1.0F) : AxisAlignedBB.getBoundingBox(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
    }
 
    public void addCollisionBoxesToList(World world, int i, int j, int k, AxisAlignedBB axisalignedbb, List arraylist, Entity par7Entity) {
@@ -219,23 +219,23 @@ public class BlockArcaneFurnace extends BlockContainer {
       int meta = world.getBlockMetadata(x, y, z);
       if (meta == 0) {
          if (entity.posX < (double)((float)x + 0.3F)) {
-            entity.motionX += (double)1.0E-4F;
+            entity.motionX += 1.0E-4F;
          }
 
          if (entity.posX > (double)((float)x + 0.7F)) {
-            entity.motionX -= (double)1.0E-4F;
+            entity.motionX -= 1.0E-4F;
          }
 
          if (entity.posZ < (double)((float)z + 0.3F)) {
-            entity.motionZ += (double)1.0E-4F;
+            entity.motionZ += 1.0E-4F;
          }
 
          if (entity.posZ > (double)((float)z + 0.7F)) {
-            entity.motionZ -= (double)1.0E-4F;
+            entity.motionZ -= 1.0E-4F;
          }
 
          if (entity instanceof EntityItem) {
-            entity.motionY = (double)0.025F;
+            entity.motionY = 0.025F;
             if (entity.onGround) {
                TileArcaneFurnace taf = (TileArcaneFurnace)world.getTileEntity(x, y, z);
                if (taf.addItemsToInventory(((EntityItem)entity).getEntityItem())) {
@@ -293,9 +293,9 @@ public class BlockArcaneFurnace extends BlockContainer {
    public void onBlockPreDestroy(World world, int x, int y, int z, int meta) {
       if (meta == 0 && !world.isRemote) {
          TileEntity te = world.getTileEntity(x, y, z);
-         if (te != null && te instanceof TileArcaneFurnace) {
+         if (te instanceof TileArcaneFurnace) {
             Entity newentity = EntityList.createEntityByName("Blaze", world);
-            newentity.setLocationAndAngles((double)((float)x + 0.5F), (double)((float)y + 1.0F), (double)((float)z + 0.5F), 0.0F, 0.0F);
+            newentity.setLocationAndAngles((float)x + 0.5F, (float)y + 1.0F, (float)z + 0.5F, 0.0F, 0.0F);
             ((EntityLivingBase)newentity).addPotionEffect(new PotionEffect(Potion.regeneration.id, 6000, 2));
             ((EntityLivingBase)newentity).addPotionEffect(new PotionEffect(Potion.resistance.id, 12000, 0));
             world.spawnEntityInWorld(newentity);
@@ -345,10 +345,10 @@ public class BlockArcaneFurnace extends BlockContainer {
    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
       if (par1World.getBlockMetadata(par2, par3, par4) == 0 && par1World.getBlock(par2, par3 + 1, par4).getMaterial() == Material.air && !par1World.getBlock(par2, par3 + 1, par4).isOpaqueCube()) {
          for(int a = 0; a < 3; ++a) {
-            double var7 = (double)((float)par2 + par5Random.nextFloat());
-            double var8 = (double)((float)par3 + 1.0F + par5Random.nextFloat() * 0.5F);
-            double var9 = (double)((float)par4 + par5Random.nextFloat());
-            par1World.spawnParticle("largesmoke", var7, var8, var9, (double)0.0F, (double)0.0F, (double)0.0F);
+            double var7 = (float)par2 + par5Random.nextFloat();
+            double var8 = (float)par3 + 1.0F + par5Random.nextFloat() * 0.5F;
+            double var9 = (float)par4 + par5Random.nextFloat();
+            par1World.spawnParticle("largesmoke", var7, var8, var9, 0.0F, 0.0F, 0.0F);
          }
       }
 
@@ -358,7 +358,7 @@ public class BlockArcaneFurnace extends BlockContainer {
       if (metadata == 0) {
          return new TileArcaneFurnace();
       } else {
-         return (TileEntity)(metadata != 2 && metadata != 4 && metadata != 5 && metadata != 6 && metadata != 8 ? super.createTileEntity(world, metadata) : new TileArcaneFurnaceNozzle());
+         return metadata != 2 && metadata != 4 && metadata != 5 && metadata != 6 && metadata != 8 ? super.createTileEntity(world, metadata) : new TileArcaneFurnaceNozzle();
       }
    }
 

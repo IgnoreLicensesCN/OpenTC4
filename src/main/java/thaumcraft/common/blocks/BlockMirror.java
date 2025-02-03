@@ -64,7 +64,7 @@ public class BlockMirror extends BlockContainer {
          new TileMirror();
       }
 
-      return (TileEntity)(metadata > 5 && metadata <= 11 ? new TileMirrorEssentia() : super.createTileEntity(world, metadata));
+      return metadata > 5 && metadata <= 11 ? new TileMirrorEssentia() : super.createTileEntity(world, metadata);
    }
 
    public TileEntity createNewTileEntity(World var1, int md) {
@@ -94,7 +94,7 @@ public class BlockMirror extends BlockContainer {
       if (md < 6) {
          TileMirror tm = (TileMirror)world.getTileEntity(x, y, z);
          ItemStack drop = new ItemStack(this, 1, 0);
-         if (tm != null && tm instanceof TileMirror) {
+         if (tm instanceof TileMirror) {
             if (tm.linked) {
                drop.setTagInfo("linkX", new NBTTagInt(tm.linkX));
                drop.setTagInfo("linkY", new NBTTagInt(tm.linkY));
@@ -111,7 +111,7 @@ public class BlockMirror extends BlockContainer {
       } else {
          TileMirrorEssentia tm = (TileMirrorEssentia)world.getTileEntity(x, y, z);
          ItemStack drop = new ItemStack(this, 1, 6);
-         if (tm != null && tm instanceof TileMirrorEssentia) {
+         if (tm instanceof TileMirrorEssentia) {
             if (tm.linked) {
                drop.setTagInfo("linkX", new NBTTagInt(tm.linkX));
                drop.setTagInfo("linkY", new NBTTagInt(tm.linkY));
@@ -131,7 +131,7 @@ public class BlockMirror extends BlockContainer {
 
    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
       int md = world.getBlockMetadata(x, y, z);
-      if (md < 6 && !world.isRemote && entity instanceof EntityItem && !entity.isDead && ((EntityItem)entity).timeUntilPortal == 0) {
+      if (md < 6 && !world.isRemote && entity instanceof EntityItem && !entity.isDead && entity.timeUntilPortal == 0) {
          TileMirror taf = (TileMirror)world.getTileEntity(x, y, z);
          if (taf != null) {
             taf.transport((EntityItem)entity);
@@ -153,12 +153,9 @@ public class BlockMirror extends BlockContainer {
    public void onNeighborBlockChange(World world, int i, int j, int k, Block l) {
       if (!world.isRemote) {
          int i1 = world.getBlockMetadata(i, j, k);
-         boolean flag = false;
-         if (!world.isSideSolid(i - 1, j, k, ForgeDirection.getOrientation(5)) && i1 % 6 == 5) {
-            flag = true;
-         }
+         boolean flag = !world.isSideSolid(i - 1, j, k, ForgeDirection.getOrientation(5)) && i1 % 6 == 5;
 
-         if (!world.isSideSolid(i + 1, j, k, ForgeDirection.getOrientation(4)) && i1 % 6 == 4) {
+          if (!world.isSideSolid(i + 1, j, k, ForgeDirection.getOrientation(4)) && i1 % 6 == 4) {
             flag = true;
          }
 
@@ -216,7 +213,7 @@ public class BlockMirror extends BlockContainer {
       } else if (world.isSideSolid(i, j, k + 1, ForgeDirection.getOrientation(2))) {
          return true;
       } else {
-         return world.isSideSolid(i, j - 1, k, ForgeDirection.getOrientation(1)) ? true : world.isSideSolid(i, j + 1, k, ForgeDirection.getOrientation(0));
+         return world.isSideSolid(i, j - 1, k, ForgeDirection.getOrientation(1)) || world.isSideSolid(i, j + 1, k, ForgeDirection.getOrientation(0));
       }
    }
 

@@ -61,8 +61,8 @@ public class BlockFluxGoo extends BlockFluidFinite {
             }
          }
       } else {
-         entity.motionX *= (double)(1.0F - this.getQuantaPercentage(world, x, y, z));
-         entity.motionZ *= (double)(1.0F - this.getQuantaPercentage(world, x, y, z));
+         entity.motionX *= 1.0F - this.getQuantaPercentage(world, x, y, z);
+         entity.motionZ *= 1.0F - this.getQuantaPercentage(world, x, y, z);
          if (entity instanceof EntityLivingBase) {
             PotionEffect pe = new PotionEffect(Config.potionVisExhaustID, 600, md / 3, true);
             pe.getCurativeItems().clear();
@@ -76,7 +76,7 @@ public class BlockFluxGoo extends BlockFluidFinite {
    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
       int meta = world.getBlockMetadata(x, y, z);
       if (rand.nextInt(50 - Thaumcraft.proxy.particleCount(10)) <= meta) {
-         FXBubble fb = new FXBubble(world, (double)((float)x + rand.nextFloat()), (double)((float)y + 0.125F * (float)meta), (double)((float)z + rand.nextFloat()), (double)0.0F, (double)0.0F, (double)0.0F, 0);
+         FXBubble fb = new FXBubble(world, (float)x + rand.nextFloat(), (float)y + 0.125F * (float)meta, (float)z + rand.nextFloat(), 0.0F, 0.0F, 0.0F, 0);
          fb.setAlphaF(0.25F);
          ParticleEngine.instance.addEffect(world, fb);
       }
@@ -90,7 +90,7 @@ public class BlockFluxGoo extends BlockFluidFinite {
       if (meta >= 2 && meta < 6 && world.isAirBlock(x, y + 1, z) && rand.nextInt(25) == 0) {
          world.setBlockToAir(x, y, z);
          EntityThaumicSlime slime = new EntityThaumicSlime(world);
-         slime.setLocationAndAngles((double)((float)x + 0.5F), (double)y, (double)((float)z + 0.5F), 0.0F, 0.0F);
+         slime.setLocationAndAngles((float)x + 0.5F, y, (float)z + 0.5F, 0.0F, 0.0F);
          slime.setSlimeSize(1);
          world.spawnEntityInWorld(slime);
          world.playSoundAtEntity(slime, "thaumcraft:gore", 1.0F, 1.0F);
@@ -98,7 +98,7 @@ public class BlockFluxGoo extends BlockFluidFinite {
          if (rand.nextInt(25) == 0) {
             world.setBlockToAir(x, y, z);
             EntityThaumicSlime slime = new EntityThaumicSlime(world);
-            slime.setLocationAndAngles((double)((float)x + 0.5F), (double)y, (double)((float)z + 0.5F), 0.0F, 0.0F);
+            slime.setLocationAndAngles((float)x + 0.5F, y, (float)z + 0.5F, 0.0F, 0.0F);
             slime.setSlimeSize(2);
             world.spawnEntityInWorld(slime);
             world.playSoundAtEntity(slime, "thaumcraft:gore", 1.0F, 1.0F);

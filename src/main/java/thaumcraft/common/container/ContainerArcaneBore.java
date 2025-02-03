@@ -33,7 +33,7 @@ public class ContainerArcaneBore extends Container {
    }
 
    public boolean canInteractWith(EntityPlayer par1EntityPlayer) {
-      return this.tileEntity.getWorldObj().getTileEntity(this.tileEntity.xCoord, this.tileEntity.yCoord, this.tileEntity.zCoord) != this.tileEntity ? false : par1EntityPlayer.getDistanceSq((double)this.tileEntity.xCoord + (double)0.5F, (double)this.tileEntity.yCoord + (double)0.5F, (double)this.tileEntity.zCoord + (double)0.5F) <= (double)64.0F;
+      return this.tileEntity.getWorldObj().getTileEntity(this.tileEntity.xCoord, this.tileEntity.yCoord, this.tileEntity.zCoord) == this.tileEntity && par1EntityPlayer.getDistanceSq((double) this.tileEntity.xCoord + (double) 0.5F, (double) this.tileEntity.yCoord + (double) 0.5F, (double) this.tileEntity.zCoord + (double) 0.5F) <= (double) 64.0F;
    }
 
    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int slot) {
@@ -59,7 +59,7 @@ public class ContainerArcaneBore extends Container {
          }
 
          if (stackInSlot.stackSize == 0) {
-            slotObject.putStack((ItemStack)null);
+            slotObject.putStack(null);
          } else {
             slotObject.onSlotChanged();
          }

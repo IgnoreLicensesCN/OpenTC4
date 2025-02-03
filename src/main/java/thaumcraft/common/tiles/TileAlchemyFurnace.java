@@ -345,7 +345,7 @@ public class TileAlchemyFurnace extends TileThaumcraft implements ISidedInventor
    }
 
    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
-      return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + (double)0.5F, (double)this.yCoord + (double)0.5F, (double)this.zCoord + (double)0.5F) <= (double)64.0F;
+      return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && par1EntityPlayer.getDistanceSq((double) this.xCoord + (double) 0.5F, (double) this.yCoord + (double) 0.5F, (double) this.zCoord + (double) 0.5F) <= (double) 64.0F;
    }
 
    public void openInventory() {
@@ -363,7 +363,7 @@ public class TileAlchemyFurnace extends TileThaumcraft implements ISidedInventor
          }
       }
 
-      return par1 == 1 ? isItemFuel(par2ItemStack) : false;
+      return par1 == 1 && isItemFuel(par2ItemStack);
    }
 
    public int[] getAccessibleSlotsFromSide(int par1) {
@@ -371,7 +371,7 @@ public class TileAlchemyFurnace extends TileThaumcraft implements ISidedInventor
    }
 
    public boolean canInsertItem(int par1, ItemStack par2ItemStack, int par3) {
-      return par3 == 1 ? false : this.isItemValidForSlot(par1, par2ItemStack);
+      return par3 != 1 && this.isItemValidForSlot(par1, par2ItemStack);
    }
 
    public boolean canExtractItem(int par1, ItemStack par2ItemStack, int par3) {

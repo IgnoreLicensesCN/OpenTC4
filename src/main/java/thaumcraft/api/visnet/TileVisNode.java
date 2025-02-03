@@ -18,7 +18,7 @@ import thaumcraft.api.aspects.Aspect;
 public abstract class TileVisNode extends TileThaumcraft {
 	
 	WeakReference<TileVisNode> parent = null;
-	ArrayList<WeakReference<TileVisNode>> children = new ArrayList<WeakReference<TileVisNode>>();
+	ArrayList<WeakReference<TileVisNode>> children = new ArrayList<>();
 	
 	/**
 	 * @return the WorldCoordinates location of where this node is located
@@ -61,7 +61,7 @@ public abstract class TileVisNode extends TileThaumcraft {
 			}
 		}	
 		
-		children = new ArrayList<WeakReference<TileVisNode>>();
+		children = new ArrayList<>();
 		if (VisNetHandler.isNodeValid(this.getParent())) {
 			this.getParent().get().nodeRefresh=true;
 		}
@@ -71,7 +71,7 @@ public abstract class TileVisNode extends TileThaumcraft {
 		if (this.isSource()) {
 			HashMap<WorldCoordinates, WeakReference<TileVisNode>> sourcelist = VisNetHandler.sources.get(worldObj.provider.dimensionId);
 			if (sourcelist==null) {
-				sourcelist = new HashMap<WorldCoordinates, WeakReference<TileVisNode>>();
+				sourcelist = new HashMap<>();
 			}
 			sourcelist.remove(getLocation());
 			VisNetHandler.sources.put( worldObj.provider.dimensionId, sourcelist );

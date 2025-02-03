@@ -50,7 +50,7 @@ public class TileJarNode extends TileJar implements IAspectContainer, INode, IWa
          }
       }
 
-      Short oldBase = nbttagcompound.getShort("nodeVisBase");
+      short oldBase = nbttagcompound.getShort("nodeVisBase");
       this.aspectsBase = new AspectList();
       if (oldBase > 0 && al.size() == 0) {
          for(Aspect a : this.aspects.getAspects()) {
@@ -65,7 +65,7 @@ public class TileJarNode extends TileJar implements IAspectContainer, INode, IWa
       if (mod >= 0) {
          this.setNodeModifier(NodeModifier.values()[mod]);
       } else {
-         this.setNodeModifier((NodeModifier)null);
+         this.setNodeModifier(null);
       }
 
    }

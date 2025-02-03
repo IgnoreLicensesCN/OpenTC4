@@ -28,7 +28,7 @@ public class AIConvertGrass extends EntityAIBase {
          int var1 = MathHelper.floor_double(this.entity.posX);
          int var2 = MathHelper.floor_double(this.entity.posY);
          int var3 = MathHelper.floor_double(this.entity.posZ);
-         return this.world.getBlock(var1, var2, var3) == Blocks.tallgrass && this.world.getBlockMetadata(var1, var2, var3) == 1 ? true : this.world.getBlock(var1, var2 - 1, var3) == Blocks.grass;
+         return this.world.getBlock(var1, var2, var3) == Blocks.tallgrass && this.world.getBlockMetadata(var1, var2, var3) == 1 || this.world.getBlock(var1, var2 - 1, var3) == Blocks.grass;
       }
    }
 

@@ -31,11 +31,11 @@ public class TileOwned extends TileThaumcraft {
       super.writeToNBT(nbttagcompound);
       NBTTagList var2 = new NBTTagList();
 
-      for(int var3 = 0; var3 < this.accessList.size(); ++var3) {
-         NBTTagCompound var4 = new NBTTagCompound();
-         var4.setString("name", (String)this.accessList.get(var3));
-         var2.appendTag(var4);
-      }
+       for (String s : this.accessList) {
+           NBTTagCompound var4 = new NBTTagCompound();
+           var4.setString("name", (String) s);
+           var2.appendTag(var4);
+       }
 
       nbttagcompound.setTag("access", var2);
    }

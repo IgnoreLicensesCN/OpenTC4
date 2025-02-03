@@ -248,13 +248,13 @@ public class TileTubeBuffer extends TileThaumcraft implements IAspectContainer, 
                    this.openSides[hit.subHit] = !this.openSides[hit.subHit];
                    ForgeDirection dir = ForgeDirection.getOrientation(hit.subHit);
                    TileEntity tile = this.worldObj.getTileEntity(this.xCoord + dir.offsetX, this.yCoord + dir.offsetY, this.zCoord + dir.offsetZ);
-                   if (tile != null && tile instanceof TileTube) {
+                   if (tile instanceof TileTube) {
                        ((TileTube) tile).openSides[dir.getOpposite().ordinal()] = this.openSides[hit.subHit];
                        world.markBlockForUpdate(this.xCoord + dir.offsetX, this.yCoord + dir.offsetY, this.zCoord + dir.offsetZ);
                        tile.markDirty();
                    }
 
-                   if (tile != null && tile instanceof TileTubeBuffer) {
+                   if (tile instanceof TileTubeBuffer) {
                        ((TileTubeBuffer) tile).openSides[dir.getOpposite().ordinal()] = this.openSides[hit.subHit];
                        world.markBlockForUpdate(this.xCoord + dir.offsetX, this.yCoord + dir.offsetY, this.zCoord + dir.offsetZ);
                        tile.markDirty();
@@ -286,36 +286,36 @@ public class TileTubeBuffer extends TileThaumcraft implements IAspectContainer, 
    private boolean canConnectSide(int side) {
       ForgeDirection dir = ForgeDirection.getOrientation(side);
       TileEntity tile = this.worldObj.getTileEntity(this.xCoord + dir.offsetX, this.yCoord + dir.offsetY, this.zCoord + dir.offsetZ);
-      return tile != null && tile instanceof IEssentiaTransport;
+      return tile instanceof IEssentiaTransport;
    }
 
    public void addTraceableCuboids(List cuboids) {
       float min = 0.42F;
       float max = 0.58F;
       if (this.canConnectSide(0)) {
-         cuboids.add(new IndexedCuboid6(0, new Cuboid6((double)((float)this.xCoord + min), (double)this.yCoord, (double)((float)this.zCoord + min), (double)((float)this.xCoord + max), (double)this.yCoord + (double)0.5F, (double)((float)this.zCoord + max))));
+         cuboids.add(new IndexedCuboid6(0, new Cuboid6((float)this.xCoord + min, this.yCoord, (float)this.zCoord + min, (float)this.xCoord + max, (double)this.yCoord + (double)0.5F, (float)this.zCoord + max)));
       }
 
       if (this.canConnectSide(1)) {
-         cuboids.add(new IndexedCuboid6(1, new Cuboid6((double)((float)this.xCoord + min), (double)this.yCoord + (double)0.5F, (double)((float)this.zCoord + min), (double)((float)this.xCoord + max), (double)(this.yCoord + 1), (double)((float)this.zCoord + max))));
+         cuboids.add(new IndexedCuboid6(1, new Cuboid6((float)this.xCoord + min, (double)this.yCoord + (double)0.5F, (float)this.zCoord + min, (float)this.xCoord + max, this.yCoord + 1, (float)this.zCoord + max)));
       }
 
       if (this.canConnectSide(2)) {
-         cuboids.add(new IndexedCuboid6(2, new Cuboid6((double)((float)this.xCoord + min), (double)((float)this.yCoord + min), (double)this.zCoord, (double)((float)this.xCoord + max), (double)((float)this.yCoord + max), (double)this.zCoord + (double)0.5F)));
+         cuboids.add(new IndexedCuboid6(2, new Cuboid6((float)this.xCoord + min, (float)this.yCoord + min, this.zCoord, (float)this.xCoord + max, (float)this.yCoord + max, (double)this.zCoord + (double)0.5F)));
       }
 
       if (this.canConnectSide(3)) {
-         cuboids.add(new IndexedCuboid6(3, new Cuboid6((double)((float)this.xCoord + min), (double)((float)this.yCoord + min), (double)this.zCoord + (double)0.5F, (double)((float)this.xCoord + max), (double)((float)this.yCoord + max), (double)(this.zCoord + 1))));
+         cuboids.add(new IndexedCuboid6(3, new Cuboid6((float)this.xCoord + min, (float)this.yCoord + min, (double)this.zCoord + (double)0.5F, (float)this.xCoord + max, (float)this.yCoord + max, this.zCoord + 1)));
       }
 
       if (this.canConnectSide(4)) {
-         cuboids.add(new IndexedCuboid6(4, new Cuboid6((double)this.xCoord, (double)((float)this.yCoord + min), (double)((float)this.zCoord + min), (double)this.xCoord + (double)0.5F, (double)((float)this.yCoord + max), (double)((float)this.zCoord + max))));
+         cuboids.add(new IndexedCuboid6(4, new Cuboid6(this.xCoord, (float)this.yCoord + min, (float)this.zCoord + min, (double)this.xCoord + (double)0.5F, (float)this.yCoord + max, (float)this.zCoord + max)));
       }
 
       if (this.canConnectSide(5)) {
-         cuboids.add(new IndexedCuboid6(5, new Cuboid6((double)this.xCoord + (double)0.5F, (double)((float)this.yCoord + min), (double)((float)this.zCoord + min), (double)(this.xCoord + 1), (double)((float)this.yCoord + max), (double)((float)this.zCoord + max))));
+         cuboids.add(new IndexedCuboid6(5, new Cuboid6((double)this.xCoord + (double)0.5F, (float)this.yCoord + min, (float)this.zCoord + min, this.xCoord + 1, (float)this.yCoord + max, (float)this.zCoord + max)));
       }
 
-      cuboids.add(new IndexedCuboid6(6, new Cuboid6((double)((float)this.xCoord + 0.25F), (double)((float)this.yCoord + 0.25F), (double)((float)this.zCoord + 0.25F), (double)((float)this.xCoord + 0.75F), (double)((float)this.yCoord + 0.75F), (double)((float)this.zCoord + 0.75F))));
+      cuboids.add(new IndexedCuboid6(6, new Cuboid6((float)this.xCoord + 0.25F, (float)this.yCoord + 0.25F, (float)this.zCoord + 0.25F, (float)this.xCoord + 0.75F, (float)this.yCoord + 0.75F, (float)this.zCoord + 0.75F)));
    }
 }

@@ -98,7 +98,7 @@ public class AIHarvestCrops extends EntityAIBase {
          if (this.delay > 0) {
             if (--this.delay > 0 && this.delay % this.mod == 0 && this.theGolem.getNavigator().noPath()) {
                this.theGolem.startActionTimer();
-               this.theWorld.playSoundEffect((double)((float)this.xx + 0.5F), (double)((float)this.yy + 0.5F), (double)((float)this.zz + 0.5F), this.block.stepSound.getBreakSound(), (this.block.stepSound.getVolume() + 0.7F) / 8.0F, this.block.stepSound.getPitch() * 0.5F);
+               this.theWorld.playSoundEffect((float)this.xx + 0.5F, (float)this.yy + 0.5F, (float)this.zz + 0.5F, this.block.stepSound.getBreakSound(), (this.block.stepSound.getVolume() + 0.7F) / 8.0F, this.block.stepSound.getPitch() * 0.5F);
                BlockUtils.destroyBlockPartially(this.theWorld, this.theGolem.getEntityId(), this.xx, this.yy, this.zz, (int)(9.0F * (1.0F - (float)this.delay / (float)this.maxDelay)));
             }
 
@@ -119,7 +119,7 @@ public class AIHarvestCrops extends EntityAIBase {
                int y = this.yy + y2;
                int z = this.zz + z2;
                if (!((float)Math.abs(this.theGolem.getHomePosition().posX - x) > this.distance) && !((float)Math.abs(this.theGolem.getHomePosition().posY - y) > this.distance) && !((float)Math.abs(this.theGolem.getHomePosition().posZ - z) > this.distance) && CropUtils.isGrownCrop(this.theWorld, x, y, z)) {
-                  Vec3 var1 = Vec3.createVectorHelper((double)x, (double)y, (double)z);
+                  Vec3 var1 = Vec3.createVectorHelper(x, y, z);
                   if (var1 != null) {
                      this.xx = (int)var1.xCoord;
                      this.yy = (int)var1.yCoord;
@@ -144,7 +144,7 @@ public class AIHarvestCrops extends EntityAIBase {
 
    public void startExecuting() {
       this.count = 200;
-      this.theGolem.getNavigator().tryMoveToXYZ((double)this.xx + (double)0.5F, (double)this.yy + (double)0.5F, (double)this.zz + (double)0.5F, (double)this.theGolem.getAIMoveSpeed());
+      this.theGolem.getNavigator().tryMoveToXYZ((double)this.xx + (double)0.5F, (double)this.yy + (double)0.5F, (double)this.zz + (double)0.5F, this.theGolem.getAIMoveSpeed());
    }
 
    private Vec3 findGrownCrop() {
@@ -165,7 +165,7 @@ public class AIHarvestCrops extends EntityAIBase {
 
       for(int y = this.theGolem.getHomePosition().posY - 3; y <= this.theGolem.getHomePosition().posY + 3; ++y) {
          if (CropUtils.isGrownCrop(this.theWorld, x, y, z)) {
-            return Vec3.createVectorHelper((double)x, (double)y, (double)z);
+            return Vec3.createVectorHelper(x, y, z);
          }
       }
 
@@ -175,7 +175,7 @@ public class AIHarvestCrops extends EntityAIBase {
    void harvest() {
       this.count = 200;
       int md = this.blockMd;
-      FakePlayer fp = FakePlayerFactory.get((WorldServer)this.theWorld, new GameProfile((UUID)null, "FakeThaumcraftGolem"));
+      FakePlayer fp = FakePlayerFactory.get((WorldServer)this.theWorld, new GameProfile(null, "FakeThaumcraftGolem"));
       fp.setPosition(this.theGolem.posX, this.theGolem.posY, this.theGolem.posZ);
       if (CropUtils.clickableCrops.contains(this.block.getUnlocalizedName() + md)) {
          this.block.onBlockActivated(this.theWorld, this.xx, this.yy, this.zz, fp, 0, 0.0F, 0.0F, 0.0F);
@@ -183,7 +183,7 @@ public class AIHarvestCrops extends EntityAIBase {
          this.theWorld.func_147480_a(this.xx, this.yy, this.zz, true);
          if (this.theGolem.getUpgradeAmount(4) > 0) {
             new ArrayList<>();
-            ArrayList<Entity> drops = EntityUtils.getEntitiesInRange(this.theWorld, this.theGolem.posX, this.theGolem.posY, this.theGolem.posZ, this.theGolem, EntityItem.class, (double)6.0F);
+            ArrayList<Entity> drops = EntityUtils.getEntitiesInRange(this.theWorld, this.theGolem.posX, this.theGolem.posY, this.theGolem.posZ, this.theGolem, EntityItem.class, 6.0F);
             if (drops.size() > 0) {
                for(Entity e : drops) {
                   if (e instanceof EntityItem) {

@@ -22,23 +22,23 @@ public class TileEldritchObelisk extends TileThaumcraft {
 
    @SideOnly(Side.CLIENT)
    public AxisAlignedBB getRenderBoundingBox() {
-      return AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 5), (double)(this.zCoord + 1));
+      return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 5, this.zCoord + 1);
    }
 
    public double getMaxRenderDistanceSquared() {
-      return (double)9216.0F;
+      return 9216.0F;
    }
 
    public void updateEntity() {
       if (!this.worldObj.isRemote && this.counter % 20 == 0) {
-         ArrayList<Entity> list = EntityUtils.getEntitiesInRange(this.getWorldObj(), (double)this.xCoord + (double)0.5F, (double)this.yCoord, (double)this.zCoord + (double)0.5F, (Entity)null, EntityLivingBase.class, (double)6.0F);
+         ArrayList<Entity> list = EntityUtils.getEntitiesInRange(this.getWorldObj(), (double)this.xCoord + (double)0.5F, this.yCoord, (double)this.zCoord + (double)0.5F, null, EntityLivingBase.class, 6.0F);
          if (list != null && list.size() > 0) {
             for(Entity e : list) {
                if (e instanceof IEldritchMob && e instanceof EntityLivingBase && !((EntityLivingBase)e).isPotionActive(Potion.regeneration.id)) {
                   try {
                      ((EntityLivingBase)e).addPotionEffect(new PotionEffect(Potion.damageBoost.getId(), 40, 0, true));
                      ((EntityLivingBase)e).addPotionEffect(new PotionEffect(Potion.regeneration.getId(), 40, 0, true));
-                  } catch (Exception var5) {
+                  } catch (Exception ignored) {
                   }
                }
             }
@@ -46,11 +46,11 @@ public class TileEldritchObelisk extends TileThaumcraft {
       }
 
       if (this.worldObj.isRemote) {
-         ArrayList<Entity> list = EntityUtils.getEntitiesInRange(this.getWorldObj(), (double)this.xCoord + (double)0.5F, (double)this.yCoord, (double)this.zCoord + (double)0.5F, (Entity)null, EntityLivingBase.class, (double)6.0F);
+         ArrayList<Entity> list = EntityUtils.getEntitiesInRange(this.getWorldObj(), (double)this.xCoord + (double)0.5F, this.yCoord, (double)this.zCoord + (double)0.5F, null, EntityLivingBase.class, 6.0F);
          if (list != null && list.size() > 0) {
             for(Entity e : list) {
                if (e instanceof IEldritchMob && e instanceof EntityLivingBase) {
-                  Thaumcraft.proxy.wispFX4(this.getWorldObj(), (double)this.xCoord + (double)0.5F, (double)((float)(this.yCoord + 1) + this.worldObj.rand.nextFloat() * 3.0F), (double)this.zCoord + (double)0.5F, e, 5, true, 1.0F);
+                  Thaumcraft.proxy.wispFX4(this.getWorldObj(), (double)this.xCoord + (double)0.5F, (float)(this.yCoord + 1) + this.worldObj.rand.nextFloat() * 3.0F, (double)this.zCoord + (double)0.5F, e, 5, true, 1.0F);
                }
             }
          }

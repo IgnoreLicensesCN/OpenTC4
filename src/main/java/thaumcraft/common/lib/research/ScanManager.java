@@ -50,7 +50,7 @@ public class ScanManager implements IScanEventHandler {
       }
 
       if (entity instanceof EntityPlayer) {
-         hash = "player_" + ((EntityPlayer)entity).getCommandSenderName();
+         hash = "player_" + entity.getCommandSenderName();
       }
 
       label101:
@@ -82,7 +82,7 @@ public class ScanManager implements IScanEventHandler {
 
                try {
                   hash = hash + nbt.name + c.cast(nbt.value);
-               } catch (Exception var12) {
+               } catch (Exception ignored) {
                }
             }
          }
@@ -110,7 +110,7 @@ public class ScanManager implements IScanEventHandler {
       }
 
       if (entity instanceof EntityGolemBase) {
-         hash = hash + "" + ((EntityGolemBase)entity).getGolemType().name();
+         hash = hash + ((EntityGolemBase)entity).getGolemType().name();
       }
 
       return hash.hashCode();
@@ -123,23 +123,23 @@ public class ScanManager implements IScanEventHandler {
          if (t.isItemStackDamageable() || !t.getHasSubtypes()) {
             meta = -1;
          }
-      } catch (Exception var15) {
+      } catch (Exception ignored) {
       }
 
       if (ThaumcraftApi.groupedObjectTags.containsKey(Arrays.asList(item, meta))) {
          meta = ((int[])ThaumcraftApi.groupedObjectTags.get(Arrays.asList(item, meta)))[0];
       }
 
-      String hash;
+      StringBuilder hash;
       try {
          GameRegistry.UniqueIdentifier ui = GameRegistry.findUniqueIdentifierFor(item);
          if (ui != null) {
-            hash = ui.toString() + ":" + meta;
+            hash = new StringBuilder(ui + ":" + meta);
          } else {
-            hash = t.getUnlocalizedName() + ":" + meta;
+            hash = new StringBuilder(t.getUnlocalizedName() + ":" + meta);
          }
       } catch (Exception var14) {
-         hash = "oops:" + meta;
+         hash = new StringBuilder("oops:" + meta);
       }
 
       if (!ThaumcraftApi.objectTags.containsKey(Arrays.asList(item, meta))) {
@@ -151,16 +151,16 @@ public class ScanManager implements IScanEventHandler {
                if (Arrays.binarySearch(range, meta) >= 0) {
                   GameRegistry.UniqueIdentifier ui = GameRegistry.findUniqueIdentifierFor(item);
                   if (ui != null) {
-                     hash = ui.toString();
+                     hash = new StringBuilder(ui.toString());
                   } else {
-                     hash = "" + t.getUnlocalizedName();
+                     hash = new StringBuilder("" + t.getUnlocalizedName());
                   }
 
                   for(int r : range) {
-                     hash = hash + ":" + r;
+                     hash.append(":").append(r);
                   }
 
-                  return hash.hashCode();
+                  return hash.toString().hashCode();
                }
             }
          }
@@ -177,15 +177,15 @@ public class ScanManager implements IScanEventHandler {
             if (found) {
                GameRegistry.UniqueIdentifier ui = GameRegistry.findUniqueIdentifierFor(item);
                if (ui != null) {
-                  hash = ui.toString() + ":" + index;
+                  hash = new StringBuilder(ui + ":" + index);
                } else {
-                  hash = t.getUnlocalizedName() + ":" + index;
+                  hash = new StringBuilder(t.getUnlocalizedName() + ":" + index);
                }
             }
          }
       }
 
-      return hash.hashCode();
+      return hash.toString().hashCode();
    }
 
    public static AspectList generateEntityAspects(Entity entity) {
@@ -197,7 +197,7 @@ public class ScanManager implements IScanEventHandler {
       } catch (Throwable var11) {
          try {
             s = entity.getCommandSenderName();
-         } catch (Throwable var10) {
+         } catch (Throwable ignored) {
          }
       }
 
@@ -206,18 +206,18 @@ public class ScanManager implements IScanEventHandler {
       }
 
       if (entity instanceof EntityPlayer) {
-         s = "player_" + ((EntityPlayer)entity).getCommandSenderName();
+         s = "player_" + entity.getCommandSenderName();
          tags = new AspectList();
          tags.add(Aspect.MAN, 4);
-         if (((EntityPlayer)entity).getCommandSenderName().equalsIgnoreCase("azanor")) {
+         if (entity.getCommandSenderName().equalsIgnoreCase("azanor")) {
             tags.add(Aspect.ELDRITCH, 20);
-         } else if (((EntityPlayer)entity).getCommandSenderName().equalsIgnoreCase("direwolf20")) {
+         } else if (entity.getCommandSenderName().equalsIgnoreCase("direwolf20")) {
             tags.add(Aspect.BEAST, 20);
-         } else if (((EntityPlayer)entity).getCommandSenderName().equalsIgnoreCase("pahimar")) {
+         } else if (entity.getCommandSenderName().equalsIgnoreCase("pahimar")) {
             tags.add(Aspect.EXCHANGE, 20);
          } else {
-            Random rand = new Random((long)s.hashCode());
-            Aspect[] posa = (Aspect[])Aspect.aspects.values().toArray(new Aspect[0]);
+            Random rand = new Random(s.hashCode());
+            Aspect[] posa = Aspect.aspects.values().toArray(new Aspect[0]);
             tags.add(posa[rand.nextInt(posa.length)], 4);
             tags.add(posa[rand.nextInt(posa.length)], 4);
             tags.add(posa[rand.nextInt(posa.length)], 4);
@@ -249,13 +249,13 @@ public class ScanManager implements IScanEventHandler {
       AspectList tags = new AspectList();
       ArrayList<Integer> loc = (ArrayList)TileNode.locations.get(node);
       if (loc != null && loc.size() > 0) {
-         int dim = (Integer)loc.get(0);
-         int x = (Integer)loc.get(1);
-         int y = (Integer)loc.get(2);
-         int z = (Integer)loc.get(3);
+         int dim = loc.get(0);
+         int x = loc.get(1);
+         int y = loc.get(2);
+         int z = loc.get(3);
          if (dim == world.provider.dimensionId) {
             TileEntity tnb = world.getTileEntity(x, y, z);
-            if (tnb != null && tnb instanceof INode) {
+            if (tnb instanceof INode) {
                AspectList ta = ((INode)tnb).getAspects();
 
                for(Aspect a : ta.getAspectsSorted()) {
@@ -298,10 +298,8 @@ public class ScanManager implements IScanEventHandler {
                scan.meta = ((int[])ThaumcraftApi.groupedObjectTags.get(Arrays.asList(Item.getItemById(scan.id), scan.meta)))[0];
             }
 
-            List<String> list = (List)Thaumcraft.proxy.getScannedObjects().get(player.getCommandSenderName());
-            if (list != null && list.contains(prefix + generateItemHash(Item.getItemById(scan.id), scan.meta))) {
-               return false;
-            }
+            List<String> list = Thaumcraft.proxy.getScannedObjects().get(player.getCommandSenderName());
+             return list == null || !list.contains(prefix + generateItemHash(Item.getItemById(scan.id), scan.meta));
          } else if (scan.type == 2) {
             if (scan.entity instanceof EntityItem) {
                EntityItem item = (EntityItem)scan.entity;
@@ -311,21 +309,15 @@ public class ScanManager implements IScanEventHandler {
                   t.setItemDamage(((int[])ThaumcraftApi.groupedObjectTags.get(Arrays.asList(t.getItem(), t.getItemDamage())))[0]);
                }
 
-               List<String> list = (List)Thaumcraft.proxy.getScannedObjects().get(player.getCommandSenderName());
-               if (list != null && list.contains(prefix + generateItemHash(t.getItem(), t.getItemDamage()))) {
-                  return false;
-               }
+               List<String> list = Thaumcraft.proxy.getScannedObjects().get(player.getCommandSenderName());
+                return list == null || !list.contains(prefix + generateItemHash(t.getItem(), t.getItemDamage()));
             } else {
-               List<String> list = (List)Thaumcraft.proxy.getScannedEntities().get(player.getCommandSenderName());
-               if (list != null && list.contains(prefix + generateEntityHash(scan.entity))) {
-                  return false;
-               }
+               List<String> list = Thaumcraft.proxy.getScannedEntities().get(player.getCommandSenderName());
+                return list == null || !list.contains(prefix + generateEntityHash(scan.entity));
             }
          } else if (scan.type == 3) {
-            List<String> list = (List)Thaumcraft.proxy.getScannedPhenomena().get(player.getCommandSenderName());
-            if (list != null && list.contains(prefix + scan.phenomena)) {
-               return false;
-            }
+            List<String> list = Thaumcraft.proxy.getScannedPhenomena().get(player.getCommandSenderName());
+             return list == null || !list.contains(prefix + scan.phenomena);
          }
 
          return true;
@@ -338,10 +330,8 @@ public class ScanManager implements IScanEventHandler {
             scan.meta = ((int[])ThaumcraftApi.groupedObjectTags.get(Arrays.asList(Item.getItemById(scan.id), scan.meta)))[0];
          }
 
-         List<String> list = (List)Thaumcraft.proxy.getScannedObjects().get(player.getCommandSenderName());
-         if (list != null && (list.contains("@" + generateItemHash(Item.getItemById(scan.id), scan.meta)) || list.contains("#" + generateItemHash(Item.getItemById(scan.id), scan.meta)))) {
-            return true;
-         }
+         List<String> list = Thaumcraft.proxy.getScannedObjects().get(player.getCommandSenderName());
+          return list != null && (list.contains("@" + generateItemHash(Item.getItemById(scan.id), scan.meta)) || list.contains("#" + generateItemHash(Item.getItemById(scan.id), scan.meta)));
       } else if (scan.type == 2) {
          if (scan.entity instanceof EntityItem) {
             EntityItem item = (EntityItem)scan.entity;
@@ -351,21 +341,15 @@ public class ScanManager implements IScanEventHandler {
                t.setItemDamage(((int[])ThaumcraftApi.groupedObjectTags.get(Arrays.asList(t.getItem(), t.getItemDamage())))[0]);
             }
 
-            List<String> list = (List)Thaumcraft.proxy.getScannedObjects().get(player.getCommandSenderName());
-            if (list != null && (list.contains("@" + generateItemHash(t.getItem(), t.getItemDamage())) || list.contains("#" + generateItemHash(t.getItem(), t.getItemDamage())))) {
-               return true;
-            }
+            List<String> list = Thaumcraft.proxy.getScannedObjects().get(player.getCommandSenderName());
+             return list != null && (list.contains("@" + generateItemHash(t.getItem(), t.getItemDamage())) || list.contains("#" + generateItemHash(t.getItem(), t.getItemDamage())));
          } else {
-            List<String> list = (List)Thaumcraft.proxy.getScannedEntities().get(player.getCommandSenderName());
-            if (list != null && (list.contains("@" + generateEntityHash(scan.entity)) || list.contains("#" + generateEntityHash(scan.entity)))) {
-               return true;
-            }
+            List<String> list = Thaumcraft.proxy.getScannedEntities().get(player.getCommandSenderName());
+             return list != null && (list.contains("@" + generateEntityHash(scan.entity)) || list.contains("#" + generateEntityHash(scan.entity)));
          }
       } else if (scan.type == 3) {
-         List<String> list = (List)Thaumcraft.proxy.getScannedPhenomena().get(player.getCommandSenderName());
-         if (list != null && (list.contains("@" + scan.phenomena) || list.contains("#" + scan.phenomena))) {
-            return true;
-         }
+         List<String> list = Thaumcraft.proxy.getScannedPhenomena().get(player.getCommandSenderName());
+          return list != null && (list.contains("@" + scan.phenomena) || list.contains("#" + scan.phenomena));
       }
 
       return false;
@@ -467,7 +451,7 @@ public class ScanManager implements IScanEventHandler {
       }
 
       if (rp.getAspectPoolFor(player.getCommandSenderName(), aspect) >= Config.aspectTotalCap) {
-         amount = (int)Math.sqrt((double)amount);
+         amount = (int)Math.sqrt(amount);
       }
 
       if (amount > 1 && (float)rp.getAspectPoolFor(player.getCommandSenderName(), aspect) >= (float)Config.aspectTotalCap * 1.25F) {
@@ -495,7 +479,7 @@ public class ScanManager implements IScanEventHandler {
                if (player.worldObj.isRemote) {
                   for(Aspect parent : aspect.getComponents()) {
                      if (!rp.hasDiscoveredAspect(player.getCommandSenderName(), parent)) {
-                        PlayerNotifications.addNotification((new ChatComponentTranslation(StatCollector.translateToLocal("tc.discoveryerror"), new Object[]{StatCollector.translateToLocal("tc.aspect.help." + parent.getTag())})).getUnformattedText());
+                        PlayerNotifications.addNotification((new ChatComponentTranslation(StatCollector.translateToLocal("tc.discoveryerror"), StatCollector.translateToLocal("tc.aspect.help." + parent.getTag()))).getUnformattedText());
                         break;
                      }
                   }

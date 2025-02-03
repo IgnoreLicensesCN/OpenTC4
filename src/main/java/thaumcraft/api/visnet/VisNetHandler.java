@@ -66,13 +66,13 @@ public class VisNetHandler {
 		ThaumcraftApi.internalMethods.generateVisEffect(dim, x, y, z, x2, y2, z2, color);
 	}
 
-	public static HashMap<Integer, HashMap<WorldCoordinates, WeakReference<TileVisNode>>> sources = new HashMap<Integer, HashMap<WorldCoordinates, WeakReference<TileVisNode>>>();
+	public static HashMap<Integer, HashMap<WorldCoordinates, WeakReference<TileVisNode>>> sources = new HashMap<>();
 
 	public static void addSource(World world, TileVisNode vs) {
 		HashMap<WorldCoordinates, WeakReference<TileVisNode>> sourcelist = sources
 				.get(world.provider.dimensionId);
 		if (sourcelist == null) {
-			sourcelist = new HashMap<WorldCoordinates, WeakReference<TileVisNode>>();
+			sourcelist = new HashMap<>();
 		}
 		sourcelist.put(vs.getLocation(), new WeakReference(vs));
 		sources.put(world.provider.dimensionId, sourcelist);
@@ -80,10 +80,8 @@ public class VisNetHandler {
 	}
 
 	public static boolean isNodeValid(WeakReference<TileVisNode> node) {
-		if (node == null || node.get() == null || node.get().isInvalid())
-			return false;
-		return true;
-	}
+        return node != null && node.get() != null && !node.get().isInvalid();
+    }
 
 	public static WeakReference<TileVisNode> addNode(World world, TileVisNode vn) {
 		WeakReference ref = new WeakReference(vn);
@@ -91,11 +89,11 @@ public class VisNetHandler {
 		HashMap<WorldCoordinates, WeakReference<TileVisNode>> sourcelist = sources
 				.get(world.provider.dimensionId);
 		if (sourcelist == null) {
-			sourcelist = new HashMap<WorldCoordinates, WeakReference<TileVisNode>>();
+			sourcelist = new HashMap<>();
 			return null;
 		}
 
-		ArrayList<Object[]> nearby = new ArrayList<Object[]>();
+		ArrayList<Object[]> nearby = new ArrayList<>();
 
 		for (WeakReference<TileVisNode> root : sourcelist.values()) {
 			if (!isNodeValid(root))
@@ -135,7 +133,7 @@ public class VisNetHandler {
 		return null;
 	}
 
-	static ArrayList<WorldCoordinates> cache = new ArrayList<WorldCoordinates>();
+	static ArrayList<WorldCoordinates> cache = new ArrayList<>();
 	public static ArrayList<Object[]> findClosestNodes(TileVisNode target,
 			TileVisNode parent, ArrayList<Object[]> in) {
 		
@@ -164,22 +162,22 @@ public class VisNetHandler {
 		return distance > range * range ? -1 : distance;
 	}
 
-	private static HashMap<WorldCoordinates, ArrayList<WeakReference<TileVisNode>>> nearbyNodes = new HashMap<WorldCoordinates, ArrayList<WeakReference<TileVisNode>>>();
+	private static HashMap<WorldCoordinates, ArrayList<WeakReference<TileVisNode>>> nearbyNodes = new HashMap<>();
 
 	private static void calculateNearbyNodes(World world, int x, int y, int z) {
 
 		HashMap<WorldCoordinates, WeakReference<TileVisNode>> sourcelist = sources
 				.get(world.provider.dimensionId);
 		if (sourcelist == null) {
-			sourcelist = new HashMap<WorldCoordinates, WeakReference<TileVisNode>>();
+			sourcelist = new HashMap<>();
 			return;
 		}
 
-		ArrayList<WeakReference<TileVisNode>> cn = new ArrayList<WeakReference<TileVisNode>>();
+		ArrayList<WeakReference<TileVisNode>> cn = new ArrayList<>();
 		WorldCoordinates drainer = new WorldCoordinates(x, y, z,
 				world.provider.dimensionId);
 
-		ArrayList<Object[]> nearby = new ArrayList<Object[]>();
+		ArrayList<Object[]> nearby = new ArrayList<>();
 
 		for (WeakReference<TileVisNode> root : sourcelist.values()) {
 			
@@ -198,7 +196,7 @@ public class VisNetHandler {
 				closest = source;
 			}
 			
-			ArrayList<WeakReference<TileVisNode>> children = new ArrayList<WeakReference<TileVisNode>>();
+			ArrayList<WeakReference<TileVisNode>> children = new ArrayList<>();
 			children = getAllChildren(source,children);
 			
 			for (WeakReference<TileVisNode> child : children) {

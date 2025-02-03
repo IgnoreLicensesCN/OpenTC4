@@ -11,7 +11,7 @@ public class PlayerNotifications {
    public static ArrayList<AspectNotification> aspectList = new ArrayList<>();
 
    public static void addNotification(String text) {
-      addNotification(text, (ResourceLocation)null, 16777215);
+      addNotification(text, null, 16777215);
    }
 
    public static void addAspectNotification(Aspect aspect) {

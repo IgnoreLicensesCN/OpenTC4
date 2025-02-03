@@ -91,6 +91,6 @@ public class ItemWispEssence extends Item implements IEssentiaContainerItem {
    }
 
    static {
-      displayAspects = (Aspect[])Aspect.aspects.values().toArray(new Aspect[0]);
+      displayAspects = Aspect.aspects.values().toArray(new Aspect[0]);
    }
 }

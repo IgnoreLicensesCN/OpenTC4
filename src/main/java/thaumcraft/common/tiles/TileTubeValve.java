@@ -57,7 +57,7 @@ public class TileTubeValve extends TileTube {
                this.openSides[hit.subHit] = !this.openSides[hit.subHit];
                ForgeDirection dir = ForgeDirection.getOrientation(hit.subHit);
                TileEntity tile = this.worldObj.getTileEntity(this.xCoord + dir.offsetX, this.yCoord + dir.offsetY, this.zCoord + dir.offsetZ);
-               if (tile != null && tile instanceof TileTube) {
+               if (tile instanceof TileTube) {
                    ((TileTube) tile).openSides[dir.getOpposite().ordinal()] = this.openSides[hit.subHit];
                    world.markBlockForUpdate(this.xCoord + dir.offsetX, this.yCoord + dir.offsetY, this.zCoord + dir.offsetZ);
                    tile.markDirty();

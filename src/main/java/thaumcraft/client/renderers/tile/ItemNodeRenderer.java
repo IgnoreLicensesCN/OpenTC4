@@ -46,8 +46,8 @@ public class ItemNodeRenderer implements IItemRenderer {
       tjf.blockType = ConfigBlocks.blockAiry;
       tjf.blockMetadata = 0;
       GL11.glPushMatrix();
-      GL11.glTranslated((double)0.5F, (double)0.5F, (double)0.5F);
-      GL11.glScaled((double)2.0F, (double)2.0F, (double)2.0F);
+      GL11.glTranslated(0.5F, 0.5F, 0.5F);
+      GL11.glScaled(2.0F, 2.0F, 2.0F);
       renderItemNode(tjf);
       GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
       renderItemNode(tjf);

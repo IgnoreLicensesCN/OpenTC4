@@ -49,7 +49,7 @@ public class TileEldritchCapRenderer extends TileEntitySpecialRenderer {
       GL11.glPushMatrix();
       UtilsFX.bindTexture(tempTex);
       GL11.glTranslated(x + (double)0.5F, y, z + (double)0.5F);
-      GL11.glRotated((double)90.0F, (double)-1.0F, (double)0.0F, (double)0.0F);
+      GL11.glRotated(90.0F, -1.0F, 0.0F, 0.0F);
       this.model.renderPart("Cap");
       GL11.glPopMatrix();
       if (te.getWorldObj() != null && te instanceof TileEldritchAltar && ((TileEldritchAltar)te).getEyes() > 0) {
@@ -57,19 +57,19 @@ public class TileEldritchCapRenderer extends TileEntitySpecialRenderer {
          GL11.glTranslatef((float)x + 0.5F, (float)y + 0.0F, (float)z + 0.5F);
          if (this.entityitem == null || this.eye == null) {
             this.eye = new ItemStack(ConfigItems.itemEldritchObject, 1, 0);
-            this.entityitem = new EntityItem(te.getWorldObj(), (double)0.0F, (double)0.0F, (double)0.0F, this.eye);
+            this.entityitem = new EntityItem(te.getWorldObj(), 0.0F, 0.0F, 0.0F, this.eye);
             this.entityitem.hoverStart = 0.0F;
          }
 
          if (this.entityitem != null && this.eye != null) {
             for(int a = 0; a < ((TileEldritchAltar)te).getEyes(); ++a) {
                GL11.glPushMatrix();
-               GL11.glRotated((double)(a * 90), (double)0.0F, (double)1.0F, (double)0.0F);
+               GL11.glRotated(a * 90, 0.0F, 1.0F, 0.0F);
                GL11.glTranslatef(0.46F, 0.2F, 0.0F);
-               GL11.glRotated((double)90.0F, (double)0.0F, (double)1.0F, (double)0.0F);
-               GL11.glRotated((double)18.0F, (double)-1.0F, (double)0.0F, (double)0.0F);
+               GL11.glRotated(90.0F, 0.0F, 1.0F, 0.0F);
+               GL11.glRotated(18.0F, -1.0F, 0.0F, 0.0F);
                RenderItem.renderInFrame = true;
-               RenderManager.instance.renderEntityWithPosYaw(this.entityitem, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F, 0.0F);
+               RenderManager.instance.renderEntityWithPosYaw(this.entityitem, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
                RenderItem.renderInFrame = false;
                GL11.glPopMatrix();
             }

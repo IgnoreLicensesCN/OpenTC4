@@ -34,7 +34,7 @@ public class AIAvoidCreeperSwell extends EntityAIBase {
          this.nearSpeed = this.theGolem.getAIMoveSpeed() * 1.25F;
       }
 
-      List var1 = this.theGolem.worldObj.getEntitiesWithinAABB(EntityCreeper.class, this.theGolem.boundingBox.expand((double)this.distanceFromEntity, (double)3.0F, (double)this.distanceFromEntity));
+      List var1 = this.theGolem.worldObj.getEntitiesWithinAABB(EntityCreeper.class, this.theGolem.boundingBox.expand(this.distanceFromEntity, 3.0F, this.distanceFromEntity));
       if (var1.isEmpty()) {
          return false;
       } else if (((EntityCreeper)var1.get(0)).getCreeperState() != 1) {
@@ -52,7 +52,7 @@ public class AIAvoidCreeperSwell extends EntityAIBase {
             } else {
                this.entityPathEntity = this.entityPathNavigate.getPathToXYZ(var2.xCoord, var2.yCoord, var2.zCoord);
                this.targetBlock = var2;
-               return this.entityPathEntity == null ? false : this.entityPathEntity.isDestinationSame(var2);
+               return this.entityPathEntity != null && this.entityPathEntity.isDestinationSame(var2);
             }
          }
       }
@@ -71,7 +71,7 @@ public class AIAvoidCreeperSwell extends EntityAIBase {
       var10000 = this.theGolem;
       var10000.motionZ += var3 / (double)var5 * (double)1.0F * (double)0.8F + this.theGolem.motionZ * (double)0.2F;
       this.theGolem.motionY = 0.3;
-      this.entityPathNavigate.setPath(this.entityPathEntity, (double)this.nearSpeed);
+      this.entityPathNavigate.setPath(this.entityPathEntity, this.nearSpeed);
    }
 
    public void resetTask() {
@@ -80,9 +80,9 @@ public class AIAvoidCreeperSwell extends EntityAIBase {
 
    public void updateTask() {
       if (this.theGolem.getDistanceSqToEntity(this.closestLivingEntity) < (double)49.0F) {
-         this.theGolem.getNavigator().setSpeed((double)this.nearSpeed);
+         this.theGolem.getNavigator().setSpeed(this.nearSpeed);
       } else {
-         this.theGolem.getNavigator().setSpeed((double)this.farSpeed);
+         this.theGolem.getNavigator().setSpeed(this.farSpeed);
       }
 
    }

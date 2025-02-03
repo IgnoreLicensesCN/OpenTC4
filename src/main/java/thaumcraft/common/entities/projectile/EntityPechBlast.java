@@ -81,34 +81,34 @@ public class EntityPechBlast extends EntityThrowable {
       }
 
       if (!this.worldObj.isRemote) {
-         List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this.getThrower(), this.boundingBox.expand((double)2.0F, (double)2.0F, (double)2.0F));
+         List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this.getThrower(), this.boundingBox.expand(2.0F, 2.0F, 2.0F));
 
-         for(int i = 0; i < list.size(); ++i) {
-            Entity entity1 = (Entity)list.get(i);
-            if (!(entity1 instanceof EntityPech) && entity1 instanceof EntityLivingBase) {
-               ((EntityLivingBase)entity1).attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float)(this.strength + 2));
+          for (Object o : list) {
+              Entity entity1 = (Entity) o;
+              if (!(entity1 instanceof EntityPech) && entity1 instanceof EntityLivingBase) {
+                  entity1.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) (this.strength + 2));
 
-               try {
-                  if (this.nightshade) {
-                     ((EntityLivingBase)entity1).addPotionEffect(new PotionEffect(Potion.poison.id, 100 + this.duration * 40, this.strength));
-                     ((EntityLivingBase)entity1).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100 + this.duration * 40, this.strength + 1));
-                     ((EntityLivingBase)entity1).addPotionEffect(new PotionEffect(Potion.weakness.id, 100 + this.duration * 40, this.strength));
-                  } else {
-                     switch (this.rand.nextInt(3)) {
-                        case 0:
-                           ((EntityLivingBase)entity1).addPotionEffect(new PotionEffect(Potion.poison.id, 100 + this.duration * 40, this.strength));
-                           break;
-                        case 1:
-                           ((EntityLivingBase)entity1).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100 + this.duration * 40, this.strength + 1));
-                           break;
-                        case 2:
-                           ((EntityLivingBase)entity1).addPotionEffect(new PotionEffect(Potion.weakness.id, 100 + this.duration * 40, this.strength));
-                     }
+                  try {
+                      if (this.nightshade) {
+                          ((EntityLivingBase) entity1).addPotionEffect(new PotionEffect(Potion.poison.id, 100 + this.duration * 40, this.strength));
+                          ((EntityLivingBase) entity1).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100 + this.duration * 40, this.strength + 1));
+                          ((EntityLivingBase) entity1).addPotionEffect(new PotionEffect(Potion.weakness.id, 100 + this.duration * 40, this.strength));
+                      } else {
+                          switch (this.rand.nextInt(3)) {
+                              case 0:
+                                  ((EntityLivingBase) entity1).addPotionEffect(new PotionEffect(Potion.poison.id, 100 + this.duration * 40, this.strength));
+                                  break;
+                              case 1:
+                                  ((EntityLivingBase) entity1).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100 + this.duration * 40, this.strength + 1));
+                                  break;
+                              case 2:
+                                  ((EntityLivingBase) entity1).addPotionEffect(new PotionEffect(Potion.weakness.id, 100 + this.duration * 40, this.strength));
+                          }
+                      }
+                  } catch (Exception ignored) {
                   }
-               } catch (Exception var6) {
-               }
-            }
-         }
+              }
+          }
 
          this.setDead();
       }

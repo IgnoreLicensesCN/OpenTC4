@@ -69,7 +69,7 @@ public class ModelWand extends ModelBase {
          Minecraft.getMinecraft().renderEngine.bindTexture(wand.getRod(wandStack).getTexture());
          GL11.glPushMatrix();
          if (staff) {
-            GL11.glTranslated((double)0.0F, 0.2, (double)0.0F);
+            GL11.glTranslated(0.0F, 0.2, 0.0F);
          }
 
          GL11.glPushMatrix();
@@ -81,8 +81,8 @@ public class ModelWand extends ModelBase {
          }
 
          if (staff) {
-            GL11.glTranslated((double)0.0F, -0.1, (double)0.0F);
-            GL11.glScaled(1.2, (double)2.0F, 1.2);
+            GL11.glTranslated(0.0F, -0.1, 0.0F);
+            GL11.glScaled(1.2, 2.0F, 1.2);
          }
 
          this.Rod.render(0.0625F);
@@ -99,7 +99,7 @@ public class ModelWand extends ModelBase {
          if (staff) {
             GL11.glScaled(1.3, 1.1, 1.3);
          } else {
-            GL11.glScaled(1.2, (double)1.0F, 1.2);
+            GL11.glScaled(1.2, 1.0F, 1.2);
          }
 
          if (wand.isSceptre(wandStack)) {
@@ -108,8 +108,8 @@ public class ModelWand extends ModelBase {
             this.Cap.render(0.0625F);
             GL11.glPopMatrix();
             GL11.glPushMatrix();
-            GL11.glTranslated((double)0.0F, 0.3, (double)0.0F);
-            GL11.glScaled((double)1.0F, 0.66, (double)1.0F);
+            GL11.glTranslated(0.0F, 0.3, 0.0F);
+            GL11.glScaled(1.0F, 0.66, 1.0F);
             this.Cap.render(0.0625F);
             GL11.glPopMatrix();
          } else {
@@ -117,12 +117,12 @@ public class ModelWand extends ModelBase {
          }
 
          if (staff) {
-            GL11.glTranslated((double)0.0F, 0.225, (double)0.0F);
+            GL11.glTranslated(0.0F, 0.225, 0.0F);
             GL11.glPushMatrix();
-            GL11.glScaled((double)1.0F, 0.66, (double)1.0F);
+            GL11.glScaled(1.0F, 0.66, 1.0F);
             this.Cap.render(0.0625F);
             GL11.glPopMatrix();
-            GL11.glTranslated((double)0.0F, 0.65, (double)0.0F);
+            GL11.glTranslated(0.0F, 0.65, 0.0F);
          }
 
          this.CapBottom.render(0.0625F);
@@ -140,13 +140,13 @@ public class ModelWand extends ModelBase {
                RenderManager.instance.renderEngine.bindTexture(TextureMap.locationItemsTexture);
                GL11.glPushMatrix();
                GL11.glTranslatef(-0.25F, -0.1F, 0.0275F);
-               GL11.glScaled((double)0.5F, (double)0.5F, (double)0.5F);
+               GL11.glScaled(0.5F, 0.5F, 0.5F);
                ItemRenderer.renderItemIn2D(tessellator, f1, f2, f3, f4, icon.getIconWidth(), icon.getIconHeight(), 0.1F);
                GL11.glPopMatrix();
                GL11.glPushMatrix();
                GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
                GL11.glTranslatef(-0.25F, -0.1F, 0.0275F);
-               GL11.glScaled((double)0.5F, (double)0.5F, (double)0.5F);
+               GL11.glScaled(0.5F, 0.5F, 0.5F);
                ItemRenderer.renderItemIn2D(tessellator, f1, f2, f3, f4, icon.getIconWidth(), icon.getIconHeight(), 0.1F);
                GL11.glPopMatrix();
                GL11.glPopMatrix();
@@ -165,7 +165,7 @@ public class ModelWand extends ModelBase {
 
                Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
                this.renderBlocks.setRenderBoundsFromBlock(Blocks.stone);
-               BlockRenderer.drawFaces(this.renderBlocks, (Block)null, wand.getFocus(wandStack).getFocusDepthLayerIcon(focusStack), false);
+               BlockRenderer.drawFaces(this.renderBlocks, null, wand.getFocus(wandStack).getFocusDepthLayerIcon(focusStack), false);
                GL11.glPopMatrix();
                alpha = 0.6F;
             }
@@ -181,7 +181,7 @@ public class ModelWand extends ModelBase {
                GL11.glTranslatef(0.0F, -0.0475F, 0.0F);
                GL11.glScaled(0.525, 0.5525, 0.525);
             } else {
-               GL11.glScaled((double)0.5F, (double)0.5F, (double)0.5F);
+               GL11.glScaled(0.5F, 0.5F, 0.5F);
             }
 
             Color c = new Color(wand.getFocus(wandStack).getFocusColor(focusStack));
@@ -204,8 +204,8 @@ public class ModelWand extends ModelBase {
 
             for(int rot = 0; rot < 10; ++rot) {
                GL11.glPushMatrix();
-               GL11.glRotated((double)(36 * rot + player.ticksExisted), (double)0.0F, (double)1.0F, (double)0.0F);
-               this.drawRune(0.16, (double)-0.01F, (double)-0.125F, rot, player);
+               GL11.glRotated(36 * rot + player.ticksExisted, 0.0F, 1.0F, 0.0F);
+               this.drawRune(0.16, -0.01F, -0.125F, rot, player);
                GL11.glPopMatrix();
             }
 
@@ -222,11 +222,11 @@ public class ModelWand extends ModelBase {
             GL11.glBlendFunc(770, 1);
 
             for(int rot = 0; rot < 4; ++rot) {
-               GL11.glRotated((double)90.0F, (double)0.0F, (double)1.0F, (double)0.0F);
+               GL11.glRotated(90.0F, 0.0F, 1.0F, 0.0F);
 
                for(int a = 0; a < 14; ++a) {
                   int rune = (a + rot * 3) % 16;
-                  this.drawRune(0.36 + (double)a * 0.14, (double)-0.01F, -0.08, rune, player);
+                  this.drawRune(0.36 + (double)a * 0.14, -0.01F, -0.08, rune, player);
                }
             }
 
@@ -245,7 +245,7 @@ public class ModelWand extends ModelBase {
       float g = MathHelper.sin((float)(player.ticksExisted + rune * 5) / 7.0F) * 0.1F + 0.63F;
       float alpha = MathHelper.sin((float)(player.ticksExisted + rune * 5) / 10.0F) * 0.2F;
       GL11.glColor4f(r, g, 0.2F, alpha + 0.6F);
-      GL11.glRotated((double)90.0F, (double)0.0F, (double)0.0F, (double)1.0F);
+      GL11.glRotated(90.0F, 0.0F, 0.0F, 1.0F);
       GL11.glTranslated(x, y, z);
       Tessellator tessellator = Tessellator.instance;
       float var8 = 0.0625F * (float)rune;
@@ -254,10 +254,10 @@ public class ModelWand extends ModelBase {
       float var11 = 1.0F;
       tessellator.startDrawingQuads();
       tessellator.setColorRGBA_F(r, g, 0.2F, alpha + 0.6F);
-      tessellator.addVertexWithUV(-0.06 - (double)(alpha / 40.0F), 0.06 + (double)(alpha / 40.0F), (double)0.0F, (double)var9, (double)var11);
-      tessellator.addVertexWithUV(0.06 + (double)(alpha / 40.0F), 0.06 + (double)(alpha / 40.0F), (double)0.0F, (double)var9, (double)var10);
-      tessellator.addVertexWithUV(0.06 + (double)(alpha / 40.0F), -0.06 - (double)(alpha / 40.0F), (double)0.0F, (double)var8, (double)var10);
-      tessellator.addVertexWithUV(-0.06 - (double)(alpha / 40.0F), -0.06 - (double)(alpha / 40.0F), (double)0.0F, (double)var8, (double)var11);
+      tessellator.addVertexWithUV(-0.06 - (double)(alpha / 40.0F), 0.06 + (double)(alpha / 40.0F), 0.0F, var9, var11);
+      tessellator.addVertexWithUV(0.06 + (double)(alpha / 40.0F), 0.06 + (double)(alpha / 40.0F), 0.0F, var9, var10);
+      tessellator.addVertexWithUV(0.06 + (double)(alpha / 40.0F), -0.06 - (double)(alpha / 40.0F), 0.0F, var8, var10);
+      tessellator.addVertexWithUV(-0.06 - (double)(alpha / 40.0F), -0.06 - (double)(alpha / 40.0F), 0.0F, var8, var11);
       tessellator.draw();
       GL11.glPopMatrix();
    }
@@ -269,6 +269,6 @@ public class ModelWand extends ModelBase {
    }
 
    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
-      super.setRotationAngles(f, f1, f2, f3, f4, f5, (Entity)null);
+      super.setRotationAngles(f, f1, f2, f3, f4, f5, null);
    }
 }

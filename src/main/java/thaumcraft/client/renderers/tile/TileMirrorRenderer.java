@@ -587,7 +587,7 @@ public class TileMirrorRenderer extends TileEntitySpecialRenderer {
          if (linked) {
             double var10002 = (double)te.xCoord + (double)0.5F;
             double var10003 = (double)te.yCoord + (double)0.5F;
-            double var10004 = (double)te.zCoord;
+            double var10004 = te.zCoord;
             if (UtilsFX.isVisibleTo(1.5F, FMLClientHandler.instance().getClient().thePlayer, var10002, var10003, var10004 + (double)0.5F)) {
                GL11.glPushMatrix();
                switch (dir) {
@@ -627,7 +627,7 @@ public class TileMirrorRenderer extends TileEntitySpecialRenderer {
 
       GL11.glPushMatrix();
       this.translateFromOrientation((float)x, (float)y, (float)z, dir.ordinal(), 0.0F);
-      IIcon icon = ((BlockMirror)ConfigBlocks.blockMirror).getIcon(0, te.getBlockMetadata());
+      IIcon icon = ConfigBlocks.blockMirror.getIcon(0, te.getBlockMetadata());
       float f1 = icon.getMaxU();
       float f2 = icon.getMinV();
       float f3 = icon.getMinU();

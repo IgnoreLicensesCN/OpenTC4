@@ -105,10 +105,10 @@ public class RenderGolemBase extends RenderLiving {
             this.renderManager.renderEngine.bindTexture(TextureMap.locationItemsTexture);
             tessellator.startDrawingQuads();
             tessellator.setNormal(0.0F, 0.0F, 1.0F);
-            tessellator.addVertexWithUV((double)0.0F, (double)0.0F, (double)0.0F, (double)f1, (double)f4);
-            tessellator.addVertexWithUV((double)1.0F, (double)0.0F, (double)0.0F, (double)f3, (double)f4);
-            tessellator.addVertexWithUV((double)1.0F, (double)1.0F, (double)0.0F, (double)f3, (double)f2);
-            tessellator.addVertexWithUV((double)0.0F, (double)1.0F, (double)0.0F, (double)f1, (double)f2);
+            tessellator.addVertexWithUV(0.0F, 0.0F, 0.0F, f1, f4);
+            tessellator.addVertexWithUV(1.0F, 0.0F, 0.0F, f3, f4);
+            tessellator.addVertexWithUV(1.0F, 1.0F, 0.0F, f3, f2);
+            tessellator.addVertexWithUV(0.0F, 1.0F, 0.0F, f1, f2);
             tessellator.draw();
             GL11.glPopMatrix();
          }
@@ -163,7 +163,7 @@ public class RenderGolemBase extends RenderLiving {
          float f3 = ic.getMaxV();
          Tessellator.instance.setColorRGBA_F(1.0F, 1.0F, 1.0F, 1.0F);
          ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, ic.getIconWidth(), ic.getIconHeight(), 0.0625F);
-         GL11.glScaled((double)1.0F, (double)1.0F, (double)1.0F);
+         GL11.glScaled(1.0F, 1.0F, 1.0F);
          GL11.glPopMatrix();
       }
 
@@ -226,7 +226,7 @@ public class RenderGolemBase extends RenderLiving {
             this.renderManager.itemRenderer.renderItem(e, var3, 0);
          }
 
-         GL11.glScaled((double)1.0F, (double)1.0F, (double)1.0F);
+         GL11.glScaled(1.0F, 1.0F, 1.0F);
          GL11.glPopMatrix();
       } else if (e.getCore() == 5) {
          GL11.glPushMatrix();

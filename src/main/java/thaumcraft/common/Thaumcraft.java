@@ -205,7 +205,7 @@ public class Thaumcraft {
                   ItemStack cluster = new ItemStack(Item.getItemById(Integer.parseInt(t[2])), 1, Integer.parseInt(t[3]));
                   Utils.addSpecialMiningResult(ore, cluster, Float.parseFloat(t[4]));
                    log.warn("Adding [{}] to special result list for [{}]", cluster.getDisplayName(), ore.getDisplayName());
-               } catch (Exception var8) {
+               } catch (Exception ignored) {
                }
             }
          }
@@ -223,7 +223,7 @@ public class Thaumcraft {
                   ThaumcraftWorldGenerator var10000 = this.worldGen;
                   ThaumcraftWorldGenerator.addDimBlacklist(Integer.parseInt(t[0]), Integer.parseInt(t[1]));
                    log.warn("Blacklisting dimension [{}] to only spawn TC content at level [{}]", Integer.parseInt(t[0]), Integer.parseInt(t[1]));
-               } catch (Exception var9) {
+               } catch (Exception ignored) {
                }
             }
          }
@@ -235,7 +235,7 @@ public class Thaumcraft {
                   ThaumcraftWorldGenerator var20 = this.worldGen;
                   ThaumcraftWorldGenerator.addBiomeBlacklist(Integer.parseInt(t[0]), Integer.parseInt(t[1]));
                    log.warn("Blacklisting [{}] to only spawn TC content at level [{}]", BiomeGenBase.getBiome(Integer.parseInt(t[0])).biomeName, Integer.parseInt(t[1]));
-               } catch (Exception var10) {
+               } catch (Exception ignored) {
                }
             }
          }

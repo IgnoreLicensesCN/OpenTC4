@@ -172,7 +172,7 @@ public class BlockArcaneDoor extends BlockContainer {
          } else {
             this.setBlockBounds(1.0F - var2, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
          }
-      } else if (var3 == 3) {
+      } else {
          if (var4) {
             if (!var5) {
                this.setBlockBounds(0.0F, 0.0F, 0.0F, var2, 1.0F, 1.0F);
@@ -186,16 +186,13 @@ public class BlockArcaneDoor extends BlockContainer {
 
    }
 
-   public void onBlockClicked(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer) {
-   }
-
-   public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer p, int par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer p, int par6, float par7, float par8, float par9) {
       if (!w.isRemote) {
          TileEntity tile = w.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileOwned) {
+         if (tile instanceof TileOwned) {
             if (!p.getCommandSenderName().equals(((TileOwned)tile).owner) && !((TileOwned)tile).accessList.contains("0" + p.getCommandSenderName()) && !((TileOwned)tile).accessList.contains("1" + p.getCommandSenderName())) {
-               p.addChatMessage(new ChatComponentTranslation("The door refuses to budge.", new Object[0]));
-               w.playSoundEffect((double)x, (double)y, (double)z, "thaumcraft:doorfail", 0.66F, 1.0F);
+               p.addChatMessage(new ChatComponentTranslation("The door refuses to budge."));
+               w.playSoundEffect(x, y, z, "thaumcraft:doorfail", 0.66F, 1.0F);
             } else {
                int var10 = this.getFullMetadata(w, x, y, z);
                int var11 = var10 & 7;
@@ -239,7 +236,7 @@ public class BlockArcaneDoor extends BlockContainer {
             par1World.markBlockRangeForRenderUpdate(par2, par3 - 1, par4, par2, par3, par4);
          }
 
-         par1World.playAuxSFXAtEntity((EntityPlayer)null, 1003, par2, par3, par4, 0);
+         par1World.playAuxSFXAtEntity(null, 1003, par2, par3, par4, 0);
       }
 
    }
@@ -249,7 +246,7 @@ public class BlockArcaneDoor extends BlockContainer {
       if (par5 == ConfigBlocks.blockWoodenDevice) {
          ArrayList<String> users = new ArrayList<>();
          TileEntity tile = par1World.getTileEntity(par2, par3, par4);
-         if (tile != null && tile instanceof TileOwned) {
+         if (tile instanceof TileOwned) {
             users.add(((TileOwned)tile).owner);
 
             for(String u : ((TileOwned)tile).accessList) {
@@ -266,7 +263,7 @@ public class BlockArcaneDoor extends BlockContainer {
             int md = par1World.getBlockMetadata(par2 + dir.offsetX, par3 + dir.offsetY, par4 + dir.offsetZ);
             if (bi == ConfigBlocks.blockWoodenDevice && md == 3) {
                TileOwned to = (TileOwned)par1World.getTileEntity(par2 + dir.offsetX, par3 + dir.offsetY, par4 + dir.offsetZ);
-               if (to != null && to instanceof TileOwned) {
+               if (to instanceof TileOwned) {
                   for(String u : users) {
                      if (to.owner.equals(u) || to.accessList.contains(u)) {
                         open = 1;
@@ -276,7 +273,7 @@ public class BlockArcaneDoor extends BlockContainer {
                }
             } else if (bi == ConfigBlocks.blockWoodenDevice && md == 2) {
                TileOwned to = (TileOwned)par1World.getTileEntity(par2 + dir.offsetX, par3 + dir.offsetY, par4 + dir.offsetZ);
-               if (to != null && to instanceof TileOwned) {
+               if (to instanceof TileOwned) {
                   for(String u : users) {
                      if (to.owner.equals(u) || to.accessList.contains(u)) {
                         open = -1;
@@ -322,7 +319,7 @@ public class BlockArcaneDoor extends BlockContainer {
    }
 
    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4) {
-      return par3 >= 255 ? false : World.doesBlockHaveSolidTopSurface(par1World, par2, par3 - 1, par4) && super.canPlaceBlockAt(par1World, par2, par3, par4) && super.canPlaceBlockAt(par1World, par2, par3 + 1, par4);
+      return par3 < 255 && World.doesBlockHaveSolidTopSurface(par1World, par2, par3 - 1, par4) && super.canPlaceBlockAt(par1World, par2, par3, par4) && super.canPlaceBlockAt(par1World, par2, par3 + 1, par4);
    }
 
    public int getMobilityFlag() {

@@ -13,7 +13,7 @@ import cpw.mods.fml.common.FMLLog;
 public class ResearchCategories {
 	
 	//Research
-	public static LinkedHashMap <String, ResearchCategoryList> researchCategories = new LinkedHashMap <String,ResearchCategoryList>();
+	public static LinkedHashMap <String, ResearchCategoryList> researchCategories = new LinkedHashMap<>();
 	
 	/**
 	 * @param key

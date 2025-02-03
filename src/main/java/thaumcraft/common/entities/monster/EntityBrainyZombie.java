@@ -13,9 +13,9 @@ import thaumcraft.common.config.ConfigItems;
 public class EntityBrainyZombie extends EntityZombie {
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)25.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)5.0F);
-      this.getEntityAttribute(field_110186_bp).setBaseValue((double)0.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(25.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(5.0F);
+      this.getEntityAttribute(field_110186_bp).setBaseValue(0.0F);
    }
 
    public EntityBrainyZombie(World world) {

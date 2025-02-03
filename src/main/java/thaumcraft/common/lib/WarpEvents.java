@@ -42,9 +42,9 @@ public class WarpEvents {
       warp += getWarpFromGear(player);
       int warpCounter = Thaumcraft.proxy.getPlayerKnowledge().getWarpCounter(player.getCommandSenderName());
       int r = player.worldObj.rand.nextInt(100);
-      if (warpCounter > 0 && warp > 0 && (double)r <= Math.sqrt((double)warpCounter)) {
+      if (warpCounter > 0 && warp > 0 && (double)r <= Math.sqrt(warpCounter)) {
          warp = Math.min(100, (warp + warp + warpCounter) / 3);
-         warpCounter = (int)((double)warpCounter - Math.max((double)5.0F, Math.sqrt((double)warpCounter) * (double)2.0F));
+         warpCounter = (int)((double)warpCounter - Math.max(5.0F, Math.sqrt(warpCounter) * (double)2.0F));
          Thaumcraft.proxy.getPlayerKnowledge().setWarpCounter(player.getCommandSenderName(), warpCounter);
          int eff = player.worldObj.rand.nextInt(warp);
          ItemStack helm = player.inventory.armorInventory[3];
@@ -235,9 +235,9 @@ public class WarpEvents {
       int amt = 1 + player.worldObj.rand.nextInt(times);
 
       for(int a = 0; a < amt; ++a) {
-         Aspect aspect = (Aspect)Aspect.getPrimalAspects().get(player.worldObj.rand.nextInt(6));
+         Aspect aspect = Aspect.getPrimalAspects().get(player.worldObj.rand.nextInt(6));
          Thaumcraft.proxy.playerKnowledge.addAspectPool(player.getCommandSenderName(), aspect, (short)1);
-         PacketHandler.INSTANCE.sendTo(new PacketAspectPool(aspect.getTag(), Short.valueOf((short)1), Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), aspect)), (EntityPlayerMP)player);
+         PacketHandler.INSTANCE.sendTo(new PacketAspectPool(aspect.getTag(), (short) 1, Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), aspect)), (EntityPlayerMP)player);
       }
 
       ResearchManager.scheduleSave(player);
@@ -254,7 +254,7 @@ public class WarpEvents {
          int j1 = j + MathHelper.getRandomIntegerInRange(player.worldObj.rand, 7, 24) * MathHelper.getRandomIntegerInRange(player.worldObj.rand, -1, 1);
          int k1 = k + MathHelper.getRandomIntegerInRange(player.worldObj.rand, 7, 24) * MathHelper.getRandomIntegerInRange(player.worldObj.rand, -1, 1);
          if (World.doesBlockHaveSolidTopSurface(player.worldObj, i1, j1 - 1, k1)) {
-            eg.setPosition((double)i1, (double)j1, (double)k1);
+            eg.setPosition(i1, j1, k1);
             if (player.worldObj.checkNoEntityCollision(eg.boundingBox) && player.worldObj.getCollidingBoundingBoxes(eg, eg.boundingBox).isEmpty() && !player.worldObj.isAnyLiquid(eg.boundingBox)) {
                eg.setTarget(player);
                eg.setAttackTarget(player);
@@ -281,7 +281,7 @@ public class WarpEvents {
             int j1 = j + MathHelper.getRandomIntegerInRange(player.worldObj.rand, 7, 24) * MathHelper.getRandomIntegerInRange(player.worldObj.rand, -1, 1);
             int k1 = k + MathHelper.getRandomIntegerInRange(player.worldObj.rand, 7, 24) * MathHelper.getRandomIntegerInRange(player.worldObj.rand, -1, 1);
             if (World.doesBlockHaveSolidTopSurface(player.worldObj, i1, j1 - 1, k1)) {
-               spider.setPosition((double)i1, (double)j1, (double)k1);
+               spider.setPosition(i1, j1, k1);
                if (player.worldObj.checkNoEntityCollision(spider.boundingBox) && player.worldObj.getCollidingBoundingBoxes(spider, spider.boundingBox).isEmpty() && !player.worldObj.isAnyLiquid(spider.boundingBox)) {
                   success = true;
                   break;
@@ -309,20 +309,20 @@ public class WarpEvents {
       if (pe != null) {
          int level = pe.getAmplifier();
          int range = Math.min(8 + level * 3, 24);
-         List list = player.worldObj.getEntitiesWithinAABBExcludingEntity(player, player.boundingBox.expand((double)range, (double)range, (double)range));
+         List list = player.worldObj.getEntitiesWithinAABBExcludingEntity(player, player.boundingBox.expand(range, range, range));
 
-         for(int i = 0; i < list.size(); ++i) {
-            Entity entity = (Entity)list.get(i);
-            if (entity.canBeCollidedWith() && entity instanceof EntityLivingBase && ((EntityLivingBase)entity).isEntityAlive() && EntityUtils.isVisibleTo(0.75F, player, entity, (float)range) && entity != null && player.canEntityBeSeen(entity) && (!(entity instanceof EntityPlayer) || MinecraftServer.getServer().isPVPEnabled()) && !((EntityLivingBase)entity).isPotionActive(Potion.wither.getId())) {
-               ((EntityLivingBase)entity).setRevengeTarget(player);
-               ((EntityLivingBase)entity).setLastAttacker(player);
-               if (entity instanceof EntityCreature) {
-                  ((EntityCreature)entity).setTarget(player);
-               }
+          for (Object o : list) {
+              Entity entity = (Entity) o;
+              if (entity.canBeCollidedWith() && entity instanceof EntityLivingBase && entity.isEntityAlive() && EntityUtils.isVisibleTo(0.75F, player, entity, (float) range) && entity != null && player.canEntityBeSeen(entity) && (!(entity instanceof EntityPlayer) || MinecraftServer.getServer().isPVPEnabled()) && !((EntityLivingBase) entity).isPotionActive(Potion.wither.getId())) {
+                  ((EntityLivingBase) entity).setRevengeTarget(player);
+                  ((EntityLivingBase) entity).setLastAttacker(player);
+                  if (entity instanceof EntityCreature) {
+                      ((EntityCreature) entity).setTarget(player);
+                  }
 
-               ((EntityLivingBase)entity).addPotionEffect(new PotionEffect(Potion.wither.getId(), 80));
-            }
-         }
+                  ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(Potion.wither.getId(), 80));
+              }
+          }
 
       }
    }

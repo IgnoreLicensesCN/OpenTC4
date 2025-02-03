@@ -56,40 +56,40 @@ public class ItemElementalSword extends ItemSword implements IRepairable {
    }
 
    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
-      return par2ItemStack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 2)) ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
+      return par2ItemStack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 2)) || super.getIsRepairable(par1ItemStack, par2ItemStack);
    }
 
    public void onUsingTick(ItemStack stack, EntityPlayer player, int count) {
       super.onUsingTick(stack, player, count);
       int ticks = this.getMaxItemUseDuration(stack) - count;
       if (player.motionY < (double)0.0F) {
-         player.motionY /= (double)1.2F;
+         player.motionY /= 1.2F;
          player.fallDistance /= 1.2F;
       }
 
-      player.motionY += (double)0.08F;
+      player.motionY += 0.08F;
       if (player.motionY > (double)0.5F) {
-         player.motionY = (double)0.2F;
+         player.motionY = 0.2F;
       }
 
       if (player instanceof EntityPlayerMP) {
          Utils.resetFloatCounter((EntityPlayerMP)player);
       }
 
-      List targets = player.worldObj.getEntitiesWithinAABBExcludingEntity(player, player.boundingBox.expand((double)2.5F, (double)2.5F, (double)2.5F));
+      List targets = player.worldObj.getEntitiesWithinAABBExcludingEntity(player, player.boundingBox.expand(2.5F, 2.5F, 2.5F));
       if (targets.size() > 0) {
-         for(int var9 = 0; var9 < targets.size(); ++var9) {
-            Entity entity = (Entity)targets.get(var9);
-            if (!(entity instanceof EntityPlayer) && !entity.isDead && (player.ridingEntity == null || player.ridingEntity != entity)) {
-               Vec3 p = Vec3.createVectorHelper(player.posX, player.posY, player.posZ);
-               Vec3 t = Vec3.createVectorHelper(entity.posX, entity.posY, entity.posZ);
-               double distance = p.distanceTo(t) + 0.1;
-               Vec3 r = Vec3.createVectorHelper(t.xCoord - p.xCoord, t.yCoord - p.yCoord, t.zCoord - p.zCoord);
-               entity.motionX += r.xCoord / (double)2.5F / distance;
-               entity.motionY += r.yCoord / (double)2.5F / distance;
-               entity.motionZ += r.zCoord / (double)2.5F / distance;
-            }
-         }
+          for (Object target : targets) {
+              Entity entity = (Entity) target;
+              if (!(entity instanceof EntityPlayer) && !entity.isDead && (player.ridingEntity == null || player.ridingEntity != entity)) {
+                  Vec3 p = Vec3.createVectorHelper(player.posX, player.posY, player.posZ);
+                  Vec3 t = Vec3.createVectorHelper(entity.posX, entity.posY, entity.posZ);
+                  double distance = p.distanceTo(t) + 0.1;
+                  Vec3 r = Vec3.createVectorHelper(t.xCoord - p.xCoord, t.yCoord - p.yCoord, t.zCoord - p.zCoord);
+                  entity.motionX += r.xCoord / (double) 2.5F / distance;
+                  entity.motionY += r.yCoord / (double) 2.5F / distance;
+                  entity.motionZ += r.zCoord / (double) 2.5F / distance;
+              }
+          }
       }
 
       if (player.worldObj.isRemote) {
@@ -106,9 +106,9 @@ public class ItemElementalSword extends ItemSword implements IRepairable {
             float r1 = player.worldObj.rand.nextFloat() * 360.0F;
             float mx = -MathHelper.sin(r1 / 180.0F * (float)Math.PI) / 5.0F;
             float mz = MathHelper.cos(r1 / 180.0F * (float)Math.PI) / 5.0F;
-            player.worldObj.spawnParticle("smoke", player.posX, player.boundingBox.minY + (double)0.1F, player.posZ, (double)mx, (double)0.0F, (double)mz);
+            player.worldObj.spawnParticle("smoke", player.posX, player.boundingBox.minY + (double)0.1F, player.posZ, mx, 0.0F, mz);
          }
-      } else if (ticks == 0 || ticks % 20 == 0) {
+      } else if (ticks % 20 == 0) {
          player.worldObj.playSoundAtEntity(player, "thaumcraft:wind", 0.5F, 0.9F + player.worldObj.rand.nextFloat() * 0.2F);
       }
 
@@ -123,13 +123,13 @@ public class ItemElementalSword extends ItemSword implements IRepairable {
          List targets = player.worldObj.getEntitiesWithinAABBExcludingEntity(player, entity.boundingBox.expand(1.2, 1.1, 1.2));
          int count = 0;
          if (targets.size() > 1) {
-            for(int var9 = 0; var9 < targets.size(); ++var9) {
-               Entity var10 = (Entity)targets.get(var9);
-               if (!var10.isDead && (!(var10 instanceof EntityGolemBase) || !((EntityGolemBase)var10).getOwnerName().equals(player.getCommandSenderName())) && (!(var10 instanceof EntityTameable) || !((EntityTameable)var10).func_152113_b().equals(player.getCommandSenderName())) && var10 instanceof EntityLiving && var10.getEntityId() != entity.getEntityId() && (!(var10 instanceof EntityPlayer) || ((EntityPlayer)var10).getCommandSenderName() != player.getCommandSenderName()) && var10.isEntityAlive()) {
-                  this.attackTargetEntityWithCurrentItem(var10, player);
-                  ++count;
-               }
-            }
+             for (Object target : targets) {
+                 Entity var10 = (Entity) target;
+                 if (!var10.isDead && (!(var10 instanceof EntityGolemBase) || !((EntityGolemBase) var10).getOwnerName().equals(player.getCommandSenderName())) && (!(var10 instanceof EntityTameable) || !((EntityTameable) var10).func_152113_b().equals(player.getCommandSenderName())) && var10 instanceof EntityLiving && var10.getEntityId() != entity.getEntityId() && (!(var10 instanceof EntityPlayer) || var10.getCommandSenderName() != player.getCommandSenderName()) && var10.isEntityAlive()) {
+                     this.attackTargetEntityWithCurrentItem(var10, player);
+                     ++count;
+                 }
+             }
 
             if (count > 0 && !player.worldObj.isRemote) {
                player.worldObj.playSoundAtEntity(entity, "thaumcraft:swing", 1.0F, 0.9F + player.worldObj.rand.nextFloat() * 0.2F);
@@ -172,7 +172,7 @@ public class ItemElementalSword extends ItemSword implements IRepairable {
                boolean flag2 = par1Entity.attackEntityFrom(DamageSource.causePlayerDamage(player), f);
                if (flag2) {
                   if (i > 0) {
-                     par1Entity.addVelocity((double)(-MathHelper.sin(player.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F), 0.1, (double)(MathHelper.cos(player.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F));
+                     par1Entity.addVelocity(-MathHelper.sin(player.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F, 0.1, MathHelper.cos(player.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F);
                      player.motionX *= 0.6;
                      player.motionZ *= 0.6;
                      player.setSprinting(false);
@@ -200,8 +200,8 @@ public class ItemElementalSword extends ItemSword implements IRepairable {
                Object object = par1Entity;
                if (par1Entity instanceof EntityDragonPart) {
                   IEntityMultiPart ientitymultipart = ((EntityDragonPart)par1Entity).entityDragonObj;
-                  if (ientitymultipart != null && ientitymultipart instanceof EntityLivingBase) {
-                     object = (EntityLivingBase)ientitymultipart;
+                  if (ientitymultipart instanceof EntityLivingBase) {
+                     object = ientitymultipart;
                   }
                }
 

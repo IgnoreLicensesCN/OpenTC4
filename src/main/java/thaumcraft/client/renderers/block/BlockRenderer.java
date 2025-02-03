@@ -34,7 +34,7 @@ public class BlockRenderer {
       GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
       tessellator.startDrawingQuads();
       tessellator.setNormal(0.0F, -1.0F, 0.0F);
-      renderblocks.renderFaceYNeg(block, (double)0.0F, (double)0.0F, (double)0.0F, i1);
+      renderblocks.renderFaceYNeg(block, 0.0F, 0.0F, 0.0F, i1);
       tessellator.draw();
       if (solidtop) {
          GL11.glDisable(3008);
@@ -42,7 +42,7 @@ public class BlockRenderer {
 
       tessellator.startDrawingQuads();
       tessellator.setNormal(0.0F, 1.0F, 0.0F);
-      renderblocks.renderFaceYPos(block, (double)0.0F, (double)0.0F, (double)0.0F, i2);
+      renderblocks.renderFaceYPos(block, 0.0F, 0.0F, 0.0F, i2);
       tessellator.draw();
       if (solidtop) {
          GL11.glEnable(3008);
@@ -50,19 +50,19 @@ public class BlockRenderer {
 
       tessellator.startDrawingQuads();
       tessellator.setNormal(0.0F, 0.0F, 1.0F);
-      renderblocks.renderFaceXNeg(block, (double)0.0F, (double)0.0F, (double)0.0F, i3);
+      renderblocks.renderFaceXNeg(block, 0.0F, 0.0F, 0.0F, i3);
       tessellator.draw();
       tessellator.startDrawingQuads();
       tessellator.setNormal(0.0F, 0.0F, -1.0F);
-      renderblocks.renderFaceXPos(block, (double)0.0F, (double)0.0F, (double)0.0F, i4);
+      renderblocks.renderFaceXPos(block, 0.0F, 0.0F, 0.0F, i4);
       tessellator.draw();
       tessellator.startDrawingQuads();
       tessellator.setNormal(1.0F, 0.0F, 0.0F);
-      renderblocks.renderFaceZNeg(block, (double)0.0F, (double)0.0F, (double)0.0F, i5);
+      renderblocks.renderFaceZNeg(block, 0.0F, 0.0F, 0.0F, i5);
       tessellator.draw();
       tessellator.startDrawingQuads();
       tessellator.setNormal(-1.0F, 0.0F, 0.0F);
-      renderblocks.renderFaceZPos(block, (double)0.0F, (double)0.0F, (double)0.0F, i6);
+      renderblocks.renderFaceZPos(block, 0.0F, 0.0F, 0.0F, i6);
       tessellator.draw();
       GL11.glTranslatef(0.5F, 0.5F, 0.5F);
    }
@@ -95,91 +95,91 @@ public class BlockRenderer {
 
    protected static void renderAllSides(IBlockAccess world, int x, int y, int z, Block block, RenderBlocks renderer, IIcon tex, boolean allsides) {
       if (allsides || block.shouldSideBeRendered(world, x + 1, y, z, 6)) {
-         renderer.renderFaceXPos(block, (double)x, (double)y, (double)z, tex);
+         renderer.renderFaceXPos(block, x, y, z, tex);
       }
 
       if (allsides || block.shouldSideBeRendered(world, x - 1, y, z, 6)) {
-         renderer.renderFaceXNeg(block, (double)x, (double)y, (double)z, tex);
+         renderer.renderFaceXNeg(block, x, y, z, tex);
       }
 
       if (allsides || block.shouldSideBeRendered(world, x, y, z + 1, 6)) {
-         renderer.renderFaceZPos(block, (double)x, (double)y, (double)z, tex);
+         renderer.renderFaceZPos(block, x, y, z, tex);
       }
 
       if (allsides || block.shouldSideBeRendered(world, x, y, z - 1, 6)) {
-         renderer.renderFaceZNeg(block, (double)x, (double)y, (double)z, tex);
+         renderer.renderFaceZNeg(block, x, y, z, tex);
       }
 
       if (allsides || block.shouldSideBeRendered(world, x, y + 1, z, 6)) {
-         renderer.renderFaceYPos(block, (double)x, (double)y, (double)z, tex);
+         renderer.renderFaceYPos(block, x, y, z, tex);
       }
 
       if (allsides || block.shouldSideBeRendered(world, x, y - 1, z, 6)) {
-         renderer.renderFaceYNeg(block, (double)x, (double)y, (double)z, tex);
+         renderer.renderFaceYNeg(block, x, y, z, tex);
       }
 
    }
 
    protected static void renderAllSides(IBlockAccess world, int x, int y, int z, Block block, RenderBlocks renderer, boolean allsides) {
       if (allsides || block.shouldSideBeRendered(world, x + 1, y, z, 6)) {
-         renderer.renderFaceXPos(block, (double)x, (double)y, (double)z, block.getIcon(world, x, y, z, 5));
+         renderer.renderFaceXPos(block, x, y, z, block.getIcon(world, x, y, z, 5));
       }
 
       if (allsides || block.shouldSideBeRendered(world, x - 1, y, z, 6)) {
-         renderer.renderFaceXNeg(block, (double)x, (double)y, (double)z, block.getIcon(world, x, y, z, 4));
+         renderer.renderFaceXNeg(block, x, y, z, block.getIcon(world, x, y, z, 4));
       }
 
       if (allsides || block.shouldSideBeRendered(world, x, y, z + 1, 6)) {
-         renderer.renderFaceZPos(block, (double)x, (double)y, (double)z, block.getIcon(world, x, y, z, 3));
+         renderer.renderFaceZPos(block, x, y, z, block.getIcon(world, x, y, z, 3));
       }
 
       if (allsides || block.shouldSideBeRendered(world, x, y, z - 1, 6)) {
-         renderer.renderFaceZNeg(block, (double)x, (double)y, (double)z, block.getIcon(world, x, y, z, 2));
+         renderer.renderFaceZNeg(block, x, y, z, block.getIcon(world, x, y, z, 2));
       }
 
       if (allsides || block.shouldSideBeRendered(world, x, y + 1, z, 6)) {
-         renderer.renderFaceYPos(block, (double)x, (double)y, (double)z, block.getIcon(world, x, y, z, 1));
+         renderer.renderFaceYPos(block, x, y, z, block.getIcon(world, x, y, z, 1));
       }
 
       if (allsides || block.shouldSideBeRendered(world, x, y - 1, z, 6)) {
-         renderer.renderFaceYNeg(block, (double)x, (double)y, (double)z, block.getIcon(world, x, y, z, 0));
+         renderer.renderFaceYNeg(block, x, y, z, block.getIcon(world, x, y, z, 0));
       }
 
    }
 
    protected static void renderAllSidesInverted(IBlockAccess world, int x, int y, int z, Block block, RenderBlocks renderer, IIcon tex, boolean allsides) {
       if (allsides || !block.shouldSideBeRendered(world, x - 1, y, z, 6)) {
-         renderer.renderFaceXPos(block, (double)(x - 1), (double)y, (double)z, tex);
+         renderer.renderFaceXPos(block, x - 1, y, z, tex);
       }
 
       if (allsides || !block.shouldSideBeRendered(world, x + 1, y, z, 6)) {
-         renderer.renderFaceXNeg(block, (double)(x + 1), (double)y, (double)z, tex);
+         renderer.renderFaceXNeg(block, x + 1, y, z, tex);
       }
 
       if (allsides || !block.shouldSideBeRendered(world, x, y, z - 1, 6)) {
-         renderer.renderFaceZPos(block, (double)x, (double)y, (double)(z - 1), tex);
+         renderer.renderFaceZPos(block, x, y, z - 1, tex);
       }
 
       if (allsides || !block.shouldSideBeRendered(world, x, y, z + 1, 6)) {
-         renderer.renderFaceZNeg(block, (double)x, (double)y, (double)(z + 1), tex);
+         renderer.renderFaceZNeg(block, x, y, z + 1, tex);
       }
 
       if (allsides || !block.shouldSideBeRendered(world, x, y - 1, z, 6)) {
-         renderer.renderFaceYPos(block, (double)x, (double)(y - 1), (double)z, tex);
+         renderer.renderFaceYPos(block, x, y - 1, z, tex);
       }
 
       if (allsides || !block.shouldSideBeRendered(world, x, y + 1, z, 6)) {
-         renderer.renderFaceYNeg(block, (double)x, (double)(y + 1), (double)z, tex);
+         renderer.renderFaceYNeg(block, x, y + 1, z, tex);
       }
 
    }
 
    protected static void renderAllSides(int x, int y, int z, Block block, RenderBlocks renderer, IIcon tex) {
-      renderer.renderFaceXPos(block, (double)(x - 1), (double)y, (double)z, tex);
-      renderer.renderFaceXNeg(block, (double)(x + 1), (double)y, (double)z, tex);
-      renderer.renderFaceZPos(block, (double)x, (double)y, (double)(z - 1), tex);
-      renderer.renderFaceZNeg(block, (double)x, (double)y, (double)(z + 1), tex);
-      renderer.renderFaceYPos(block, (double)x, (double)(y - 1), (double)z, tex);
-      renderer.renderFaceYNeg(block, (double)x, (double)(y + 1), (double)z, tex);
+      renderer.renderFaceXPos(block, x - 1, y, z, tex);
+      renderer.renderFaceXNeg(block, x + 1, y, z, tex);
+      renderer.renderFaceZPos(block, x, y, z - 1, tex);
+      renderer.renderFaceZNeg(block, x, y, z + 1, tex);
+      renderer.renderFaceYPos(block, x, y - 1, z, tex);
+      renderer.renderFaceYNeg(block, x, y + 1, z, tex);
    }
 }

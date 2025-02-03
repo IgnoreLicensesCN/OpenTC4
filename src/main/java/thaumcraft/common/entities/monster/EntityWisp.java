@@ -45,9 +45,9 @@ public class EntityWisp extends EntityFlying implements IMob {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)22.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(22.0F);
       this.getAttributeMap().registerAttribute(SharedMonsterAttributes.attackDamage);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)3.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(3.0F);
    }
 
    protected boolean canTriggerWalking() {
@@ -60,12 +60,12 @@ public class EntityWisp extends EntityFlying implements IMob {
 
    public boolean attackEntityFrom(DamageSource damagesource, float i) {
       if (damagesource.getSourceOfDamage() instanceof EntityLivingBase) {
-         this.targetedEntity = (EntityLivingBase)damagesource.getSourceOfDamage();
+         this.targetedEntity = damagesource.getSourceOfDamage();
          this.aggroCooldown = 200;
       }
 
       if (damagesource.getEntity() instanceof EntityLivingBase) {
-         this.targetedEntity = (EntityLivingBase)damagesource.getEntity();
+         this.targetedEntity = damagesource.getEntity();
          this.aggroCooldown = 200;
       }
 
@@ -74,7 +74,7 @@ public class EntityWisp extends EntityFlying implements IMob {
 
    protected void entityInit() {
       super.entityInit();
-      this.dataWatcher.addObject(22, String.valueOf(""));
+      this.dataWatcher.addObject(22, "");
    }
 
    public void onDeath(DamageSource par1DamageSource) {
@@ -131,10 +131,10 @@ public class EntityWisp extends EntityFlying implements IMob {
             }
          } else if (this.worldObj.rand.nextInt(10) != 0) {
             ArrayList<Aspect> as = Aspect.getPrimalAspects();
-            this.setType(((Aspect)as.get(this.worldObj.rand.nextInt(as.size()))).getTag());
+            this.setType(as.get(this.worldObj.rand.nextInt(as.size())).getTag());
          } else {
             ArrayList<Aspect> as = Aspect.getCompoundAspects();
-            this.setType(((Aspect)as.get(this.worldObj.rand.nextInt(as.size()))).getTag());
+            this.setType(as.get(this.worldObj.rand.nextInt(as.size())).getTag());
          }
       }
 
@@ -144,7 +144,7 @@ public class EntityWisp extends EntityFlying implements IMob {
 
       this.despawnEntity();
       this.prevAttackCounter = this.attackCounter;
-      double attackrange = (double)16.0F;
+      double attackrange = 16.0F;
       double d = this.waypointX - this.posX;
       double d1 = this.waypointY - this.posY;
       double d2 = this.waypointZ - this.posZ;
@@ -157,7 +157,7 @@ public class EntityWisp extends EntityFlying implements IMob {
 
       if (this.courseChangeCooldown-- <= 0) {
          this.courseChangeCooldown += this.rand.nextInt(5) + 2;
-         d3 = (double)MathHelper.sqrt_double(d3);
+         d3 = MathHelper.sqrt_double(d3);
          if (this.isCourseTraversable(this.waypointX, this.waypointY, this.waypointZ, d3)) {
             this.motionX += d / d3 * 0.1;
             this.motionY += d1 / d3 * 0.1;
@@ -175,7 +175,7 @@ public class EntityWisp extends EntityFlying implements IMob {
 
       --this.aggroCooldown;
       if (this.worldObj.rand.nextInt(1000) == 0 && (this.targetedEntity == null || this.aggroCooldown-- <= 0)) {
-         this.targetedEntity = this.worldObj.getClosestVulnerablePlayerToEntity(this, (double)16.0F);
+         this.targetedEntity = this.worldObj.getClosestVulnerablePlayerToEntity(this, 16.0F);
          if (this.targetedEntity != null) {
             this.aggroCooldown = 50;
          }
@@ -190,7 +190,7 @@ public class EntityWisp extends EntityFlying implements IMob {
             ++this.attackCounter;
             if (this.attackCounter == 20) {
                this.worldObj.playSoundAtEntity(this, "thaumcraft:zap", 1.0F, 1.1F);
-               PacketHandler.INSTANCE.sendToAllAround(new PacketFXWispZap(this.getEntityId(), this.targetedEntity.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.posX, this.posY, this.posZ, (double)32.0F));
+               PacketHandler.INSTANCE.sendToAllAround(new PacketFXWispZap(this.getEntityId(), this.targetedEntity.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.posX, this.posY, this.posZ, 32.0F));
                float damage = (float)this.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
                if (!(Math.abs(this.targetedEntity.motionX) > (double)0.1F) && !(Math.abs(this.targetedEntity.motionY) > (double)0.1F) && !(Math.abs(this.targetedEntity.motionZ) > (double)0.1F)) {
                   if (this.worldObj.rand.nextFloat() < 0.66F) {
@@ -281,11 +281,11 @@ public class EntityWisp extends EntityFlying implements IMob {
       int count = 0;
 
       try {
-         List l = this.worldObj.getEntitiesWithinAABB(EntityWisp.class, this.boundingBox.expand((double)16.0F, (double)16.0F, (double)16.0F));
+         List l = this.worldObj.getEntitiesWithinAABB(EntityWisp.class, this.boundingBox.expand(16.0F, 16.0F, 16.0F));
          if (l != null) {
             count = l.size();
          }
-      } catch (Exception var3) {
+      } catch (Exception ignored) {
       }
 
       return count < 8 && this.worldObj.difficultySetting.getDifficultyId() > 0 && this.isValidLightLevel() && super.getCanSpawnHere();

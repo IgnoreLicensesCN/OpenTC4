@@ -42,7 +42,7 @@ public class EntityAlumentum extends EntityThrowable {
    protected void onImpact(MovingObjectPosition par1MovingObjectPosition) {
       if (!this.worldObj.isRemote) {
          boolean var2 = this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
-         this.worldObj.createExplosion((Entity)null, this.posX, this.posY, this.posZ, 1.66F, var2);
+         this.worldObj.createExplosion(null, this.posX, this.posY, this.posZ, 1.66F, var2);
          this.setDead();
       }
 

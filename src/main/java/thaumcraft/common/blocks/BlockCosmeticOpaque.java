@@ -74,7 +74,7 @@ public class BlockCosmeticOpaque extends BlockContainer {
          float f = (float)target.hitVec.xCoord - (float)target.blockX;
          float f1 = (float)target.hitVec.yCoord - (float)target.blockY;
          float f2 = (float)target.hitVec.zCoord - (float)target.blockZ;
-         Thaumcraft.proxy.blockWard(worldObj, (double)target.blockX, (double)target.blockY, (double)target.blockZ, ForgeDirection.getOrientation(target.sideHit), f, f1, f2);
+         Thaumcraft.proxy.blockWard(worldObj, target.blockX, target.blockY, target.blockZ, ForgeDirection.getOrientation(target.sideHit), f, f1, f2);
          return true;
       } else {
          return false;
@@ -174,7 +174,7 @@ public class BlockCosmeticOpaque extends BlockContainer {
       if (world.getBlockMetadata(x, y, z) != world.getBlockMetadata(x - Facing.offsetsXForSide[side], y - Facing.offsetsYForSide[side], z - Facing.offsetsZForSide[side])) {
          return true;
       } else {
-         return block == this ? false : super.shouldSideBeRendered(world, x, y, z, side);
+         return block != this && super.shouldSideBeRendered(world, x, y, z, side);
       }
    }
 
@@ -187,12 +187,12 @@ public class BlockCosmeticOpaque extends BlockContainer {
    }
 
    public TileEntity createTileEntity(World world, int metadata) {
-      return (TileEntity)(metadata == 2 ? new TileOwned() : super.createTileEntity(world, metadata));
+      return metadata == 2 ? new TileOwned() : super.createTileEntity(world, metadata);
    }
 
    public boolean canEntityDestroy(IBlockAccess world, int x, int y, int z, Entity entity) {
       int md = world.getBlockMetadata(x, y, z);
-      return md == 2 ? false : super.canEntityDestroy(world, x, y, z, entity);
+      return md != 2 && super.canEntityDestroy(world, x, y, z, entity);
    }
 
    public void onBlockExploded(World world, int x, int y, int z, Explosion explosion) {
@@ -209,8 +209,8 @@ public class BlockCosmeticOpaque extends BlockContainer {
 
    public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase p, ItemStack is) {
       TileEntity tile = w.getTileEntity(x, y, z);
-      if (tile != null && tile instanceof TileOwned && p instanceof EntityPlayer) {
-         ((TileOwned)tile).owner = ((EntityPlayer)p).getCommandSenderName();
+      if (tile instanceof TileOwned && p instanceof EntityPlayer) {
+         ((TileOwned)tile).owner = p.getCommandSenderName();
          tile.markDirty();
       }
 

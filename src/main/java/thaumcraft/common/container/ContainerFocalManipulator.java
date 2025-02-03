@@ -30,7 +30,7 @@ public class ContainerFocalManipulator extends Container {
 
    public boolean enchantItem(EntityPlayer p, int button) {
       if (button >= 0 && !this.table.startCraft(button, p)) {
-         this.table.getWorldObj().playSoundEffect((double)this.table.xCoord, (double)this.table.yCoord, (double)this.table.zCoord, "thaumcraft:craftfail", 0.33F, 1.0F);
+         this.table.getWorldObj().playSoundEffect(this.table.xCoord, this.table.yCoord, this.table.zCoord, "thaumcraft:craftfail", 0.33F, 1.0F);
       }
 
       return false;
@@ -63,7 +63,7 @@ public class ContainerFocalManipulator extends Container {
          }
 
          if (itemstack1.stackSize == 0) {
-            slot.putStack((ItemStack)null);
+            slot.putStack(null);
          } else {
             slot.onSlotChanged();
          }

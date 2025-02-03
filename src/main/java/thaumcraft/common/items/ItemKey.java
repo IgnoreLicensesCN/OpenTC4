@@ -83,7 +83,7 @@ public class ItemKey extends Item {
 
          String loc = x + "," + (y + mod) + "," + z;
          TileEntity tile = world.getTileEntity(x, y + mod, z);
-         if (tile != null && tile instanceof TileOwned) {
+         if (tile instanceof TileOwned) {
             if (!itemstack.hasTagCompound()) {
                if (player.getCommandSenderName().equals(((TileOwned)tile).owner) || ((TileOwned)tile).accessList.contains("1" + player.getCommandSenderName()) && itemstack.getItemDamage() == 0) {
                   ItemStack st = new ItemStack(ConfigItems.itemKey, 1, itemstack.getItemDamage());
@@ -106,7 +106,7 @@ public class ItemKey extends Item {
                            player.addChatMessage(new ChatComponentText("§5§o" + StatCollector.translateToLocal("tc.key2")));
                      }
 
-                     world.playSoundEffect((double)x, (double)y, (double)z, "thaumcraft:key", 1.0F, 0.9F);
+                     world.playSoundEffect(x, y, z, "thaumcraft:key", 1.0F, 0.9F);
                   }
 
                   player.swingItem();
@@ -115,7 +115,7 @@ public class ItemKey extends Item {
                ((TileOwned)tile).accessList.add(itemstack.getItemDamage() + player.getCommandSenderName());
                if (type == 0) {
                   TileEntity tile2 = world.getTileEntity(x, y + mod2, z);
-                  if (tile2 != null && tile2 instanceof TileOwned) {
+                  if (tile2 instanceof TileOwned) {
                      ((TileOwned)tile2).accessList.add(itemstack.getItemDamage() + player.getCommandSenderName());
                   }
 
@@ -132,7 +132,7 @@ public class ItemKey extends Item {
                         player.addChatMessage(new ChatComponentText("§5§o" + StatCollector.translateToLocal("tc.key5") + (itemstack.getItemDamage() == 0 ? "" : StatCollector.translateToLocal("tc.key6"))));
                   }
 
-                  world.playSoundEffect((double)x, (double)y, (double)z, "thaumcraft:key", 1.0F, 1.1F);
+                  world.playSoundEffect(x, y, z, "thaumcraft:key", 1.0F, 1.1F);
                }
 
                if (!player.capabilities.isCreativeMode) {
@@ -162,7 +162,7 @@ public class ItemKey extends Item {
          try {
             String[] ss = location.split(",");
             location = "x " + ss[0] + ", z " + ss[2] + ", y " + ss[1];
-         } catch (Exception var7) {
+         } catch (Exception ignored) {
          }
 
          byte type = stack.stackTagCompound.getByte("type");

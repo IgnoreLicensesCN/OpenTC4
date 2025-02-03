@@ -24,7 +24,7 @@ public class FXBoreParticles extends EntityFX {
    private double targetZ;
 
    public FXBoreParticles(World par1World, double par2, double par4, double par6, double tx, double ty, double tz, Block par14Block, int par15, int par16) {
-      super(par1World, par2, par4, par6, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(par1World, par2, par4, par6, 0.0F, 0.0F, 0.0F);
       this.blockInstance = par14Block;
       this.setParticleIcon(par14Block.getIcon(par15, par16));
       this.particleGravity = par14Block.blockParticleGravity;
@@ -44,9 +44,9 @@ public class FXBoreParticles extends EntityFX {
 
       this.particleMaxAge = base / 2 + this.rand.nextInt(base);
       float f3 = 0.01F;
-      this.motionX = (double)((float)this.worldObj.rand.nextGaussian() * f3);
-      this.motionY = (double)((float)this.worldObj.rand.nextGaussian() * f3);
-      this.motionZ = (double)((float)this.worldObj.rand.nextGaussian() * f3);
+      this.motionX = (float)this.worldObj.rand.nextGaussian() * f3;
+      this.motionY = (float)this.worldObj.rand.nextGaussian() * f3;
+      this.motionZ = (float)this.worldObj.rand.nextGaussian() * f3;
       this.particleGravity = 0.2F;
       this.noClip = false;
       EntityLivingBase renderentity = FMLClientHandler.instance().getClient().renderViewEntity;
@@ -62,7 +62,7 @@ public class FXBoreParticles extends EntityFX {
    }
 
    public FXBoreParticles(World par1World, double par2, double par4, double par6, double tx, double ty, double tz, Item item, int par15, int par16) {
-      super(par1World, par2, par4, par6, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(par1World, par2, par4, par6, 0.0F, 0.0F, 0.0F);
       this.itemInstance = item;
       this.setParticleIcon(item.getIconFromDamage(par16));
       this.metadata = par16;
@@ -83,9 +83,9 @@ public class FXBoreParticles extends EntityFX {
 
       this.particleMaxAge = base / 2 + this.rand.nextInt(base);
       float f3 = 0.01F;
-      this.motionX = (double)((float)this.worldObj.rand.nextGaussian() * f3);
-      this.motionY = (double)((float)this.worldObj.rand.nextGaussian() * f3);
-      this.motionZ = (double)((float)this.worldObj.rand.nextGaussian() * f3);
+      this.motionX = (float)this.worldObj.rand.nextGaussian() * f3;
+      this.motionY = (float)this.worldObj.rand.nextGaussian() * f3;
+      this.motionZ = (float)this.worldObj.rand.nextGaussian() * f3;
       this.particleGravity = 0.2F;
       this.noClip = false;
       EntityLivingBase renderentity = FMLClientHandler.instance().getClient().renderViewEntity;
@@ -117,7 +117,7 @@ public class FXBoreParticles extends EntityFX {
          double dy = this.targetY - this.posY;
          double dz = this.targetZ - this.posZ;
          double d13 = 0.3;
-         double d11 = (double)MathHelper.sqrt_double(dx * dx + dy * dy + dz * dz);
+         double d11 = MathHelper.sqrt_double(dx * dx + dy * dy + dz * dz);
          if (d11 < (double)4.0F) {
             this.particleScale *= 0.9F;
             d13 = 0.6;
@@ -129,9 +129,9 @@ public class FXBoreParticles extends EntityFX {
          this.motionX += dx * d13;
          this.motionY += dy * d13;
          this.motionZ += dz * d13;
-         this.motionX = (double)MathHelper.clamp_float((float)this.motionX, -0.35F, 0.35F);
-         this.motionY = (double)MathHelper.clamp_float((float)this.motionY, -0.35F, 0.35F);
-         this.motionZ = (double)MathHelper.clamp_float((float)this.motionZ, -0.35F, 0.35F);
+         this.motionX = MathHelper.clamp_float((float)this.motionX, -0.35F, 0.35F);
+         this.motionY = MathHelper.clamp_float((float)this.motionY, -0.35F, 0.35F);
+         this.motionZ = MathHelper.clamp_float((float)this.motionZ, -0.35F, 0.35F);
       } else {
          this.setDead();
       }
@@ -145,7 +145,7 @@ public class FXBoreParticles extends EntityFX {
                   this.particleRed *= (float) (var4 >> 16 & 255) / 255.0F;
                   this.particleGreen *= (float) (var4 >> 8 & 255) / 255.0F;
                   this.particleBlue *= (float) (var4 & 255) / 255.0F;
-              } catch (Exception var5) {
+              } catch (Exception ignored) {
               }
 
           }
@@ -156,7 +156,7 @@ public class FXBoreParticles extends EntityFX {
             this.particleRed *= (float)(var4 >> 16 & 255) / 255.0F;
             this.particleGreen *= (float)(var4 >> 8 & 255) / 255.0F;
             this.particleBlue *= (float)(var4 & 255) / 255.0F;
-         } catch (Exception var6) {
+         } catch (Exception ignored) {
          }
 
          return this;
@@ -171,14 +171,13 @@ public class FXBoreParticles extends EntityFX {
               this.particleGreen *= (float) (var2 >> 8 & 255) / 255.0F;
               this.particleBlue *= (float) (var2 & 255) / 255.0F;
           }
-          return this;
       } else {
          int var4 = this.itemInstance.getColorFromItemStack(new ItemStack(this.itemInstance, 1, this.metadata), this.metadata);
          this.particleRed *= (float)(var4 >> 16 & 255) / 255.0F;
          this.particleGreen *= (float)(var4 >> 8 & 255) / 255.0F;
          this.particleBlue *= (float)(var4 & 255) / 255.0F;
-         return this;
       }
+      return this;
    }
 
    public int getFXLayer() {
@@ -192,10 +191,10 @@ public class FXBoreParticles extends EntityFX {
       float f9 = f8 + 0.015609375F;
       float f10 = 0.1F * this.particleScale;
       if (this.particleIcon != null) {
-         f6 = this.particleIcon.getInterpolatedU((double)(this.particleTextureJitterX / 4.0F * 16.0F));
-         f7 = this.particleIcon.getInterpolatedU((double)((this.particleTextureJitterX + 1.0F) / 4.0F * 16.0F));
-         f8 = this.particleIcon.getInterpolatedV((double)(this.particleTextureJitterY / 4.0F * 16.0F));
-         f9 = this.particleIcon.getInterpolatedV((double)((this.particleTextureJitterY + 1.0F) / 4.0F * 16.0F));
+         f6 = this.particleIcon.getInterpolatedU(this.particleTextureJitterX / 4.0F * 16.0F);
+         f7 = this.particleIcon.getInterpolatedU((this.particleTextureJitterX + 1.0F) / 4.0F * 16.0F);
+         f8 = this.particleIcon.getInterpolatedV(this.particleTextureJitterY / 4.0F * 16.0F);
+         f9 = this.particleIcon.getInterpolatedV((this.particleTextureJitterY + 1.0F) / 4.0F * 16.0F);
       }
 
       float f11 = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)par2 - interpPosX);
@@ -203,10 +202,10 @@ public class FXBoreParticles extends EntityFX {
       float f13 = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * (double)par2 - interpPosZ);
       float f14 = 1.0F;
       par1Tessellator.setColorOpaque_F(f14 * this.particleRed, f14 * this.particleGreen, f14 * this.particleBlue);
-      par1Tessellator.addVertexWithUV((double)(f11 - par3 * f10 - par6 * f10), (double)(f12 - par4 * f10), (double)(f13 - par5 * f10 - par7 * f10), (double)f6, (double)f9);
-      par1Tessellator.addVertexWithUV((double)(f11 - par3 * f10 + par6 * f10), (double)(f12 + par4 * f10), (double)(f13 - par5 * f10 + par7 * f10), (double)f6, (double)f8);
-      par1Tessellator.addVertexWithUV((double)(f11 + par3 * f10 + par6 * f10), (double)(f12 + par4 * f10), (double)(f13 + par5 * f10 + par7 * f10), (double)f7, (double)f8);
-      par1Tessellator.addVertexWithUV((double)(f11 + par3 * f10 - par6 * f10), (double)(f12 - par4 * f10), (double)(f13 + par5 * f10 - par7 * f10), (double)f7, (double)f9);
+      par1Tessellator.addVertexWithUV(f11 - par3 * f10 - par6 * f10, f12 - par4 * f10, f13 - par5 * f10 - par7 * f10, f6, f9);
+      par1Tessellator.addVertexWithUV(f11 - par3 * f10 + par6 * f10, f12 + par4 * f10, f13 - par5 * f10 + par7 * f10, f6, f8);
+      par1Tessellator.addVertexWithUV(f11 + par3 * f10 + par6 * f10, f12 + par4 * f10, f13 + par5 * f10 + par7 * f10, f7, f8);
+      par1Tessellator.addVertexWithUV(f11 + par3 * f10 - par6 * f10, f12 - par4 * f10, f13 + par5 * f10 - par7 * f10, f7, f9);
    }
 
    protected boolean pushOutOfBlocks(double par1, double par3, double par5) {
@@ -224,7 +223,7 @@ public class FXBoreParticles extends EntityFX {
          boolean var20 = !this.worldObj.isBlockNormalCubeDefault(var7, var8, var9 - 1, true);
          boolean var21 = !this.worldObj.isBlockNormalCubeDefault(var7, var8, var9 + 1, true);
          byte var22 = -1;
-         double var23 = (double)9999.0F;
+         double var23 = 9999.0F;
          if (var16 && var10 < var23) {
             var23 = var10;
             var22 = 0;
@@ -258,33 +257,33 @@ public class FXBoreParticles extends EntityFX {
          float var25 = this.rand.nextFloat() * 0.05F + 0.025F;
          float var26 = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F;
          if (var22 == 0) {
-            this.motionX = (double)(-var25);
-            this.motionY = this.motionZ = (double)var26;
+            this.motionX = -var25;
+            this.motionY = this.motionZ = var26;
          }
 
          if (var22 == 1) {
-            this.motionX = (double)var25;
-            this.motionY = this.motionZ = (double)var26;
+            this.motionX = var25;
+            this.motionY = this.motionZ = var26;
          }
 
          if (var22 == 2) {
-            this.motionY = (double)(-var25);
-            this.motionX = this.motionZ = (double)var26;
+            this.motionY = -var25;
+            this.motionX = this.motionZ = var26;
          }
 
          if (var22 == 3) {
-            this.motionY = (double)var25;
-            this.motionX = this.motionZ = (double)var26;
+            this.motionY = var25;
+            this.motionX = this.motionZ = var26;
          }
 
          if (var22 == 4) {
-            this.motionZ = (double)(-var25);
-            this.motionY = this.motionX = (double)var26;
+            this.motionZ = -var25;
+            this.motionY = this.motionX = var26;
          }
 
          if (var22 == 5) {
-            this.motionZ = (double)var25;
-            this.motionY = this.motionX = (double)var26;
+            this.motionZ = var25;
+            this.motionY = this.motionX = var26;
          }
 
          return true;

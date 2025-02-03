@@ -91,9 +91,9 @@ public class TileArcaneLampGrowth extends TileThaumcraft implements IEssentiaTra
 
    private void updatePlant() {
       if (this.lid != this.worldObj.getBlock(this.lx, this.ly, this.lz) || this.lmd != this.worldObj.getBlockMetadata(this.lx, this.ly, this.lz)) {
-         EntityPlayer p = this.worldObj.getClosestPlayer((double)this.lx, (double)this.ly, (double)this.lz, (double)32.0F);
+         EntityPlayer p = this.worldObj.getClosestPlayer(this.lx, this.ly, this.lz, 32.0F);
          if (p != null) {
-            PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(this.lx, this.ly, this.lz, 4259648), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, (double)this.lx, (double)this.ly, (double)this.lz, (double)32.0F));
+            PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(this.lx, this.ly, this.lz, 4259648), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.lx, this.ly, this.lz, 32.0F));
          }
 
          this.lid = this.worldObj.getBlock(this.lx, this.ly, this.lz);
@@ -156,9 +156,7 @@ public class TileArcaneLampGrowth extends TileThaumcraft implements IEssentiaTra
                return false;
             }
 
-            if (ic.getSuctionAmount(this.facing.getOpposite()) < this.getSuctionAmount(this.facing) && ic.takeEssentia(Aspect.PLANT, 1, this.facing.getOpposite()) == 1) {
-               return true;
-            }
+             return ic.getSuctionAmount(this.facing.getOpposite()) < this.getSuctionAmount(this.facing) && ic.takeEssentia(Aspect.PLANT, 1, this.facing.getOpposite()) == 1;
          }
 
          return false;

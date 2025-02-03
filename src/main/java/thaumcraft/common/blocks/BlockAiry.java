@@ -142,17 +142,17 @@ public class BlockAiry extends BlockContainer {
 
    public boolean canBeReplacedByLeaves(IBlockAccess world, int x, int y, int z) {
       int md = world.getBlockMetadata(x, y, z);
-      return md != 2 && md != 3 && md != 4 ? super.canBeReplacedByLeaves(world, x, y, z) : true;
+      return md == 2 || md == 3 || md == 4 || super.canBeReplacedByLeaves(world, x, y, z);
    }
 
    public boolean isLeaves(IBlockAccess world, int x, int y, int z) {
       int md = world.getBlockMetadata(x, y, z);
-      return md != 2 && md != 3 ? super.isLeaves(world, x, y, z) : true;
+      return md == 2 || md == 3 || super.isLeaves(world, x, y, z);
    }
 
    public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity) {
       int metadata = world.getBlockMetadata(x, y, z);
-      if (metadata == 4 && par7Entity != null && par7Entity instanceof EntityLivingBase && !(par7Entity instanceof EntityPlayer)) {
+      if (metadata == 4 && par7Entity instanceof EntityLivingBase && !(par7Entity instanceof EntityPlayer)) {
          int a = 1;
          if (world.getBlock(x, y - a, z) != ConfigBlocks.blockCosmeticSolid) {
             ++a;
@@ -174,7 +174,7 @@ public class BlockAiry extends BlockContainer {
       if (metadata == 4) {
          for(int a = 1; a < 3; ++a) {
             TileEntity te = world.getTileEntity(x, y - a, z);
-            if (te != null && te instanceof TileWardingStone) {
+            if (te instanceof TileWardingStone) {
                return te.getWorldObj().isBlockIndirectlyGettingPowered(x, y - a, z);
             }
          }
@@ -190,7 +190,7 @@ public class BlockAiry extends BlockContainer {
 
    public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
       int md = par1World.getBlockMetadata(par2, par3, par4);
-      return md != 0 && md != 2 && md != 3 && md != 4 && md != 5 && md != 10 && md != 11 && md != 12 ? super.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4) : AxisAlignedBB.getBoundingBox((double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F);
+      return md != 0 && md != 2 && md != 3 && md != 4 && md != 5 && md != 10 && md != 11 && md != 12 ? super.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4) : AxisAlignedBB.getBoundingBox(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
    }
 
    public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {
@@ -225,7 +225,7 @@ public class BlockAiry extends BlockContainer {
    public void onBlockHarvested(World par1World, int par2, int par3, int par4, int par5, EntityPlayer par6EntityPlayer) {
       if (par5 == 0 && !par1World.isRemote) {
          TileEntity te = par1World.getTileEntity(par2, par3, par4);
-         if (te != null && te instanceof INode && ((INode)te).getAspects().size() > 0) {
+         if (te instanceof INode && ((INode) te).getAspects().size() > 0) {
             for(Aspect aspect : ((INode)te).getAspects().getAspects()) {
                for(int a = 0; a <= ((INode)te).getAspects().getAmount(aspect) / 10; ++a) {
                   if (((INode)te).getAspects().getAmount(aspect) >= 5) {
@@ -246,7 +246,7 @@ public class BlockAiry extends BlockContainer {
    public void randomDisplayTick(World w, int i, int j, int k, Random r) {
       int md = w.getBlockMetadata(i, j, k);
       if (md == 1) {
-         FXSparkle ef2 = new FXSparkle(w, (double)((float)i + 0.5F), (double)((float)j + 0.5F), (double)((float)k + 0.5F), (double)((float)i + 0.5F + (r.nextFloat() - r.nextFloat()) / 3.0F), (double)((float)j + 0.5F + (r.nextFloat() - r.nextFloat()) / 3.0F), (double)((float)k + 0.5F + (r.nextFloat() - r.nextFloat()) / 3.0F), 1.0F, 6, 3);
+         FXSparkle ef2 = new FXSparkle(w, (float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, (float)i + 0.5F + (r.nextFloat() - r.nextFloat()) / 3.0F, (float)j + 0.5F + (r.nextFloat() - r.nextFloat()) / 3.0F, (float)k + 0.5F + (r.nextFloat() - r.nextFloat()) / 3.0F, 1.0F, 6, 3);
          ef2.setGravity(0.05F);
          ef2.noClip = true;
          ParticleEngine.instance.addEffect(w, ef2);
@@ -257,10 +257,10 @@ public class BlockAiry extends BlockContainer {
          int x2 = x1 + r.nextInt(3) - r.nextInt(3);
          int y2 = y1 + r.nextInt(3) - r.nextInt(3);
          int z2 = z1 + r.nextInt(3) - r.nextInt(3);
-         Thaumcraft.proxy.wispFX3(w, (double)x1, (double)y1, (double)z1, (double)x2, (double)y2, (double)z2, 0.1F + r.nextFloat() * 0.1F, 7, false, r.nextBoolean() ? -0.033F : 0.033F);
+         Thaumcraft.proxy.wispFX3(w, x1, y1, z1, x2, y2, z2, 0.1F + r.nextFloat() * 0.1F, 7, false, r.nextBoolean() ? -0.033F : 0.033F);
       } else if (md == 10 || md == 11) {
          float h = r.nextFloat() * 0.33F;
-         FXSpark ef = new FXSpark(w, (double)((float)i + w.rand.nextFloat()), (double)((float)j + 0.1515F + h / 2.0F), (double)((float)k + w.rand.nextFloat()), 0.33F + h);
+         FXSpark ef = new FXSpark(w, (float)i + w.rand.nextFloat(), (float)j + 0.1515F + h / 2.0F, (float)k + w.rand.nextFloat(), 0.33F + h);
          if (md == 10) {
             ef.setRBGColorF(0.65F + w.rand.nextFloat() * 0.1F, 1.0F, 1.0F);
             ef.setAlphaF(0.8F);
@@ -270,7 +270,7 @@ public class BlockAiry extends BlockContainer {
 
          ParticleEngine.instance.addEffect(w, ef);
          if (r.nextInt(50) == 0) {
-            w.playSound((double)i, (double)j, (double)k, "thaumcraft:jacobs", 0.5F, 1.0F + (r.nextFloat() - r.nextFloat()) * 0.2F, false);
+            w.playSound(i, j, k, "thaumcraft:jacobs", 0.5F, 1.0F + (r.nextFloat() - r.nextFloat()) * 0.2F, false);
          }
       }
 
@@ -284,7 +284,7 @@ public class BlockAiry extends BlockContainer {
       } else if (metadata == 4) {
          return new TileWardingStoneFence();
       } else {
-         return (TileEntity)(metadata == 5 ? new TileNodeEnergized() : super.createTileEntity(world, metadata));
+         return metadata == 5 ? new TileNodeEnergized() : super.createTileEntity(world, metadata);
       }
    }
 
@@ -314,9 +314,9 @@ public class BlockAiry extends BlockContainer {
       int md = world.getBlockMetadata(x, y, z);
       if (md == 5) {
          TileEntity te = world.getTileEntity(x, y - 1, z);
-         if (!world.isBlockIndirectlyGettingPowered(x, y - 1, z) && te != null && te instanceof TileNodeStabilizer) {
+         if (!world.isBlockIndirectlyGettingPowered(x, y - 1, z) && te instanceof TileNodeStabilizer) {
             te = world.getTileEntity(x, y + 1, z);
-            if (te == null || !(te instanceof TileNodeConverter)) {
+            if (!(te instanceof TileNodeConverter)) {
                explodify(world, x, y, z);
             }
          } else {
@@ -330,7 +330,7 @@ public class BlockAiry extends BlockContainer {
    public static void explodify(World world, int x, int y, int z) {
       if (!world.isRemote) {
          world.setBlockToAir(x, y, z);
-         world.createExplosion((Entity)null, (double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, 3.0F, false);
+         world.createExplosion(null, (double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, 3.0F, false);
 
          for(int a = 0; a < 50; ++a) {
             int xx = x + world.rand.nextInt(8) - world.rand.nextInt(8);

@@ -44,7 +44,7 @@ public class RenderEldritchGuardian extends RenderLiving {
       float base = 1.0F;
       double d3 = par4 - (double)guardian.yOffset;
       if (guardian instanceof EntityEldritchWarden) {
-         d3 -= (double)(guardian.height * ((float)((EntityEldritchWarden)guardian).getSpawnTimer() / 150.0F));
+         d3 -= guardian.height * ((float)((EntityEldritchWarden)guardian).getSpawnTimer() / 150.0F);
       } else {
          Entity e = Minecraft.getMinecraft().renderViewEntity;
          float d6 = e.worldObj.difficultySetting == EnumDifficulty.HARD ? 576.0F : 1024.0F;
@@ -56,7 +56,7 @@ public class RenderEldritchGuardian extends RenderLiving {
             if (d8 < (double)256.0F) {
                base = 0.6F;
             } else {
-               base = (float)((double)1.0F - Math.min((double)(d6 - d7), d8 - (double)d7) / (double)(d6 - d7)) * 0.6F;
+               base = (float)((double)1.0F - Math.min(d6 - d7, d8 - (double)d7) / (double)(d6 - d7)) * 0.6F;
             }
          }
       }

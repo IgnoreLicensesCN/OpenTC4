@@ -26,20 +26,20 @@ public class CrucibleRecipe {
 		if (cat instanceof String) {
 			this.catalyst = OreDictionary.getOres((String) cat);
 		}
-		String hc = researchKey + result.toString();
+		StringBuilder hc = new StringBuilder(researchKey + result.toString());
 		for (Aspect tag:tags.getAspects()) {
-			hc += tag.getTag()+tags.getAmount(tag);
+			hc.append(tag.getTag()).append(tags.getAmount(tag));
 		}
 		if (cat instanceof ItemStack) {
-			hc += ((ItemStack)cat).toString();
+			hc.append(((ItemStack) cat).toString());
 		} else
 		if (cat instanceof ArrayList && ((ArrayList<ItemStack>)catalyst).size()>0) {
 			for (ItemStack is :(ArrayList<ItemStack>)catalyst) {
-				hc += is.toString();
+				hc.append(is.toString());
 			}
 		}
 		
-		hash = hc.hashCode();
+		hash = hc.toString().hashCode();
 	}
 	
 		
@@ -66,7 +66,7 @@ public class CrucibleRecipe {
 		} else 
 		if (catalyst instanceof ArrayList && ((ArrayList<ItemStack>)catalyst).size()>0) {
 			ItemStack[] ores = ((ArrayList<ItemStack>)catalyst).toArray(new ItemStack[]{});
-			if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{cat},ores)) return true;
+            return ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{cat}, ores);
 		}
 		return false;
 	}

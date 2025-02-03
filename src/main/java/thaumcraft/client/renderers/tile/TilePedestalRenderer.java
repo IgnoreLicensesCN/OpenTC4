@@ -31,12 +31,12 @@ public class TilePedestalRenderer extends TileEntitySpecialRenderer {
 
          ItemStack is = ped.getStackInSlot(0).copy();
          is.stackSize = 1;
-         entityitem = new EntityItem(ped.getWorldObj(), (double)0.0F, (double)0.0F, (double)0.0F, is);
+         entityitem = new EntityItem(ped.getWorldObj(), 0.0F, 0.0F, 0.0F, is);
          entityitem.hoverStart = 0.0F;
-         RenderManager.instance.renderEntityWithPosYaw(entityitem, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F, 0.0F);
+         RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
          if (!Minecraft.isFancyGraphicsEnabled()) {
             GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
-            RenderManager.instance.renderEntityWithPosYaw(entityitem, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F, 0.0F);
+            RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
          }
 
          GL11.glPopMatrix();

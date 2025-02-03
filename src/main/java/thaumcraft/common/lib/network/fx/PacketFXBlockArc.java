@@ -50,7 +50,7 @@ public class PacketFXBlockArc implements IMessage, IMessageHandler<PacketFXBlock
             b = 0.0F;
          }
 
-         Thaumcraft.proxy.arcLightning(Thaumcraft.proxy.getClientWorld(), p.posX, p.boundingBox.minY + (double)(p.height / 2.0F), p.posZ, (double)message.x + (double)0.5F, (double)(message.y + 1), (double)message.z + (double)0.5F, r, g, b, 0.5F);
+         Thaumcraft.proxy.arcLightning(Thaumcraft.proxy.getClientWorld(), p.posX, p.boundingBox.minY + (double)(p.height / 2.0F), p.posZ, (double)message.x + (double)0.5F, message.y + 1, (double)message.z + (double)0.5F, r, g, b, 0.5F);
       }
 
       return null;

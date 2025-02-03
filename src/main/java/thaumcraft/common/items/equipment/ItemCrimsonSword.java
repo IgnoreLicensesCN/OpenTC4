@@ -48,7 +48,7 @@ public class ItemCrimsonSword extends ItemSword implements IRepairable, IWarping
    }
 
    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
-      return par2ItemStack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 15)) ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
+      return par2ItemStack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 15)) || super.getIsRepairable(par1ItemStack, par2ItemStack);
    }
 
    public void onUpdate(ItemStack stack, World world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
@@ -64,7 +64,7 @@ public class ItemCrimsonSword extends ItemSword implements IRepairable, IWarping
          try {
             target.addPotionEffect(new PotionEffect(Potion.weakness.getId(), 60));
             target.addPotionEffect(new PotionEffect(Potion.hunger.getId(), 120));
-         } catch (Exception var5) {
+         } catch (Exception ignored) {
          }
       }
 

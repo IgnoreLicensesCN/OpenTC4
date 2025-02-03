@@ -14,7 +14,7 @@ public interface IEssentiaTransport {
 	 * @param face
 	 * @return
 	 */
-	public boolean isConnectable(ForgeDirection face);
+    boolean isConnectable(ForgeDirection face);
 	
 	/**
 	 * Is this side used to input essentia?
@@ -34,7 +34,7 @@ public interface IEssentiaTransport {
 	 * Sets the amount of suction this block will apply
 	 * @param suction
 	 */
-	public void setSuction(Aspect aspect, int amount);
+    void setSuction(Aspect aspect, int amount);
 	
 	/**
 	 * Returns the type of suction this block is applying. 
@@ -43,7 +43,7 @@ public interface IEssentiaTransport {
 	 * @return
 	 * 		a return type of null indicates the suction is untyped and the first thing available will be drawn
 	 */
-	public Aspect getSuctionType(ForgeDirection face);
+    Aspect getSuctionType(ForgeDirection face);
 	
 	/**
 	 * Returns the strength of suction this block is applying. 
@@ -51,33 +51,33 @@ public interface IEssentiaTransport {
 	 * 		the location from where the suction is being checked
 	 * @return
 	 */
-	public int getSuctionAmount(ForgeDirection face);
+    int getSuctionAmount(ForgeDirection face);
 	
 	/**
 	 * remove the specified amount of essentia from this transport tile
 	 * @return how much was actually taken
 	 */
-	public int takeEssentia(Aspect aspect, int amount, ForgeDirection face);
+    int takeEssentia(Aspect aspect, int amount, ForgeDirection face);
 	
 	/**
 	 * add the specified amount of essentia to this transport tile
 	 * @return how much was actually added
 	 */
-	public int addEssentia(Aspect aspect, int amount, ForgeDirection face);
+    int addEssentia(Aspect aspect, int amount, ForgeDirection face);
 	
 	/**
 	 * What type of essentia this contains
 	 * @param face
 	 * @return
 	 */
-	public Aspect getEssentiaType(ForgeDirection face);
+    Aspect getEssentiaType(ForgeDirection face);
 	
 	/**
 	 * How much essentia this block contains
 	 * @param face
 	 * @return
 	 */
-	public int getEssentiaAmount(ForgeDirection face);
+    int getEssentiaAmount(ForgeDirection face);
 	
 	
 
@@ -85,7 +85,7 @@ public interface IEssentiaTransport {
 	 * Essentia will not be drawn from this container unless the suction exceeds this amount.
 	 * @return the amount
 	 */
-	public int getMinimumSuction();
+    int getMinimumSuction();
 
 	/**
 	 * Return true if you want the conduit to extend a little further into the block. 

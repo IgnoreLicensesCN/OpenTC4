@@ -26,9 +26,9 @@ public class CCRenderPipeline {
    }
 
    private void unbuild() {
-      for(int i = 0; i < this.attribs.size(); ++i) {
-         ((CCRenderState.VertexAttribute)this.attribs.get(i)).active = false;
-      }
+       for (CCRenderState.VertexAttribute attrib : this.attribs) {
+           ((CCRenderState.VertexAttribute) attrib).active = false;
+       }
 
       this.attribs.clear();
       this.sorted.clear();
@@ -53,26 +53,26 @@ public class CCRenderPipeline {
             this.addAttribute(CCRenderState.colourAttrib);
          }
 
-         for(int i = 0; i < this.ops.size(); ++i) {
-            CCRenderState.IVertexOperation op = (CCRenderState.IVertexOperation)this.ops.get(i);
-            this.loading = (PipelineNode)this.nodes.get(op.operationID());
-            boolean loaded = op.load();
-            if (loaded) {
-               this.loading.op = op;
-            }
+          for (CCRenderState.IVertexOperation iVertexOperation : this.ops) {
+              CCRenderState.IVertexOperation op = (CCRenderState.IVertexOperation) iVertexOperation;
+              this.loading = this.nodes.get(op.operationID());
+              boolean loaded = op.load();
+              if (loaded) {
+                  this.loading.op = op;
+              }
 
-            if (op instanceof CCRenderState.VertexAttribute) {
-               if (loaded) {
-                  this.attribs.add((CCRenderState.VertexAttribute)op);
-               } else {
-                  ((CCRenderState.VertexAttribute)op).active = false;
-               }
-            }
-         }
+              if (op instanceof CCRenderState.VertexAttribute) {
+                  if (loaded) {
+                      this.attribs.add((CCRenderState.VertexAttribute) op);
+                  } else {
+                      ((CCRenderState.VertexAttribute) op).active = false;
+                  }
+              }
+          }
 
-         for(int i = 0; i < this.nodes.size(); ++i) {
-            ((PipelineNode)this.nodes.get(i)).add();
-         }
+          for (PipelineNode node : this.nodes) {
+              ((PipelineNode) node).add();
+          }
 
       }
    }
@@ -95,9 +95,9 @@ public class CCRenderPipeline {
    }
 
    public void operate() {
-      for(int i = 0; i < this.sorted.size(); ++i) {
-         ((CCRenderState.IVertexOperation)this.sorted.get(i)).operate();
-      }
+       for (CCRenderState.IVertexOperation iVertexOperation : this.sorted) {
+           ((CCRenderState.IVertexOperation) iVertexOperation).operate();
+       }
 
    }
 
@@ -137,9 +137,9 @@ public class CCRenderPipeline {
 
       public void add() {
          if (this.op != null) {
-            for(int i = 0; i < this.deps.size(); ++i) {
-               ((PipelineNode)this.deps.get(i)).add();
-            }
+             for (PipelineNode dep : this.deps) {
+                 ((PipelineNode) dep).add();
+             }
 
             this.deps.clear();
             CCRenderPipeline.this.sorted.add(this.op);

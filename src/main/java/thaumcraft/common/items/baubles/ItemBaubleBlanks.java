@@ -85,12 +85,12 @@ public class ItemBaubleBlanks extends Item implements IBauble, IVisDiscountGear,
    }
 
    public int getColorFromItemStack(ItemStack stack, int par2) {
-      return stack.getItemDamage() >= 3 && stack.getItemDamage() <= 8 ? ((Aspect)Aspect.getPrimalAspects().get(stack.getItemDamage() - 3)).getColor() : super.getColorFromItemStack(stack, par2);
+      return stack.getItemDamage() >= 3 && stack.getItemDamage() <= 8 ? Aspect.getPrimalAspects().get(stack.getItemDamage() - 3).getColor() : super.getColorFromItemStack(stack, par2);
    }
 
    public String getItemStackDisplayName(ItemStack stack) {
       if (stack.getItemDamage() >= 3 && stack.getItemDamage() <= 8) {
-         Aspect aspect = (Aspect)Aspect.getPrimalAspects().get(stack.getItemDamage() - 3);
+         Aspect aspect = Aspect.getPrimalAspects().get(stack.getItemDamage() - 3);
          return StatCollector.translateToLocal("item.ItemBaubleBlanks.3.name").replace("%TYPE", aspect.getName());
       } else {
          return super.getItemStackDisplayName(stack);
@@ -99,7 +99,7 @@ public class ItemBaubleBlanks extends Item implements IBauble, IVisDiscountGear,
 
    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
       if (stack.getItemDamage() >= 3 && stack.getItemDamage() <= 8) {
-         Aspect aspect = (Aspect)Aspect.getPrimalAspects().get(stack.getItemDamage() - 3);
+         Aspect aspect = Aspect.getPrimalAspects().get(stack.getItemDamage() - 3);
          list.add(EnumChatFormatting.DARK_PURPLE + aspect.getName() + " " + StatCollector.translateToLocal("tc.discount") + ": 1%");
       }
 

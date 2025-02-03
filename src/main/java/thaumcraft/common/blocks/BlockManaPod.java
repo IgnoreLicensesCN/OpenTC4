@@ -114,7 +114,7 @@ public class BlockManaPod extends Block {
          par1World.setBlockToAir(par2, par3, par4);
       } else if (par1World.rand.nextInt(30) == 0) {
          TileEntity tile = par1World.getTileEntity(par2, par3, par4);
-         if (tile != null && tile instanceof TileManaPod) {
+         if (tile instanceof TileManaPod) {
             ((TileManaPod)tile).checkGrowth();
          }
 
@@ -160,7 +160,7 @@ public class BlockManaPod extends Block {
 
    public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
       TileEntity tile = world.getTileEntity(x, y, z);
-      if (tile != null && tile instanceof TileManaPod && ((TileManaPod)tile).aspect != null) {
+      if (tile instanceof TileManaPod && ((TileManaPod) tile).aspect != null) {
          st.put(new WorldCoordinates(x, y, z, world.provider.dimensionId), ((TileManaPod)tile).aspect);
       }
 
@@ -180,7 +180,7 @@ public class BlockManaPod extends Block {
                aspect = (Aspect) st.get(new WorldCoordinates(x, y, z, world.provider.dimensionId));
            } else {
                TileEntity tile = world.getTileEntity(x, y, z);
-               if (tile != null && tile instanceof TileManaPod && ((TileManaPod) tile).aspect != null) {
+               if (tile instanceof TileManaPod && ((TileManaPod) tile).aspect != null) {
                    aspect = ((TileManaPod) tile).aspect;
                }
            }

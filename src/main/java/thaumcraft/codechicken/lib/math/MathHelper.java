@@ -67,12 +67,12 @@ public class MathHelper {
    }
 
    public static int approachExpI(int a, int b, double ratio) {
-      int r = (int)Math.round(approachExp((double)a, (double)b, ratio));
+      int r = (int)Math.round(approachExp(a, b, ratio));
       return r == a ? b : r;
    }
 
    public static int retreatExpI(int a, int b, int c, double ratio, int kick) {
-      int r = (int)Math.round(retreatExp((double)a, (double)b, (double)c, ratio, (double)kick));
+      int r = (int)Math.round(retreatExp(a, b, c, ratio, kick));
       return r == a ? b : r;
    }
 
@@ -85,11 +85,11 @@ public class MathHelper {
    }
 
    public static int compare(int a, int b) {
-      return a == b ? 0 : (a < b ? -1 : 1);
+      return Integer.compare(a, b);
    }
 
    public static int compare(double a, double b) {
-      return a == b ? 0 : (a < b ? -1 : 1);
+      return Double.compare(a, b);
    }
 
    static {
@@ -97,9 +97,9 @@ public class MathHelper {
          SIN_TABLE[i] = Math.sin((double)i / (double)65536.0F * (double)2.0F * Math.PI);
       }
 
-      SIN_TABLE[0] = (double)0.0F;
-      SIN_TABLE[16384] = (double)1.0F;
-      SIN_TABLE['耀'] = (double)0.0F;
-      SIN_TABLE['쀀'] = (double)1.0F;
+      SIN_TABLE[0] = 0.0F;
+      SIN_TABLE[16384] = 1.0F;
+      SIN_TABLE['耀'] = 0.0F;
+      SIN_TABLE['쀀'] = 1.0F;
    }
 }

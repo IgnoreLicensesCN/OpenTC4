@@ -61,12 +61,12 @@ public class ItemCultistRobeArmor extends ItemArmor implements IRepairable, IRun
    }
 
    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-      list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": " + this.getVisDiscount(stack, player, (Aspect)null) + "%");
+      list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": " + this.getVisDiscount(stack, player, null) + "%");
       super.addInformation(stack, player, list, par4);
    }
 
    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
-      return par2ItemStack.isItemEqual(new ItemStack(Items.iron_ingot)) ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
+      return par2ItemStack.isItemEqual(new ItemStack(Items.iron_ingot)) || super.getIsRepairable(par1ItemStack, par2ItemStack);
    }
 
    public int getRunicCharge(ItemStack itemstack) {

@@ -76,7 +76,7 @@ public class ItemResearchNotes extends Item {
                --stack.stackSize;
                world.playSoundAtEntity(player, "thaumcraft:learn", 0.75F, 1.0F);
             } else {
-               player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("tc.researcherror"), new Object[0]));
+               player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("tc.researcherror")));
             }
          } else if (stack.getItemDamage() == 42 || stack.getItemDamage() == 24) {
             String key = ResearchManager.findHiddenResearch(player);

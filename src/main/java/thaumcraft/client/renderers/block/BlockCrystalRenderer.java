@@ -17,13 +17,13 @@ public class BlockCrystalRenderer extends BlockRenderer implements ISimpleBlockR
          GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
          TileCrystal tc = new TileCrystal();
          tc.blockMetadata = metadata;
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(tc, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(tc, 0.0F, 0.0F, 0.0F, 0.0F);
          GL11.glEnable(32826);
       }
 
       if (metadata == 7) {
          GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileEldritchCrystal(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileEldritchCrystal(), 0.0F, 0.0F, 0.0F, 0.0F);
          GL11.glEnable(32826);
       }
 

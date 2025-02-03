@@ -44,7 +44,7 @@ public class PacketSyncScannedPhenomena implements IMessage, IMessageHandler<Pac
    }
 
    public PacketSyncScannedPhenomena(EntityPlayer player) {
-      this.data = (ArrayList)Thaumcraft.proxy.getScannedPhenomena().get(player.getCommandSenderName());
+      this.data = Thaumcraft.proxy.getScannedPhenomena().get(player.getCommandSenderName());
    }
 
    @SideOnly(Side.CLIENT)

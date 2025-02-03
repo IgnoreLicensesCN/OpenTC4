@@ -133,17 +133,17 @@ public class REHWandHandler {
          this.renderFocusRadialHUD(event.resolution.getScaledWidth_double(), event.resolution.getScaledHeight_double(), time, event.partialTicks);
          if (time > this.lastTime) {
             for(String key : this.fociHover.keySet()) {
-               if ((Boolean)this.fociHover.get(key)) {
+               if (this.fociHover.get(key)) {
                   if (!KeyHandler.radialActive && !KeyHandler.radialLock) {
                      PacketHandler.INSTANCE.sendToServer(new PacketFocusChangeToServer(mc.thePlayer, key));
                      KeyHandler.radialLock = true;
                   }
 
-                  if ((Float)this.fociScale.get(key) < 1.3F) {
-                     this.fociScale.put(key, (Float)this.fociScale.get(key) + 0.025F);
+                  if (this.fociScale.get(key) < 1.3F) {
+                     this.fociScale.put(key, this.fociScale.get(key) + 0.025F);
                   }
-               } else if ((Float)this.fociScale.get(key) > 1.0F) {
-                  this.fociScale.put(key, (Float)this.fociScale.get(key) - 0.025F);
+               } else if (this.fociScale.get(key) > 1.0F) {
+                  this.fociScale.put(key, this.fociScale.get(key) - 0.025F);
                }
             }
 
@@ -184,14 +184,14 @@ public class REHWandHandler {
             GL11.glClear(256);
             GL11.glMatrixMode(5889);
             GL11.glLoadIdentity();
-            GL11.glOrtho((double)0.0F, sw, sh, (double)0.0F, (double)1000.0F, (double)3000.0F);
+            GL11.glOrtho(0.0F, sw, sh, 0.0F, 1000.0F, 3000.0F);
             GL11.glMatrixMode(5888);
             GL11.glLoadIdentity();
             GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
             GL11.glDisable(2929);
             GL11.glDepthMask(false);
             GL11.glPushMatrix();
-            GL11.glTranslated(sw / (double)2.0F, sh / (double)2.0F, (double)0.0F);
+            GL11.glTranslated(sw / (double)2.0F, sh / (double)2.0F, 0.0F);
             ItemStack tt = null;
             float width = 16.0F + (float)this.fociItem.size() * 2.5F;
             UtilsFX.bindTexture("textures/misc/radial.png");
@@ -231,21 +231,21 @@ public class REHWandHandler {
                }
             }
 
-            GL11.glScaled((double)radialHudScale, (double)radialHudScale, (double)radialHudScale);
+            GL11.glScaled(radialHudScale, radialHudScale, radialHudScale);
             float currentRot = -90.0F * radialHudScale;
             float pieSlice = 360.0F / (float)this.fociItem.size();
-            String key = (String)this.foci.firstKey();
+            String key = this.foci.firstKey();
 
             for(int a = 0; a < this.fociItem.size(); ++a) {
-               double xx = (double)(MathHelper.cos(currentRot / 180.0F * (float)Math.PI) * width);
-               double yy = (double)(MathHelper.sin(currentRot / 180.0F * (float)Math.PI) * width);
+               double xx = MathHelper.cos(currentRot / 180.0F * (float)Math.PI) * width;
+               double yy = MathHelper.sin(currentRot / 180.0F * (float)Math.PI) * width;
                currentRot += pieSlice;
                GL11.glPushMatrix();
-               GL11.glTranslated(xx, yy, (double)100.0F);
-               GL11.glScalef((Float)this.fociScale.get(key), (Float)this.fociScale.get(key), (Float)this.fociScale.get(key));
+               GL11.glTranslated(xx, yy, 100.0F);
+               GL11.glScalef(this.fociScale.get(key), this.fociScale.get(key), this.fociScale.get(key));
                GL11.glEnable(32826);
                RenderHelper.enableGUIStandardItemLighting();
-               ItemStack item = ((ItemStack)this.fociItem.get(key)).copy();
+               ItemStack item = this.fociItem.get(key).copy();
                item.stackTagCompound = null;
                ri.renderItemIntoGUI(mc.fontRenderer, mc.renderEngine, item, -8, -8);
                RenderHelper.disableStandardItemLighting();
@@ -256,7 +256,7 @@ public class REHWandHandler {
                   int my = (int)((double)j - sh / (double)2.0F - yy);
                   if (mx >= -10 && mx <= 10 && my >= -10 && my <= 10) {
                      this.fociHover.put(key, true);
-                     tt = (ItemStack)this.fociItem.get(key);
+                     tt = this.fociItem.get(key);
                      if (k == 0) {
                         KeyHandler.radialActive = false;
                         KeyHandler.radialLock = true;
@@ -268,7 +268,7 @@ public class REHWandHandler {
                   }
                }
 
-               key = (String)this.foci.higherKey(key);
+               key = this.foci.higherKey(key);
             }
 
             GL11.glPopMatrix();
@@ -289,7 +289,7 @@ public class REHWandHandler {
    public boolean handleArchitectOverlay(ItemStack stack, DrawBlockHighlightEvent event, int playerticks, MovingObjectPosition target) {
       Minecraft mc = Minecraft.getMinecraft();
       IArchitect af = (IArchitect)stack.getItem();
-      String h = target.blockX + "" + target.blockY + "" + target.blockZ + "" + target.sideHit + "" + playerticks / 5;
+      String h = target.blockX + "" + target.blockY + target.blockZ + target.sideHit + playerticks / 5;
       int hc = h.hashCode();
       if (hc != this.lastArcHash) {
          this.lastArcHash = hc;
@@ -297,7 +297,7 @@ public class REHWandHandler {
       }
 
       if (this.architectBlocks != null && this.architectBlocks.size() != 0) {
-         this.drawArchitectAxis((double)target.blockX, (double)target.blockY, (double)target.blockZ, event.partialTicks, af.showAxis(stack, mc.theWorld, event.player, target.sideHit, IArchitect.EnumAxis.X), af.showAxis(stack, mc.theWorld, event.player, target.sideHit, IArchitect.EnumAxis.Y), af.showAxis(stack, mc.theWorld, event.player, target.sideHit, IArchitect.EnumAxis.Z));
+         this.drawArchitectAxis(target.blockX, target.blockY, target.blockZ, event.partialTicks, af.showAxis(stack, mc.theWorld, event.player, target.sideHit, IArchitect.EnumAxis.X), af.showAxis(stack, mc.theWorld, event.player, target.sideHit, IArchitect.EnumAxis.Y), af.showAxis(stack, mc.theWorld, event.player, target.sideHit, IArchitect.EnumAxis.Z));
 
          for(BlockCoordinates cc : this.architectBlocks) {
             this.drawOverlayBlock(cc.x, cc.y, cc.z, playerticks, mc, event.partialTicks);
@@ -388,7 +388,7 @@ public class REHWandHandler {
       GL11.glTranslated(-iPX + (double)x + (double)0.5F, -iPY + (double)y, -iPZ + (double)z + (double)0.5F);
       GL11.glDisable(2896);
       Tessellator t = Tessellator.instance;
-      this.renderBlocks.setRenderBounds((double)-0.001F, (double)-0.001F, (double)-0.001F, (double)1.001F, (double)1.001F, (double)1.001F);
+      this.renderBlocks.setRenderBounds(-0.001F, -0.001F, -0.001F, 1.001F, 1.001F, 1.001F);
       float r = MathHelper.sin((float)ticks / 2.0F + (float)x) * 0.2F + 0.3F;
       float g = MathHelper.sin((float)ticks / 3.0F + (float)y) * 0.2F + 0.3F;
       float b = MathHelper.sin((float)ticks / 4.0F + (float)z) * 0.2F + 0.8F;
@@ -398,27 +398,27 @@ public class REHWandHandler {
       mc.renderEngine.bindTexture(TextureMap.locationBlocksTexture);
       GL11.glTexEnvi(8960, 8704, 260);
       if (this.shouldSideBeRendered(x, y, z, 1)) {
-         this.renderBlocks.renderFaceYNeg(ConfigBlocks.blockJar, (double)-0.5F, (double)0.0F, (double)-0.5F, this.getIconOnSide(mc.theWorld, x, y, z, 0, ticks));
+         this.renderBlocks.renderFaceYNeg(ConfigBlocks.blockJar, -0.5F, 0.0F, -0.5F, this.getIconOnSide(mc.theWorld, x, y, z, 0, ticks));
       }
 
       if (this.shouldSideBeRendered(x, y, z, 0)) {
-         this.renderBlocks.renderFaceYPos(ConfigBlocks.blockJar, (double)-0.5F, (double)0.0F, (double)-0.5F, this.getIconOnSide(mc.theWorld, x, y, z, 1, ticks));
+         this.renderBlocks.renderFaceYPos(ConfigBlocks.blockJar, -0.5F, 0.0F, -0.5F, this.getIconOnSide(mc.theWorld, x, y, z, 1, ticks));
       }
 
       if (this.shouldSideBeRendered(x, y, z, 3)) {
-         this.renderBlocks.renderFaceZNeg(ConfigBlocks.blockJar, (double)-0.5F, (double)0.0F, (double)-0.5F, this.getIconOnSide(mc.theWorld, x, y, z, 2, ticks));
+         this.renderBlocks.renderFaceZNeg(ConfigBlocks.blockJar, -0.5F, 0.0F, -0.5F, this.getIconOnSide(mc.theWorld, x, y, z, 2, ticks));
       }
 
       if (this.shouldSideBeRendered(x, y, z, 2)) {
-         this.renderBlocks.renderFaceZPos(ConfigBlocks.blockJar, (double)-0.5F, (double)0.0F, (double)-0.5F, this.getIconOnSide(mc.theWorld, x, y, z, 3, ticks));
+         this.renderBlocks.renderFaceZPos(ConfigBlocks.blockJar, -0.5F, 0.0F, -0.5F, this.getIconOnSide(mc.theWorld, x, y, z, 3, ticks));
       }
 
       if (this.shouldSideBeRendered(x, y, z, 5)) {
-         this.renderBlocks.renderFaceXNeg(ConfigBlocks.blockJar, (double)-0.5F, (double)0.0F, (double)-0.5F, this.getIconOnSide(mc.theWorld, x, y, z, 4, ticks));
+         this.renderBlocks.renderFaceXNeg(ConfigBlocks.blockJar, -0.5F, 0.0F, -0.5F, this.getIconOnSide(mc.theWorld, x, y, z, 4, ticks));
       }
 
       if (this.shouldSideBeRendered(x, y, z, 4)) {
-         this.renderBlocks.renderFaceXPos(ConfigBlocks.blockJar, (double)-0.5F, (double)0.0F, (double)-0.5F, this.getIconOnSide(mc.theWorld, x, y, z, 5, ticks));
+         this.renderBlocks.renderFaceXPos(ConfigBlocks.blockJar, -0.5F, 0.0F, -0.5F, this.getIconOnSide(mc.theWorld, x, y, z, 5, ticks));
       }
 
       t.draw();
@@ -455,26 +455,26 @@ public class REHWandHandler {
          GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
          if (dx) {
             GL11.glPushMatrix();
-            UtilsFX.renderQuadCenteredFromTexture((String)this.tex, 1.0F, r, g, b, 200, 1, 1.0F);
+            UtilsFX.renderQuadCenteredFromTexture(this.tex, 1.0F, r, g, b, 200, 1, 1.0F);
             GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
-            UtilsFX.renderQuadCenteredFromTexture((String)this.tex, 1.0F, r, g, b, 200, 1, 1.0F);
+            UtilsFX.renderQuadCenteredFromTexture(this.tex, 1.0F, r, g, b, 200, 1, 1.0F);
             GL11.glPopMatrix();
          }
 
          if (dz) {
             GL11.glPushMatrix();
             GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
-            UtilsFX.renderQuadCenteredFromTexture((String)this.tex, 1.0F, r, g, b, 200, 1, 1.0F);
+            UtilsFX.renderQuadCenteredFromTexture(this.tex, 1.0F, r, g, b, 200, 1, 1.0F);
             GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
-            UtilsFX.renderQuadCenteredFromTexture((String)this.tex, 1.0F, r, g, b, 200, 1, 1.0F);
+            UtilsFX.renderQuadCenteredFromTexture(this.tex, 1.0F, r, g, b, 200, 1, 1.0F);
             GL11.glPopMatrix();
          }
 
          if (dy) {
             GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
-            UtilsFX.renderQuadCenteredFromTexture((String)this.tex, 1.0F, r, g, b, 200, 1, 1.0F);
+            UtilsFX.renderQuadCenteredFromTexture(this.tex, 1.0F, r, g, b, 200, 1, 1.0F);
             GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
-            UtilsFX.renderQuadCenteredFromTexture((String)this.tex, 1.0F, r, g, b, 200, 1, 1.0F);
+            UtilsFX.renderQuadCenteredFromTexture(this.tex, 1.0F, r, g, b, 200, 1, 1.0F);
          }
 
          GL11.glPopMatrix();

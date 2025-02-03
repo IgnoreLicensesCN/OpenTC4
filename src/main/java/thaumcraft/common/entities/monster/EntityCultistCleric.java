@@ -33,8 +33,8 @@ public class EntityCultistCleric extends EntityCultist implements IRangedAttackM
       super(p_i1745_1_);
       this.tasks.addTask(0, new EntityAISwimming(this));
       this.tasks.addTask(1, new AIAltarFocus(this));
-      this.tasks.addTask(2, new AILongRangeAttack(this, (double)2.0F, (double)1.0F, 20, 40, 24.0F));
-      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityLivingBase.class, (double)1.0F, false));
+      this.tasks.addTask(2, new AILongRangeAttack(this, 2.0F, 1.0F, 20, 40, 24.0F));
+      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityLivingBase.class, 1.0F, false));
       this.tasks.addTask(4, new EntityAIRestrictOpenDoor(this));
       this.tasks.addTask(5, new EntityAIOpenDoor(this, true));
       this.tasks.addTask(6, new EntityAIMoveTowardsRestriction(this, 0.8));
@@ -47,7 +47,7 @@ public class EntityCultistCleric extends EntityCultist implements IRangedAttackM
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)30.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(30.0F);
    }
 
    protected void addRandomArmor() {
@@ -75,7 +75,7 @@ public class EntityCultistCleric extends EntityCultist implements IRangedAttackM
          this.worldObj.spawnEntityInWorld(blast);
       } else {
          float f1 = MathHelper.sqrt_float(f) * 0.5F;
-         this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1009, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
+         this.worldObj.playAuxSFXAtEntity(null, 1009, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
 
          for(int i = 0; i < 3; ++i) {
             EntitySmallFireball entitysmallfireball = new EntitySmallFireball(this.worldObj, this, d0 + this.rand.nextGaussian() * (double)f1, d1, d2 + this.rand.nextGaussian() * (double)f1);
@@ -92,7 +92,7 @@ public class EntityCultistCleric extends EntityCultist implements IRangedAttackM
 
    public void entityInit() {
       super.entityInit();
-      this.dataWatcher.addObject(16, new Byte((byte)0));
+      this.dataWatcher.addObject(16, (byte) 0);
    }
 
    public boolean getIsRitualist() {
@@ -144,7 +144,7 @@ public class EntityCultistCleric extends EntityCultist implements IRangedAttackM
          double d0 = (double)this.getHomePosition().posX + (double)0.5F - this.posX;
          double d1 = (double)this.getHomePosition().posY + (double)1.5F - (this.posY + (double)this.getEyeHeight());
          double d2 = (double)this.getHomePosition().posZ + (double)0.5F - this.posZ;
-         double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+         double d3 = MathHelper.sqrt_double(d0 * d0 + d2 * d2);
          float f = (float)(Math.atan2(d2, d0) * (double)180.0F / Math.PI) - 90.0F;
          float f1 = (float)(-(Math.atan2(d1, d3) * (double)180.0F / Math.PI));
          this.rotationPitch = this.updateRotation(this.rotationPitch, f1, 10.0F);

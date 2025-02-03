@@ -47,15 +47,15 @@ public class FXVent extends EntityFX {
 
    public void setHeading(double par1, double par3, double par5, float par7, float par8) {
       float f2 = MathHelper.sqrt_double(par1 * par1 + par3 * par3 + par5 * par5);
-      par1 /= (double)f2;
-      par3 /= (double)f2;
-      par5 /= (double)f2;
+      par1 /= f2;
+      par3 /= f2;
+      par5 /= f2;
       par1 += this.rand.nextGaussian() * (double)(this.rand.nextBoolean() ? -1 : 1) * (double)0.0075F * (double)par8;
       par3 += this.rand.nextGaussian() * (double)(this.rand.nextBoolean() ? -1 : 1) * (double)0.0075F * (double)par8;
       par5 += this.rand.nextGaussian() * (double)(this.rand.nextBoolean() ? -1 : 1) * (double)0.0075F * (double)par8;
-      par1 *= (double)par7;
-      par3 *= (double)par7;
-      par5 *= (double)par7;
+      par1 *= par7;
+      par3 *= par7;
+      par5 *= par7;
       this.motionX = par1;
       this.motionY = par3;
       this.motionZ = par5;
@@ -80,8 +80,8 @@ public class FXVent extends EntityFX {
       }
 
       if (this.onGround) {
-         this.motionX *= (double)0.7F;
-         this.motionZ *= (double)0.7F;
+         this.motionX *= 0.7F;
+         this.motionZ *= 0.7F;
       }
 
    }
@@ -107,10 +107,10 @@ public class FXVent extends EntityFX {
       tessellator.setBrightness(this.getBrightnessForRender(f));
       float alpha = this.particleAlpha * ((this.psm - this.particleScale) / this.psm);
       tessellator.setColorRGBA_F(this.particleRed * var16, this.particleGreen * var16, this.particleBlue * var16, alpha);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 - f3 * var12 - f5 * var12), (double)var9, (double)var11);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 - f3 * var12 + f5 * var12), (double)var9, (double)var10);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 + f3 * var12 + f5 * var12), (double)var8, (double)var10);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 + f3 * var12 - f5 * var12), (double)var8, (double)var11);
+      tessellator.addVertexWithUV(var13 - f1 * var12 - f4 * var12, var14 - f2 * var12, var15 - f3 * var12 - f5 * var12, var9, var11);
+      tessellator.addVertexWithUV(var13 - f1 * var12 + f4 * var12, var14 + f2 * var12, var15 - f3 * var12 + f5 * var12, var9, var10);
+      tessellator.addVertexWithUV(var13 + f1 * var12 + f4 * var12, var14 + f2 * var12, var15 + f3 * var12 + f5 * var12, var8, var10);
+      tessellator.addVertexWithUV(var13 + f1 * var12 - f4 * var12, var14 - f2 * var12, var15 + f3 * var12 - f5 * var12, var8, var11);
    }
 
    public int getFXLayer() {

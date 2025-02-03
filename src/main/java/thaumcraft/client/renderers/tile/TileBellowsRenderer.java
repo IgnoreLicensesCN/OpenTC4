@@ -51,7 +51,7 @@ public class TileBellowsRenderer extends TileEntitySpecialRenderer {
       GL11.glEnable(32826);
       GL11.glBlendFunc(770, 771);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-      this.translateFromOrientation((double)((float)x), (double)((float)y), (double)((float)z), bellows.orientation);
+      this.translateFromOrientation((float)x, (float)y, (float)z, bellows.orientation);
       GL11.glTranslatef(0.0F, 1.0F, 0.0F);
       GL11.glPushMatrix();
       GL11.glScalef(0.5F, (scale + 0.1F) / 2.0F, 0.5F);

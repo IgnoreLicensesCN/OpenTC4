@@ -83,7 +83,7 @@ public class TileNodeRenderer extends TileEntitySpecialRenderer {
             scale = MathHelper.sin((float)viewer.ticksExisted / (14.0F - (float)count)) * bscale + bscale * 2.0F;
             scale = 0.2F + scale * ((float)aspects.getAmount(aspect) / 50.0F);
             scale *= size;
-            angle = (float)(time % (long)(5000 + 500 * count)) / (5000.0F + (float)(500 * count)) * rad;
+            angle = (float)(time % (long)(5000 + 500L * count)) / (5000.0F + (float)(500 * count)) * rad;
             UtilsFX.renderFacingStrip((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, angle, scale, alpha / Math.max(1.0F, (float)aspects.size() / 2.0F), frames, 0, i, partialTicks, aspect.getColor());
             GL11.glDisable(3042);
             GL11.glPopMatrix();
@@ -161,7 +161,7 @@ public class TileNodeRenderer extends TileEntitySpecialRenderer {
       if (tile instanceof INode) {
          float size = 1.0F;
          INode node = (INode)tile;
-         double viewDistance = (double)64.0F;
+         double viewDistance = 64.0F;
          EntityLivingBase viewer = Minecraft.getMinecraft().renderViewEntity;
          boolean condition = false;
          boolean depthIgnore = false;
@@ -172,10 +172,10 @@ public class TileNodeRenderer extends TileEntitySpecialRenderer {
             } else if (((EntityPlayer)viewer).inventory.armorItemInSlot(3) != null && ((EntityPlayer)viewer).inventory.armorItemInSlot(3).getItem() instanceof IRevealer && ((IRevealer)((EntityPlayer)viewer).inventory.armorItemInSlot(3).getItem()).showNodes(((EntityPlayer)viewer).inventory.armorItemInSlot(3), viewer)) {
                condition = true;
                depthIgnore = true;
-            } else if (((EntityPlayer)viewer).inventory.getCurrentItem() != null && ((EntityPlayer)viewer).inventory.getCurrentItem().getItem() instanceof ItemThaumometer && UtilsFX.isVisibleTo(0.44F, viewer, (double)tile.xCoord, (double)tile.yCoord, (double)tile.zCoord)) {
+            } else if (((EntityPlayer)viewer).inventory.getCurrentItem() != null && ((EntityPlayer)viewer).inventory.getCurrentItem().getItem() instanceof ItemThaumometer && UtilsFX.isVisibleTo(0.44F, viewer, tile.xCoord, tile.yCoord, tile.zCoord)) {
                condition = true;
                depthIgnore = true;
-               viewDistance = (double)48.0F;
+               viewDistance = 48.0F;
             }
          }
 
@@ -196,7 +196,7 @@ public class TileNodeRenderer extends TileEntitySpecialRenderer {
                f10 = MathHelper.sin((float)iiud / 10.0F) * 10.0F;
             }
 
-            Vec3 vec3 = Vec3.createVectorHelper(-0.1, -0.1, (double)0.5F);
+            Vec3 vec3 = Vec3.createVectorHelper(-0.1, -0.1, 0.5F);
             vec3.rotateAroundX(-(drainEntity.prevRotationPitch + (drainEntity.rotationPitch - drainEntity.prevRotationPitch) * partialTicks) * (float)Math.PI / 180.0F);
             vec3.rotateAroundY(-(drainEntity.prevRotationYaw + (drainEntity.rotationYaw - drainEntity.prevRotationYaw) * partialTicks) * (float)Math.PI / 180.0F);
             vec3.rotateAroundY(-f10 * 0.01F);

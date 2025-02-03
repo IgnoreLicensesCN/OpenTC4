@@ -16,7 +16,7 @@ public class WorldGenManaPods extends WorldGenerator {
             if (ConfigBlocks.blockManaPod.canPlaceBlockOnSide(par1World, x, y, z, 0)) {
                par1World.setBlock(x, y, z, ConfigBlocks.blockManaPod, 2 + par2Random.nextInt(5), 2);
                TileEntity tile = par1World.getTileEntity(x, y, z);
-               if (tile != null && tile instanceof TileManaPod) {
+               if (tile instanceof TileManaPod) {
                   ((TileManaPod)tile).checkGrowth();
                }
                break;

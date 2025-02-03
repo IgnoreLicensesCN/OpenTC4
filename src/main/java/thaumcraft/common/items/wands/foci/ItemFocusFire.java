@@ -68,7 +68,7 @@ public class ItemFocusFire extends ItemFocusBasic {
                orb.strength += (float)wand.getFocusPotency(itemstack) * 0.4F;
                orb.onFire = this.isUpgradedWith(wand.getFocusItem(itemstack), FocusUpgradeType.alchemistsfire);
                world.spawnEntityInWorld(orb);
-               world.playAuxSFXAtEntity((EntityPlayer)null, 1009, (int)p.posX, (int)p.posY, (int)p.posZ, 0);
+               world.playAuxSFXAtEntity(null, 1009, (int)p.posX, (int)p.posY, (int)p.posZ, 0);
             }
 
             p.swingItem();

@@ -70,7 +70,7 @@ public class EntityPrimalArrow extends EntityArrow implements IProjectile, IEnti
       this.ticksInAir = 0;
       this.damage = 2.1;
       this.type = 0;
-      this.renderDistanceWeight = (double)10.0F;
+      this.renderDistanceWeight = 10.0F;
       this.setSize(0.5F, 0.5F);
    }
 
@@ -82,7 +82,7 @@ public class EntityPrimalArrow extends EntityArrow implements IProjectile, IEnti
       this.ticksInAir = 0;
       this.damage = 2.1;
       this.type = 0;
-      this.renderDistanceWeight = (double)10.0F;
+      this.renderDistanceWeight = 10.0F;
       this.setSize(0.25F, 0.25F);
       this.setPosition(par2, par4, par6);
       this.yOffset = 0.0F;
@@ -96,25 +96,25 @@ public class EntityPrimalArrow extends EntityArrow implements IProjectile, IEnti
       this.ticksInAir = 0;
       this.damage = 2.1;
       this.type = 0;
-      this.renderDistanceWeight = (double)10.0F;
+      this.renderDistanceWeight = 10.0F;
       this.shootingEntity = par2EntityLivingBase;
       this.type = type;
       this.canBePickedUp = 0;
       this.shootingEntityId = this.shootingEntity.getEntityId();
       this.setSize(0.5F, 0.5F);
       this.setLocationAndAngles(par2EntityLivingBase.posX, par2EntityLivingBase.posY + (double)par2EntityLivingBase.getEyeHeight(), par2EntityLivingBase.posZ, par2EntityLivingBase.rotationYaw, par2EntityLivingBase.rotationPitch);
-      this.posX -= (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
+      this.posX -= MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * 0.16F;
       this.posY -= 0.10000000014901161;
-      this.posZ -= (double)(MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
+      this.posZ -= MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * 0.16F;
       Vec3 vec3d = par2EntityLivingBase.getLook(1.0F);
       this.posX += vec3d.xCoord;
       this.posY += vec3d.yCoord;
       this.posZ += vec3d.zCoord;
       this.setPosition(this.posX, this.posY, this.posZ);
       this.yOffset = 0.0F;
-      this.motionX = (double)(-MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI));
-      this.motionZ = (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI));
-      this.motionY = (double)(-MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI));
+      this.motionX = -MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI);
+      this.motionZ = MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI);
+      this.motionY = -MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI);
       this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, par3 * 1.5F, 1.0F);
    }
 
@@ -126,7 +126,7 @@ public class EntityPrimalArrow extends EntityArrow implements IProjectile, IEnti
       if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
          float f = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
          this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * (double)180.0F / Math.PI);
-         this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(this.motionY, (double)f) * (double)180.0F / Math.PI);
+         this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(this.motionY, f) * (double)180.0F / Math.PI);
       }
 
       Block i = this.worldObj.getBlock(this.xTile, this.yTile, this.zTile);
@@ -152,9 +152,9 @@ public class EntityPrimalArrow extends EntityArrow implements IProjectile, IEnti
             }
          } else {
             this.inGround = false;
-            this.motionX *= (double)(this.rand.nextFloat() * 0.2F);
-            this.motionY *= (double)(this.rand.nextFloat() * 0.2F);
-            this.motionZ *= (double)(this.rand.nextFloat() * 0.2F);
+            this.motionX *= this.rand.nextFloat() * 0.2F;
+            this.motionY *= this.rand.nextFloat() * 0.2F;
+            this.motionZ *= this.rand.nextFloat() * 0.2F;
             this.ticksInGround = 0;
             this.ticksInAir = 0;
          }
@@ -170,30 +170,30 @@ public class EntityPrimalArrow extends EntityArrow implements IProjectile, IEnti
          }
 
          Entity entity = null;
-         List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand((double)1.0F, (double)1.0F, (double)1.0F));
-         double d0 = (double)0.0F;
+         List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0F, 1.0F, 1.0F));
+         double d0 = 0.0F;
 
-         for(int l = 0; l < list.size(); ++l) {
-            Entity entity1 = (Entity)list.get(l);
-            if (entity1.canBeCollidedWith() && (entity1.getEntityId() != this.shootingEntityId || this.ticksInAir >= 5)) {
-               float f1 = 0.3F;
-               AxisAlignedBB axisalignedbb1 = entity1.boundingBox.expand((double)f1, (double)f1, (double)f1);
-               MovingObjectPosition movingobjectposition1 = axisalignedbb1.calculateIntercept(vec3, vec31);
-               if (movingobjectposition1 != null) {
-                  double d1 = vec3.distanceTo(movingobjectposition1.hitVec);
-                  if (d1 < d0 || d0 == (double)0.0F) {
-                     entity = entity1;
-                     d0 = d1;
+          for (Object o : list) {
+              Entity entity1 = (Entity) o;
+              if (entity1.canBeCollidedWith() && (entity1.getEntityId() != this.shootingEntityId || this.ticksInAir >= 5)) {
+                  float f1 = 0.3F;
+                  AxisAlignedBB axisalignedbb1 = entity1.boundingBox.expand(f1, f1, f1);
+                  MovingObjectPosition movingobjectposition1 = axisalignedbb1.calculateIntercept(vec3, vec31);
+                  if (movingobjectposition1 != null) {
+                      double d1 = vec3.distanceTo(movingobjectposition1.hitVec);
+                      if (d1 < d0 || d0 == (double) 0.0F) {
+                          entity = entity1;
+                          d0 = d1;
+                      }
                   }
-               }
-            }
-         }
+              }
+          }
 
          if (entity != null) {
             movingobjectposition = new MovingObjectPosition(entity);
          }
 
-         if (movingobjectposition != null && movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityPlayer) {
+         if (movingobjectposition != null && movingobjectposition.entityHit instanceof EntityPlayer) {
             EntityPlayer entityplayer = (EntityPlayer)movingobjectposition.entityHit;
             if (entityplayer.capabilities.disableDamage || this.shootingEntity instanceof EntityPlayer && !((EntityPlayer)this.shootingEntity).canAttackPlayer(entityplayer)) {
                movingobjectposition = null;
@@ -227,9 +227,9 @@ public class EntityPrimalArrow extends EntityArrow implements IProjectile, IEnti
                      this.setDead();
                   }
                } else {
-                  this.motionX *= (double)-0.1F;
-                  this.motionY *= (double)-0.1F;
-                  this.motionZ *= (double)-0.1F;
+                  this.motionX *= -0.1F;
+                  this.motionY *= -0.1F;
+                  this.motionZ *= -0.1F;
                   this.rotationYaw += 180.0F;
                   this.prevRotationYaw += 180.0F;
                   this.ticksInAir = 0;
@@ -240,9 +240,9 @@ public class EntityPrimalArrow extends EntityArrow implements IProjectile, IEnti
                this.zTile = movingobjectposition.blockZ;
                this.inTile = this.worldObj.getBlock(this.xTile, this.yTile, this.zTile);
                this.inData = this.worldObj.getBlockMetadata(this.xTile, this.yTile, this.zTile);
-               this.motionX = (double)((float)(movingobjectposition.hitVec.xCoord - this.posX));
-               this.motionY = (double)((float)(movingobjectposition.hitVec.yCoord - this.posY));
-               this.motionZ = (double)((float)(movingobjectposition.hitVec.zCoord - this.posZ));
+               this.motionX = (float)(movingobjectposition.hitVec.xCoord - this.posX);
+               this.motionY = (float)(movingobjectposition.hitVec.yCoord - this.posY);
+               this.motionZ = (float)(movingobjectposition.hitVec.zCoord - this.posZ);
                float f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
                this.posX -= this.motionX / (double)f2 * (double)0.05F;
                this.posY -= this.motionY / (double)f2 * (double)0.05F;
@@ -269,7 +269,7 @@ public class EntityPrimalArrow extends EntityArrow implements IProjectile, IEnti
          float f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
          this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * (double)180.0F / Math.PI);
 
-         for(this.rotationPitch = (float)(Math.atan2(this.motionY, (double)f2) * (double)180.0F / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
+         for(this.rotationPitch = (float)(Math.atan2(this.motionY, f2) * (double)180.0F / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
          }
 
          while(this.rotationPitch - this.prevRotationPitch >= 180.0F) {
@@ -297,10 +297,10 @@ public class EntityPrimalArrow extends EntityArrow implements IProjectile, IEnti
             f4 = 0.8F;
          }
 
-         this.motionX *= (double)f4;
-         this.motionY *= (double)f4;
-         this.motionZ *= (double)f4;
-         this.motionY -= (double)f1;
+         this.motionX *= f4;
+         this.motionY *= f4;
+         this.motionZ *= f4;
+         this.motionY -= f1;
          this.setPosition(this.posX, this.posY, this.posZ);
          this.func_145775_I();
       }

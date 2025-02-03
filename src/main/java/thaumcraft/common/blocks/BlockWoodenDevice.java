@@ -141,7 +141,7 @@ public class BlockWoodenDevice extends BlockContainer {
       int meta = world.getBlockMetadata(x, y, z);
       if (meta == 2 || meta == 3) {
          TileEntity tile = world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileArcanePressurePlate) {
+         if (tile instanceof TileArcanePressurePlate) {
             return this.iconAPPlate[((TileArcanePressurePlate)tile).setting];
          }
       }
@@ -208,7 +208,7 @@ public class BlockWoodenDevice extends BlockContainer {
    }
 
    public AxisAlignedBB getSelectedBoundingBoxFromPool(World p_149633_1_, int p_149633_2_, int p_149633_3_, int p_149633_4_) {
-      return p_149633_1_.getBlock(p_149633_2_, p_149633_3_, p_149633_4_) != this ? AxisAlignedBB.getBoundingBox((double)p_149633_2_, (double)p_149633_3_, (double)p_149633_4_, (double)p_149633_2_ + (double)1.0F, (double)p_149633_3_ + (double)1.0F, (double)p_149633_4_ + (double)1.0F) : super.getSelectedBoundingBoxFromPool(p_149633_1_, p_149633_2_, p_149633_3_, p_149633_4_);
+      return p_149633_1_.getBlock(p_149633_2_, p_149633_3_, p_149633_4_) != this ? AxisAlignedBB.getBoundingBox(p_149633_2_, p_149633_3_, p_149633_4_, (double)p_149633_2_ + (double)1.0F, (double)p_149633_3_ + (double)1.0F, (double)p_149633_4_ + (double)1.0F) : super.getSelectedBoundingBoxFromPool(p_149633_1_, p_149633_2_, p_149633_3_, p_149633_4_);
    }
 
    public void setBlockBoundsBasedOnState(IBlockAccess par1iBlockAccess, int par2, int par3, int par4) {
@@ -227,14 +227,14 @@ public class BlockWoodenDevice extends BlockContainer {
          } else if (meta == 5) {
             ForgeDirection dir = ForgeDirection.UNKNOWN;
             TileEntity tile = par1iBlockAccess.getTileEntity(par2, par3, par4);
-            if (tile != null && tile instanceof TileArcaneBore) {
+            if (tile instanceof TileArcaneBore) {
                dir = ((TileArcaneBore)tile).orientation;
             }
 
             this.setBlockBounds((float)((dir.offsetX < 0 ? -1 : 0)), (float)((dir.offsetY < 0 ? -1 : 0)), (float)((dir.offsetZ < 0 ? -1 : 0)), (float)(1 + (dir.offsetX > 0 ? 1 : 0)), (float)(1 + (dir.offsetY > 0 ? 1 : 0)), (float)(1 + (dir.offsetZ > 0 ? 1 : 0)));
          } else if (meta == 8) {
             TileEntity tile = par1iBlockAccess.getTileEntity(par2, par3, par4);
-            if (tile != null && tile instanceof TileBanner) {
+            if (tile instanceof TileBanner) {
                if (((TileBanner)tile).getWall()) {
                   switch (((TileBanner)tile).getFacing()) {
                      case 0:
@@ -274,7 +274,7 @@ public class BlockWoodenDevice extends BlockContainer {
             if (meta == 5) {
                ForgeDirection dir = ForgeDirection.UNKNOWN;
                TileEntity tile = world.getTileEntity(i, j, k);
-               if (tile != null && tile instanceof TileArcaneBore) {
+               if (tile instanceof TileArcaneBore) {
                   dir = ((TileArcaneBore)tile).orientation;
                }
 
@@ -294,12 +294,12 @@ public class BlockWoodenDevice extends BlockContainer {
       int meta = world.getBlockMetadata(x, y, z);
       if (meta == 1) {
          TileEntity tile = world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileSensor) {
+         if (tile instanceof TileSensor) {
             ((TileSensor)tile).updateTone();
          }
       } else if (meta == 5) {
          TileArcaneBore tile = (TileArcaneBore)world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileArcaneBore) {
+         if (tile instanceof TileArcaneBore) {
             ForgeDirection d = tile.baseOrientation.getOpposite();
             Block block = world.getBlock(x + d.offsetX, y + d.offsetY, z + d.offsetZ);
             if (block != ConfigBlocks.blockWoodenDevice || !block.isSideSolid(world, x + d.offsetX, y + d.offsetY, z + d.offsetZ, tile.baseOrientation)) {
@@ -315,7 +315,7 @@ public class BlockWoodenDevice extends BlockContainer {
 
    public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {
       int meta = world.getBlockMetadata(x, y, z);
-      return meta != 4 && meta != 6 && meta != 7 ? super.isSideSolid(world, x, y, z, side) : true;
+      return meta == 4 || meta == 6 || meta == 7 || super.isSideSolid(world, x, y, z, side);
    }
 
    public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer p, int par6, float par7, float par8, float par9) {
@@ -338,15 +338,15 @@ public class BlockWoodenDevice extends BlockContainer {
                      TileBanner te = (TileBanner)w.getTileEntity(x, y, z);
                      if (te != null && te.getColor() >= 0) {
                         if (p.isSneaking()) {
-                           te.setAspect((Aspect)null);
-                        } else if (((IEssentiaContainerItem)((IEssentiaContainerItem)p.getHeldItem().getItem())).getAspects(p.getHeldItem()) != null) {
-                           te.setAspect(((IEssentiaContainerItem)((IEssentiaContainerItem)p.getHeldItem().getItem())).getAspects(p.getHeldItem()).getAspects()[0]);
+                           te.setAspect(null);
+                        } else if (((IEssentiaContainerItem) p.getHeldItem().getItem()).getAspects(p.getHeldItem()) != null) {
+                           te.setAspect(((IEssentiaContainerItem) p.getHeldItem().getItem()).getAspects(p.getHeldItem()).getAspects()[0]);
                            --p.getHeldItem().stackSize;
                         }
 
                         w.markBlockForUpdate(x, y, z);
                         te.markDirty();
-                        w.playSoundEffect((double)x, (double)y, (double)z, "step.cloth", 1.0F, 1.0F);
+                        w.playSoundEffect(x, y, z, "step.cloth", 1.0F, 1.0F);
                      }
                   }
                } else {
@@ -359,13 +359,13 @@ public class BlockWoodenDevice extends BlockContainer {
 
                      switch (var6.setting) {
                         case 0:
-                           p.addChatMessage(new ChatComponentTranslation("It will now trigger on everything.", new Object[0]));
+                           p.addChatMessage(new ChatComponentTranslation("It will now trigger on everything."));
                            break;
                         case 1:
-                           p.addChatMessage(new ChatComponentTranslation("It will now trigger on everything except you.", new Object[0]));
+                           p.addChatMessage(new ChatComponentTranslation("It will now trigger on everything except you."));
                            break;
                         case 2:
-                           p.addChatMessage(new ChatComponentTranslation("It will now trigger on just you.", new Object[0]));
+                           p.addChatMessage(new ChatComponentTranslation("It will now trigger on just you."));
                      }
 
                      w.playSoundEffect((double)x + (double)0.5F, (double)y + 0.1, (double)z + (double)0.5F, "random.click", 0.1F, 0.9F);
@@ -401,7 +401,7 @@ public class BlockWoodenDevice extends BlockContainer {
       } else {
          ArrayList<ItemStack> drops = new ArrayList<>();
          TileEntity te = world.getTileEntity(x, y, z);
-         if (te != null && te instanceof TileBanner) {
+         if (te instanceof TileBanner) {
             ItemStack drop = new ItemStack(this, 1, 8);
             if (((TileBanner)te).getColor() >= 0 || ((TileBanner)te).getAspect() != null) {
                drop.setTagCompound(new NBTTagCompound());
@@ -421,8 +421,8 @@ public class BlockWoodenDevice extends BlockContainer {
 
    public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase p, ItemStack s) {
       TileEntity tile = w.getTileEntity(x, y, z);
-      if (tile != null && tile instanceof TileOwned && p instanceof EntityPlayer) {
-         ((TileOwned)tile).owner = ((EntityPlayer)p).getCommandSenderName();
+      if (tile instanceof TileOwned && p instanceof EntityPlayer) {
+         ((TileOwned)tile).owner = p.getCommandSenderName();
          tile.markDirty();
       }
 
@@ -435,7 +435,7 @@ public class BlockWoodenDevice extends BlockContainer {
          int meta = world.getBlockMetadata(x, y, z);
          if (meta == 1) {
             TileEntity tile = world.getTileEntity(x, y, z);
-            if (tile != null && tile instanceof TileSensor) {
+            if (tile instanceof TileSensor) {
                ((TileSensor)tile).updateTone();
                tile.markDirty();
             }
@@ -449,7 +449,7 @@ public class BlockWoodenDevice extends BlockContainer {
       if (meta == 0) {
          return false;
       } else {
-         return meta != 1 && meta != 2 && meta != 3 && meta != 4 && meta != 5 ? super.canConnectRedstone(world, x, y, z, side) : true;
+         return meta == 1 || meta == 2 || meta == 3 || meta == 4 || meta == 5 || super.canConnectRedstone(world, x, y, z, side);
       }
    }
 
@@ -467,7 +467,7 @@ public class BlockWoodenDevice extends BlockContainer {
       } else if (metadata == 5) {
          return new TileArcaneBore();
       } else {
-         return (TileEntity)(metadata == 8 ? new TileBanner() : super.createTileEntity(world, metadata));
+         return metadata == 8 ? new TileBanner() : super.createTileEntity(world, metadata);
       }
    }
 
@@ -476,7 +476,7 @@ public class BlockWoodenDevice extends BlockContainer {
    }
 
    public boolean onBlockEventReceived(World par1World, int par2, int par3, int par4, int par5, int par6) {
-      float var7 = (float)Math.pow((double)2.0F, (double)(par6 - 12) / (double)12.0F);
+      float var7 = (float)Math.pow(2.0F, (double)(par6 - 12) / (double)12.0F);
       if (par5 <= 4) {
          if (par5 >= 0) {
             String var8 = "harp";
@@ -499,10 +499,10 @@ public class BlockWoodenDevice extends BlockContainer {
             par1World.playSoundEffect((double)par2 + (double)0.5F, (double)par3 + (double)0.5F, (double)par4 + (double)0.5F, "note." + var8, 3.0F, var7);
          }
 
-         par1World.spawnParticle("note", (double)par2 + (double)0.5F, (double)par3 + 1.2, (double)par4 + (double)0.5F, (double)par6 / (double)24.0F, (double)0.0F, (double)0.0F);
+         par1World.spawnParticle("note", (double)par2 + (double)0.5F, (double)par3 + 1.2, (double)par4 + (double)0.5F, (double)par6 / (double)24.0F, 0.0F, 0.0F);
          return true;
       } else {
-         return par5 == 99 ? super.onBlockEventReceived(par1World, par2, par3, par4, par5, par6) : super.onBlockEventReceived(par1World, par2, par3, par4, par5, par6);
+         return super.onBlockEventReceived(par1World, par2, par3, par4, par5, par6);
       }
    }
 
@@ -540,20 +540,20 @@ public class BlockWoodenDevice extends BlockContainer {
       }
 
       if (setting == 0) {
-         var8 = world.getEntitiesWithinAABBExcludingEntity((Entity)null, AxisAlignedBB.getBoundingBox((double)((float)x + var7), (double)y, (double)((float)z + var7), (double)((float)(x + 1) - var7), (double)y + (double)0.25F, (double)((float)(z + 1) - var7)));
+         var8 = world.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.getBoundingBox((float)x + var7, y, (float)z + var7, (float)(x + 1) - var7, (double)y + (double)0.25F, (float)(z + 1) - var7));
       }
 
       if (setting == 1) {
-         var8 = world.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox((double)((float)x + var7), (double)y, (double)((float)z + var7), (double)((float)(x + 1) - var7), (double)y + (double)0.25F, (double)((float)(z + 1) - var7)));
+         var8 = world.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox((float)x + var7, y, (float)z + var7, (float)(x + 1) - var7, (double)y + (double)0.25F, (float)(z + 1) - var7));
       }
 
       if (setting == 2) {
-         var8 = world.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox((double)((float)x + var7), (double)y, (double)((float)z + var7), (double)((float)(x + 1) - var7), (double)y + (double)0.25F, (double)((float)(z + 1) - var7)));
+         var8 = world.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox((float)x + var7, y, (float)z + var7, (float)(x + 1) - var7, (double)y + (double)0.25F, (float)(z + 1) - var7));
       }
 
       if (!var8.isEmpty()) {
          for(Entity var10 : var8) {
-            if (!var10.doesEntityNotTriggerPressurePlate() && (setting != 1 || !(var10 instanceof EntityPlayer) || !((EntityPlayer)var10).getCommandSenderName().equals(username) && !accessList.contains("0" + ((EntityPlayer)var10).getCommandSenderName()) && !accessList.contains("1" + ((EntityPlayer)var10).getCommandSenderName())) && (setting != 2 || !(var10 instanceof EntityPlayer) || ((EntityPlayer)var10).getCommandSenderName().equals(username) || accessList.contains("0" + ((EntityPlayer)var10).getCommandSenderName()) || accessList.contains("1" + ((EntityPlayer)var10).getCommandSenderName()))) {
+            if (!var10.doesEntityNotTriggerPressurePlate() && (setting != 1 || !(var10 instanceof EntityPlayer) || !var10.getCommandSenderName().equals(username) && !accessList.contains("0" + var10.getCommandSenderName()) && !accessList.contains("1" + var10.getCommandSenderName())) && (setting != 2 || !(var10 instanceof EntityPlayer) || var10.getCommandSenderName().equals(username) || accessList.contains("0" + var10.getCommandSenderName()) || accessList.contains("1" + var10.getCommandSenderName()))) {
                var6 = true;
                break;
             }
@@ -597,7 +597,7 @@ public class BlockWoodenDevice extends BlockContainer {
       int meta = world.getBlockMetadata(x, y, z);
       if (meta == 1) {
          TileEntity tile = world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileSensor) {
+         if (tile instanceof TileSensor) {
             return ((TileSensor)tile).redstoneSignal > 0 ? 15 : 0;
          } else {
             return super.isProvidingStrongPower(world, x, y, z, side);
@@ -611,7 +611,7 @@ public class BlockWoodenDevice extends BlockContainer {
       int meta = world.getBlockMetadata(x, y, z);
       if (meta == 1) {
          TileEntity tile = world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileSensor) {
+         if (tile instanceof TileSensor) {
             return ((TileSensor)tile).redstoneSignal > 0 ? 15 : 0;
          }
       } else if (meta == 3) {
@@ -636,7 +636,7 @@ public class BlockWoodenDevice extends BlockContainer {
 
    public boolean canEntityDestroy(IBlockAccess world, int x, int y, int z, Entity entity) {
       int meta = world.getBlockMetadata(x, y, z);
-      return meta != 2 && meta != 3 ? super.canEntityDestroy(world, x, y, z, entity) : false;
+      return meta != 2 && meta != 3 && super.canEntityDestroy(world, x, y, z, entity);
    }
 
    public int getFlammability(IBlockAccess world, int x, int y, int z, ForgeDirection face) {

@@ -31,7 +31,7 @@ public class Matrix4 extends Transformation implements Copyable {
    public double m33;
 
    public Matrix4() {
-      this.m00 = this.m11 = this.m22 = this.m33 = (double)1.0F;
+      this.m00 = this.m11 = this.m22 = this.m33 = 1.0F;
    }
 
    public Matrix4(double d00, double d01, double d02, double d03, double d10, double d11, double d12, double d13, double d20, double d21, double d22, double d23, double d30, double d31, double d32, double d33) {
@@ -58,8 +58,8 @@ public class Matrix4 extends Transformation implements Copyable {
    }
 
    public Matrix4 setIdentity() {
-      this.m00 = this.m11 = this.m22 = this.m33 = (double)1.0F;
-      this.m01 = this.m02 = this.m03 = this.m10 = this.m12 = this.m13 = this.m20 = this.m21 = this.m23 = this.m30 = this.m31 = this.m32 = (double)0.0F;
+      this.m00 = this.m11 = this.m22 = this.m33 = 1.0F;
+      this.m01 = this.m02 = this.m03 = this.m10 = this.m12 = this.m13 = this.m20 = this.m21 = this.m23 = this.m30 = this.m31 = this.m32 = 0.0F;
       return this;
    }
 

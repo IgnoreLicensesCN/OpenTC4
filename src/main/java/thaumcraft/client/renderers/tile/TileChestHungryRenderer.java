@@ -48,7 +48,7 @@ public class TileChestHungryRenderer extends TileEntitySpecialRenderer {
          var11 = -90;
       }
 
-      GL11.glRotatef((float)var11, 0.0F, 1.0F, 0.0F);
+      GL11.glRotatef(var11, 0.0F, 1.0F, 0.0F);
       GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
       float var12 = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * par8;
       var12 = 1.0F - var12;

@@ -20,15 +20,15 @@ public class BlockWoodenDeviceRenderer extends BlockRenderer implements ISimpleB
       if (metadata == 0) {
          GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
          GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileBellows(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileBellows(), 0.0F, 0.0F, 0.0F, 0.0F);
       } else if (metadata == 4) {
          GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
          GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileArcaneBoreBase(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileArcaneBoreBase(), 0.0F, 0.0F, 0.0F, 0.0F);
       } else if (metadata == 5) {
          GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
          GL11.glTranslatef(-0.5F, -0.75F, -0.5F);
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileArcaneBore(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileArcaneBore(), 0.0F, 0.0F, 0.0F, 0.0F);
       } else if (metadata == 1) {
          block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, W3, 1.0F);
          renderblocks.setRenderBoundsFromBlock(block);
@@ -78,7 +78,7 @@ public class BlockWoodenDeviceRenderer extends BlockRenderer implements ISimpleB
       } else if (metadata == 8) {
          GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
          GL11.glTranslatef(-0.5F, -1.0F, -0.5F);
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileBanner(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileBanner(), 0.0F, 0.0F, 0.0F, 0.0F);
       }
 
       GL11.glEnable(32826);
@@ -89,7 +89,7 @@ public class BlockWoodenDeviceRenderer extends BlockRenderer implements ISimpleB
       if (md == 1) {
          ((BlockWoodenDevice)block).renderState = 0;
          TileEntity tile = world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileSensor && ((TileSensor)tile).redstoneSignal > 0) {
+         if (tile instanceof TileSensor && ((TileSensor) tile).redstoneSignal > 0) {
             ((BlockWoodenDevice)block).renderState = 1;
          }
 

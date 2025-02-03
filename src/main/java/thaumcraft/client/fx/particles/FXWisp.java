@@ -22,7 +22,7 @@ public class FXWisp extends EntityFX {
    }
 
    public FXWisp(World world, double d, double d1, double d2, float f, float red, float green, float blue) {
-      super(world, d, d1, d2, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, d, d1, d2, 0.0F, 0.0F, 0.0F);
       this.target = null;
       this.shrink = false;
       this.tinkle = false;
@@ -35,7 +35,7 @@ public class FXWisp extends EntityFX {
       this.particleGreen = green;
       this.particleBlue = blue;
       this.particleGravity = 0.0F;
-      this.motionX = this.motionY = this.motionZ = (double)0.0F;
+      this.motionX = this.motionY = this.motionZ = 0.0F;
       this.particleScale *= f;
       this.moteParticleScale = this.particleScale;
       this.particleMaxAge = (int)((double)36.0F / (Math.random() * 0.3 + 0.7));
@@ -158,10 +158,10 @@ public class FXWisp extends EntityFX {
       float var11 = 1.0F;
       tessellator.setBrightness(240);
       tessellator.setColorRGBA_F(this.particleRed, this.particleGreen, this.particleBlue, 0.5F);
-      tessellator.addVertexWithUV((double)(f11 - f1 * f10 - f4 * f10), (double)(f12 - f2 * f10), (double)(f13 - f3 * f10 - f5 * f10), (double)var9, (double)var11);
-      tessellator.addVertexWithUV((double)(f11 - f1 * f10 + f4 * f10), (double)(f12 + f2 * f10), (double)(f13 - f3 * f10 + f5 * f10), (double)var9, (double)var10);
-      tessellator.addVertexWithUV((double)(f11 + f1 * f10 + f4 * f10), (double)(f12 + f2 * f10), (double)(f13 + f3 * f10 + f5 * f10), (double)var8, (double)var10);
-      tessellator.addVertexWithUV((double)(f11 + f1 * f10 - f4 * f10), (double)(f12 - f2 * f10), (double)(f13 + f3 * f10 - f5 * f10), (double)var8, (double)var11);
+      tessellator.addVertexWithUV(f11 - f1 * f10 - f4 * f10, f12 - f2 * f10, f13 - f3 * f10 - f5 * f10, var9, var11);
+      tessellator.addVertexWithUV(f11 - f1 * f10 + f4 * f10, f12 + f2 * f10, f13 - f3 * f10 + f5 * f10, var9, var10);
+      tessellator.addVertexWithUV(f11 + f1 * f10 + f4 * f10, f12 + f2 * f10, f13 + f3 * f10 + f5 * f10, var8, var10);
+      tessellator.addVertexWithUV(f11 + f1 * f10 - f4 * f10, f12 - f2 * f10, f13 + f3 * f10 - f5 * f10, var8, var11);
    }
 
    public int getFXLayer() {
@@ -194,23 +194,23 @@ public class FXWisp extends EntityFX {
          double dy = this.target.posY + (double)(this.target.height / 2.0F) - this.posY;
          double dz = this.target.posZ - this.posZ;
          double d13 = 0.2;
-         double d11 = (double)MathHelper.sqrt_double(dx * dx + dy * dy + dz * dz);
+         double d11 = MathHelper.sqrt_double(dx * dx + dy * dy + dz * dz);
          dx /= d11;
          dy /= d11;
          dz /= d11;
          this.motionX += dx * d13;
          this.motionY += dy * d13;
          this.motionZ += dz * d13;
-         this.motionX = (double)MathHelper.clamp_float((float)this.motionX, -0.2F, 0.2F);
-         this.motionY = (double)MathHelper.clamp_float((float)this.motionY, -0.2F, 0.2F);
-         this.motionZ = (double)MathHelper.clamp_float((float)this.motionZ, -0.2F, 0.2F);
+         this.motionX = MathHelper.clamp_float((float)this.motionX, -0.2F, 0.2F);
+         this.motionY = MathHelper.clamp_float((float)this.motionY, -0.2F, 0.2F);
+         this.motionZ = MathHelper.clamp_float((float)this.motionZ, -0.2F, 0.2F);
       } else {
-         this.motionX *= (double)0.98F;
-         this.motionY *= (double)0.98F;
-         this.motionZ *= (double)0.98F;
+         this.motionX *= 0.98F;
+         this.motionY *= 0.98F;
+         this.motionZ *= 0.98F;
          if (this.onGround) {
-            this.motionX *= (double)0.7F;
-            this.motionZ *= (double)0.7F;
+            this.motionX *= 0.7F;
+            this.motionZ *= 0.7F;
          }
       }
 
@@ -231,7 +231,7 @@ public class FXWisp extends EntityFX {
          boolean var20 = !this.worldObj.isBlockNormalCubeDefault(var7, var8, var9 - 1, true);
          boolean var21 = !this.worldObj.isBlockNormalCubeDefault(var7, var8, var9 + 1, true);
          byte var22 = -1;
-         double var23 = (double)9999.0F;
+         double var23 = 9999.0F;
          if (var16 && var10 < var23) {
             var23 = var10;
             var22 = 0;
@@ -265,33 +265,33 @@ public class FXWisp extends EntityFX {
          float var25 = this.rand.nextFloat() * 0.05F + 0.025F;
          float var26 = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F;
          if (var22 == 0) {
-            this.motionX = (double)(-var25);
-            this.motionY = this.motionZ = (double)var26;
+            this.motionX = -var25;
+            this.motionY = this.motionZ = var26;
          }
 
          if (var22 == 1) {
-            this.motionX = (double)var25;
-            this.motionY = this.motionZ = (double)var26;
+            this.motionX = var25;
+            this.motionY = this.motionZ = var26;
          }
 
          if (var22 == 2) {
-            this.motionY = (double)(-var25);
-            this.motionX = this.motionZ = (double)var26;
+            this.motionY = -var25;
+            this.motionX = this.motionZ = var26;
          }
 
          if (var22 == 3) {
-            this.motionY = (double)var25;
-            this.motionX = this.motionZ = (double)var26;
+            this.motionY = var25;
+            this.motionX = this.motionZ = var26;
          }
 
          if (var22 == 4) {
-            this.motionZ = (double)(-var25);
-            this.motionY = this.motionX = (double)var26;
+            this.motionZ = -var25;
+            this.motionY = this.motionX = var26;
          }
 
          if (var22 == 5) {
-            this.motionZ = (double)var25;
-            this.motionY = this.motionX = (double)var26;
+            this.motionZ = var25;
+            this.motionY = this.motionX = var26;
          }
 
          return true;

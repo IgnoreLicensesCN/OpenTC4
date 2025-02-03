@@ -43,7 +43,7 @@ public class PacketItemKeyToServer implements IMessage, IMessageHandler<PacketIt
       World world = DimensionManager.getWorld(message.dim);
        if (world != null) {
            Entity player = world.getEntityByID(message.playerid);
-           if (player != null && player instanceof EntityPlayer && ((EntityPlayer) player).getHeldItem() != null) {
+           if (player instanceof EntityPlayer && ((EntityPlayer) player).getHeldItem() != null) {
                if (message.key == 0 && ((EntityPlayer) player).getHeldItem().getItem() instanceof ItemGolemBell) {
                    ItemGolemBell.resetMarkers(((EntityPlayer) player).getHeldItem(), world, (EntityPlayer) player);
                }

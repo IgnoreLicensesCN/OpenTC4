@@ -28,7 +28,7 @@ public class TileArcaneFurnaceNozzle extends TileThaumcraft implements IEssentia
 
          for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             TileEntity tile = this.worldObj.getTileEntity(this.xCoord + dir.offsetX, this.yCoord + dir.offsetY, this.zCoord + dir.offsetZ);
-            if (tile != null && tile instanceof TileArcaneFurnace) {
+            if (tile instanceof TileArcaneFurnace) {
                this.facing = dir.getOpposite();
                this.furnace = (TileArcaneFurnace)tile;
                break;
@@ -42,7 +42,7 @@ public class TileArcaneFurnaceNozzle extends TileThaumcraft implements IEssentia
                TileArcaneFurnace var10000 = this.furnace;
                var10000.speedyTime += 600;
             }
-         } catch (Exception var6) {
+         } catch (Exception ignored) {
          }
       }
 
@@ -59,9 +59,7 @@ public class TileArcaneFurnaceNozzle extends TileThaumcraft implements IEssentia
                return false;
             }
 
-            if (ic.getSuctionAmount(this.facing.getOpposite()) < this.getSuctionAmount(this.facing) && ic.takeEssentia(Aspect.FIRE, 1, this.facing.getOpposite()) == 1) {
-               return true;
-            }
+             return ic.getSuctionAmount(this.facing.getOpposite()) < this.getSuctionAmount(this.facing) && ic.takeEssentia(Aspect.FIRE, 1, this.facing.getOpposite()) == 1;
          }
 
          return false;
@@ -100,7 +98,7 @@ public class TileArcaneFurnaceNozzle extends TileThaumcraft implements IEssentia
          if (this.furnace != null && this.furnace.speedyTime < 40) {
             return 128;
          }
-      } catch (Exception var3) {
+      } catch (Exception ignored) {
       }
 
       return 0;

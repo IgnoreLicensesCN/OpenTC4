@@ -47,7 +47,7 @@ public class WandCap {
 	 */
 	ItemStack item;
 	
-	public static LinkedHashMap<String,WandCap> caps = new LinkedHashMap<String,WandCap>();
+	public static LinkedHashMap<String,WandCap> caps = new LinkedHashMap<>();
 
 	public WandCap (String tag, float discount, ItemStack item, int craftCost) {
 		this.setTag(tag);

@@ -53,7 +53,7 @@ public class GuiResearchPopup extends Gui {
       GL11.glClear(256);
       GL11.glMatrixMode(5889);
       GL11.glLoadIdentity();
-      GL11.glOrtho((double)0.0F, (double)this.windowWidth, (double)this.windowHeight, (double)0.0F, (double)1000.0F, (double)3000.0F);
+      GL11.glOrtho(0.0F, this.windowWidth, this.windowHeight, 0.0F, 1000.0F, 3000.0F);
       GL11.glMatrixMode(5888);
       GL11.glLoadIdentity();
       GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
@@ -71,10 +71,10 @@ public class GuiResearchPopup extends Gui {
                var3 = (double)2.0F - var3;
             }
 
-            var3 *= (double)4.0F;
+            var3 *= 4.0F;
             var3 = (double)1.0F - var3;
             if (var3 < (double)0.0F) {
-               var3 = (double)0.0F;
+               var3 = 0.0F;
             }
 
             var3 *= var3;
@@ -110,7 +110,7 @@ public class GuiResearchPopup extends Gui {
                this.itemRender.renderItemIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().renderEngine, InventoryUtils.cycleItemStack(((ResearchItem)this.theResearch.get(0)).icon_item), var5 + 8, var6 + 8);
             } else if (((ResearchItem)this.theResearch.get(0)).icon_resource != null) {
                Minecraft.getMinecraft().renderEngine.bindTexture(((ResearchItem)this.theResearch.get(0)).icon_resource);
-               UtilsFX.drawTexturedQuadFull(var5 + 8, var6 + 8, (double)this.zLevel);
+               UtilsFX.drawTexturedQuadFull(var5 + 8, var6 + 8, this.zLevel);
             }
 
             GL11.glDisable(2896);

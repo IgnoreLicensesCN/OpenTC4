@@ -52,14 +52,14 @@ public class BlockFluidDeath extends BlockFluidFinite {
    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
       int meta = world.getBlockMetadata(x, y, z);
       float h = rand.nextFloat() * 0.075F;
-      FXSlimyBubble ef = new FXSlimyBubble(world, (double)((float)x + rand.nextFloat()), (double)((float)y + 0.1F + 0.225F * (float)meta), (double)((float)z + rand.nextFloat()), 0.075F + h);
+      FXSlimyBubble ef = new FXSlimyBubble(world, (float)x + rand.nextFloat(), (float)y + 0.1F + 0.225F * (float)meta, (float)z + rand.nextFloat(), 0.075F + h);
       ef.setAlphaF(0.8F);
       ef.setRBGColorF(0.3F - rand.nextFloat() * 0.1F, 0.0F, 0.4F + rand.nextFloat() * 0.1F);
       ParticleEngine.instance.addEffect(world, ef);
       if (rand.nextInt(50) == 0) {
-         double var21 = (double)((float)x + rand.nextFloat());
+         double var21 = (float)x + rand.nextFloat();
          double var22 = (double)y + this.maxY;
-         double var23 = (double)((float)z + rand.nextFloat());
+         double var23 = (float)z + rand.nextFloat();
          world.playSound(var21, var22, var23, "liquid.lavapop", 0.1F + rand.nextFloat() * 0.1F, 0.9F + rand.nextFloat() * 0.15F, false);
       }
 

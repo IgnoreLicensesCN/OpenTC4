@@ -28,8 +28,8 @@ public class TileGrate extends TileEntity implements ISidedInventory {
       if (!this.worldObj.isRemote) {
          EntityItemGrate ei = new EntityItemGrate(this.worldObj, (double)this.xCoord + (double)0.5F, (double)this.yCoord + 0.6, (double)this.zCoord + (double)0.5F, stack.copy());
          ei.motionY = -0.1;
-         ei.motionX = (double)0.0F;
-         ei.motionZ = (double)0.0F;
+         ei.motionX = 0.0F;
+         ei.motionZ = 0.0F;
          this.worldObj.spawnEntityInWorld(ei);
       }
 

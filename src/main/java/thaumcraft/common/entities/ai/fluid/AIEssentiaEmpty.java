@@ -50,7 +50,7 @@ public class AIEssentiaEmpty extends EntityAIBase {
 
    public void startExecuting() {
       TileEntity tile = this.theWorld.getTileEntity(this.jarX, this.jarY, this.jarZ);
-      if (tile != null && tile instanceof TileJarFillable) {
+      if (tile instanceof TileJarFillable) {
          TileJarFillable jar = (TileJarFillable)tile;
          this.theGolem.essentiaAmount = jar.addToContainer(this.theGolem.essentia, this.theGolem.essentiaAmount);
          if (this.theGolem.essentiaAmount == 0) {
@@ -60,7 +60,7 @@ public class AIEssentiaEmpty extends EntityAIBase {
          this.theWorld.playSoundAtEntity(this.theGolem, "game.neutral.swim", 0.2F, 1.0F + (this.theWorld.rand.nextFloat() - this.theWorld.rand.nextFloat()) * 0.3F);
          this.theGolem.updateCarried();
          this.theWorld.markBlockForUpdate(this.jarX, this.jarY, this.jarZ);
-      } else if (tile != null && tile instanceof TileEssentiaReservoir) {
+      } else if (tile instanceof TileEssentiaReservoir) {
          TileEssentiaReservoir trans = (TileEssentiaReservoir)tile;
          if (trans.getSuctionAmount(trans.facing) > 0 && (trans.getSuctionType(trans.facing) == null || trans.getSuctionType(trans.facing) == this.theGolem.essentia)) {
             int added = trans.addEssentia(this.theGolem.essentia, this.theGolem.essentiaAmount, trans.facing);

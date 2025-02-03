@@ -76,7 +76,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
 
    @SideOnly(Side.CLIENT)
    public AxisAlignedBB getRenderBoundingBox() {
-      return AxisAlignedBB.getBoundingBox((double)(this.xCoord - 1), (double)(this.yCoord - 1), (double)(this.zCoord - 1), (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1));
+      return AxisAlignedBB.getBoundingBox(this.xCoord - 1, this.yCoord - 1, this.zCoord - 1, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1);
    }
 
    public void readCustomNBT(NBTTagCompound nbtCompound) {
@@ -206,15 +206,15 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
    public boolean validLocation() {
       TileEntity te = null;
       te = this.worldObj.getTileEntity(this.xCoord, this.yCoord - 2, this.zCoord);
-      if (te != null && te instanceof TilePedestal) {
+      if (te instanceof TilePedestal) {
          te = this.worldObj.getTileEntity(this.xCoord + 1, this.yCoord - 2, this.zCoord + 1);
-         if (te != null && te instanceof TileInfusionPillar) {
+         if (te instanceof TileInfusionPillar) {
             te = this.worldObj.getTileEntity(this.xCoord + 1, this.yCoord - 2, this.zCoord - 1);
-            if (te != null && te instanceof TileInfusionPillar) {
+            if (te instanceof TileInfusionPillar) {
                te = this.worldObj.getTileEntity(this.xCoord - 1, this.yCoord - 2, this.zCoord - 1);
-               if (te != null && te instanceof TileInfusionPillar) {
+               if (te instanceof TileInfusionPillar) {
                   te = this.worldObj.getTileEntity(this.xCoord - 1, this.yCoord - 2, this.zCoord + 1);
-                  return te != null && te instanceof TileInfusionPillar;
+                  return te instanceof TileInfusionPillar;
                } else {
                   return false;
                }
@@ -239,7 +239,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
          TileEntity te = null;
          this.recipeInput = null;
          te = this.worldObj.getTileEntity(this.xCoord, this.yCoord - 2, this.zCoord);
-         if (te != null && te instanceof TilePedestal) {
+         if (te instanceof TilePedestal) {
             TilePedestal ped = (TilePedestal)te;
             if (ped.getStackInSlot(0) != null) {
                this.recipeInput = ped.getStackInSlot(0).copy();
@@ -251,7 +251,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
 
             for(ChunkCoordinates cc : this.pedestals) {
                te = this.worldObj.getTileEntity(cc.posX, cc.posY, cc.posZ);
-               if (te != null && te instanceof TilePedestal) {
+               if (te instanceof TilePedestal) {
                   TilePedestal ped = (TilePedestal)te;
                   if (ped.getStackInSlot(0) != null) {
                      components.add(ped.getStackInSlot(0).copy());
@@ -277,7 +277,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
                   if (recipe.getRecipeOutput(this.recipeInput) instanceof Object[]) {
                      Object[] obj = (Object[])recipe.getRecipeOutput(this.recipeInput);
                      this.recipeOutputLabel = (String)obj[0];
-                     this.recipeOutput = (NBTBase)obj[1];
+                     this.recipeOutput = obj[1];
                   } else {
                      this.recipeOutput = recipe.getRecipeOutput(this.recipeInput);
                   }
@@ -287,7 +287,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
                   this.recipePlayer = player.getCommandSenderName();
                   this.instability = this.symmetry + this.recipeInstability;
                   this.crafting = true;
-                  this.worldObj.playSoundEffect((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, "thaumcraft:craftstart", 0.5F, 1.0F);
+                  this.worldObj.playSoundEffect(this.xCoord, this.yCoord, this.zCoord, "thaumcraft:craftstart", 0.5F, 1.0F);
                   this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
                   this.markDirty();
                } else {
@@ -313,7 +313,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
                      this.recipeXP = recipe2.calcXP(this.recipeInput);
                      this.instability = this.symmetry + this.recipeInstability;
                      this.crafting = true;
-                     this.worldObj.playSoundEffect((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, "thaumcraft:craftstart", 0.5F, 1.0F);
+                     this.worldObj.playSoundEffect(this.xCoord, this.yCoord, this.zCoord, "thaumcraft:craftstart", 0.5F, 1.0F);
                      this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
                      this.markDirty();
                   }
@@ -326,7 +326,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
    public void craftCycle() {
       boolean valid = false;
       TileEntity te = this.worldObj.getTileEntity(this.xCoord, this.yCoord - 2, this.zCoord);
-      if (te != null && te instanceof TilePedestal) {
+      if (te instanceof TilePedestal) {
          TilePedestal ped = (TilePedestal)te;
          if (ped.getStackInSlot(0) != null) {
             ItemStack i2 = ped.getStackInSlot(0).copy();
@@ -373,7 +373,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
                this.inEvEjectItem(4);
                break;
             case 9:
-               this.worldObj.createExplosion((Entity)null, (double)((float)this.xCoord + 0.5F), (double)((float)this.yCoord + 0.5F), (double)((float)this.zCoord + 0.5F), 1.5F + this.worldObj.rand.nextFloat(), false);
+               this.worldObj.createExplosion(null, (float)this.xCoord + 0.5F, (float)this.yCoord + 0.5F, (float)this.zCoord + 0.5F, 1.5F + this.worldObj.rand.nextFloat(), false);
                break;
             case 12:
                this.inEvZap(true);
@@ -398,10 +398,10 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
          this.crafting = false;
          this.recipeEssentia = new AspectList();
          this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-         this.worldObj.playSoundEffect((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, "thaumcraft:craftfail", 1.0F, 0.6F);
+         this.worldObj.playSoundEffect(this.xCoord, this.yCoord, this.zCoord, "thaumcraft:craftfail", 1.0F, 0.6F);
          this.markDirty();
       } else if (this.recipeType == 1 && this.recipeXP > 0) {
-         List<EntityPlayer> targets = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1)).expand((double)10.0F, (double)10.0F, (double)10.0F));
+         List<EntityPlayer> targets = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(10.0F, 10.0F, 10.0F));
          if (targets != null && targets.size() > 0) {
             for(EntityPlayer target : targets) {
                if (target.experienceLevel > 0) {
@@ -410,10 +410,10 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
                   target.attackEntityFrom(DamageSource.magic, (float)this.worldObj.rand.nextInt(2));
                   SimpleNetworkWrapper var21 = PacketHandler.INSTANCE;
                   PacketFXInfusionSource var22 = new PacketFXInfusionSource(this.xCoord, this.yCoord, this.zCoord, (byte)0, (byte)0, (byte)0, target.getEntityId());
-                  double var23 = (double)this.xCoord;
-                  double var24 = (double)this.yCoord;
-                  double var25 = (double)this.zCoord;
-                  var21.sendToAllAround(var22, new NetworkRegistry.TargetPoint(this.getWorldObj().provider.dimensionId, var23, var24, var25, (double)32.0F));
+                  double var23 = this.xCoord;
+                  double var24 = this.yCoord;
+                  double var25 = this.zCoord;
+                  var21.sendToAllAround(var22, new NetworkRegistry.TargetPoint(this.getWorldObj().provider.dimensionId, var23, var24, var25, 32.0F));
                   this.worldObj.playSoundAtEntity(target, "random.fizz", 1.0F, 2.0F + this.worldObj.rand.nextFloat() * 0.4F);
                   this.countDelay = 20;
                   return;
@@ -466,7 +466,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
             }
 
             this.checkSurroundings = true;
-         } else if (this.recipeIngredients.size() <= 0) {
+         } else if (this.recipeIngredients.size() == 0) {
             this.instability = 0;
             this.crafting = false;
             this.craftingFinish(this.recipeOutput, this.recipeOutputLabel);
@@ -477,15 +477,15 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
             for(int a = 0; a < this.recipeIngredients.size(); ++a) {
                for(ChunkCoordinates cc : this.pedestals) {
                   te = this.worldObj.getTileEntity(cc.posX, cc.posY, cc.posZ);
-                  if (te != null && te instanceof TilePedestal && ((TilePedestal)te).getStackInSlot(0) != null && InfusionRecipe.areItemStacksEqual(((TilePedestal)te).getStackInSlot(0), (ItemStack)this.recipeIngredients.get(a), true)) {
+                  if (te instanceof TilePedestal && ((TilePedestal) te).getStackInSlot(0) != null && InfusionRecipe.areItemStacksEqual(((TilePedestal) te).getStackInSlot(0), this.recipeIngredients.get(a), true)) {
                      if (this.itemCount == 0) {
                         this.itemCount = 5;
                         SimpleNetworkWrapper var10000 = PacketHandler.INSTANCE;
                         PacketFXInfusionSource var10001 = new PacketFXInfusionSource(this.xCoord, this.yCoord, this.zCoord, (byte)(this.xCoord - cc.posX), (byte)(this.yCoord - cc.posY), (byte)(this.zCoord - cc.posZ), 0);
-                        double var10005 = (double)this.xCoord;
-                        double var10006 = (double)this.yCoord;
-                        double var10007 = (double)this.zCoord;
-                        var10000.sendToAllAround(var10001, new NetworkRegistry.TargetPoint(this.getWorldObj().provider.dimensionId, var10005, var10006, var10007, (double)32.0F));
+                        double var10005 = this.xCoord;
+                        double var10006 = this.yCoord;
+                        double var10007 = this.zCoord;
+                        var10000.sendToAllAround(var10001, new NetworkRegistry.TargetPoint(this.getWorldObj().provider.dimensionId, var10005, var10006, var10007, 32.0F));
                      } else if (this.itemCount-- <= 1) {
                         ItemStack is = ((TilePedestal)te).getStackInSlot(0).getItem().getContainerItem(((TilePedestal)te).getStackInSlot(0));
                         ((TilePedestal)te).setInventorySlotContents(0, is == null ? null : is.copy());
@@ -518,10 +518,10 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
    }
 
    private void inEvZap(boolean all) {
-      List<Entity> targets = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1)).expand((double)10.0F, (double)10.0F, (double)10.0F));
+      List<Entity> targets = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(10.0F, 10.0F, 10.0F));
       if (targets != null && targets.size() > 0) {
          for(Entity target : targets) {
-            PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockZap((float)this.xCoord + 0.5F, (float)this.yCoord + 0.5F, (float)this.zCoord + 0.5F, (float)target.posX, (float)target.posY + target.height / 2.0F, (float)target.posZ), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, (double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)32.0F));
+            PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockZap((float)this.xCoord + 0.5F, (float)this.yCoord + 0.5F, (float)this.zCoord + 0.5F, (float)target.posX, (float)target.posY + target.height / 2.0F, (float)target.posZ), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 32.0F));
             target.attackEntityFrom(DamageSource.magic, (float)(4 + this.worldObj.rand.nextInt(4)));
             if (!all) {
                break;
@@ -532,7 +532,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
    }
 
    private void inEvHarm(boolean all) {
-      List<EntityLivingBase> targets = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1)).expand((double)10.0F, (double)10.0F, (double)10.0F));
+      List<EntityLivingBase> targets = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(10.0F, 10.0F, 10.0F));
       if (targets != null && targets.size() > 0) {
          for(EntityLivingBase target : targets) {
             if (this.worldObj.rand.nextBoolean()) {
@@ -552,9 +552,9 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
    }
 
    private void inEvWarp() {
-      List<EntityPlayer> targets = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1)).expand((double)10.0F, (double)10.0F, (double)10.0F));
+      List<EntityPlayer> targets = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(10.0F, 10.0F, 10.0F));
       if (targets != null && targets.size() > 0) {
-         EntityPlayer target = (EntityPlayer)targets.get(this.worldObj.rand.nextInt(targets.size()));
+         EntityPlayer target = targets.get(this.worldObj.rand.nextInt(targets.size()));
          if (this.worldObj.rand.nextFloat() < 0.25F) {
             Thaumcraft.addStickyWarpToPlayer(target, 1);
          } else {
@@ -566,11 +566,11 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
 
    private void inEvEjectItem(int type) {
       for(int q = 0; q < 50 && this.pedestals.size() > 0; ++q) {
-         ChunkCoordinates cc = (ChunkCoordinates)this.pedestals.get(this.worldObj.rand.nextInt(this.pedestals.size()));
+         ChunkCoordinates cc = this.pedestals.get(this.worldObj.rand.nextInt(this.pedestals.size()));
          TileEntity te = this.worldObj.getTileEntity(cc.posX, cc.posY, cc.posZ);
-         if (te != null && te instanceof TilePedestal && ((TilePedestal)te).getStackInSlot(0) != null) {
+         if (te instanceof TilePedestal && ((TilePedestal) te).getStackInSlot(0) != null) {
             if (type >= 3 && type != 5) {
-               ((TilePedestal)te).setInventorySlotContents(0, (ItemStack)null);
+               ((TilePedestal)te).setInventorySlotContents(0, null);
             } else {
                InventoryUtils.dropItems(this.worldObj, cc.posX, cc.posY, cc.posZ);
             }
@@ -578,19 +578,19 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
             if (type != 1 && type != 3) {
                if (type != 2 && type != 4) {
                   if (type == 5) {
-                     this.worldObj.createExplosion((Entity)null, (double)((float)cc.posX + 0.5F), (double)((float)cc.posY + 0.5F), (double)((float)cc.posZ + 0.5F), 1.0F, false);
+                     this.worldObj.createExplosion(null, (float)cc.posX + 0.5F, (float)cc.posY + 0.5F, (float)cc.posZ + 0.5F, 1.0F, false);
                   }
                } else {
                   this.worldObj.setBlock(cc.posX, cc.posY + 1, cc.posZ, ConfigBlocks.blockFluxGas, 7, 3);
-                  this.worldObj.playSoundEffect((double)cc.posX, (double)cc.posY, (double)cc.posZ, "random.fizz", 0.3F, 1.0F);
+                  this.worldObj.playSoundEffect(cc.posX, cc.posY, cc.posZ, "random.fizz", 0.3F, 1.0F);
                }
             } else {
                this.worldObj.setBlock(cc.posX, cc.posY + 1, cc.posZ, ConfigBlocks.blockFluxGoo, 7, 3);
-               this.worldObj.playSoundEffect((double)cc.posX, (double)cc.posY, (double)cc.posZ, "game.neutral.swim", 0.3F, 1.0F);
+               this.worldObj.playSoundEffect(cc.posX, cc.posY, cc.posZ, "game.neutral.swim", 0.3F, 1.0F);
             }
 
             this.worldObj.addBlockEvent(cc.posX, cc.posY, cc.posZ, ConfigBlocks.blockStoneDevice, 11, 0);
-            PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockZap((float)this.xCoord + 0.5F, (float)this.yCoord + 0.5F, (float)this.zCoord + 0.5F, (float)cc.posX + 0.5F, (float)cc.posY + 1.5F, (float)cc.posZ + 0.5F), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, (double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)32.0F));
+            PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockZap((float)this.xCoord + 0.5F, (float)this.yCoord + 0.5F, (float)this.zCoord + 0.5F, (float)cc.posX + 0.5F, (float)cc.posY + 1.5F, (float)cc.posZ + 0.5F), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 32.0F));
             return;
          }
       }
@@ -599,7 +599,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
 
    public void craftingFinish(Object out, String label) {
       TileEntity te = this.worldObj.getTileEntity(this.xCoord, this.yCoord - 2, this.zCoord);
-      if (te != null && te instanceof TilePedestal) {
+      if (te instanceof TilePedestal) {
          if (out instanceof ItemStack) {
             ((TilePedestal)te).setInventorySlotContentsFromInfusion(0, ((ItemStack)out).copy());
          } else if (out instanceof NBTBase) {
@@ -647,7 +647,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
                      int y = this.yCoord - yy;
                      int z = this.zCoord + zz;
                      TileEntity te = this.worldObj.getTileEntity(x, y, z);
-                     if (!skip && yy > 0 && Math.abs(xx) <= 8 && Math.abs(zz) <= 8 && te != null && te instanceof TilePedestal) {
+                     if (!skip && yy > 0 && Math.abs(xx) <= 8 && Math.abs(zz) <= 8 && te instanceof TilePedestal) {
                         this.pedestals.add(new ChunkCoordinates(x, y, z));
                         skip = true;
                      } else {
@@ -668,7 +668,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
             int x = this.xCoord - cc.posX;
             int z = this.zCoord - cc.posZ;
             TileEntity te = this.worldObj.getTileEntity(cc.posX, cc.posY, cc.posZ);
-            if (te != null && te instanceof TilePedestal) {
+            if (te instanceof TilePedestal) {
                this.symmetry += 2;
                if (((TilePedestal)te).getStackInSlot(0) != null) {
                   ++this.symmetry;
@@ -679,7 +679,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
             int xx = this.xCoord + x;
             int zz = this.zCoord + z;
             te = this.worldObj.getTileEntity(xx, cc.posY, zz);
-            if (te != null && te instanceof TilePedestal) {
+            if (te instanceof TilePedestal) {
                this.symmetry -= 2;
                if (((TilePedestal)te).getStackInSlot(0) != null && items) {
                   --this.symmetry;
@@ -707,7 +707,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
          }
 
          this.symmetry = (int)((float)this.symmetry + sym);
-      } catch (Exception var11) {
+      } catch (Exception ignored) {
       }
 
    }
@@ -739,13 +739,13 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
    private void doEffects() {
       if (this.crafting) {
          if (this.craftCount == 0) {
-            this.worldObj.playSound((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, "thaumcraft:infuserstart", 0.5F, 1.0F, false);
+            this.worldObj.playSound(this.xCoord, this.yCoord, this.zCoord, "thaumcraft:infuserstart", 0.5F, 1.0F, false);
          } else if (this.craftCount % 65 == 0) {
-            this.worldObj.playSound((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, "thaumcraft:infuser", 0.5F, 1.0F, false);
+            this.worldObj.playSound(this.xCoord, this.yCoord, this.zCoord, "thaumcraft:infuser", 0.5F, 1.0F, false);
          }
 
          ++this.craftCount;
-         Thaumcraft.proxy.blockRunes(this.worldObj, (double)this.xCoord, (double)(this.yCoord - 2), (double)this.zCoord, 0.5F + this.worldObj.rand.nextFloat() * 0.2F, 0.1F, 0.7F + this.worldObj.rand.nextFloat() * 0.3F, 25, -0.03F);
+         Thaumcraft.proxy.blockRunes(this.worldObj, this.xCoord, this.yCoord - 2, this.zCoord, 0.5F + this.worldObj.rand.nextFloat() * 0.2F, 0.1F, 0.7F + this.worldObj.rand.nextFloat() * 0.3F, 25, -0.03F);
       } else if (this.craftCount > 0) {
          this.craftCount -= 2;
          if (this.craftCount < 0) {
@@ -768,9 +768,9 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
       }
 
       if (!this.active && this.startUp > 0.0F) {
-         if (this.startUp > 0.0F) {
-            this.startUp -= this.startUp / 10.0F;
-         }
+
+         this.startUp -= this.startUp / 10.0F;
+
 
          if ((double)this.startUp < 0.001) {
             this.startUp = 0.0F;
@@ -795,17 +795,17 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
                   ItemStack is = ((TilePedestal)tile).getStackInSlot(0);
                   if (is != null) {
                      if (this.worldObj.rand.nextInt(3) == 0) {
-                        Thaumcraft.proxy.drawInfusionParticles3(this.worldObj, (double)((float)fx.loc.posX + this.worldObj.rand.nextFloat()), (double)((float)fx.loc.posY + this.worldObj.rand.nextFloat() + 1.0F), (double)((float)fx.loc.posZ + this.worldObj.rand.nextFloat()), this.xCoord, this.yCoord, this.zCoord);
+                        Thaumcraft.proxy.drawInfusionParticles3(this.worldObj, (float)fx.loc.posX + this.worldObj.rand.nextFloat(), (float)fx.loc.posY + this.worldObj.rand.nextFloat() + 1.0F, (float)fx.loc.posZ + this.worldObj.rand.nextFloat(), this.xCoord, this.yCoord, this.zCoord);
                      } else {
                         Item bi = is.getItem();
                         int md = is.getItemDamage();
                         if (is.getItemSpriteNumber() == 0 && bi instanceof ItemBlock) {
                            for(int a = 0; a < Thaumcraft.proxy.particleCount(2); ++a) {
-                              Thaumcraft.proxy.drawInfusionParticles2(this.worldObj, (double)((float)fx.loc.posX + this.worldObj.rand.nextFloat()), (double)((float)fx.loc.posY + this.worldObj.rand.nextFloat() + 1.0F), (double)((float)fx.loc.posZ + this.worldObj.rand.nextFloat()), this.xCoord, this.yCoord, this.zCoord, Block.getBlockFromItem(bi), md);
+                              Thaumcraft.proxy.drawInfusionParticles2(this.worldObj, (float)fx.loc.posX + this.worldObj.rand.nextFloat(), (float)fx.loc.posY + this.worldObj.rand.nextFloat() + 1.0F, (float)fx.loc.posZ + this.worldObj.rand.nextFloat(), this.xCoord, this.yCoord, this.zCoord, Block.getBlockFromItem(bi), md);
                            }
                         } else {
                            for(int a = 0; a < Thaumcraft.proxy.particleCount(2); ++a) {
-                              Thaumcraft.proxy.drawInfusionParticles1(this.worldObj, (double)((float)fx.loc.posX + 0.4F + this.worldObj.rand.nextFloat() * 0.2F), (double)((float)fx.loc.posY + 1.23F + this.worldObj.rand.nextFloat() * 0.2F), (double)((float)fx.loc.posZ + 0.4F + this.worldObj.rand.nextFloat() * 0.2F), this.xCoord, this.yCoord, this.zCoord, bi, md);
+                              Thaumcraft.proxy.drawInfusionParticles1(this.worldObj, (float)fx.loc.posX + 0.4F + this.worldObj.rand.nextFloat() * 0.2F, (float)fx.loc.posY + 1.23F + this.worldObj.rand.nextFloat() * 0.2F, (float)fx.loc.posZ + 0.4F + this.worldObj.rand.nextFloat() * 0.2F, this.xCoord, this.yCoord, this.zCoord, bi, md);
                            }
                         }
                      }
@@ -861,7 +861,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
       return true;
    }
 
-   public class SourceFX {
+   public static class SourceFX {
       public ChunkCoordinates loc;
       public int ticks;
       public int color;

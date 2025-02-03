@@ -25,9 +25,9 @@ public class TileWandPedestalRenderer extends TileEntitySpecialRenderer {
          GL11.glRotatef(ticks % 360.0F, 0.0F, 1.0F, 0.0F);
          ItemStack is = ped.getStackInSlot(0).copy();
          is.stackSize = 1;
-         entityitem = new EntityItem(ped.getWorldObj(), (double)0.0F, (double)0.0F, (double)0.0F, is);
+         entityitem = new EntityItem(ped.getWorldObj(), 0.0F, 0.0F, 0.0F, is);
          entityitem.hoverStart = 0.0F;
-         RenderManager.instance.renderEntityWithPosYaw(entityitem, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F, 0.0F);
+         RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
          GL11.glPopMatrix();
          if (ped.draining) {
             GL11.glPushMatrix();

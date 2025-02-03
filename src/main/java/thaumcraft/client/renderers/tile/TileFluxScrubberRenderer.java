@@ -27,7 +27,7 @@ public class TileFluxScrubberRenderer extends TileEntitySpecialRenderer {
       this.model.renderPart("Cap");
       float q = (float)Minecraft.getMinecraft().renderViewEntity.ticksExisted + f + (float)((TileFluxScrubber)te).count;
       float bob = MathHelper.sin(q / 8.0F) * 0.075F + 0.075F;
-      GL11.glTranslated((double)0.0F, (double)0.0F, (double)(-bob));
+      GL11.glTranslated(0.0F, 0.0F, -bob);
       this.model.renderPart("Tip");
       GL11.glPopMatrix();
    }
@@ -48,6 +48,6 @@ public class TileFluxScrubberRenderer extends TileEntitySpecialRenderer {
          }
       }
 
-      GL11.glTranslated((double)0.0F, (double)0.0F, (double)-0.5F);
+      GL11.glTranslated(0.0F, 0.0F, -0.5F);
    }
 }

@@ -48,11 +48,11 @@ public class InternalMethodHandler implements IInternalMethodHandler {
    }
 
    public boolean consumeVisFromWand(ItemStack wand, EntityPlayer player, AspectList cost, boolean doit, boolean crafting) {
-      return wand.getItem() instanceof ItemWandCasting ? ((ItemWandCasting)wand.getItem()).consumeAllVis(wand, player, cost, doit, crafting) : false;
+      return wand.getItem() instanceof ItemWandCasting && ((ItemWandCasting) wand.getItem()).consumeAllVis(wand, player, cost, doit, crafting);
    }
 
    public boolean consumeVisFromWandCrafting(ItemStack wand, EntityPlayer player, AspectList cost, boolean doit) {
-      return wand.getItem() instanceof ItemWandCasting ? ((ItemWandCasting)wand.getItem()).consumeAllVisCrafting(wand, player, cost, doit) : false;
+      return wand.getItem() instanceof ItemWandCasting && ((ItemWandCasting) wand.getItem()).consumeAllVisCrafting(wand, player, cost, doit);
    }
 
    public boolean consumeVisFromInventory(EntityPlayer player, AspectList cost) {

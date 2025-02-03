@@ -76,7 +76,7 @@ public class TileManaPodRenderer extends TileEntitySpecialRenderer {
             int k = j % 65536;
             int l = j / 65536;
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) k, (float) l);
-            GL11.glTranslated((double)0.0F, 0.1, (double)0.0F);
+            GL11.glTranslated(0.0F, 0.1, 0.0F);
             GL11.glScaled((double)0.125F * (double)meta * (double)scale, (double)0.125F * (double)meta * (double)scale, (double)0.125F * (double)meta * (double)scale);
             UtilsFX.bindTexture(pod0tex);
             this.model.pod0.render(0.0625F);

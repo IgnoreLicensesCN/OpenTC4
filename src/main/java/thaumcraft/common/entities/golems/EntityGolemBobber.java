@@ -49,9 +49,9 @@ public class EntityGolemBobber extends Entity implements IEntityAdditionalSpawnD
       super(par1World);
       this.setSize(0.25F, 0.25F);
       this.ignoreFrustumCheck = true;
-      this.motionX = (double)0.0F;
-      this.motionY = (double)0.0F;
-      this.motionZ = (double)0.0F;
+      this.motionX = 0.0F;
+      this.motionY = 0.0F;
+      this.motionZ = 0.0F;
    }
 
    public EntityGolemBobber(World par1World, EntityGolemBase par2EntityLiving, int x, int y, int z) {
@@ -62,7 +62,7 @@ public class EntityGolemBobber extends Entity implements IEntityAdditionalSpawnD
       double d1 = (double)x + (double)0.5F - this.fisher.posX;
       double d3 = (double)(y + 1) - this.fisher.posY;
       double d5 = (double)z + (double)0.5F - this.fisher.posZ;
-      double d7 = (double)MathHelper.sqrt_double(d1 * d1 + d3 * d3 + d5 * d5);
+      double d7 = MathHelper.sqrt_double(d1 * d1 + d3 * d3 + d5 * d5);
       double d9 = 0.1;
       this.motionX = d1 * d9;
       this.motionY = d3 * d9 + (double)MathHelper.sqrt_double(d7) * 0.08;
@@ -74,7 +74,7 @@ public class EntityGolemBobber extends Entity implements IEntityAdditionalSpawnD
    @SideOnly(Side.CLIENT)
    public boolean isInRangeToRenderDist(double par1) {
       double d1 = this.boundingBox.getAverageEdgeLength() * (double)4.0F;
-      d1 *= (double)64.0F;
+      d1 *= 64.0F;
       return par1 < d1 * d1;
    }
 
@@ -87,7 +87,7 @@ public class EntityGolemBobber extends Entity implements IEntityAdditionalSpawnD
          }
 
          if (this.rand.nextFloat() < 0.02F) {
-            ((WorldServer)this.worldObj).func_147487_a("splash", this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), 2 + this.rand.nextInt(2), (double)0.1F, (double)0.0F, (double)0.1F, (double)0.0F);
+            ((WorldServer)this.worldObj).func_147487_a("splash", this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), 2 + this.rand.nextInt(2), 0.1F, 0.0F, 0.1F, 0.0F);
          }
       }
 
@@ -96,9 +96,9 @@ public class EntityGolemBobber extends Entity implements IEntityAdditionalSpawnD
       } else {
          if (this.inBlock) {
             this.inBlock = false;
-            this.motionX *= (double)(this.rand.nextFloat() * 0.2F);
-            this.motionY *= (double)(this.rand.nextFloat() * 0.2F);
-            this.motionZ *= (double)(this.rand.nextFloat() * 0.2F);
+            this.motionX *= this.rand.nextFloat() * 0.2F;
+            this.motionY *= this.rand.nextFloat() * 0.2F;
+            this.motionZ *= this.rand.nextFloat() * 0.2F;
          }
 
          Vec3 vec31 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
@@ -121,7 +121,7 @@ public class EntityGolemBobber extends Entity implements IEntityAdditionalSpawnD
             float f5 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
             this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * (double)180.0F / Math.PI);
 
-            for(this.rotationPitch = (float)(Math.atan2(this.motionY, (double)f5) * (double)180.0F / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
+            for(this.rotationPitch = (float)(Math.atan2(this.motionY, f5) * (double)180.0F / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
             }
 
             while(this.rotationPitch - this.prevRotationPitch >= 180.0F) {
@@ -144,7 +144,7 @@ public class EntityGolemBobber extends Entity implements IEntityAdditionalSpawnD
             }
 
             byte b0 = 5;
-            double d10 = (double)0.0F;
+            double d10 = 0.0F;
 
             for(int j = 0; j < b0; ++j) {
                double d3 = this.boundingBox.minY + (this.boundingBox.maxY - this.boundingBox.minY) * (double)(j) / (double)b0 - (double)0.125F + (double)0.125F;
@@ -186,9 +186,9 @@ public class EntityGolemBobber extends Entity implements IEntityAdditionalSpawnD
                      float f7 = MathHelper.randomFloatClamp(this.rand, 0.0F, 360.0F) * ((float)Math.PI / 180F);
                      float f2 = MathHelper.randomFloatClamp(this.rand, 25.0F, 60.0F);
                      double d11 = this.posX + (double)(MathHelper.sin(f7) * f2 * 0.1F);
-                     double d5 = (double)((float)MathHelper.floor_double(this.boundingBox.minY) + 1.0F);
+                     double d5 = (float)MathHelper.floor_double(this.boundingBox.minY) + 1.0F;
                      double d6 = this.posZ + (double)(MathHelper.cos(f7) * f2 * 0.1F);
-                     worldserver.func_147487_a("splash", d11, d5, d6, 2 + this.rand.nextInt(2), (double)0.1F, (double)0.0F, (double)0.1F, (double)0.0F);
+                     worldserver.func_147487_a("splash", d11, d5, d6, 2 + this.rand.nextInt(2), 0.1F, 0.0F, 0.1F, 0.0F);
                   }
 
                   if (this.field_146040_ay <= 0) {
@@ -208,9 +208,9 @@ public class EntityGolemBobber extends Entity implements IEntityAdditionalSpawnD
                this.motionY *= 0.8;
             }
 
-            this.motionX *= (double)f6;
-            this.motionY *= (double)f6;
-            this.motionZ *= (double)f6;
+            this.motionX *= f6;
+            this.motionY *= f6;
+            this.motionZ *= f6;
             this.setPosition(this.posX, this.posY, this.posZ);
          }
 

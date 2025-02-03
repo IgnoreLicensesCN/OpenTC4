@@ -75,7 +75,7 @@ public class AILiquidGoto extends EntityAIBase {
          Vec3 var2 = RandomPositionGenerator.findRandomTarget(this.theGolem, 2, 1);
          if (var2 != null) {
             this.count = 20;
-            this.theGolem.getNavigator().tryMoveToXYZ(var2.xCoord, var2.yCoord, var2.zCoord, (double)this.theGolem.getAIMoveSpeed());
+            this.theGolem.getNavigator().tryMoveToXYZ(var2.xCoord, var2.yCoord, var2.zCoord, this.theGolem.getAIMoveSpeed());
          }
       }
 
@@ -87,6 +87,6 @@ public class AILiquidGoto extends EntityAIBase {
       this.prevX = MathHelper.floor_double(this.theGolem.posX);
       this.prevY = MathHelper.floor_double(this.theGolem.posY);
       this.prevZ = MathHelper.floor_double(this.theGolem.posZ);
-      this.theGolem.getNavigator().tryMoveToXYZ(this.waterX, this.waterY, this.waterZ, (double)this.theGolem.getAIMoveSpeed());
+      this.theGolem.getNavigator().tryMoveToXYZ(this.waterX, this.waterY, this.waterZ, this.theGolem.getAIMoveSpeed());
    }
 }

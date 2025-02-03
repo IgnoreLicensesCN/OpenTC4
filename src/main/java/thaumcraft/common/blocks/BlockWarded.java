@@ -65,7 +65,7 @@ public class BlockWarded extends BlockContainer {
       float f = (float)target.hitVec.xCoord - (float)target.blockX;
       float f1 = (float)target.hitVec.yCoord - (float)target.blockY;
       float f2 = (float)target.hitVec.zCoord - (float)target.blockZ;
-      Thaumcraft.proxy.blockWard(worldObj, (double)target.blockX, (double)target.blockY, (double)target.blockZ, ForgeDirection.getOrientation(target.sideHit), f, f1, f2);
+      Thaumcraft.proxy.blockWard(worldObj, target.blockX, target.blockY, target.blockZ, ForgeDirection.getOrientation(target.sideHit), f, f1, f2);
       return true;
    }
 
@@ -80,7 +80,7 @@ public class BlockWarded extends BlockContainer {
       } else {
          ++this.sc;
          TileEntity tile = world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileWarded) {
+         if (tile instanceof TileWarded) {
             this.sc = 0;
             return ((TileWarded)tile).block;
          } else {
@@ -96,7 +96,7 @@ public class BlockWarded extends BlockContainer {
       } else {
          ++this.sc;
          TileEntity tile = world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileWarded) {
+         if (tile instanceof TileWarded) {
             this.sc = 0;
             return ((TileWarded)tile).block;
          } else {
@@ -209,7 +209,7 @@ public class BlockWarded extends BlockContainer {
 
    public int getLightValue(IBlockAccess world, int x, int y, int z) {
       TileEntity tile = world.getTileEntity(x, y, z);
-      return tile != null && tile instanceof TileWarded ? ((TileWarded)tile).light : 0;
+      return tile instanceof TileWarded ? ((TileWarded)tile).light : 0;
    }
 
    public boolean isLadder(IBlockAccess world, int x, int y, int z, EntityLivingBase entity) {

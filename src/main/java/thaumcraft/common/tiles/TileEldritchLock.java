@@ -44,7 +44,7 @@ public class TileEldritchLock extends TileThaumcraft {
       if (this.count != -1) {
          ++this.count;
          if (this.count % 5 == 0) {
-            this.worldObj.playSoundEffect((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, "thaumcraft:pump", 1.0F, 1.0F);
+            this.worldObj.playSoundEffect(this.xCoord, this.yCoord, this.zCoord, "thaumcraft:pump", 1.0F, 1.0F);
          }
 
          if (this.count > 100) {
@@ -55,7 +55,7 @@ public class TileEldritchLock extends TileThaumcraft {
    }
 
    private void doBossSpawn() {
-      this.worldObj.playSoundEffect((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, "thaumcraft:ice", 1.0F, 1.0F);
+      this.worldObj.playSoundEffect(this.xCoord, this.yCoord, this.zCoord, "thaumcraft:ice", 1.0F, 1.0F);
       if (!this.worldObj.isRemote) {
          int cx = this.xCoord >> 4;
          int cz = this.zCoord >> 4;
@@ -109,7 +109,7 @@ public class TileEldritchLock extends TileThaumcraft {
             for(int b = -2; b <= 2; ++b) {
                for(int c = -2; c <= 2; ++c) {
                   if (this.worldObj.getBlock(this.xCoord + a, this.yCoord + b, this.zCoord + c) == ConfigBlocks.blockAiry) {
-                     PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(this.xCoord + a, this.yCoord + b, this.zCoord + c, 4194368), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, (double)(this.xCoord + a), (double)(this.yCoord + b), (double)(this.zCoord + c), (double)32.0F));
+                     PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(this.xCoord + a, this.yCoord + b, this.zCoord + c, 4194368), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord + a, this.yCoord + b, this.zCoord + c, 32.0F));
                      this.worldObj.setBlockToAir(this.xCoord + a, this.yCoord + b, this.zCoord + c);
                   }
                }
@@ -124,7 +124,7 @@ public class TileEldritchLock extends TileThaumcraft {
    private void spawnWardenBossRoom(int cx, int cz, int exit) {
       for(int i = 0; i < this.worldObj.playerEntities.size(); ++i) {
          EntityPlayer ep = (EntityPlayer)this.worldObj.playerEntities.get(i);
-         if (ep.getDistanceSq((double)this.xCoord, (double)this.yCoord, (double)this.zCoord) < (double)300.0F) {
+         if (ep.getDistanceSq(this.xCoord, this.yCoord, this.zCoord) < (double)300.0F) {
             ep.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("tc.boss.warden")));
          }
       }
@@ -194,13 +194,13 @@ public class TileEldritchLock extends TileThaumcraft {
 
       EntityEldritchWarden boss = new EntityEldritchWarden(this.worldObj);
       double d0 = (double)this.xCoord - ((double)x2 + (double)0.5F);
-      double d1 = (double)((float)this.yCoord - ((float)(y + 3) + boss.getEyeHeight()));
+      double d1 = (float)this.yCoord - ((float)(y + 3) + boss.getEyeHeight());
       double d2 = (double)this.zCoord - ((double)z2 + (double)0.5F);
-      double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+      double d3 = MathHelper.sqrt_double(d0 * d0 + d2 * d2);
       float f = (float)(Math.atan2(d2, d0) * (double)180.0F / Math.PI) - 90.0F;
       float f1 = (float)(-(Math.atan2(d1, d3) * (double)180.0F / Math.PI));
-      boss.setLocationAndAngles((double)x2 + (double)0.5F, (double)(y + 3), (double)z2 + (double)0.5F, f, f1);
-      boss.onSpawnWithEgg((IEntityLivingData)null);
+      boss.setLocationAndAngles((double)x2 + (double)0.5F, y + 3, (double)z2 + (double)0.5F, f, f1);
+      boss.onSpawnWithEgg(null);
       boss.setHomeArea(x, y + 2, z, 32);
       this.worldObj.spawnEntityInWorld(boss);
    }
@@ -208,7 +208,7 @@ public class TileEldritchLock extends TileThaumcraft {
    private void spawnGolemBossRoom(int cx, int cz, int exit) {
       for(int i = 0; i < this.worldObj.playerEntities.size(); ++i) {
          EntityPlayer ep = (EntityPlayer)this.worldObj.playerEntities.get(i);
-         if (ep.getDistanceSq((double)this.xCoord, (double)this.yCoord, (double)this.zCoord) < (double)300.0F) {
+         if (ep.getDistanceSq(this.xCoord, this.yCoord, this.zCoord) < (double)300.0F) {
             ep.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("tc.boss.golem")));
          }
       }
@@ -265,20 +265,20 @@ public class TileEldritchLock extends TileThaumcraft {
 
       EntityEldritchGolem boss = new EntityEldritchGolem(this.worldObj);
       double d0 = (double)this.xCoord - ((double)x + (double)0.5F);
-      double d1 = (double)((float)this.yCoord - ((float)(y + 3) + boss.getEyeHeight()));
+      double d1 = (float)this.yCoord - ((float)(y + 3) + boss.getEyeHeight());
       double d2 = (double)this.zCoord - ((double)z + (double)0.5F);
-      double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+      double d3 = MathHelper.sqrt_double(d0 * d0 + d2 * d2);
       float f = (float)(Math.atan2(d2, d0) * (double)180.0F / Math.PI) - 90.0F;
       float f1 = (float)(-(Math.atan2(d1, d3) * (double)180.0F / Math.PI));
-      boss.setLocationAndAngles((double)x + (double)0.5F, (double)(y + 3), (double)z + (double)0.5F, f, f1);
-      boss.onSpawnWithEgg((IEntityLivingData)null);
+      boss.setLocationAndAngles((double)x + (double)0.5F, y + 3, (double)z + (double)0.5F, f, f1);
+      boss.onSpawnWithEgg(null);
       this.worldObj.spawnEntityInWorld(boss);
    }
 
    private void spawnCultistBossRoom(int cx, int cz, int exit) {
       for(int i = 0; i < this.worldObj.playerEntities.size(); ++i) {
          EntityPlayer ep = (EntityPlayer)this.worldObj.playerEntities.get(i);
-         if (ep.getDistanceSq((double)this.xCoord, (double)this.yCoord, (double)this.zCoord) < (double)300.0F) {
+         if (ep.getDistanceSq(this.xCoord, this.yCoord, this.zCoord) < (double)300.0F) {
             ep.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("tc.boss.crimson")));
          }
       }
@@ -309,14 +309,14 @@ public class TileEldritchLock extends TileThaumcraft {
       }
 
       EntityCultistPortal boss = new EntityCultistPortal(this.worldObj);
-      boss.setLocationAndAngles((double)x + (double)0.5F, (double)(y + 2), (double)z + (double)0.5F, 0.0F, 0.0F);
+      boss.setLocationAndAngles((double)x + (double)0.5F, y + 2, (double)z + (double)0.5F, 0.0F, 0.0F);
       this.worldObj.spawnEntityInWorld(boss);
    }
 
    private void spawnTaintBossRoom(int cx, int cz, int exit) {
       for(int i = 0; i < this.worldObj.playerEntities.size(); ++i) {
          EntityPlayer ep = (EntityPlayer)this.worldObj.playerEntities.get(i);
-         if (ep.getDistanceSq((double)this.xCoord, (double)this.yCoord, (double)this.zCoord) < (double)300.0F) {
+         if (ep.getDistanceSq(this.xCoord, this.yCoord, this.zCoord) < (double)300.0F) {
             ep.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("tc.boss.taint")));
          }
       }
@@ -348,30 +348,30 @@ public class TileEldritchLock extends TileThaumcraft {
          }
       }
 
-      EntityTaintacle boss1 = (EntityTaintacle)(this.worldObj.difficultySetting != EnumDifficulty.HARD ? new EntityTaintacle(this.worldObj) : new EntityTaintacleGiant(this.worldObj));
-      boss1.setLocationAndAngles((double)x + (double)0.5F, (double)(y + 3), (double)z + (double)0.5F, 0.0F, 0.0F);
+      EntityTaintacle boss1 = this.worldObj.difficultySetting != EnumDifficulty.HARD ? new EntityTaintacle(this.worldObj) : new EntityTaintacleGiant(this.worldObj);
+      boss1.setLocationAndAngles((double)x + (double)0.5F, y + 3, (double)z + (double)0.5F, 0.0F, 0.0F);
       EntityUtils.makeChampion(boss1, true);
       this.worldObj.spawnEntityInWorld(boss1);
-      EntityTaintacle boss2 = (EntityTaintacle)(this.worldObj.rand.nextBoolean() ? new EntityTaintacle(this.worldObj) : new EntityTaintacleGiant(this.worldObj));
-      boss2.setLocationAndAngles((double)x + (double)3.5F, (double)(y + 3), (double)z + (double)3.5F, 0.0F, 0.0F);
+      EntityTaintacle boss2 = this.worldObj.rand.nextBoolean() ? new EntityTaintacle(this.worldObj) : new EntityTaintacleGiant(this.worldObj);
+      boss2.setLocationAndAngles((double)x + (double)3.5F, y + 3, (double)z + (double)3.5F, 0.0F, 0.0F);
       EntityUtils.makeChampion(boss2, true);
       this.worldObj.spawnEntityInWorld(boss2);
-      EntityTaintacle boss3 = (EntityTaintacle)(boss2 instanceof EntityTaintacleGiant ? new EntityTaintacle(this.worldObj) : new EntityTaintacleGiant(this.worldObj));
-      boss3.setLocationAndAngles((double)x - (double)2.5F, (double)(y + 3), (double)z + (double)3.5F, 0.0F, 0.0F);
+      EntityTaintacle boss3 = boss2 instanceof EntityTaintacleGiant ? new EntityTaintacle(this.worldObj) : new EntityTaintacleGiant(this.worldObj);
+      boss3.setLocationAndAngles((double)x - (double)2.5F, y + 3, (double)z + (double)3.5F, 0.0F, 0.0F);
       EntityUtils.makeChampion(boss3, true);
       this.worldObj.spawnEntityInWorld(boss3);
-      EntityTaintacle boss4 = (EntityTaintacle)(this.worldObj.rand.nextBoolean() ? new EntityTaintacle(this.worldObj) : new EntityTaintacleGiant(this.worldObj));
-      boss4.setLocationAndAngles((double)x + (double)3.5F, (double)(y + 3), (double)z - (double)2.5F, 0.0F, 0.0F);
+      EntityTaintacle boss4 = this.worldObj.rand.nextBoolean() ? new EntityTaintacle(this.worldObj) : new EntityTaintacleGiant(this.worldObj);
+      boss4.setLocationAndAngles((double)x + (double)3.5F, y + 3, (double)z - (double)2.5F, 0.0F, 0.0F);
       EntityUtils.makeChampion(boss4, true);
       this.worldObj.spawnEntityInWorld(boss4);
-      EntityTaintacle boss5 = (EntityTaintacle)(boss4 instanceof EntityTaintacleGiant ? new EntityTaintacle(this.worldObj) : new EntityTaintacleGiant(this.worldObj));
-      boss5.setLocationAndAngles((double)x - (double)2.5F, (double)(y + 3), (double)z - (double)2.5F, 0.0F, 0.0F);
+      EntityTaintacle boss5 = boss4 instanceof EntityTaintacleGiant ? new EntityTaintacle(this.worldObj) : new EntityTaintacleGiant(this.worldObj);
+      boss5.setLocationAndAngles((double)x - (double)2.5F, y + 3, (double)z - (double)2.5F, 0.0F, 0.0F);
       EntityUtils.makeChampion(boss5, true);
       this.worldObj.spawnEntityInWorld(boss5);
    }
 
    public double getMaxRenderDistanceSquared() {
-      return (double)9216.0F;
+      return 9216.0F;
    }
 
    @SideOnly(Side.CLIENT)

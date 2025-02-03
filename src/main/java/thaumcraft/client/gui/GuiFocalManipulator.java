@@ -66,7 +66,7 @@ public class GuiFocalManipulator extends GuiContainer {
             mposx = par1 - (baseX + 48 + a * 16);
             mposy = par2 - (baseY + 104);
             if (mposx >= 0 && mposy >= 0 && mposx < 16 && mposy < 16) {
-               FocusUpgradeType u = (FocusUpgradeType)this.possibleUpgrades.get(a);
+               FocusUpgradeType u = this.possibleUpgrades.get(a);
                List list = new ArrayList<>();
                list.add(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.UNDERLINE + u.getLocalizedName());
                list.add(u.getLocalizedText());
@@ -107,7 +107,7 @@ public class GuiFocalManipulator extends GuiContainer {
          mposx = par1 - (baseX + 56 + a * 16);
          mposy = par2 - (baseY + 32);
          if (mposx >= 0 && mposy >= 0 && mposx < 16 && mposy < 16) {
-            FocusUpgradeType u = (FocusUpgradeType)this.upgrades.get(a);
+            FocusUpgradeType u = this.upgrades.get(a);
             List list = new ArrayList<>();
             list.add(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.UNDERLINE + u.getLocalizedName());
             list.add(u.getLocalizedText());
@@ -138,7 +138,7 @@ public class GuiFocalManipulator extends GuiContainer {
 
       if (this.rank > 0) {
          for(int a = 0; a < this.possibleUpgrades.size(); ++a) {
-            FocusUpgradeType u = (FocusUpgradeType)this.possibleUpgrades.get(a);
+            FocusUpgradeType u = this.possibleUpgrades.get(a);
             if (this.selected == u.id) {
                this.drawTexturedModalRect(k + 48 + a * 16, l + 104, 200, 0, 16, 16);
             }
@@ -166,7 +166,7 @@ public class GuiFocalManipulator extends GuiContainer {
                      float y = 92.0F;
                      float xx = ((float)(46 + this.rank * 16) - x) / 9.0F;
                      float yy = (38.0F - y) / 9.0F;
-                     this.sparkles.put(this.time, new Sparkle(x, y, xx, yy, (float)c.getRed() / 255.0F, (float)c.getGreen() / 255.0F, (float)c.getBlue() / 255.0F));
+                     this.sparkles.put(this.time, new Sparkle(x, y, xx, yy, (float) c.getRed() / 255.0F, (float) c.getGreen() / 255.0F, (float) c.getBlue() / 255.0F));
                   }
                }
             }
@@ -183,10 +183,10 @@ public class GuiFocalManipulator extends GuiContainer {
          for(Aspect a : al.getAspectsSorted()) {
             if (a != null) {
                GL11.glPushMatrix();
-               GL11.glTranslated((double)(k + 49), (double)(l + 68) - (double)al.size() * (double)2.5F, (double)0.0F);
-               GL11.glScaled((double)0.5F, (double)0.5F, (double)0.5F);
+               GL11.glTranslated(k + 49, (double)(l + 68) - (double)al.size() * (double)2.5F, 0.0F);
+               GL11.glScaled(0.5F, 0.5F, 0.5F);
                this.fontRendererObj.drawStringWithShadow(a.getName(), 0, q * 10, a.getColor());
-               String s = this.myFormatter.format((double)((float)al.getAmount(a) / 100.0F));
+               String s = this.myFormatter.format((float)al.getAmount(a) / 100.0F);
                this.fontRendererObj.drawStringWithShadow(s, 48, q * 10, a.getColor());
                GL11.glPopMatrix();
                ++q;
@@ -197,36 +197,36 @@ public class GuiFocalManipulator extends GuiContainer {
       if (this.rank > 0) {
          if (this.nextSparkle < this.time) {
             this.nextSparkle = this.time + (long)(this.table.size > 0 ? 10 : 500) + (long)this.table.getWorldObj().rand.nextInt(200);
-            this.sparkles.put(this.time, new Sparkle((float)(42 + this.rank * 16 + this.table.getWorldObj().rand.nextInt(12)), (float)(34 + this.table.getWorldObj().rand.nextInt(12)), 0.0F, 0.0F, 0.5F + this.table.getWorldObj().rand.nextFloat() * 0.4F, 1.0F - this.table.getWorldObj().rand.nextFloat() * 0.4F, 1.0F - this.table.getWorldObj().rand.nextFloat() * 0.4F));
+            this.sparkles.put(this.time, new Sparkle((float) (42 + this.rank * 16 + this.table.getWorldObj().rand.nextInt(12)), (float) (34 + this.table.getWorldObj().rand.nextInt(12)), 0.0F, 0.0F, 0.5F + this.table.getWorldObj().rand.nextFloat() * 0.4F, 1.0F - this.table.getWorldObj().rand.nextFloat() * 0.4F, 1.0F - this.table.getWorldObj().rand.nextFloat() * 0.4F));
          }
 
          GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
          for(int a = 0; a < this.possibleUpgrades.size(); ++a) {
-            FocusUpgradeType u = (FocusUpgradeType)this.possibleUpgrades.get(a);
+            FocusUpgradeType u = this.possibleUpgrades.get(a);
             GL11.glPushMatrix();
             GL11.glEnable(3042);
             GL11.glBlendFunc(770, 771);
             this.mc.renderEngine.bindTexture(u.icon);
-            UtilsFX.drawTexturedQuadFull(k + 48 + a * 16, l + 104, (double)this.zLevel);
+            UtilsFX.drawTexturedQuadFull(k + 48 + a * 16, l + 104, this.zLevel);
             GL11.glPopMatrix();
          }
       } else if (this.rank == 0 && this.table.getStackInSlot(0) != null) {
          try {
             this.gatherInfo();
-         } catch (Exception var18) {
+         } catch (Exception ignored) {
          }
       }
 
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
       for(int a = 0; a < this.upgrades.size(); ++a) {
-         FocusUpgradeType u = (FocusUpgradeType)this.upgrades.get(a);
+         FocusUpgradeType u = this.upgrades.get(a);
          GL11.glPushMatrix();
          GL11.glEnable(3042);
          GL11.glBlendFunc(770, 771);
          this.mc.renderEngine.bindTexture(u.icon);
-         UtilsFX.drawTexturedQuadFull(k + 56 + a * 16, l + 32, (double)this.zLevel);
+         UtilsFX.drawTexturedQuadFull(k + 56 + a * 16, l + 32, this.zLevel);
          GL11.glPopMatrix();
       }
 
@@ -255,11 +255,11 @@ public class GuiFocalManipulator extends GuiContainer {
             return;
          }
 
-         for(int a = 0; a < ut.length; ++a) {
-            if (focus.canApplyUpgrade(this.table.getStackInSlot(0), Minecraft.getMinecraft().thePlayer, ut[a], this.rank)) {
-               this.possibleUpgrades.add(ut[a]);
-            }
-         }
+          for (FocusUpgradeType focusUpgradeType : ut) {
+              if (focus.canApplyUpgrade(this.table.getStackInSlot(0), Minecraft.getMinecraft().thePlayer, focusUpgradeType, this.rank)) {
+                  this.possibleUpgrades.add(focusUpgradeType);
+              }
+          }
       }
 
       if (this.table.size > 0) {
@@ -270,11 +270,11 @@ public class GuiFocalManipulator extends GuiContainer {
 
    protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
       UtilsFX.bindTexture(ParticleEngine.particleTexture);
-      Long[] keys = (Long[])this.sparkles.keySet().toArray(new Long[0]);
+      Long[] keys = this.sparkles.keySet().toArray(new Long[0]);
 
       for(Long key : keys) {
-         Sparkle s = (Sparkle)this.sparkles.get(key);
-         this.drawSparkle((double)s.x, (double)s.y, s.frame, s.r, s.g, s.b);
+         Sparkle s = this.sparkles.get(key);
+         this.drawSparkle(s.x, s.y, s.frame, s.r, s.g, s.b);
          if (s.nextframe < this.time) {
             ++s.frame;
             s.nextframe = this.time + 50L;
@@ -303,7 +303,7 @@ public class GuiFocalManipulator extends GuiContainer {
       } else {
          if (this.table.size == 0) {
             for(int a = 0; a < this.possibleUpgrades.size(); ++a) {
-               FocusUpgradeType u = (FocusUpgradeType)this.possibleUpgrades.get(a);
+               FocusUpgradeType u = this.possibleUpgrades.get(a);
                var7 = mx - (gx + 48 + a * 16);
                var8 = my - (gy + 104);
                if (var7 >= 0 && var8 >= 0 && var7 < 16 && var8 < 16) {
@@ -345,7 +345,7 @@ public class GuiFocalManipulator extends GuiContainer {
       GL11.glEnable(3042);
       GL11.glBlendFunc(770, 1);
       GL11.glColor4f(r, g, b, 0.9F);
-      GL11.glTranslated(x, y, (double)200.0F);
+      GL11.glTranslated(x, y, 200.0F);
       Tessellator tessellator = Tessellator.instance;
       float var8 = (float)frame / 16.0F;
       float var9 = var8 + 0.0624375F;
@@ -354,10 +354,10 @@ public class GuiFocalManipulator extends GuiContainer {
       tessellator.startDrawingQuads();
       tessellator.setBrightness(220);
       tessellator.setColorRGBA_F(r, g, b, 0.9F);
-      tessellator.addVertexWithUV((double)-4.0F, (double)4.0F, (double)this.zLevel, (double)var9, (double)var11);
-      tessellator.addVertexWithUV((double)4.0F, (double)4.0F, (double)this.zLevel, (double)var9, (double)var10);
-      tessellator.addVertexWithUV((double)4.0F, (double)-4.0F, (double)this.zLevel, (double)var8, (double)var10);
-      tessellator.addVertexWithUV((double)-4.0F, (double)-4.0F, (double)this.zLevel, (double)var8, (double)var11);
+      tessellator.addVertexWithUV(-4.0F, 4.0F, this.zLevel, var9, var11);
+      tessellator.addVertexWithUV(4.0F, 4.0F, this.zLevel, var9, var10);
+      tessellator.addVertexWithUV(4.0F, -4.0F, this.zLevel, var8, var10);
+      tessellator.addVertexWithUV(-4.0F, -4.0F, this.zLevel, var8, var11);
       tessellator.draw();
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       GL11.glDisable(3042);
@@ -410,7 +410,7 @@ public class GuiFocalManipulator extends GuiContainer {
          this.drawGradientRect(j2 - 3, k2 + i1 + 2, j2 + k + 3, k2 + i1 + 3, l1, l1);
 
          for(int i2 = 0; i2 < list.size(); ++i2) {
-            String s1 = (String)list.get(i2);
+            String s1 = list.get(i2);
             font.drawStringWithShadow(s1, j2, k2, -1);
             if (i2 == 0) {
                k2 += 2;
@@ -437,7 +437,7 @@ public class GuiFocalManipulator extends GuiContainer {
       return p_78273_1_;
    }
 
-   private class Sparkle {
+   private static class Sparkle {
       float x;
       float y;
       float mx;

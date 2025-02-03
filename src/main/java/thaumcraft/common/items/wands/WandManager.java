@@ -158,7 +158,7 @@ public class WandManager implements IWandTriggerManager {
                if (blueprint[yy][xx][zz] == null) {
                   if (xx == 1 && zz == 1 && yy == 2) {
                      TileEntity t = world.getTileEntity(x + xx, y - yy + 2, z + zz);
-                     if (t == null || !(t instanceof TilePedestal)) {
+                     if (!(t instanceof TilePedestal)) {
                         return false;
                      }
                   } else if (!world.isAirBlock(x + xx, y - yy + 2, z + zz)) {
@@ -246,7 +246,7 @@ public class WandManager implements IWandTriggerManager {
          world.setBlock(x, y, z, ConfigBlocks.blockMetalDevice, 10, 0);
          world.setBlock(x, y + 1, z, ConfigBlocks.blockMetalDevice, 11, 0);
          TileEntity tile = world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileThaumatorium) {
+         if (tile instanceof TileThaumatorium) {
             ((TileThaumatorium)tile).facing = ForgeDirection.getOrientation(side);
          }
 
@@ -254,8 +254,8 @@ public class WandManager implements IWandTriggerManager {
          world.markBlockForUpdate(x, y + 1, z);
          world.notifyBlockChange(x, y, z, ConfigBlocks.blockMetalDevice);
          world.notifyBlockChange(x, y + 1, z, ConfigBlocks.blockMetalDevice);
-         PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(x, y, z, -9999), new NetworkRegistry.TargetPoint(world.provider.dimensionId, (double)x, (double)y, (double)z, (double)32.0F));
-         PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(x, y + 1, z, -9999), new NetworkRegistry.TargetPoint(world.provider.dimensionId, (double)x, (double)y, (double)z, (double)32.0F));
+         PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(x, y, z, -9999), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, y, z, 32.0F));
+         PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(x, y + 1, z, -9999), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, y, z, 32.0F));
          world.playSoundEffect((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, "thaumcraft:wand", 1.0F, 1.0F);
          return true;
       } else {
@@ -293,7 +293,7 @@ public class WandManager implements IWandTriggerManager {
 
                if (blueprint[yy][xx][zz] == 3) {
                   TileEntity tile = world.getTileEntity(x + xx, y - yy + 2, z + zz);
-                  if (tile == null || !(tile instanceof INode) || tile instanceof TileJarNode) {
+                  if (!(tile instanceof INode) || tile instanceof TileJarNode) {
                      return false;
                   }
                }
@@ -453,12 +453,12 @@ public class WandManager implements IWandTriggerManager {
             return false;
          } else {
             world.setBlockToAir(x, y, z);
-            EntitySpecialItem entityItem = new EntitySpecialItem(world, (double)((float)x + 0.5F), (double)((float)y + 0.3F), (double)((float)z + 0.5F), new ItemStack(ConfigItems.itemThaumonomicon));
-            entityItem.motionY = (double)0.0F;
-            entityItem.motionX = (double)0.0F;
-            entityItem.motionZ = (double)0.0F;
+            EntitySpecialItem entityItem = new EntitySpecialItem(world, (float)x + 0.5F, (float)y + 0.3F, (float)z + 0.5F, new ItemStack(ConfigItems.itemThaumonomicon));
+            entityItem.motionY = 0.0F;
+            entityItem.motionX = 0.0F;
+            entityItem.motionZ = 0.0F;
             world.spawnEntityInWorld(entityItem);
-            PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(x, y, z, -9999), new NetworkRegistry.TargetPoint(world.provider.dimensionId, (double)x, (double)y, (double)z, (double)32.0F));
+            PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(x, y, z, -9999), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, y, z, 32.0F));
             world.playSoundEffect((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, "thaumcraft:wand", 1.0F, 1.0F);
             return true;
          }
@@ -471,7 +471,7 @@ public class WandManager implements IWandTriggerManager {
       if (!world.isRemote) {
          TileEntity tile = world.getTileEntity(x, y, z);
          TileEntity node = world.getTileEntity(x, y + 1, z);
-         if (tile != null && node != null && tile instanceof TileEldritchAltar && ((TileEldritchAltar)tile).getEyes() == 4 && !((TileEldritchAltar)tile).isOpen() && node instanceof TileNode && ((TileNode)node).getNodeType() == NodeType.DARK && ((TileEldritchAltar)tile).checkForMaze()) {
+         if (node != null && tile instanceof TileEldritchAltar && ((TileEldritchAltar) tile).getEyes() == 4 && !((TileEldritchAltar) tile).isOpen() && node instanceof TileNode && ((TileNode) node).getNodeType() == NodeType.DARK && ((TileEldritchAltar) tile).checkForMaze()) {
             ItemWandCasting wand = (ItemWandCasting)itemstack.getItem();
             if (wand.consumeAllVisCrafting(itemstack, player, (new AspectList()).add(Aspect.AIR, 100).add(Aspect.FIRE, 100).add(Aspect.EARTH, 100).add(Aspect.WATER, 100).add(Aspect.ORDER, 100).add(Aspect.ENTROPY, 100), true)) {
                world.playSoundEffect((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, "thaumcraft:wand", 1.0F, 1.0F);
@@ -535,20 +535,20 @@ public class WandManager implements IWandTriggerManager {
          if (foci != null && foci.size() > 0 && focus != null) {
             String newkey = focus;
             if (foci.get(focus) == null) {
-               newkey = (String)foci.higherKey(focus);
+               newkey = foci.higherKey(focus);
             }
 
             if (newkey == null || foci.get(newkey) == null) {
-               newkey = (String)foci.firstKey();
+               newkey = foci.firstKey();
             }
 
-            if ((Integer)foci.get(newkey) < 1000 && (Integer)foci.get(newkey) >= 0) {
-               item = player.inventory.mainInventory[(Integer)foci.get(newkey)].copy();
+            if (foci.get(newkey) < 1000 && foci.get(newkey) >= 0) {
+               item = player.inventory.mainInventory[foci.get(newkey)].copy();
             } else {
-               int pid = (Integer)foci.get(newkey) / 1000;
+               int pid = foci.get(newkey) / 1000;
                if (pouches.containsKey(pid)) {
-                  int pouchslot = (Integer)pouches.get(pid);
-                  int focusslot = (Integer)foci.get(newkey) - pid * 1000;
+                  int pouchslot = pouches.get(pid);
+                  int focusslot = foci.get(newkey) - pid * 1000;
                   ItemStack tmp = null;
                   if (pouchslot >= 0) {
                      tmp = player.inventory.mainInventory[pouchslot].copy();
@@ -564,13 +564,13 @@ public class WandManager implements IWandTriggerManager {
                return;
             }
 
-            if ((Integer)foci.get(newkey) < 1000 && (Integer)foci.get(newkey) >= 0) {
-               player.inventory.setInventorySlotContents((Integer)foci.get(newkey), (ItemStack)null);
+            if (foci.get(newkey) < 1000 && foci.get(newkey) >= 0) {
+               player.inventory.setInventorySlotContents(foci.get(newkey), null);
             }
 
             w.playSoundAtEntity(player, "thaumcraft:cameraticks", 0.3F, 1.0F);
             if (wand.getFocus(is) != null && (addFocusToPouch(player, wand.getFocusItem(is).copy(), pouches) || player.inventory.addItemStackToInventory(wand.getFocusItem(is).copy()))) {
-               wand.setFocus(is, (ItemStack)null);
+               wand.setFocus(is, null);
             }
 
             if (wand.getFocus(is) == null) {
@@ -582,7 +582,7 @@ public class WandManager implements IWandTriggerManager {
 
       } else {
          if (wand.getFocus(is) != null && (addFocusToPouch(player, wand.getFocusItem(is).copy(), pouches) || player.inventory.addItemStackToInventory(wand.getFocusItem(is).copy()))) {
-            wand.setFocus(is, (ItemStack)null);
+            wand.setFocus(is, null);
             w.playSoundAtEntity(player, "thaumcraft:cameraticks", 0.3F, 0.9F);
          }
 
@@ -770,16 +770,16 @@ public class WandManager implements IWandTriggerManager {
 
    static boolean isOnCooldown(EntityLivingBase entityLiving) {
       if (entityLiving.worldObj.isRemote && cooldownClient.containsKey(entityLiving.getEntityId())) {
-         return (Long)cooldownClient.get(entityLiving.getEntityId()) > System.currentTimeMillis();
+         return cooldownClient.get(entityLiving.getEntityId()) > System.currentTimeMillis();
       } else if (!entityLiving.worldObj.isRemote && cooldownServer.containsKey(entityLiving.getEntityId())) {
-         return (Long)cooldownServer.get(entityLiving.getEntityId()) > System.currentTimeMillis();
+         return cooldownServer.get(entityLiving.getEntityId()) > System.currentTimeMillis();
       } else {
          return false;
       }
    }
 
    public static float getCooldown(EntityLivingBase entityLiving) {
-      return entityLiving.worldObj.isRemote && cooldownClient.containsKey(entityLiving.getEntityId()) ? (float)((Long)cooldownClient.get(entityLiving.getEntityId()) - System.currentTimeMillis()) / 1000.0F : 0.0F;
+      return entityLiving.worldObj.isRemote && cooldownClient.containsKey(entityLiving.getEntityId()) ? (float)(cooldownClient.get(entityLiving.getEntityId()) - System.currentTimeMillis()) / 1000.0F : 0.0F;
    }
 
    public static void setCooldown(EntityLivingBase entityLiving, int cd) {
@@ -896,7 +896,7 @@ public class WandManager implements IWandTriggerManager {
                            for (int aa = -1; aa <= 1; ++aa) {
                                for (int bb = 0; bb <= 1; ++bb) {
                                    for (int cc = -1; cc <= 1; ++cc) {
-                                       PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(x + a + aa, y + b + bb, z + c + cc, -9999), new NetworkRegistry.TargetPoint(world.provider.dimensionId, (double) (x + a), (double) (y + b), (double) (z + c), (double) 32.0F));
+                                       PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(x + a + aa, y + b + bb, z + c + cc, -9999), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x + a, y + b, z + c, 32.0F));
                                    }
                                }
                            }

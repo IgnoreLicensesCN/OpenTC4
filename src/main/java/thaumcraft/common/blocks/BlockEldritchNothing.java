@@ -46,7 +46,7 @@ public class BlockEldritchNothing extends Block {
    }
 
    public AxisAlignedBB getSelectedBoundingBoxFromPool(World w, int i, int j, int k) {
-      return AxisAlignedBB.getBoundingBox((double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F);
+      return AxisAlignedBB.getBoundingBox(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
    }
 
    public boolean renderAsNormalBlock() {
@@ -88,6 +88,6 @@ public class BlockEldritchNothing extends Block {
 
    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
       float f = 0.125F;
-      return AxisAlignedBB.getBoundingBox((double)((float)x + f), (double)y + (double)f, (double)((float)z + f), (double)((float)(x + 1) - f), (double)((float)(y + 1) - f), (double)((float)(z + 1) - f));
+      return AxisAlignedBB.getBoundingBox((float)x + f, (double)y + (double)f, (float)z + f, (float)(x + 1) - f, (float)(y + 1) - f, (float)(z + 1) - f);
    }
 }

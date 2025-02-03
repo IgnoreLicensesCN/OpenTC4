@@ -72,25 +72,25 @@ public class ShapelessNBTOreRecipe extends ShapelessOreRecipe {
          ItemStack slot = var1.getStackInSlot(x);
          if (slot != null) {
             boolean inRecipe = false;
-            Iterator<Object/*ItemStack or ArrayList<ItemStack>*/> req = required.iterator();
+             /*ItemStack or ArrayList<ItemStack>*/
 
-            while(req.hasNext()) {
-               boolean match = false;
-               Object/*ItemStack or ArrayList<ItemStack>*/ next = req.next();
-               if (next instanceof ItemStack) {
-                  match = this.checkItemEquals((ItemStack)next, slot);
-               } else if (next instanceof ArrayList) {
-                  for(ItemStack item : (ArrayList<ItemStack>)next) {
-                     match = match || this.checkItemEquals(item, slot);
-                  }
-               }
+             for (Object o : required) {
+                 boolean match = false;
+                 Object/*ItemStack or ArrayList<ItemStack>*/ next = o;
+                 if (next instanceof ItemStack) {
+                     match = this.checkItemEquals((ItemStack) next, slot);
+                 } else if (next instanceof ArrayList) {
+                     for (ItemStack item : (ArrayList<ItemStack>) next) {
+                         match = match || this.checkItemEquals(item, slot);
+                     }
+                 }
 
-               if (match) {
-                  inRecipe = true;
-                  required.remove(next);
-                  break;
-               }
-            }
+                 if (match) {
+                     inRecipe = true;
+                     required.remove(next);
+                     break;
+                 }
+             }
 
             if (!inRecipe) {
                return false;

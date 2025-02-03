@@ -17,19 +17,19 @@ import thaumcraft.client.lib.UtilsFX;
 public class FXBeamWand extends EntityFX {
    public int particle = 16;
    EntityPlayer player = null;
-   private double offset = (double)0.0F;
+   private double offset = 0.0F;
    private float length = 0.0F;
    private float rotYaw = 0.0F;
    private float rotPitch = 0.0F;
    private float prevYaw = 0.0F;
    private float prevPitch = 0.0F;
    private Entity targetEntity = null;
-   private double tX = (double)0.0F;
-   private double tY = (double)0.0F;
-   private double tZ = (double)0.0F;
-   private double ptX = (double)0.0F;
-   private double ptY = (double)0.0F;
-   private double ptZ = (double)0.0F;
+   private double tX = 0.0F;
+   private double tY = 0.0F;
+   private double tZ = 0.0F;
+   private double ptX = 0.0F;
+   private double ptY = 0.0F;
+   private double ptZ = 0.0F;
    private int type = 0;
    private float endMod = 1.0F;
    private boolean reverse = false;
@@ -39,7 +39,7 @@ public class FXBeamWand extends EntityFX {
    public int impact;
 
    public FXBeamWand(World par1World, EntityPlayer player, double tx, double ty, double tz, float red, float green, float blue, int age) {
-      super(par1World, player.posX, player.posY, player.posZ, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(par1World, player.posX, player.posY, player.posZ, 0.0F, 0.0F, 0.0F);
       if (player.getEntityId() != Minecraft.getMinecraft().renderViewEntity.getEntityId()) {
          this.offset = (double)(player.height / 2.0F) + (double)0.25F;
       }
@@ -50,9 +50,9 @@ public class FXBeamWand extends EntityFX {
       this.player = player;
       this.setSize(0.02F, 0.02F);
       this.noClip = true;
-      this.motionX = (double)0.0F;
-      this.motionY = (double)0.0F;
-      this.motionZ = (double)0.0F;
+      this.motionX = 0.0F;
+      this.motionY = 0.0F;
+      this.motionZ = 0.0F;
       this.tX = tx;
       this.tY = ty;
       this.tZ = tz;
@@ -60,9 +60,9 @@ public class FXBeamWand extends EntityFX {
       float yd = (float)(player.posY + this.offset - this.tY);
       float zd = (float)(player.posZ - this.tZ);
       this.length = MathHelper.sqrt_float(xd * xd + yd * yd + zd * zd);
-      double var7 = (double)MathHelper.sqrt_double((double)(xd * xd + zd * zd));
-      this.rotYaw = (float)(Math.atan2((double)xd, (double)zd) * (double)180.0F / Math.PI);
-      this.rotPitch = (float)(Math.atan2((double)yd, var7) * (double)180.0F / Math.PI);
+      double var7 = MathHelper.sqrt_double(xd * xd + zd * zd);
+      this.rotYaw = (float)(Math.atan2(xd, zd) * (double)180.0F / Math.PI);
+      this.rotPitch = (float)(Math.atan2(yd, var7) * (double)180.0F / Math.PI);
       this.prevYaw = this.rotYaw;
       this.prevPitch = this.rotPitch;
       this.particleMaxAge = age;
@@ -100,10 +100,10 @@ public class FXBeamWand extends EntityFX {
       float yd = (float)(this.player.posY + this.offset - this.tY);
       float zd = (float)(this.player.posZ - this.tZ);
       this.length = MathHelper.sqrt_float(xd * xd + yd * yd + zd * zd);
-      double var7 = (double)MathHelper.sqrt_double((double)(xd * xd + zd * zd));
-      this.rotYaw = (float)(Math.atan2((double)xd, (double)zd) * (double)180.0F / Math.PI);
+      double var7 = MathHelper.sqrt_double(xd * xd + zd * zd);
+      this.rotYaw = (float)(Math.atan2(xd, zd) * (double)180.0F / Math.PI);
 
-      for(this.rotPitch = (float)(Math.atan2((double)yd, var7) * (double)180.0F / Math.PI); this.rotPitch - this.prevPitch < -180.0F; this.prevPitch -= 360.0F) {
+      for(this.rotPitch = (float)(Math.atan2(yd, var7) * (double)180.0F / Math.PI); this.rotPitch - this.prevPitch < -180.0F; this.prevPitch -= 360.0F) {
       }
 
       while(this.rotPitch - this.prevPitch >= 180.0F) {
@@ -203,16 +203,16 @@ public class FXBeamWand extends EntityFX {
       double px = this.player.posX;
       double py = this.player.posY + this.offset;
       double pz = this.player.posZ;
-      prex -= (double)(MathHelper.cos(this.player.prevRotationYaw / 180.0F * 3.141593F) * 0.066F);
+      prex -= MathHelper.cos(this.player.prevRotationYaw / 180.0F * 3.141593F) * 0.066F;
       prey -= 0.06;
-      prez -= (double)(MathHelper.sin(this.player.prevRotationYaw / 180.0F * 3.141593F) * 0.04F);
+      prez -= MathHelper.sin(this.player.prevRotationYaw / 180.0F * 3.141593F) * 0.04F;
       Vec3 vec3d = this.player.getLook(1.0F);
       prex += vec3d.xCoord * 0.3;
       prey += vec3d.yCoord * 0.3;
       prez += vec3d.zCoord * 0.3;
-      px -= (double)(MathHelper.cos(this.player.rotationYaw / 180.0F * 3.141593F) * 0.066F);
+      px -= MathHelper.cos(this.player.rotationYaw / 180.0F * 3.141593F) * 0.066F;
       py -= 0.06;
-      pz -= (double)(MathHelper.sin(this.player.rotationYaw / 180.0F * 3.141593F) * 0.04F);
+      pz -= MathHelper.sin(this.player.rotationYaw / 180.0F * 3.141593F) * 0.04F;
       vec3d = this.player.getLook(1.0F);
       px += vec3d.xCoord * 0.3;
       py += vec3d.yCoord * 0.3;
@@ -220,7 +220,7 @@ public class FXBeamWand extends EntityFX {
       float xx = (float)(prex + (px - prex) * (double)f - interpPosX);
       float yy = (float)(prey + (py - prey) * (double)f - interpPosY);
       float zz = (float)(prez + (pz - prez) * (double)f - interpPosZ);
-      GL11.glTranslated((double)xx, (double)yy, (double)zz);
+      GL11.glTranslated(xx, yy, zz);
       float ry = (float)((double)this.prevYaw + (double)(this.rotYaw - this.prevYaw) * (double)f);
       float rp = (float)((double)this.prevPitch + (double)(this.rotPitch - this.prevPitch) * (double)f);
       GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
@@ -233,19 +233,19 @@ public class FXBeamWand extends EntityFX {
       GL11.glRotatef(rot, 0.0F, 1.0F, 0.0F);
 
       for(int t = 0; t < 3; ++t) {
-         double var29 = (double)(this.length * size * var9);
-         double var31 = (double)0.0F;
-         double var33 = (double)1.0F;
-         double var35 = (double)(-1.0F + var12 + (float)t / 3.0F);
+         double var29 = this.length * size * var9;
+         double var31 = 0.0F;
+         double var33 = 1.0F;
+         double var35 = -1.0F + var12 + (float)t / 3.0F;
          double var37 = (double)(this.length * size * var9) + var35;
          GL11.glRotatef(60.0F, 0.0F, 1.0F, 0.0F);
          tessellator.startDrawingQuads();
          tessellator.setBrightness(200);
          tessellator.setColorRGBA_F(this.particleRed, this.particleGreen, this.particleBlue, op);
-         tessellator.addVertexWithUV(var44b, var29, (double)0.0F, var33, var37);
-         tessellator.addVertexWithUV(var44, (double)0.0F, (double)0.0F, var33, var35);
-         tessellator.addVertexWithUV(var17, (double)0.0F, (double)0.0F, var31, var35);
-         tessellator.addVertexWithUV(var17b, var29, (double)0.0F, var31, var37);
+         tessellator.addVertexWithUV(var44b, var29, 0.0F, var33, var37);
+         tessellator.addVertexWithUV(var44, 0.0F, 0.0F, var33, var35);
+         tessellator.addVertexWithUV(var17, 0.0F, 0.0F, var31, var35);
+         tessellator.addVertexWithUV(var17b, var29, 0.0F, var31, var37);
          tessellator.draw();
       }
 
@@ -283,10 +283,10 @@ public class FXBeamWand extends EntityFX {
       tessellator.startDrawingQuads();
       tessellator.setBrightness(200);
       tessellator.setColorRGBA_F(this.particleRed, this.particleGreen, this.particleBlue, 0.66F);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 - f3 * var12 - f5 * var12), (double)var9, (double)var11);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 - f3 * var12 + f5 * var12), (double)var9, (double)var10);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 + f3 * var12 + f5 * var12), (double)var8, (double)var10);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 + f3 * var12 - f5 * var12), (double)var8, (double)var11);
+      tessellator.addVertexWithUV(var13 - f1 * var12 - f4 * var12, var14 - f2 * var12, var15 - f3 * var12 - f5 * var12, var9, var11);
+      tessellator.addVertexWithUV(var13 - f1 * var12 + f4 * var12, var14 + f2 * var12, var15 - f3 * var12 + f5 * var12, var9, var10);
+      tessellator.addVertexWithUV(var13 + f1 * var12 + f4 * var12, var14 + f2 * var12, var15 + f3 * var12 + f5 * var12, var8, var10);
+      tessellator.addVertexWithUV(var13 + f1 * var12 - f4 * var12, var14 - f2 * var12, var15 + f3 * var12 - f5 * var12, var8, var11);
       tessellator.draw();
       GL11.glDisable(3042);
       GL11.glDepthMask(true);

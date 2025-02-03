@@ -35,9 +35,9 @@ public class EntityTaintSheep extends EntityMob implements IShearable, ITaintedM
       this.getNavigator().setAvoidsWater(true);
       this.tasks.addTask(0, new EntityAISwimming(this));
       this.tasks.addTask(2, this.field_48137_c);
-      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityPlayer.class, (double)1.0F, false));
-      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityVillager.class, (double)1.0F, true));
-      this.tasks.addTask(6, new EntityAIWander(this, (double)1.0F));
+      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityPlayer.class, 1.0F, false));
+      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityVillager.class, 1.0F, true));
+      this.tasks.addTask(6, new EntityAIWander(this, 1.0F));
       this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
       this.tasks.addTask(8, new EntityAILookIdle(this));
       this.targetTasks.addTask(0, new EntityAIHurtByTarget(this, false));
@@ -47,9 +47,9 @@ public class EntityTaintSheep extends EntityMob implements IShearable, ITaintedM
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)20.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)3.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue((double)0.25F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(3.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25F);
    }
 
    protected boolean isAIEnabled() {
@@ -85,7 +85,7 @@ public class EntityTaintSheep extends EntityMob implements IShearable, ITaintedM
 
    protected void entityInit() {
       super.entityInit();
-      this.dataWatcher.addObject(16, new Byte((byte)0));
+      this.dataWatcher.addObject(16, (byte) 0);
    }
 
    protected Item getDropItem() {

@@ -52,14 +52,14 @@ public class ItemFocusBasic extends Item {
 			for (Aspect aspect:al.getAspectsSorted()) {
 				DecimalFormat myFormatter = new DecimalFormat("#####.##");
 				String amount = myFormatter.format(al.getAmount(aspect)/100f);
-				list.add(" \u00A7"+aspect.getChatcolor()+aspect.getName()+"\u00A7r x "+ amount);				
+				list.add(" §"+aspect.getChatcolor()+aspect.getName()+"§r x "+ amount);
 			}
 		}
 		addFocusInformation(stack,player,list,par4);
 	}
 	
 	public void addFocusInformation(ItemStack focusstack,EntityPlayer player, List list, boolean par4) {
-		LinkedHashMap<Short, Integer> map = new LinkedHashMap<Short, Integer>();
+		LinkedHashMap<Short, Integer> map = new LinkedHashMap<>();
 		for (short id:this.getAppliedUpgrades(focusstack)) {
 			if (id>=0) {
 				int amt = 1;
@@ -113,8 +113,8 @@ public class ItemFocusBasic extends Item {
 	}
 	
 	public enum WandFocusAnimation {
-		WAVE, CHARGE;
-	}
+		WAVE, CHARGE
+    }
 
 	public WandFocusAnimation getAnimation(ItemStack focusstack) {
 		return WandFocusAnimation.WAVE;
@@ -124,11 +124,11 @@ public class ItemFocusBasic extends Item {
 	 * Just insert two alphanumeric characters before this string in your focus item class
 	 */
 	public String getSortingHelper(ItemStack focusstack) {		
-		String out="";
+		StringBuilder out= new StringBuilder();
 		for (short id:this.getAppliedUpgrades(focusstack)) {
-			out = out + id;
+			out.append(id);
 		}
-		return out;
+		return out.toString();
 	}
 	
 	

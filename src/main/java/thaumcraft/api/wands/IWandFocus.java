@@ -32,8 +32,8 @@ public interface IWandFocus {
 
    boolean acceptsEnchant(int var1);
 
-   public static enum WandFocusAnimation {
+   enum WandFocusAnimation {
       WAVE,
-      CHARGE;
+      CHARGE
    }
 }

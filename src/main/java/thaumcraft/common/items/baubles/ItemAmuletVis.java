@@ -119,7 +119,7 @@ public class ItemAmuletVis extends Item implements IBauble, IRunicArmor {
       if (stack.hasTagCompound()) {
          for(Aspect aspect : Aspect.getPrimalAspects()) {
             if (stack.stackTagCompound.hasKey(aspect.getTag())) {
-               String amount = this.myFormatter.format((double)((float)stack.stackTagCompound.getInteger(aspect.getTag()) / 100.0F));
+               String amount = this.myFormatter.format((float)stack.stackTagCompound.getInteger(aspect.getTag()) / 100.0F);
                list.add(" §" + aspect.getChatcolor() + aspect.getName() + "§r x " + amount);
             }
          }
@@ -220,7 +220,7 @@ public class ItemAmuletVis extends Item implements IBauble, IRunicArmor {
    }
 
    public boolean canEquip(ItemStack itemstack, EntityLivingBase player) {
-      return itemstack.getItemDamage() != 1 ? true : ResearchManager.isResearchComplete(player.getCommandSenderName(), "VISAMULET");
+      return itemstack.getItemDamage() != 1 || ResearchManager.isResearchComplete(player.getCommandSenderName(), "VISAMULET");
    }
 
    public boolean canUnequip(ItemStack itemstack, EntityLivingBase player) {

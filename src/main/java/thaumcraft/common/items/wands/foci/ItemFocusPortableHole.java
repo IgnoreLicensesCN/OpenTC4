@@ -56,7 +56,7 @@ public class ItemFocusPortableHole extends ItemFocusBasic {
    public static boolean createHole(World world, int ii, int jj, int kk, int side, byte count, int max) {
       Block bi = world.getBlock(ii, jj, kk);
       if (world.getTileEntity(ii, jj, kk) == null && !ThaumcraftApi.portableHoleBlackList.contains(bi) && bi != Blocks.bedrock && bi != ConfigBlocks.blockHole && !bi.isAir(world, ii, jj, kk) && !bi.canPlaceBlockAt(world, ii, jj, kk) && bi.getBlockHardness(world, ii, jj, kk) != -1.0F) {
-         TileHole ts = new TileHole(bi, world.getBlockMetadata(ii, jj, kk), (short)max, count, (byte)side, (TileEntity)null);
+         TileHole ts = new TileHole(bi, world.getBlockMetadata(ii, jj, kk), (short)max, count, (byte)side, null);
          world.setBlock(ii, jj, kk, Blocks.air, 0, 0);
          if (world.setBlock(ii, jj, kk, ConfigBlocks.blockHole, 0, 0)) {
             world.setTileEntity(ii, jj, kk, ts);

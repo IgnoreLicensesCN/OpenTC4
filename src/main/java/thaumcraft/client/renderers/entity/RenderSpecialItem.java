@@ -62,12 +62,12 @@ public class RenderSpecialItem extends Render {
          fa /= 30.0F / ((float)Math.min(par1EntityItem.age, 10) / 10.0F);
          f4 /= 30.0F / ((float)Math.min(par1EntityItem.age, 10) / 10.0F);
          tessellator.setColorRGBA_I(16777215, (int)(255.0F * (1.0F - f2)));
-         tessellator.addVertex((double)0.0F, (double)0.0F, (double)0.0F);
+         tessellator.addVertex(0.0F, 0.0F, 0.0F);
          tessellator.setColorRGBA_I(16711935, 0);
-         tessellator.addVertex(-0.866 * (double)f4, (double)fa, (double)(-0.5F * f4));
-         tessellator.addVertex(0.866 * (double)f4, (double)fa, (double)(-0.5F * f4));
-         tessellator.addVertex((double)0.0F, (double)fa, (double)(f4));
-         tessellator.addVertex(-0.866 * (double)f4, (double)fa, (double)(-0.5F * f4));
+         tessellator.addVertex(-0.866 * (double)f4, fa, -0.5F * f4);
+         tessellator.addVertex(0.866 * (double)f4, fa, -0.5F * f4);
+         tessellator.addVertex(0.0F, fa, f4);
+         tessellator.addVertex(-0.866 * (double)f4, fa, -0.5F * f4);
          tessellator.draw();
       }
 

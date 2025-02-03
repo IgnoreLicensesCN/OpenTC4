@@ -55,7 +55,7 @@ public class ItemCultistLeaderArmor extends ItemArmor implements IRepairable, IR
    }
 
    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
-      return par2ItemStack.isItemEqual(new ItemStack(Items.iron_ingot)) ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
+      return par2ItemStack.isItemEqual(new ItemStack(Items.iron_ingot)) || super.getIsRepairable(par1ItemStack, par2ItemStack);
    }
 
    public int getRunicCharge(ItemStack itemstack) {

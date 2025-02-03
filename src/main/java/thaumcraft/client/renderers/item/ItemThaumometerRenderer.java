@@ -126,7 +126,7 @@ public class ItemThaumometerRenderer implements IItemRenderer {
       GL11.glTranslatef(0.0F, 0.11F, 0.0F);
       GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
       GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
-      UtilsFX.renderQuadCenteredFromTexture((String)"textures/models/scanscreen.png", 2.5F, 1.0F, 1.0F, 1.0F, (int)(190.0F + MathHelper.sin((float)(playermp.ticksExisted - playermp.worldObj.rand.nextInt(2))) * 10.0F + 10.0F), 771, 1.0F);
+      UtilsFX.renderQuadCenteredFromTexture("textures/models/scanscreen.png", 2.5F, 1.0F, 1.0F, 1.0F, (int)(190.0F + MathHelper.sin((float)(playermp.ticksExisted - playermp.worldObj.rand.nextInt(2))) * 10.0F + 10.0F), 771, 1.0F);
       if (playermp instanceof EntityPlayer && type == ItemRenderType.EQUIPPED_FIRST_PERSON && player_id == rve_id && mc.gameSettings.thirdPersonView == 0) {
          RenderHelper.disableStandardItemLighting();
          int j = (int)(190.0F + MathHelper.sin((float)(playermp.ticksExisted - playermp.worldObj.rand.nextInt(2))) * 10.0F + 10.0F);
@@ -166,7 +166,7 @@ public class ItemThaumometerRenderer implements IItemRenderer {
 
                if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
                   TileEntity tile = playermp.worldObj.getTileEntity(mop.blockX, mop.blockY, mop.blockZ);
-                  if (tile != null && tile instanceof INode) {
+                  if (tile instanceof INode) {
                      aspects = ((INode)tile).getAspects();
                      GL11.glPushMatrix();
                      GL11.glEnable(3042);
@@ -190,12 +190,12 @@ public class ItemThaumometerRenderer implements IItemRenderer {
                if (stack.getItem() != null) {
                   try {
                      text = stack.getDisplayName();
-                  } catch (Exception var27) {
+                  } catch (Exception ignored) {
                   }
                } else if (stack.getItem() != null) {
                   try {
                      text = stack.getItem().getItemStackDisplayName(stack);
-                  } catch (Exception var26) {
+                  } catch (Exception ignored) {
                   }
                }
             }
@@ -257,7 +257,7 @@ public class ItemThaumometerRenderer implements IItemRenderer {
 
    private ScanResult doScan(ItemStack stack, EntityPlayer p) {
       if (stack != null && p != null) {
-         Entity pointedEntity = EntityUtils.getPointedEntity(p.worldObj, p, (double)0.5F, (double)10.0F, 0.0F, true);
+         Entity pointedEntity = EntityUtils.getPointedEntity(p.worldObj, p, 0.5F, 10.0F, 0.0F, true);
          if (pointedEntity != null) {
             ScanResult sr = new ScanResult((byte)2, 0, 0, pointedEntity, "");
             return sr;
@@ -266,9 +266,9 @@ public class ItemThaumometerRenderer implements IItemRenderer {
             if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
                Block bi = p.worldObj.getBlock(mop.blockX, mop.blockY, mop.blockZ);
                TileEntity tile = p.worldObj.getTileEntity(mop.blockX, mop.blockY, mop.blockZ);
-               if (tile != null && tile instanceof INode) {
+               if (tile instanceof INode) {
                   int md = bi.getDamageValue(p.worldObj, mop.blockX, mop.blockY, mop.blockZ);
-                  ScanResult sr = new ScanResult((byte)3, Block.getIdFromBlock(bi), md, (Entity)null, "NODE" + ((INode)tile).getId());
+                  ScanResult sr = new ScanResult((byte)3, Block.getIdFromBlock(bi), md, null, "NODE" + ((INode)tile).getId());
                   return sr;
                }
 
@@ -281,16 +281,16 @@ public class ItemThaumometerRenderer implements IItemRenderer {
                      if (is == null) {
                         is = BlockUtils.createStackedBlock(bi, md);
                      }
-                  } catch (Exception var12) {
+                  } catch (Exception ignored) {
                   }
 
                   try {
                      if (is == null) {
-                        sr = new ScanResult((byte)1, Block.getIdFromBlock(bi), md, (Entity)null, "");
+                        sr = new ScanResult((byte)1, Block.getIdFromBlock(bi), md, null, "");
                      } else {
-                        sr = new ScanResult((byte)1, Item.getIdFromItem(is.getItem()), is.getItemDamage(), (Entity)null, "");
+                        sr = new ScanResult((byte)1, Item.getIdFromItem(is.getItem()), is.getItemDamage(), null, "");
                      }
-                  } catch (Exception var11) {
+                  } catch (Exception ignored) {
                   }
 
                   return sr;

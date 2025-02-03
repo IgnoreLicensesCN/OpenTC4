@@ -8,7 +8,7 @@ import net.minecraft.util.AxisAlignedBB;
 import thaumcraft.codechicken.lib.util.Copyable;
 
 public class Cuboid6 implements Copyable<Cuboid6> {
-   public static Cuboid6 full = new Cuboid6((double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)1.0F, (double)1.0F);
+   public static Cuboid6 full = new Cuboid6(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
    public Vector3 min;
    public Vector3 max;
 
@@ -93,7 +93,7 @@ public class Cuboid6 implements Copyable<Cuboid6> {
    }
 
    public Vector3 center() {
-      return this.min.copy().add(this.max).multiply((double)0.5F);
+      return this.min.copy().add(this.max).multiply(0.5F);
    }
 
    public static boolean intersects(Cuboid6 a, Cuboid6 b) {

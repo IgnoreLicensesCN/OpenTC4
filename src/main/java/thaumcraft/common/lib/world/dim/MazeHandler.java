@@ -3,6 +3,7 @@ package thaumcraft.common.lib.world.dim;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -22,7 +23,7 @@ public class MazeHandler {
    }
 
    public static synchronized Cell getFromHashMap(CellLoc key) {
-      return labyrinth.containsKey(key) ? new Cell((Short)labyrinth.get(key)) : null;
+      return labyrinth.containsKey(key) ? new Cell(labyrinth.get(key)) : null;
    }
 
    public static synchronized void removeFromHashMap(CellLoc key) {
@@ -30,7 +31,7 @@ public class MazeHandler {
    }
 
    public static synchronized short getFromHashMapRaw(CellLoc key) {
-      return labyrinth.containsKey(key) ? (Short)labyrinth.get(key) : 0;
+      return labyrinth.containsKey(key) ? labyrinth.get(key) : 0;
    }
 
    public static synchronized void clearHashMap() {
@@ -74,7 +75,7 @@ public class MazeHandler {
       File file1 = new File(world.getSaveHandler().getWorldDirectory(), "labyrinth.dat");
       if (file1.exists()) {
          try {
-            NBTTagCompound nbttagcompound = CompressedStreamTools.readCompressed(new FileInputStream(file1));
+            NBTTagCompound nbttagcompound = CompressedStreamTools.readCompressed(Files.newInputStream(file1.toPath()));
             NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Data");
             readNBT(nbttagcompound1);
             return;
@@ -86,7 +87,7 @@ public class MazeHandler {
       file1 = new File(world.getSaveHandler().getWorldDirectory(), "labyrinth.dat_old");
       if (file1.exists()) {
          try {
-            NBTTagCompound nbttagcompound = CompressedStreamTools.readCompressed(new FileInputStream(file1));
+            NBTTagCompound nbttagcompound = CompressedStreamTools.readCompressed(Files.newInputStream(file1.toPath()));
             NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Data");
             readNBT(nbttagcompound1);
             return;
@@ -106,7 +107,7 @@ public class MazeHandler {
          File file1 = new File(world.getSaveHandler().getWorldDirectory(), "labyrinth.dat_new");
          File file2 = new File(world.getSaveHandler().getWorldDirectory(), "labyrinth.dat_old");
          File file3 = new File(world.getSaveHandler().getWorldDirectory(), "labyrinth.dat");
-         CompressedStreamTools.writeCompressed(nbttagcompound1, new FileOutputStream(file1));
+         CompressedStreamTools.writeCompressed(nbttagcompound1, Files.newOutputStream(file1.toPath()));
          if (file2.exists()) {
             file2.delete();
          }
@@ -177,10 +178,7 @@ public class MazeHandler {
    }
 
    private static void generatePassage(World world, Random random, int cx, int cz, int y, Cell cell) {
-      switch (random.nextInt(1)) {
-         case 0:
-            GenPassage.generateDefaultPassage(world, random, cx, cz, y, cell);
-         default:
-      }
+       random.nextInt(1);
+       GenPassage.generateDefaultPassage(world, random, cx, cz, y, cell);
    }
 }

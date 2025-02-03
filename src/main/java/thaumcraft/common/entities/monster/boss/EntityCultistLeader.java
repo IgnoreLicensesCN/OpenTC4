@@ -39,7 +39,7 @@ public class EntityCultistLeader extends EntityThaumcraftBoss implements IRanged
       super(p_i1745_1_);
       this.setSize(0.75F, 2.25F);
       this.tasks.addTask(0, new EntityAISwimming(this));
-      this.tasks.addTask(2, new AILongRangeAttack(this, (double)16.0F, (double)1.0F, 30, 40, 24.0F));
+      this.tasks.addTask(2, new AILongRangeAttack(this, 16.0F, 1.0F, 30, 40, 24.0F));
       this.tasks.addTask(3, new AIAttackOnCollide(this, EntityLivingBase.class, 1.1, false));
       this.tasks.addTask(6, new EntityAIMoveTowardsRestriction(this, 0.8));
       this.tasks.addTask(7, new EntityAIWander(this, 0.8));
@@ -53,8 +53,8 @@ public class EntityCultistLeader extends EntityThaumcraftBoss implements IRanged
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
       this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.32);
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)125.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)5.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(125.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(5.0F);
    }
 
    protected void entityInit() {
@@ -114,7 +114,7 @@ public class EntityCultistLeader extends EntityThaumcraftBoss implements IRanged
    }
 
    public boolean canAttackClass(Class clazz) {
-      return clazz != EntityCultistCleric.class && clazz != EntityCultistLeader.class && clazz != EntityCultistKnight.class ? super.canAttackClass(clazz) : false;
+      return clazz != EntityCultistCleric.class && clazz != EntityCultistLeader.class && clazz != EntityCultistKnight.class && super.canAttackClass(clazz);
    }
 
    protected Item getDropItem() {
@@ -138,12 +138,12 @@ public class EntityCultistLeader extends EntityThaumcraftBoss implements IRanged
    protected void updateAITasks() {
       super.updateAITasks();
 
-      for(Entity e : EntityUtils.getEntitiesInRange(this.worldObj, this.posX, this.posY, this.posZ, this, EntityCultist.class, (double)8.0F)) {
+      for(Entity e : EntityUtils.getEntitiesInRange(this.worldObj, this.posX, this.posY, this.posZ, this, EntityCultist.class, 8.0F)) {
          try {
             if (e instanceof EntityCultist && !((EntityCultist)e).isPotionActive(Potion.regeneration.id)) {
                ((EntityCultist)e).addPotionEffect(new PotionEffect(Potion.regeneration.id, 60, 1));
             }
-         } catch (Exception var5) {
+         } catch (Exception ignored) {
          }
       }
 

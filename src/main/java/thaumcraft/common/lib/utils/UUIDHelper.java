@@ -23,7 +23,7 @@ public class UUIDHelper {
             InputStreamReader isr = new InputStreamReader(connection.getInputStream());
             JsonObject profile = (JsonObject)(new JsonParser()).parse(isr);
             return profile.get("name").toString().replace('"', '\u0000').trim();
-         } catch (Exception var5) {
+         } catch (Exception ignored) {
          }
       }
 
@@ -42,7 +42,7 @@ public class UUIDHelper {
             connection.setDoOutput(true);
             JsonObject profile = (JsonObject)(new JsonParser()).parse(new InputStreamReader(connection.getInputStream()));
             return UUID.fromString(fullUUID(profile.get("id").toString()));
-         } catch (Exception var4) {
+         } catch (Exception ignored) {
          }
       }
 

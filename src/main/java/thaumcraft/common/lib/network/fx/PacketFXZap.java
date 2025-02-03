@@ -53,6 +53,6 @@ public class PacketFXZap implements IMessage, IMessageHandler<PacketFXZap,IMessa
 
    @SideOnly(Side.CLIENT)
    private Entity getEntityByID(int par1, Minecraft mc, WorldClient world) {
-      return (Entity)(par1 == mc.thePlayer.getEntityId() ? mc.thePlayer : world.getEntityByID(par1));
+      return par1 == mc.thePlayer.getEntityId() ? mc.thePlayer : world.getEntityByID(par1);
    }
 }

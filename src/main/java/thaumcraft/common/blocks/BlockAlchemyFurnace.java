@@ -136,7 +136,7 @@ public class BlockAlchemyFurnace extends BlockContainer {
       if (metadata == 0) {
          return new TileAlchemyFurnaceAdvanced();
       } else {
-         return (TileEntity)(metadata == 1 ? new TileAlchemyFurnaceAdvancedNozzle() : super.createTileEntity(world, metadata));
+         return metadata == 1 ? new TileAlchemyFurnaceAdvancedNozzle() : super.createTileEntity(world, metadata);
       }
    }
 
@@ -146,7 +146,7 @@ public class BlockAlchemyFurnace extends BlockContainer {
 
    public int getComparatorInputOverride(World world, int x, int y, int z, int rs) {
       TileEntity te = world.getTileEntity(x, y, z);
-      if (te != null && te instanceof TileAlchemyFurnaceAdvancedNozzle) {
+      if (te instanceof TileAlchemyFurnaceAdvancedNozzle) {
          if (((TileAlchemyFurnaceAdvancedNozzle)te).furnace != null) {
             float r = (float)((TileAlchemyFurnaceAdvancedNozzle)te).furnace.vis / (float)((TileAlchemyFurnaceAdvancedNozzle)te).furnace.maxVis;
             return MathHelper.floor_float(r * 14.0F) + ((TileAlchemyFurnaceAdvancedNozzle)te).furnace.vis > 0 ? 1 : 0;
@@ -200,20 +200,20 @@ public class BlockAlchemyFurnace extends BlockContainer {
       if (meta == 0) {
          TileAlchemyFurnaceAdvanced tile = (TileAlchemyFurnaceAdvanced)world.getTileEntity(x, y, z);
          if (tile != null && tile.vis > 0) {
-            FXSlimyBubble ef = new FXSlimyBubble(world, (double)((float)x + rand.nextFloat()), (double)(y + 1), (double)((float)z + rand.nextFloat()), 0.06F + rand.nextFloat() * 0.06F);
+            FXSlimyBubble ef = new FXSlimyBubble(world, (float)x + rand.nextFloat(), y + 1, (float)z + rand.nextFloat(), 0.06F + rand.nextFloat() * 0.06F);
             ef.setAlphaF(0.8F);
             ef.setRBGColorF(0.6F - rand.nextFloat() * 0.2F, 0.0F, 0.6F + rand.nextFloat() * 0.2F);
             ParticleEngine.instance.addEffect(world, ef);
             if (rand.nextInt(50) == 0) {
-               double var21 = (double)((float)x + rand.nextFloat());
+               double var21 = (float)x + rand.nextFloat();
                double var22 = (double)y + this.maxY;
-               double var23 = (double)((float)z + rand.nextFloat());
+               double var23 = (float)z + rand.nextFloat();
                world.playSound(var21, var22, var23, "liquid.lavapop", 0.1F + rand.nextFloat() * 0.1F, 0.9F + rand.nextFloat() * 0.15F, false);
             }
 
             int q = rand.nextInt(2);
             int w = rand.nextInt(2);
-            FXSlimyBubble ef2 = new FXSlimyBubble(world, (double)x - 0.6 + (double)rand.nextFloat() * 0.2 + (double)(q * 2), (double)(y + 2), (double)z - 0.6 + (double)rand.nextFloat() * 0.2 + (double)(w * 2), 0.06F + rand.nextFloat() * 0.06F);
+            FXSlimyBubble ef2 = new FXSlimyBubble(world, (double)x - 0.6 + (double)rand.nextFloat() * 0.2 + (double)(q * 2), y + 2, (double)z - 0.6 + (double)rand.nextFloat() * 0.2 + (double)(w * 2), 0.06F + rand.nextFloat() * 0.06F);
             ef2.setAlphaF(0.8F);
             ef2.setRBGColorF(0.6F - rand.nextFloat() * 0.2F, 0.0F, 0.6F + rand.nextFloat() * 0.2F);
             ParticleEngine.instance.addEffect(world, ef2);

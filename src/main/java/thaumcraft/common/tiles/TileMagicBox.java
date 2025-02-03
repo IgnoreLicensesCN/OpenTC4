@@ -35,7 +35,7 @@ public class TileMagicBox extends TileThaumcraft implements IInventory {
          tile = this.worldObj.getTileEntity(this.master.x, this.master.y, this.master.z);
       }
 
-      return tile != null && tile instanceof TileMagicBox ? (TileMagicBox)tile : this;
+      return tile instanceof TileMagicBox ? (TileMagicBox)tile : this;
    }
 
    public ItemStack getStackInSlot(int par1) {
@@ -125,13 +125,13 @@ public class TileMagicBox extends TileThaumcraft implements IInventory {
       super.writeToNBT(par1NBTTagCompound);
       NBTTagList var2 = new NBTTagList();
 
-      for(int var3 = 0; var3 < this.boxContents.size(); ++var3) {
-         if (this.boxContents.get(var3) != null) {
-            NBTTagCompound var4 = new NBTTagCompound();
-            ((ItemStack)this.boxContents.get(var3)).writeToNBT(var4);
-            var2.appendTag(var4);
-         }
-      }
+       for (Object boxContent : this.boxContents) {
+           if (boxContent != null) {
+               NBTTagCompound var4 = new NBTTagCompound();
+               ((ItemStack) boxContent).writeToNBT(var4);
+               var2.appendTag(var4);
+           }
+       }
 
       par1NBTTagCompound.setTag("Items", var2);
    }
@@ -149,7 +149,7 @@ public class TileMagicBox extends TileThaumcraft implements IInventory {
    }
 
    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
-      return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + (double)0.5F, (double)this.yCoord + (double)0.5F, (double)this.zCoord + (double)0.5F) <= (double)64.0F;
+      return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && par1EntityPlayer.getDistanceSq((double) this.xCoord + (double) 0.5F, (double) this.yCoord + (double) 0.5F, (double) this.zCoord + (double) 0.5F) <= (double) 64.0F;
    }
 
    public void updateEntity() {
@@ -164,7 +164,7 @@ public class TileMagicBox extends TileThaumcraft implements IInventory {
       if (par1 == 1) {
          return true;
       } else {
-         return par1 == 2 ? true : this.tileEntityInvalid;
+         return par1 == 2 || this.tileEntityInvalid;
       }
    }
 
@@ -237,11 +237,11 @@ public class TileMagicBox extends TileThaumcraft implements IInventory {
             s1 = s1 + ((ItemStack)this.getContents().get(i)).getDisplayName();
             s2 = s2 + ((ItemStack)this.getContents().get(j)).getDisplayName();
             if (((ItemStack)this.getContents().get(i)).hasTagCompound()) {
-               s1 = s1 + "" + ((ItemStack)this.getContents().get(i)).stackTagCompound.hashCode();
+               s1 = s1 + ((ItemStack)this.getContents().get(i)).stackTagCompound.hashCode();
             }
 
             if (((ItemStack)this.getContents().get(j)).hasTagCompound()) {
-               s2 = s2 + "" + ((ItemStack)this.getContents().get(j)).stackTagCompound.hashCode();
+               s2 = s2 + ((ItemStack)this.getContents().get(j)).stackTagCompound.hashCode();
             }
 
             int r = s1.compareToIgnoreCase(s2);
@@ -259,11 +259,11 @@ public class TileMagicBox extends TileThaumcraft implements IInventory {
          s1 = s1 + ((ItemStack)this.getContents().get(i)).getDisplayName();
          s2 = s2 + ((ItemStack)this.getContents().get(j)).getDisplayName();
          if (((ItemStack)this.getContents().get(i)).hasTagCompound()) {
-            s1 = s1 + "" + ((ItemStack)this.getContents().get(i)).stackTagCompound.hashCode();
+            s1 = s1 + ((ItemStack)this.getContents().get(i)).stackTagCompound.hashCode();
          }
 
          if (((ItemStack)this.getContents().get(j)).hasTagCompound()) {
-            s2 = s2 + "" + ((ItemStack)this.getContents().get(j)).stackTagCompound.hashCode();
+            s2 = s2 + ((ItemStack)this.getContents().get(j)).stackTagCompound.hashCode();
          }
 
          int r = s1.compareToIgnoreCase(s2);
@@ -293,7 +293,7 @@ public class TileMagicBox extends TileThaumcraft implements IInventory {
          for(int a = 0; a < 6; ++a) {
             ForgeDirection dir = ForgeDirection.getOrientation(a);
             TileEntity tile = this.worldObj.getTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
-            if (tile != null && tile instanceof TileMagicBox) {
+            if (tile instanceof TileMagicBox) {
                WorldCoordinates wc = new WorldCoordinates(tile);
                if (!list.contains(wc)) {
                   list.add(wc);

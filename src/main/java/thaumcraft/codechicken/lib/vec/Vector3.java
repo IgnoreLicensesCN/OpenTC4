@@ -16,8 +16,8 @@ import thaumcraft.codechicken.lib.util.Copyable;
 
 public class Vector3 implements Copyable {
    public static Vector3 zero = new Vector3();
-   public static Vector3 one = new Vector3((double)1.0F, (double)1.0F, (double)1.0F);
-   public static Vector3 center = new Vector3((double)0.5F, (double)0.5F, (double)0.5F);
+   public static Vector3 one = new Vector3(1.0F, 1.0F, 1.0F);
+   public static Vector3 center = new Vector3(0.5F, 0.5F, 0.5F);
    public double x;
    public double y;
    public double z;
@@ -48,9 +48,9 @@ public class Vector3 implements Copyable {
    }
 
    public Vector3(BlockCoord coord) {
-      this.x = (double)coord.x;
-      this.y = (double)coord.y;
-      this.z = (double)coord.z;
+      this.x = coord.x;
+      this.y = coord.y;
+      this.z = coord.z;
    }
 
    public Vector3 copy() {
@@ -66,7 +66,7 @@ public class Vector3 implements Copyable {
    }
 
    public static Vector3 fromTileEntity(TileEntity e) {
-      return new Vector3((double)e.xCoord, (double)e.yCoord, (double)e.zCoord);
+      return new Vector3(e.xCoord, e.yCoord, e.zCoord);
    }
 
    public static Vector3 fromTileEntityCenter(TileEntity e) {
@@ -131,9 +131,9 @@ public class Vector3 implements Copyable {
    public double dotProduct(Vector3 vec) {
       double d = vec.x * this.x + vec.y * this.y + vec.z * this.z;
       if (d > (double)1.0F && d < 1.00001) {
-         d = (double)1.0F;
+         d = 1.0F;
       } else if (d < (double)-1.0F && d > -1.00001) {
-         d = (double)-1.0F;
+         d = -1.0F;
       }
 
       return d;
@@ -239,7 +239,7 @@ public class Vector3 implements Copyable {
    public Vector3 xCrossProduct() {
       double d = this.z;
       double d1 = -this.y;
-      this.x = (double)0.0F;
+      this.x = 0.0F;
       this.y = d;
       this.z = d1;
       return this;
@@ -250,7 +250,7 @@ public class Vector3 implements Copyable {
       double d1 = -this.x;
       this.x = d;
       this.y = d1;
-      this.z = (double)0.0F;
+      this.z = 0.0F;
       return this;
    }
 
@@ -258,7 +258,7 @@ public class Vector3 implements Copyable {
       double d = -this.z;
       double d1 = this.x;
       this.x = d;
-      this.y = (double)0.0F;
+      this.y = 0.0F;
       this.z = d1;
       return this;
    }
@@ -314,7 +314,7 @@ public class Vector3 implements Copyable {
          double d = (px - this.x) / dx;
          if (MathHelper.between(-1.0E-5, d, 1.0E-5)) {
             return this;
-         } else if (!MathHelper.between((double)0.0F, d, (double)1.0F)) {
+         } else if (!MathHelper.between(0.0F, d, 1.0F)) {
             return null;
          } else {
             this.x = px;
@@ -335,7 +335,7 @@ public class Vector3 implements Copyable {
          double d = (py - this.y) / dy;
          if (MathHelper.between(-1.0E-5, d, 1.0E-5)) {
             return this;
-         } else if (!MathHelper.between((double)0.0F, d, (double)1.0F)) {
+         } else if (!MathHelper.between(0.0F, d, 1.0F)) {
             return null;
          } else {
             this.x += d * dx;
@@ -356,7 +356,7 @@ public class Vector3 implements Copyable {
          double d = (pz - this.z) / dz;
          if (MathHelper.between(-1.0E-5, d, 1.0E-5)) {
             return this;
-         } else if (!MathHelper.between((double)0.0F, d, (double)1.0F)) {
+         } else if (!MathHelper.between(0.0F, d, 1.0F)) {
             return null;
          } else {
             this.x += d * dx;
@@ -386,7 +386,7 @@ public class Vector3 implements Copyable {
    public Vector3 project(Vector3 b) {
       double l = b.magSquared();
       if (l == (double)0.0F) {
-         this.set((double)0.0F, (double)0.0F, (double)0.0F);
+         this.set(0.0F, 0.0F, 0.0F);
       } else {
          double m = this.dotProduct(b) / l;
          this.set(b).multiply(m);

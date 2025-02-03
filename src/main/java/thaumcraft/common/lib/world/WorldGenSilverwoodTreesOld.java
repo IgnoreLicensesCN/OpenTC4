@@ -19,10 +19,10 @@ public class WorldGenSilverwoodTreesOld extends WorldGenAbstractTree {
    int heightLimit = 0;
    int height;
    double heightAttenuation = 0.618;
-   double branchDensity = (double)1.0F;
+   double branchDensity = 1.0F;
    double branchSlope = -0.3;
    double scaleWidth = 0.9;
-   double leafDensity = (double)1.0F;
+   double leafDensity = 1.0F;
    int trunkSize = 1;
    int heightLimitLimit = 8;
    int leafDistanceLimit = 4;
@@ -38,7 +38,7 @@ public class WorldGenSilverwoodTreesOld extends WorldGenAbstractTree {
          this.height = this.heightLimit - 1;
       }
 
-      int var1 = (int)(1.382 + Math.pow(this.leafDensity * (double)this.heightLimit / (double)13.0F, (double)2.0F));
+      int var1 = (int)(1.382 + Math.pow(this.leafDensity * (double)this.heightLimit / (double)13.0F, 2.0F));
       if (var1 < 1) {
          var1 = 1;
       }
@@ -58,7 +58,7 @@ public class WorldGenSilverwoodTreesOld extends WorldGenAbstractTree {
          int var7 = 0;
          float var8 = this.layerSize(var6);
           if (!(var8 < 0.0F)) {
-              for (double var9 = (double) 0.5F; var7 < var1; ++var7) {
+              for (double var9 = 0.5F; var7 < var1; ++var7) {
                   double var11 = this.scaleWidth * (double) var8 * ((double) this.rand.nextFloat() + 0.328);
                   double var13 = (double) this.rand.nextFloat() * (double) 2.0F * Math.PI;
                   int var15 = MathHelper.floor_double(var11 * Math.sin(var13) + (double) this.basePos[0] + var9);
@@ -67,7 +67,7 @@ public class WorldGenSilverwoodTreesOld extends WorldGenAbstractTree {
                   int[] var18 = new int[]{var15, var3 + this.leafDistanceLimit, var16};
                   if (this.checkBlockLine(var17, var18) == -1) {
                       int[] var19 = new int[]{this.basePos[0], this.basePos[1], this.basePos[2]};
-                      double var20 = Math.sqrt(Math.pow((double) Math.abs(this.basePos[0] - var17[0]), (double) 2.0F) + Math.pow((double) Math.abs(this.basePos[2] - var17[2]), (double) 2.0F));
+                      double var20 = Math.sqrt(Math.pow(Math.abs(this.basePos[0] - var17[0]), 2.0F) + Math.pow(Math.abs(this.basePos[2] - var17[2]), 2.0F));
                       double var22 = var20 * this.branchSlope;
                       if ((double) var17[1] - var22 > (double) var5) {
                           var19[1] = var5;
@@ -108,7 +108,7 @@ public class WorldGenSilverwoodTreesOld extends WorldGenAbstractTree {
          var13 = -var7;
 
          while(var13 <= var7) {
-            double var15 = Math.pow((double)Math.abs(var12) + (double)0.5F, (double)2.0F) + Math.pow((double)Math.abs(var13) + (double)0.5F, (double)2.0F);
+            double var15 = Math.pow((double)Math.abs(var12) + (double)0.5F, 2.0F) + Math.pow((double)Math.abs(var13) + (double)0.5F, 2.0F);
              if (!(var15 > (double) (par4 * par4))) {
                  var11[var9] = var10[var9] + var13;
                  Block block = this.worldObj.getBlock(var11[0], var11[1], var11[2]);
@@ -135,7 +135,7 @@ public class WorldGenSilverwoodTreesOld extends WorldGenAbstractTree {
          } else if (Math.abs(var3) >= var2) {
             var4 = 0.0F;
          } else {
-            var4 = (float)Math.sqrt(Math.pow((double)Math.abs(var2), (double)2.0F) - Math.pow((double)Math.abs(var3), (double)2.0F));
+            var4 = (float)Math.sqrt(Math.pow(Math.abs(var2), 2.0F) - Math.pow(Math.abs(var3), 2.0F));
          }
 
          var4 *= 0.5F;

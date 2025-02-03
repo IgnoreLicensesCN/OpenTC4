@@ -32,7 +32,7 @@ public class BlockCandleRenderer extends BlockRenderer implements ISimpleBlockRe
       block.setBlockBounds(W6, 0.0F, W6, W10, 0.5F, W10);
       renderer.setRenderBoundsFromBlock(block);
       renderer.renderStandardBlock(block, x, y, z);
-      Random rr = new Random((long)(x + y * z));
+      Random rr = new Random(x + (long) y * z);
       int q = 1 + rr.nextInt(5);
 
       for(int a = 0; a < q; ++a) {

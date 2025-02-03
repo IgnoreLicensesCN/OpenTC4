@@ -36,7 +36,7 @@ public class EntityEldritchCrab extends EntityMob {
       this.getNavigator().setAvoidsWater(true);
       this.tasks.addTask(0, new EntityAISwimming(this));
       this.tasks.addTask(2, new EntityAILeapAtTarget(this, 0.63F));
-      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityLivingBase.class, (double)1.0F, false));
+      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityLivingBase.class, 1.0F, false));
       this.tasks.addTask(7, new EntityAIWander(this, 0.8));
       this.tasks.addTask(8, new EntityAILookIdle(this));
       this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
@@ -50,14 +50,14 @@ public class EntityEldritchCrab extends EntityMob {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)20.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)4.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(4.0F);
       this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(this.hasHelm() ? 0.275 : 0.3);
    }
 
    protected void entityInit() {
       super.entityInit();
-      this.dataWatcher.addObject(22, new Byte((byte)0));
+      this.dataWatcher.addObject(22, (byte) 0);
    }
 
    public boolean canPickUpLoot() {
@@ -201,7 +201,7 @@ public class EntityEldritchCrab extends EntityMob {
    }
 
    public boolean isPotionApplicable(PotionEffect p_70687_1_) {
-      return p_70687_1_.getPotionID() == Potion.poison.id ? false : super.isPotionApplicable(p_70687_1_);
+      return p_70687_1_.getPotionID() != Potion.poison.id && super.isPotionApplicable(p_70687_1_);
    }
 
    public boolean isOnSameTeam(EntityLivingBase el) {

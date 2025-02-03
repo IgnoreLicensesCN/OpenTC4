@@ -66,7 +66,7 @@ public class EventHandlerWorld implements IFuelHandler {
          VisNetHandler.sources.remove(event.world.provider.dimensionId);
 
          try {
-            TileSensor.noteBlockEvents.remove((WorldServer)event.world);
+            TileSensor.noteBlockEvents.remove(event.world);
          } catch (Exception e) {
             FMLCommonHandler.instance().getFMLLogger().log(Level.WARN, "[Thaumcraft] Error unloading noteblock even handlers.", e);
          }
@@ -148,12 +148,12 @@ public class EventHandlerWorld implements IFuelHandler {
             float chance = 0.2F + (float)fortune * 0.075F;
 
             for(int a = 0; a < event.drops.size(); ++a) {
-               ItemStack is = (ItemStack)event.drops.get(a);
+               ItemStack is = event.drops.get(a);
                ItemStack smr = Utils.findSpecialMiningResult(is, chance, event.world.rand);
                if (!is.isItemEqual(smr)) {
                   event.drops.set(a, smr);
                   if (!event.world.isRemote) {
-                     event.world.playSoundEffect((double)((float)event.x + 0.5F), (double)((float)event.y + 0.5F), (double)((float)event.z + 0.5F), "random.orb", 0.2F, 0.7F + event.world.rand.nextFloat() * 0.2F);
+                     event.world.playSoundEffect((float)event.x + 0.5F, (float)event.y + 0.5F, (float)event.z + 0.5F, "random.orb", 0.2F, 0.7F + event.world.rand.nextFloat() * 0.2F);
                   }
                }
             }
@@ -166,12 +166,12 @@ public class EventHandlerWorld implements IFuelHandler {
    public void noteEvent(NoteBlockEvent.Play event) {
       if (!event.world.isRemote) {
          if (!TileSensor.noteBlockEvents.containsKey(event.world)) {
-            TileSensor.noteBlockEvents.put((WorldServer)event.world, new ArrayList());
+            TileSensor.noteBlockEvents.put(event.world, new ArrayList());
          }
 
          ArrayList<Integer[]> list = (ArrayList)TileSensor.noteBlockEvents.get(event.world);
          list.add(new Integer[]{event.x, event.y, event.z, event.instrument.ordinal(), event.getVanillaNoteId()});
-         TileSensor.noteBlockEvents.put((WorldServer)event.world, list);
+         TileSensor.noteBlockEvents.put(event.world, list);
       }
    }
 
@@ -217,10 +217,8 @@ public class EventHandlerWorld implements IFuelHandler {
          int zz = z >> 4;
          Cell c = MazeHandler.getFromHashMap(new CellLoc(xx, zz));
          if (c != null && c.feature >= 2 && c.feature <= 5) {
-            ArrayList<Entity> list = EntityUtils.getEntitiesInRange(world, (double)x, (double)y, (double)z, (Entity)null, EntityThaumcraftBoss.class, (double)32.0F);
-            if (list != null && list.size() > 0) {
-               return true;
-            }
+            ArrayList<Entity> list = EntityUtils.getEntitiesInRange(world, x, y, z, null, EntityThaumcraftBoss.class, 32.0F);
+             return list != null && list.size() > 0;
          }
       }
 

@@ -114,7 +114,7 @@ public class ItemResource extends Item implements IEssentiaContainerItem {
          ((EntityLivingBase)entity).addPotionEffect(new PotionEffect(Config.potionTaintPoisonID, 120, 0, false));
          if (entity instanceof EntityPlayer) {
             String s = StatCollector.translateToLocal("tc.taint_item_poison").replace("%s", "§5§o" + stack.getDisplayName() + "§r");
-            ((EntityPlayer)entity).addChatMessage(new ChatComponentTranslation(s, new Object[0]));
+            ((EntityPlayer)entity).addChatMessage(new ChatComponentTranslation(s));
             InventoryUtils.consumeInventoryItem((EntityPlayer)entity, stack.getItem(), stack.getItemDamage());
          }
       } else if (!entity.worldObj.isRemote && stack.getItemDamage() == 15) {
@@ -149,8 +149,8 @@ public class ItemResource extends Item implements IEssentiaContainerItem {
                EntityAspectOrb orb = new EntityAspectOrb(world, entity.posX, entity.posY, entity.posZ, aspect, 1);
                world.spawnEntityInWorld(orb);
             }
-         } else if (r == 42 && entity instanceof EntityPlayer && !ResearchManager.isResearchComplete(((EntityPlayer)entity).getCommandSenderName(), "FOCUSPRIMAL") && !ResearchManager.isResearchComplete(((EntityPlayer)entity).getCommandSenderName(), "@FOCUSPRIMAL")) {
-            ((EntityPlayer)entity).addChatMessage(new ChatComponentTranslation("§5§o" + StatCollector.translateToLocal("tc.primalcharm.trigger"), new Object[0]));
+         } else if (r == 42 && entity instanceof EntityPlayer && !ResearchManager.isResearchComplete(entity.getCommandSenderName(), "FOCUSPRIMAL") && !ResearchManager.isResearchComplete(entity.getCommandSenderName(), "@FOCUSPRIMAL")) {
+            ((EntityPlayer)entity).addChatMessage(new ChatComponentTranslation("§5§o" + StatCollector.translateToLocal("tc.primalcharm.trigger")));
             PacketHandler.INSTANCE.sendTo(new PacketResearchComplete("@FOCUSPRIMAL"), (EntityPlayerMP)entity);
             Thaumcraft.proxy.getResearchManager().completeResearch((EntityPlayer)entity, "@FOCUSPRIMAL");
          }
@@ -197,7 +197,7 @@ public class ItemResource extends Item implements IEssentiaContainerItem {
             return false;
          } else if (world.canPlaceEntityOnSide(ConfigBlocks.blockAiry, x, y, z, false, par7, player, itemstack)) {
             if (this.placeBlockAt(itemstack, player, world, x, y, z, par7, par8, par9, par10, ConfigBlocks.blockAiry, itemstack.getItemDamage())) {
-               world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), ConfigBlocks.blockAiry.stepSound.getStepResourcePath(), (ConfigBlocks.blockAiry.stepSound.getVolume() + 1.0F) / 2.0F, ConfigBlocks.blockAiry.stepSound.getPitch() * 0.8F);
+               world.playSoundEffect((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, ConfigBlocks.blockAiry.stepSound.getStepResourcePath(), (ConfigBlocks.blockAiry.stepSound.getVolume() + 1.0F) / 2.0F, ConfigBlocks.blockAiry.stepSound.getPitch() * 0.8F);
                --itemstack.stackSize;
                return true;
             } else {
@@ -263,7 +263,7 @@ public class ItemResource extends Item implements IEssentiaContainerItem {
       }
 
       if (stack.getItemDamage() == 15) {
-         Random rand = new Random((long)(stack.hashCode() + player.ticksExisted / 120));
+         Random rand = new Random(stack.hashCode() + player.ticksExisted / 120);
          int r = rand.nextInt(200);
          if (r < 25) {
             list.add("§6" + StatCollector.translateToLocal("tc.primalcharm." + rand.nextInt(5)));

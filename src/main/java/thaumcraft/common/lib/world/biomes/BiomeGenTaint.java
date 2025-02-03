@@ -44,7 +44,7 @@ public class BiomeGenTaint extends BiomeGenBase {
    }
 
    public WorldGenAbstractTree func_150567_a(Random par1Random) {
-      return (WorldGenAbstractTree)(par1Random.nextInt(8) == 0 ? this.bigTree : super.func_150567_a(par1Random));
+      return par1Random.nextInt(8) == 0 ? this.bigTree : super.func_150567_a(par1Random);
    }
 
    public void decorateSpecial(World world, Random random, int x, int z) {

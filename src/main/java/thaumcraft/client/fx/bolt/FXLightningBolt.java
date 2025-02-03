@@ -18,57 +18,57 @@ public class FXLightningBolt extends EntityFX {
    private FXLightningBoltCommon main;
 
    public FXLightningBolt(World world, WRVector3 jammervec, WRVector3 targetvec, long seed) {
-      super(world, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
       this.main = new FXLightningBoltCommon(world, jammervec, targetvec, seed);
       this.setupFromMain();
    }
 
    public FXLightningBolt(World world, Entity detonator, Entity target, long seed) {
-      super(world, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
       this.main = new FXLightningBoltCommon(world, detonator, target, seed);
       this.setupFromMain();
    }
 
    public FXLightningBolt(World world, Entity detonator, Entity target, long seed, int speed) {
-      super(world, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
       this.main = new FXLightningBoltCommon(world, detonator, target, seed, speed);
       this.setupFromMain();
    }
 
    public FXLightningBolt(World world, TileEntity detonator, Entity target, long seed) {
-      super(world, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
       this.main = new FXLightningBoltCommon(world, detonator, target, seed);
       this.setupFromMain();
    }
 
    public FXLightningBolt(World world, double x1, double y1, double z1, double x, double y, double z, long seed, int duration, float multi) {
-      super(world, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
       this.main = new FXLightningBoltCommon(world, x1, y1, z1, x, y, z, seed, duration, multi);
       this.setupFromMain();
    }
 
    public FXLightningBolt(World world, double x1, double y1, double z1, double x, double y, double z, long seed, int duration, float multi, int speed) {
-      super(world, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
       this.main = new FXLightningBoltCommon(world, x1, y1, z1, x, y, z, seed, duration, multi, speed);
       this.setupFromMain();
    }
 
    public FXLightningBolt(World world, double x1, double y1, double z1, double x, double y, double z, long seed, int duration) {
-      super(world, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
       this.main = new FXLightningBoltCommon(world, x1, y1, z1, x, y, z, seed, duration, 1.0F);
       this.setupFromMain();
    }
 
    public FXLightningBolt(World world, TileEntity detonator, double x, double y, double z, long seed) {
-      super(world, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
       this.main = new FXLightningBoltCommon(world, detonator, x, y, z, seed);
       this.setupFromMain();
    }
 
    private void setupFromMain() {
       this.particleAge = this.main.particleMaxAge;
-      this.setPosition((double)this.main.start.x, (double)this.main.start.y, (double)this.main.start.z);
-      this.setVelocity((double)0.0F, (double)0.0F, (double)0.0F);
+      this.setPosition(this.main.start.x, this.main.start.y, this.main.start.z);
+      this.setVelocity(0.0F, 0.0F, 0.0F);
    }
 
    public void defaultFractal() {
@@ -107,11 +107,11 @@ public class FXLightningBolt extends EntityFX {
 
    private static WRVector3 getRelativeViewVector(WRVector3 pos) {
       EntityPlayer renderentity = FMLClientHandler.instance().getClient().thePlayer;
-      return new WRVector3((double)((float)renderentity.posX - pos.x), (double)((float)renderentity.posY - pos.y), (double)((float)renderentity.posZ - pos.z));
+      return new WRVector3((float)renderentity.posX - pos.x, (float)renderentity.posY - pos.y, (float)renderentity.posZ - pos.z);
    }
 
    private void renderBolt(Tessellator tessellator, float partialframe, float cosyaw, float cospitch, float sinyaw, float cossinpitch, int pass, float mainalpha) {
-      WRVector3 playervec = new WRVector3((double)(sinyaw * -cospitch), (double)(-cossinpitch / cosyaw), (double)(cosyaw * cospitch));
+      WRVector3 playervec = new WRVector3(sinyaw * -cospitch, -cossinpitch / cosyaw, cosyaw * cospitch);
       float boltage = this.main.particleAge >= 0 ? (float)this.main.particleAge / (float)this.main.particleMaxAge : 0.0F;
       if (pass == 0) {
          mainalpha = (1.0F - boltage) * 0.4F;
@@ -135,19 +135,19 @@ public class FXLightningBolt extends EntityFX {
             float ry2 = (float)((double)endvec.y - interpPosY);
             float rz2 = (float)((double)endvec.z - interpPosZ);
             tessellator.setColorRGBA_F(this.particleRed, this.particleGreen, this.particleBlue, mainalpha * rendersegment.light);
-            tessellator.addVertexWithUV((double)(rx2 - diff2.x), (double)(ry2 - diff2.y), (double)(rz2 - diff2.z), (double)0.5F, (double)0.0F);
-            tessellator.addVertexWithUV((double)(rx1 - diff1.x), (double)(ry1 - diff1.y), (double)(rz1 - diff1.z), (double)0.5F, (double)0.0F);
-            tessellator.addVertexWithUV((double)(rx1 + diff1.x), (double)(ry1 + diff1.y), (double)(rz1 + diff1.z), (double)0.5F, (double)1.0F);
-            tessellator.addVertexWithUV((double)(rx2 + diff2.x), (double)(ry2 + diff2.y), (double)(rz2 + diff2.z), (double)0.5F, (double)1.0F);
+            tessellator.addVertexWithUV(rx2 - diff2.x, ry2 - diff2.y, rz2 - diff2.z, 0.5F, 0.0F);
+            tessellator.addVertexWithUV(rx1 - diff1.x, ry1 - diff1.y, rz1 - diff1.z, 0.5F, 0.0F);
+            tessellator.addVertexWithUV(rx1 + diff1.x, ry1 + diff1.y, rz1 + diff1.z, 0.5F, 1.0F);
+            tessellator.addVertexWithUV(rx2 + diff2.x, ry2 + diff2.y, rz2 + diff2.z, 0.5F, 1.0F);
             if (rendersegment.next == null) {
                WRVector3 roundend = rendersegment.endpoint.point.copy().add(rendersegment.diff.copy().normalize().scale(width));
                float rx3 = (float)((double)roundend.x - interpPosX);
                float ry3 = (float)((double)roundend.y - interpPosY);
                float rz3 = (float)((double)roundend.z - interpPosZ);
-               tessellator.addVertexWithUV((double)(rx3 - diff2.x), (double)(ry3 - diff2.y), (double)(rz3 - diff2.z), (double)0.0F, (double)0.0F);
-               tessellator.addVertexWithUV((double)(rx2 - diff2.x), (double)(ry2 - diff2.y), (double)(rz2 - diff2.z), (double)0.5F, (double)0.0F);
-               tessellator.addVertexWithUV((double)(rx2 + diff2.x), (double)(ry2 + diff2.y), (double)(rz2 + diff2.z), (double)0.5F, (double)1.0F);
-               tessellator.addVertexWithUV((double)(rx3 + diff2.x), (double)(ry3 + diff2.y), (double)(rz3 + diff2.z), (double)0.0F, (double)1.0F);
+               tessellator.addVertexWithUV(rx3 - diff2.x, ry3 - diff2.y, rz3 - diff2.z, 0.0F, 0.0F);
+               tessellator.addVertexWithUV(rx2 - diff2.x, ry2 - diff2.y, rz2 - diff2.z, 0.5F, 0.0F);
+               tessellator.addVertexWithUV(rx2 + diff2.x, ry2 + diff2.y, rz2 + diff2.z, 0.5F, 1.0F);
+               tessellator.addVertexWithUV(rx3 + diff2.x, ry3 + diff2.y, rz3 + diff2.z, 0.0F, 1.0F);
             }
 
             if (rendersegment.prev == null) {
@@ -155,10 +155,10 @@ public class FXLightningBolt extends EntityFX {
                float rx3 = (float)((double)roundend.x - interpPosX);
                float ry3 = (float)((double)roundend.y - interpPosY);
                float rz3 = (float)((double)roundend.z - interpPosZ);
-               tessellator.addVertexWithUV((double)(rx1 - diff1.x), (double)(ry1 - diff1.y), (double)(rz1 - diff1.z), (double)0.5F, (double)0.0F);
-               tessellator.addVertexWithUV((double)(rx3 - diff1.x), (double)(ry3 - diff1.y), (double)(rz3 - diff1.z), (double)0.0F, (double)0.0F);
-               tessellator.addVertexWithUV((double)(rx3 + diff1.x), (double)(ry3 + diff1.y), (double)(rz3 + diff1.z), (double)0.0F, (double)1.0F);
-               tessellator.addVertexWithUV((double)(rx1 + diff1.x), (double)(ry1 + diff1.y), (double)(rz1 + diff1.z), (double)0.5F, (double)1.0F);
+               tessellator.addVertexWithUV(rx1 - diff1.x, ry1 - diff1.y, rz1 - diff1.z, 0.5F, 0.0F);
+               tessellator.addVertexWithUV(rx3 - diff1.x, ry3 - diff1.y, rz3 - diff1.z, 0.0F, 0.0F);
+               tessellator.addVertexWithUV(rx3 + diff1.x, ry3 + diff1.y, rz3 + diff1.z, 0.0F, 1.0F);
+               tessellator.addVertexWithUV(rx1 + diff1.x, ry1 + diff1.y, rz1 + diff1.z, 0.5F, 1.0F);
             }
          }
       }

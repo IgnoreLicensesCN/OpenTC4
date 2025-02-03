@@ -49,10 +49,10 @@ public class ItemJarNodeRenderer implements IItemRenderer {
          tjf.blockType = ConfigBlocks.blockJar;
          tjf.blockMetadata = 2;
          GL11.glPushMatrix();
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileJar(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileJar(), 0.0F, 0.0F, 0.0F, 0.0F);
          GL11.glPopMatrix();
          GL11.glPushMatrix();
-         GL11.glTranslated((double)0.5F, 0.4, (double)0.5F);
+         GL11.glTranslated(0.5F, 0.4, 0.5F);
          ItemNodeRenderer.renderItemNode(tjf);
          GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
          ItemNodeRenderer.renderItemNode(tjf);

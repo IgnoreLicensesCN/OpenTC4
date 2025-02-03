@@ -51,8 +51,8 @@ public class ArcaneSceptreRecipe implements IArcaneRecipe {
             if (bc != null && br != null) {
                int cost = (int)((float)(cc * cr) * 1.5F);
                out = new ItemStack(ConfigItems.itemWandCasting, 1, cost);
-               ((ItemWandCasting)out.getItem()).setCap(out, (WandCap)WandCap.caps.get(bc));
-               ((ItemWandCasting)out.getItem()).setRod(out, (WandRod)WandRod.rods.get(br));
+               ((ItemWandCasting)out.getItem()).setCap(out, WandCap.caps.get(bc));
+               ((ItemWandCasting)out.getItem()).setRod(out, WandRod.rods.get(br));
                out.setTagInfo("sceptre", new NBTTagByte((byte)1));
             }
          }
@@ -116,7 +116,7 @@ public class ArcaneSceptreRecipe implements IArcaneRecipe {
          ItemStack cap3 = ThaumcraftApiHelper.getStackInRowAndColumn(inv, 0, 2);
          ItemStack rod = ThaumcraftApiHelper.getStackInRowAndColumn(inv, 1, 1);
          ItemStack focus = ThaumcraftApiHelper.getStackInRowAndColumn(inv, 2, 0);
-         return ThaumcraftApiHelper.getStackInRowAndColumn(inv, 0, 0) == null && ThaumcraftApiHelper.getStackInRowAndColumn(inv, 0, 1) == null && ThaumcraftApiHelper.getStackInRowAndColumn(inv, 1, 2) == null && ThaumcraftApiHelper.getStackInRowAndColumn(inv, 2, 2) == null ? this.checkMatch(cap1, cap2, cap3, rod, focus, player) : false;
+         return ThaumcraftApiHelper.getStackInRowAndColumn(inv, 0, 0) == null && ThaumcraftApiHelper.getStackInRowAndColumn(inv, 0, 1) == null && ThaumcraftApiHelper.getStackInRowAndColumn(inv, 1, 2) == null && ThaumcraftApiHelper.getStackInRowAndColumn(inv, 2, 2) == null && this.checkMatch(cap1, cap2, cap3, rod, focus, player);
       }
    }
 

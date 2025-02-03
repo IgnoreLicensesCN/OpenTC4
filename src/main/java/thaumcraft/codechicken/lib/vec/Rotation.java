@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 import thaumcraft.codechicken.lib.math.MathHelper;
 
 public class Rotation extends Transformation {
-   public static Transformation[] quarterRotations = new Transformation[]{new RedundantTransformation(), new VariableTransformation(new Matrix4((double)0.0F, (double)0.0F, (double)-1.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F)) {
+   public static Transformation[] quarterRotations = new Transformation[]{new RedundantTransformation(), new VariableTransformation(new Matrix4(0.0F, 0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F)) {
       public void apply(Vector3 vec) {
          double d1 = vec.x;
          double d2 = vec.z;
@@ -22,7 +22,7 @@ public class Rotation extends Transformation {
       public Transformation inverse() {
          return Rotation.quarterRotations[3];
       }
-   }, new VariableTransformation(new Matrix4((double)-1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)-1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F)) {
+   }, new VariableTransformation(new Matrix4(-1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F)) {
       public void apply(Vector3 vec) {
          vec.x = -vec.x;
          vec.z = -vec.z;
@@ -31,7 +31,7 @@ public class Rotation extends Transformation {
       public Transformation inverse() {
          return this;
       }
-   }, new VariableTransformation(new Matrix4((double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)-1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F)) {
+   }, new VariableTransformation(new Matrix4(0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F)) {
       public void apply(Vector3 vec) {
          double d1 = vec.x;
          double d2 = vec.z;
@@ -43,7 +43,7 @@ public class Rotation extends Transformation {
          return Rotation.quarterRotations[1];
       }
    }};
-   public static Transformation[] sideRotations = new Transformation[]{new RedundantTransformation(), new VariableTransformation(new Matrix4((double)1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)-1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)-1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F)) {
+   public static Transformation[] sideRotations = new Transformation[]{new RedundantTransformation(), new VariableTransformation(new Matrix4(1.0F, 0.0F, 0.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F)) {
       public void apply(Vector3 vec) {
          vec.y = -vec.y;
          vec.z = -vec.z;
@@ -52,7 +52,7 @@ public class Rotation extends Transformation {
       public Transformation inverse() {
          return this;
       }
-   }, new VariableTransformation(new Matrix4((double)1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)-1.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F)) {
+   }, new VariableTransformation(new Matrix4(1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F)) {
       public void apply(Vector3 vec) {
          double d1 = vec.y;
          double d2 = vec.z;
@@ -63,7 +63,7 @@ public class Rotation extends Transformation {
       public Transformation inverse() {
          return Rotation.sideRotations[3];
       }
-   }, new VariableTransformation(new Matrix4((double)1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)-1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F)) {
+   }, new VariableTransformation(new Matrix4(1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F)) {
       public void apply(Vector3 vec) {
          double d1 = vec.y;
          double d2 = vec.z;
@@ -74,7 +74,7 @@ public class Rotation extends Transformation {
       public Transformation inverse() {
          return Rotation.sideRotations[2];
       }
-   }, new VariableTransformation(new Matrix4((double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)-1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F)) {
+   }, new VariableTransformation(new Matrix4(0.0F, 1.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F)) {
       public void apply(Vector3 vec) {
          double d0 = vec.x;
          double d1 = vec.y;
@@ -85,7 +85,7 @@ public class Rotation extends Transformation {
       public Transformation inverse() {
          return Rotation.sideRotations[5];
       }
-   }, new VariableTransformation(new Matrix4((double)0.0F, (double)-1.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)1.0F)) {
+   }, new VariableTransformation(new Matrix4(0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F)) {
       public void apply(Vector3 vec) {
          double d0 = vec.x;
          double d1 = vec.y;
@@ -97,7 +97,7 @@ public class Rotation extends Transformation {
          return Rotation.sideRotations[4];
       }
    }};
-   public static Vector3[] axes = new Vector3[]{new Vector3((double)0.0F, (double)-1.0F, (double)0.0F), new Vector3((double)0.0F, (double)1.0F, (double)0.0F), new Vector3((double)0.0F, (double)0.0F, (double)-1.0F), new Vector3((double)0.0F, (double)0.0F, (double)1.0F), new Vector3((double)-1.0F, (double)0.0F, (double)0.0F), new Vector3((double)1.0F, (double)0.0F, (double)0.0F)};
+   public static Vector3[] axes = new Vector3[]{new Vector3(0.0F, -1.0F, 0.0F), new Vector3(0.0F, 1.0F, 0.0F), new Vector3(0.0F, 0.0F, -1.0F), new Vector3(0.0F, 0.0F, 1.0F), new Vector3(-1.0F, 0.0F, 0.0F), new Vector3(1.0F, 0.0F, 0.0F)};
    public static int[] sideRotMap = new int[]{3, 4, 2, 5, 3, 5, 2, 4, 1, 5, 0, 4, 1, 4, 0, 5, 1, 2, 0, 3, 1, 3, 0, 2};
    public static int[] rotSideMap = new int[]{-1, -1, 2, 0, 1, 3, -1, -1, 2, 0, 3, 1, 2, 0, -1, -1, 3, 1, 2, 0, -1, -1, 1, 3, 2, 0, 1, 3, -1, -1, 2, 0, 3, 1, -1, -1};
    public static int[] sideRotOffsets = new int[]{0, 2, 2, 0, 1, 3};
@@ -119,7 +119,7 @@ public class Rotation extends Transformation {
 
    public static int getSidedRotation(EntityPlayer player, int side) {
       Vector3 look = new Vector3(player.getLook(1.0F));
-      double max = (double)0.0F;
+      double max = 0.0F;
       int maxr = 0;
 
       for(int r = 0; r < 4; ++r) {
@@ -140,7 +140,7 @@ public class Rotation extends Transformation {
 
    public static int getSideFromLookAngle(EntityLivingBase entity) {
       Vector3 look = new Vector3(entity.getLook(1.0F));
-      double max = (double)0.0F;
+      double max = 0.0F;
       int maxs = 0;
 
       for(int s = 0; s < 6; ++s) {
@@ -167,7 +167,7 @@ public class Rotation extends Transformation {
       this.quat = quat;
       this.angle = Math.acos(quat.s) * (double)2.0F;
       if (this.angle == (double)0.0F) {
-         this.axis = new Vector3((double)0.0F, (double)1.0F, (double)0.0F);
+         this.axis = new Vector3(0.0F, 1.0F, 0.0F);
       } else {
          double sa = Math.sin(this.angle * (double)0.5F);
          this.axis = new Vector3(quat.x / sa, quat.y / sa, quat.z / sa);

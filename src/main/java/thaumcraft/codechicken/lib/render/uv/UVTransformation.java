@@ -7,11 +7,11 @@ public abstract class UVTransformation extends ITransformation<UV, UVTransformat
    public static final int operationIndex = CCRenderState.registerOperation();
 
    public UVTransformation at(UV point) {
-      return new UVTransformationList(new UVTransformation[]{new UVTranslation(-point.u, -point.v), this, new UVTranslation(point.u, point.v)});
+      return new UVTransformationList(new UVTranslation(-point.u, -point.v), this, new UVTranslation(point.u, point.v));
    }
 
    public UVTransformationList with(UVTransformation t) {
-      return new UVTransformationList(new UVTransformation[]{this, t});
+      return new UVTransformationList(this, t);
    }
 
    public boolean load() {

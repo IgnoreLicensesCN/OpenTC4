@@ -20,7 +20,7 @@ public class PotionDeathGaze extends Potion {
    public static void init() {
       instance.setPotionName("potion.deathgaze");
       instance.setIconIndex(4, 2);
-      instance.setEffectiveness((double)0.25F);
+      instance.setEffectiveness(0.25F);
    }
 
    public boolean isBadEffect() {

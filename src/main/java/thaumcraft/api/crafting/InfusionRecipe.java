@@ -46,7 +46,7 @@ public class InfusionRecipe
 		
 		if (!areItemStacksEqual(i2, getRecipeInput(), true)) return false;
 		
-		ArrayList<ItemStack> ii = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> ii = new ArrayList<>();
 		for (ItemStack is:input) {
 			ii.add(is.copy());
 		}
@@ -66,7 +66,7 @@ public class InfusionRecipe
 			}
 			if (!b) return false;
 		}
-		return ii.size()==0?true:false;
+		return ii.size() == 0;
     }
 	
 	public static boolean areItemStacksEqual(ItemStack stack0, ItemStack stack1, boolean fuzzy)
@@ -80,7 +80,7 @@ public class InfusionRecipe
 		if (!t1) return false;
 		
 		if (fuzzy) {
-			Integer od = OreDictionary.getOreID(stack0);
+			int od = OreDictionary.getOreID(stack0);
 			if (od!=-1) {
 				ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[]{});
 				if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{stack1}, ores))
@@ -92,7 +92,7 @@ public class InfusionRecipe
 		boolean damage = stack0.getItemDamage() == stack1.getItemDamage() ||
 				stack1.getItemDamage() == OreDictionary.WILDCARD_VALUE;		
 		
-        return stack0.getItem() != stack1.getItem() ? false : (!damage ? false : stack0.stackSize <= stack0.getMaxStackSize() );
+        return stack0.getItem() == stack1.getItem() && (damage && stack0.stackSize <= stack0.getMaxStackSize());
     }
 	   
     public Object getRecipeOutput() {

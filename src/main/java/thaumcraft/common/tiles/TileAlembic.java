@@ -37,7 +37,7 @@ public class TileAlembic extends TileThaumcraft implements IAspectContainer, IWa
 
    @SideOnly(Side.CLIENT)
    public AxisAlignedBB getRenderBoundingBox() {
-      return AxisAlignedBB.getBoundingBox((double)(this.xCoord - 1), (double)this.yCoord, (double)(this.zCoord - 1), (double)(this.xCoord + 2), (double)(this.yCoord + 1), (double)(this.zCoord + 2));
+      return AxisAlignedBB.getBoundingBox(this.xCoord - 1, this.yCoord, this.zCoord - 1, this.xCoord + 2, this.yCoord + 1, this.zCoord + 2);
    }
 
    public void readCustomNBT(NBTTagCompound nbttagcompound) {
@@ -125,10 +125,7 @@ public class TileAlembic extends TileThaumcraft implements IAspectContainer, IWa
 
    public void getAppearance() {
       this.aboveAlembic = false;
-      this.aboveFurnace = false;
-      if (this.worldObj.getBlock(this.xCoord, this.yCoord - 1, this.zCoord) == ConfigBlocks.blockStoneDevice && this.worldObj.getBlockMetadata(this.xCoord, this.yCoord - 1, this.zCoord) == 0) {
-         this.aboveFurnace = true;
-      }
+       this.aboveFurnace = this.worldObj.getBlock(this.xCoord, this.yCoord - 1, this.zCoord) == ConfigBlocks.blockStoneDevice && this.worldObj.getBlockMetadata(this.xCoord, this.yCoord - 1, this.zCoord) == 0;
 
       if (this.worldObj.getBlock(this.xCoord, this.yCoord - 1, this.zCoord) == ConfigBlocks.blockMetalDevice && this.worldObj.getBlockMetadata(this.xCoord, this.yCoord - 1, this.zCoord) == this.getBlockMetadata()) {
          this.aboveAlembic = true;

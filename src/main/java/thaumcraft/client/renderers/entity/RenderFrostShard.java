@@ -28,7 +28,7 @@ public class RenderFrostShard extends Render {
       GL11.glEnable(3042);
       GL11.glBlendFunc(770, 771);
       GL11.glTranslatef((float)par2, (float)par4, (float)par6);
-      Random rnd = new Random((long)shard.getEntityId());
+      Random rnd = new Random(shard.getEntityId());
       GL11.glRotatef(shard.prevRotationYaw + (shard.rotationYaw - shard.prevRotationYaw) * par9, 0.0F, 1.0F, 0.0F);
       GL11.glRotatef(shard.prevRotationPitch + (shard.rotationPitch - shard.prevRotationPitch) * par9, 0.0F, 0.0F, 1.0F);
       GL11.glPushMatrix();

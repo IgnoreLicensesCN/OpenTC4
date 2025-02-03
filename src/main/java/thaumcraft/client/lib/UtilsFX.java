@@ -87,7 +87,7 @@ public class UtilsFX {
          }
 
          for(int a = 0; a < Thaumcraft.proxy.particleCount(3); ++a) {
-            FXSparkle fx = new FXSparkle(world, (double)((float)x + world.rand.nextFloat()), (double)((float)y + world.rand.nextFloat()), (double)((float)z + world.rand.nextFloat()), 1.75F, color == -1 ? world.rand.nextInt(5) : color, 3 + world.rand.nextInt(3));
+            FXSparkle fx = new FXSparkle(world, (float)x + world.rand.nextFloat(), (float)y + world.rand.nextFloat(), (float)z + world.rand.nextFloat(), 1.75F, color == -1 ? world.rand.nextInt(5) : color, 3 + world.rand.nextInt(3));
             fx.setGravity(0.1F);
             ParticleEngine.instance.addEffect(world, fx);
          }
@@ -136,18 +136,18 @@ public class UtilsFX {
          tessellator.startDrawingQuads();
          tessellator.setBrightness(220);
          tessellator.setColorRGBA_I(color, (int)(alpha * 255.0F));
-         Vec3 v1 = Vec3.createVectorHelper((double)(-arX * scale - arYZ * scale), (double)(-arXZ * scale), (double)(-arZ * scale - arXY * scale));
-         Vec3 v2 = Vec3.createVectorHelper((double)(-arX * scale + arYZ * scale), (double)(arXZ * scale), (double)(-arZ * scale + arXY * scale));
-         Vec3 v3 = Vec3.createVectorHelper((double)(arX * scale + arYZ * scale), (double)(arXZ * scale), (double)(arZ * scale + arXY * scale));
-         Vec3 v4 = Vec3.createVectorHelper((double)(arX * scale - arYZ * scale), (double)(-arXZ * scale), (double)(arZ * scale - arXY * scale));
+         Vec3 v1 = Vec3.createVectorHelper(-arX * scale - arYZ * scale, -arXZ * scale, -arZ * scale - arXY * scale);
+         Vec3 v2 = Vec3.createVectorHelper(-arX * scale + arYZ * scale, arXZ * scale, -arZ * scale + arXY * scale);
+         Vec3 v3 = Vec3.createVectorHelper(arX * scale + arYZ * scale, arXZ * scale, arZ * scale + arXY * scale);
+         Vec3 v4 = Vec3.createVectorHelper(arX * scale - arYZ * scale, -arXZ * scale, arZ * scale - arXY * scale);
          if (angle != 0.0F) {
             Vec3 pvec = Vec3.createVectorHelper(iPX, iPY, iPZ);
             Vec3 tvec = Vec3.createVectorHelper(px, py, pz);
             Vec3 qvec = pvec.subtract(tvec).normalize();
-            QuadHelper.setAxis(qvec, (double)angle).rotate(v1);
-            QuadHelper.setAxis(qvec, (double)angle).rotate(v2);
-            QuadHelper.setAxis(qvec, (double)angle).rotate(v3);
-            QuadHelper.setAxis(qvec, (double)angle).rotate(v4);
+            QuadHelper.setAxis(qvec, angle).rotate(v1);
+            QuadHelper.setAxis(qvec, angle).rotate(v2);
+            QuadHelper.setAxis(qvec, angle).rotate(v3);
+            QuadHelper.setAxis(qvec, angle).rotate(v4);
          }
 
          float f2 = (float)cframe / (float)frames;
@@ -155,10 +155,10 @@ public class UtilsFX {
          float f4 = 0.0F;
          float f5 = 1.0F;
          tessellator.setNormal(0.0F, 0.0F, -1.0F);
-         tessellator.addVertexWithUV(px + v1.xCoord, py + v1.yCoord, pz + v1.zCoord, (double)f2, (double)f5);
-         tessellator.addVertexWithUV(px + v2.xCoord, py + v2.yCoord, pz + v2.zCoord, (double)f3, (double)f5);
-         tessellator.addVertexWithUV(px + v3.xCoord, py + v3.yCoord, pz + v3.zCoord, (double)f3, (double)f4);
-         tessellator.addVertexWithUV(px + v4.xCoord, py + v4.yCoord, pz + v4.zCoord, (double)f2, (double)f4);
+         tessellator.addVertexWithUV(px + v1.xCoord, py + v1.yCoord, pz + v1.zCoord, f2, f5);
+         tessellator.addVertexWithUV(px + v2.xCoord, py + v2.yCoord, pz + v2.zCoord, f3, f5);
+         tessellator.addVertexWithUV(px + v3.xCoord, py + v3.yCoord, pz + v3.zCoord, f3, f4);
+         tessellator.addVertexWithUV(px + v4.xCoord, py + v4.yCoord, pz + v4.zCoord, f2, f4);
          tessellator.draw();
       }
 
@@ -180,18 +180,18 @@ public class UtilsFX {
          tessellator.startDrawingQuads();
          tessellator.setBrightness(220);
          tessellator.setColorRGBA_I(color, (int)(alpha * 255.0F));
-         Vec3 v1 = Vec3.createVectorHelper((double)(-arX * scale - arYZ * scale), (double)(-arXZ * scale), (double)(-arZ * scale - arXY * scale));
-         Vec3 v2 = Vec3.createVectorHelper((double)(-arX * scale + arYZ * scale), (double)(arXZ * scale), (double)(-arZ * scale + arXY * scale));
-         Vec3 v3 = Vec3.createVectorHelper((double)(arX * scale + arYZ * scale), (double)(arXZ * scale), (double)(arZ * scale + arXY * scale));
-         Vec3 v4 = Vec3.createVectorHelper((double)(arX * scale - arYZ * scale), (double)(-arXZ * scale), (double)(arZ * scale - arXY * scale));
+         Vec3 v1 = Vec3.createVectorHelper(-arX * scale - arYZ * scale, -arXZ * scale, -arZ * scale - arXY * scale);
+         Vec3 v2 = Vec3.createVectorHelper(-arX * scale + arYZ * scale, arXZ * scale, -arZ * scale + arXY * scale);
+         Vec3 v3 = Vec3.createVectorHelper(arX * scale + arYZ * scale, arXZ * scale, arZ * scale + arXY * scale);
+         Vec3 v4 = Vec3.createVectorHelper(arX * scale - arYZ * scale, -arXZ * scale, arZ * scale - arXY * scale);
          if (angle != 0.0F) {
             Vec3 pvec = Vec3.createVectorHelper(iPX, iPY, iPZ);
             Vec3 tvec = Vec3.createVectorHelper(px, py, pz);
             Vec3 qvec = pvec.subtract(tvec).normalize();
-            QuadHelper.setAxis(qvec, (double)angle).rotate(v1);
-            QuadHelper.setAxis(qvec, (double)angle).rotate(v2);
-            QuadHelper.setAxis(qvec, (double)angle).rotate(v3);
-            QuadHelper.setAxis(qvec, (double)angle).rotate(v4);
+            QuadHelper.setAxis(qvec, angle).rotate(v1);
+            QuadHelper.setAxis(qvec, angle).rotate(v2);
+            QuadHelper.setAxis(qvec, angle).rotate(v3);
+            QuadHelper.setAxis(qvec, angle).rotate(v4);
          }
 
          float f2 = (float)frame / (float)frames;
@@ -199,10 +199,10 @@ public class UtilsFX {
          float f4 = (float)strip / (float)frames;
          float f5 = ((float)strip + 1.0F) / (float)frames;
          tessellator.setNormal(0.0F, 0.0F, -1.0F);
-         tessellator.addVertexWithUV(px + v1.xCoord, py + v1.yCoord, pz + v1.zCoord, (double)f3, (double)f5);
-         tessellator.addVertexWithUV(px + v2.xCoord, py + v2.yCoord, pz + v2.zCoord, (double)f3, (double)f4);
-         tessellator.addVertexWithUV(px + v3.xCoord, py + v3.yCoord, pz + v3.zCoord, (double)f2, (double)f4);
-         tessellator.addVertexWithUV(px + v4.xCoord, py + v4.yCoord, pz + v4.zCoord, (double)f2, (double)f5);
+         tessellator.addVertexWithUV(px + v1.xCoord, py + v1.yCoord, pz + v1.zCoord, f3, f5);
+         tessellator.addVertexWithUV(px + v2.xCoord, py + v2.yCoord, pz + v2.zCoord, f3, f4);
+         tessellator.addVertexWithUV(px + v3.xCoord, py + v3.yCoord, pz + v3.zCoord, f2, f4);
+         tessellator.addVertexWithUV(px + v4.xCoord, py + v4.yCoord, pz + v4.zCoord, f2, f5);
          tessellator.draw();
       }
 
@@ -219,10 +219,10 @@ public class UtilsFX {
          float f4 = 0.0F;
          float f5 = 1.0F;
          tessellator.setNormal(0.0F, 0.0F, -1.0F);
-         tessellator.addVertexWithUV((double)-0.5F * (double)scale, (double)0.5F * (double)scale, (double)0.0F, (double)f2, (double)f5);
-         tessellator.addVertexWithUV((double)0.5F * (double)scale, (double)0.5F * (double)scale, (double)0.0F, (double)f3, (double)f5);
-         tessellator.addVertexWithUV((double)0.5F * (double)scale, (double)-0.5F * (double)scale, (double)0.0F, (double)f3, (double)f4);
-         tessellator.addVertexWithUV((double)-0.5F * (double)scale, (double)-0.5F * (double)scale, (double)0.0F, (double)f2, (double)f4);
+         tessellator.addVertexWithUV((double)-0.5F * (double)scale, (double)0.5F * (double)scale, 0.0F, f2, f5);
+         tessellator.addVertexWithUV((double)0.5F * (double)scale, (double)0.5F * (double)scale, 0.0F, f3, f5);
+         tessellator.addVertexWithUV((double)0.5F * (double)scale, (double)-0.5F * (double)scale, 0.0F, f3, f4);
+         tessellator.addVertexWithUV((double)-0.5F * (double)scale, (double)-0.5F * (double)scale, 0.0F, f2, f4);
          tessellator.draw();
       }
 
@@ -239,10 +239,10 @@ public class UtilsFX {
          float f4 = (float)strip / (float)frames;
          float f5 = (float)(strip + 1) / (float)frames;
          tessellator.setNormal(0.0F, 0.0F, -1.0F);
-         tessellator.addVertexWithUV((double)-0.5F * (double)scale, (double)0.5F * (double)scale, (double)0.0F, (double)f2, (double)f5);
-         tessellator.addVertexWithUV((double)0.5F * (double)scale, (double)0.5F * (double)scale, (double)0.0F, (double)f3, (double)f5);
-         tessellator.addVertexWithUV((double)0.5F * (double)scale, (double)-0.5F * (double)scale, (double)0.0F, (double)f3, (double)f4);
-         tessellator.addVertexWithUV((double)-0.5F * (double)scale, (double)-0.5F * (double)scale, (double)0.0F, (double)f2, (double)f4);
+         tessellator.addVertexWithUV((double)-0.5F * (double)scale, (double)0.5F * (double)scale, 0.0F, f2, f5);
+         tessellator.addVertexWithUV((double)0.5F * (double)scale, (double)0.5F * (double)scale, 0.0F, f3, f5);
+         tessellator.addVertexWithUV((double)0.5F * (double)scale, (double)-0.5F * (double)scale, 0.0F, f3, f4);
+         tessellator.addVertexWithUV((double)-0.5F * (double)scale, (double)-0.5F * (double)scale, 0.0F, f2, f4);
          tessellator.draw();
       }
 
@@ -255,7 +255,7 @@ public class UtilsFX {
    public static Vec3 xCrossProduct(Vec3 v) {
       double d = v.zCoord;
       double d1 = -v.yCoord;
-      v.xCoord = (double)0.0F;
+      v.xCoord = 0.0F;
       v.yCoord = d;
       v.zCoord = d1;
       return v;
@@ -266,7 +266,7 @@ public class UtilsFX {
       double d1 = -v.xCoord;
       v.xCoord = d;
       v.yCoord = d1;
-      v.zCoord = (double)0.0F;
+      v.zCoord = 0.0F;
       return v;
    }
 
@@ -275,20 +275,20 @@ public class UtilsFX {
       float var8 = 0.00390625F;
       Tessellator var9 = Tessellator.instance;
       var9.startDrawingQuads();
-      var9.addVertexWithUV((double)(par1), (double)(par2 + par6), zLevel, (double)((float)(par3) * var7), (double)((float)(par4 + par6) * var8));
-      var9.addVertexWithUV((double)(par1 + par5), (double)(par2 + par6), zLevel, (double)((float)(par3 + par5) * var7), (double)((float)(par4 + par6) * var8));
-      var9.addVertexWithUV((double)(par1 + par5), (double)(par2), zLevel, (double)((float)(par3 + par5) * var7), (double)((float)(par4) * var8));
-      var9.addVertexWithUV((double)(par1), (double)(par2), zLevel, (double)((float)(par3) * var7), (double)((float)(par4) * var8));
+      var9.addVertexWithUV(par1, par2 + par6, zLevel, (float)(par3) * var7, (float)(par4 + par6) * var8);
+      var9.addVertexWithUV(par1 + par5, par2 + par6, zLevel, (float)(par3 + par5) * var7, (float)(par4 + par6) * var8);
+      var9.addVertexWithUV(par1 + par5, par2, zLevel, (float)(par3 + par5) * var7, (float)(par4) * var8);
+      var9.addVertexWithUV(par1, par2, zLevel, (float)(par3) * var7, (float)(par4) * var8);
       var9.draw();
    }
 
    public static void drawTexturedQuadFull(int par1, int par2, double zLevel) {
       Tessellator var9 = Tessellator.instance;
       var9.startDrawingQuads();
-      var9.addVertexWithUV((double)(par1), (double)(par2 + 16), zLevel, (double)0.0F, (double)1.0F);
-      var9.addVertexWithUV((double)(par1 + 16), (double)(par2 + 16), zLevel, (double)1.0F, (double)1.0F);
-      var9.addVertexWithUV((double)(par1 + 16), (double)(par2), zLevel, (double)1.0F, (double)0.0F);
-      var9.addVertexWithUV((double)(par1), (double)(par2), zLevel, (double)0.0F, (double)0.0F);
+      var9.addVertexWithUV(par1, par2 + 16, zLevel, 0.0F, 1.0F);
+      var9.addVertexWithUV(par1 + 16, par2 + 16, zLevel, 1.0F, 1.0F);
+      var9.addVertexWithUV(par1 + 16, par2, zLevel, 1.0F, 0.0F);
+      var9.addVertexWithUV(par1, par2, zLevel, 0.0F, 0.0F);
       var9.draw();
    }
 
@@ -310,10 +310,10 @@ public class UtilsFX {
       tessellator.startDrawingQuads();
       tessellator.setColorRGBA_F(r, g, b, trans);
       tessellator.setNormal(0.0F, 0.0F, -1.0F);
-      tessellator.addVertexWithUV((double)0.0F, (double)1.0F, (double)0.0F, (double)0.0F, (double)1.0F);
-      tessellator.addVertexWithUV((double)1.0F, (double)1.0F, (double)0.0F, (double)1.0F, (double)1.0F);
-      tessellator.addVertexWithUV((double)1.0F, (double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F);
-      tessellator.addVertexWithUV((double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F);
+      tessellator.addVertexWithUV(0.0F, 1.0F, 0.0F, 0.0F, 1.0F);
+      tessellator.addVertexWithUV(1.0F, 1.0F, 0.0F, 1.0F, 1.0F);
+      tessellator.addVertexWithUV(1.0F, 0.0F, 0.0F, 1.0F, 0.0F);
+      tessellator.addVertexWithUV(0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
       tessellator.draw();
       GL11.glDisable(3042);
       GL11.glDisable(32826);
@@ -341,10 +341,10 @@ public class UtilsFX {
       }
 
       tessellator.setColorRGBA_F(red, green, blue, opacity);
-      tessellator.addVertexWithUV((double)-0.5F, (double)0.5F, (double)0.0F, (double)0.0F, (double)1.0F);
-      tessellator.addVertexWithUV((double)0.5F, (double)0.5F, (double)0.0F, (double)1.0F, (double)1.0F);
-      tessellator.addVertexWithUV((double)0.5F, (double)-0.5F, (double)0.0F, (double)1.0F, (double)0.0F);
-      tessellator.addVertexWithUV((double)-0.5F, (double)-0.5F, (double)0.0F, (double)0.0F, (double)0.0F);
+      tessellator.addVertexWithUV(-0.5F, 0.5F, 0.0F, 0.0F, 1.0F);
+      tessellator.addVertexWithUV(0.5F, 0.5F, 0.0F, 1.0F, 1.0F);
+      tessellator.addVertexWithUV(0.5F, -0.5F, 0.0F, 1.0F, 0.0F);
+      tessellator.addVertexWithUV(-0.5F, -0.5F, 0.0F, 0.0F, 0.0F);
       tessellator.draw();
       GL11.glDisable(3042);
    }
@@ -372,10 +372,10 @@ public class UtilsFX {
       tessellator.setBrightness(brightness);
       tessellator.setColorRGBA_F(red, green, blue, opacity);
       tessellator.setNormal(0.0F, 0.0F, -1.0F);
-      tessellator.addVertexWithUV((double)0.0F, (double)1.0F, (double)0.0F, (double)f1, (double)f2);
-      tessellator.addVertexWithUV((double)1.0F, (double)1.0F, (double)0.0F, (double)f, (double)f2);
-      tessellator.addVertexWithUV((double)1.0F, (double)0.0F, (double)0.0F, (double)f, (double)f3);
-      tessellator.addVertexWithUV((double)0.0F, (double)0.0F, (double)0.0F, (double)f1, (double)f3);
+      tessellator.addVertexWithUV(0.0F, 1.0F, 0.0F, f1, f2);
+      tessellator.addVertexWithUV(1.0F, 1.0F, 0.0F, f, f2);
+      tessellator.addVertexWithUV(1.0F, 0.0F, 0.0F, f, f3);
+      tessellator.addVertexWithUV(0.0F, 0.0F, 0.0F, f1, f3);
       tessellator.draw();
       GL11.glDisable(3042);
       GL11.glDisable(32826);
@@ -404,10 +404,10 @@ public class UtilsFX {
 
       tessellator.setColorRGBA_F(red, green, blue, opacity);
       tessellator.setNormal(0.0F, 0.0F, 1.0F);
-      tessellator.addVertexWithUV((double)0.0F, (double)0.0F, (double)0.0F, (double)f1, (double)f4);
-      tessellator.addVertexWithUV((double)1.0F, (double)0.0F, (double)0.0F, (double)f3, (double)f4);
-      tessellator.addVertexWithUV((double)1.0F, (double)1.0F, (double)0.0F, (double)f3, (double)f2);
-      tessellator.addVertexWithUV((double)0.0F, (double)1.0F, (double)0.0F, (double)f1, (double)f2);
+      tessellator.addVertexWithUV(0.0F, 0.0F, 0.0F, f1, f4);
+      tessellator.addVertexWithUV(1.0F, 0.0F, 0.0F, f3, f4);
+      tessellator.addVertexWithUV(1.0F, 1.0F, 0.0F, f3, f2);
+      tessellator.addVertexWithUV(0.0F, 1.0F, 0.0F, f1, f2);
       tessellator.draw();
       GL11.glDisable(3042);
    }
@@ -433,10 +433,10 @@ public class UtilsFX {
       tessellator.setBrightness(brightness);
       tessellator.setColorRGBA_F(red, green, blue, opacity);
       tessellator.setNormal(0.0F, 0.0F, 1.0F);
-      tessellator.addVertexWithUV((double)-0.5F, (double)0.5F, (double)0.0F, (double)f1, (double)f4);
-      tessellator.addVertexWithUV((double)0.5F, (double)0.5F, (double)0.0F, (double)f3, (double)f4);
-      tessellator.addVertexWithUV((double)0.5F, (double)-0.5F, (double)0.0F, (double)f3, (double)f2);
-      tessellator.addVertexWithUV((double)-0.5F, (double)-0.5F, (double)0.0F, (double)f1, (double)f2);
+      tessellator.addVertexWithUV(-0.5F, 0.5F, 0.0F, f1, f4);
+      tessellator.addVertexWithUV(0.5F, 0.5F, 0.0F, f3, f4);
+      tessellator.addVertexWithUV(0.5F, -0.5F, 0.0F, f3, f2);
+      tessellator.addVertexWithUV(-0.5F, -0.5F, 0.0F, f1, f2);
       tessellator.draw();
       GL11.glDisable(3042);
       GL11.glDisable(32826);
@@ -531,11 +531,11 @@ public class UtilsFX {
    }
 
    public static void drawTag(int x, int y, Aspect aspect) {
-      drawTag(x, y, aspect, 0.0F, 0, (double)0.0F, 771, 1.0F, true);
+      drawTag(x, y, aspect, 0.0F, 0, 0.0F, 771, 1.0F, true);
    }
 
    public static void drawTag(int x, int y, Aspect aspect, float amount, int bonus, double z, int blend, float alpha, boolean bw) {
-      drawTag((double)x, (double)y, aspect, amount, bonus, z, blend, alpha, bw);
+      drawTag(x, (double)y, aspect, amount, bonus, z, blend, alpha, bw);
    }
 
    public static void drawTag(double x, double y, Aspect aspect, float amount, int bonus, double z, int blend, float alpha, boolean bw) {
@@ -563,17 +563,17 @@ public class UtilsFX {
             var9.setColorRGBA_F(0.1F, 0.1F, 0.1F, alpha * 0.8F);
          }
 
-         var9.addVertexWithUV(x + (double)0.0F, y + (double)16.0F, z, (double)0.0F, (double)1.0F);
-         var9.addVertexWithUV(x + (double)16.0F, y + (double)16.0F, z, (double)1.0F, (double)1.0F);
-         var9.addVertexWithUV(x + (double)16.0F, y + (double)0.0F, z, (double)1.0F, (double)0.0F);
-         var9.addVertexWithUV(x + (double)0.0F, y + (double)0.0F, z, (double)0.0F, (double)0.0F);
+         var9.addVertexWithUV(x + (double)0.0F, y + (double)16.0F, z, 0.0F, 1.0F);
+         var9.addVertexWithUV(x + (double)16.0F, y + (double)16.0F, z, 1.0F, 1.0F);
+         var9.addVertexWithUV(x + (double)16.0F, y + (double)0.0F, z, 1.0F, 0.0F);
+         var9.addVertexWithUV(x + (double)0.0F, y + (double)0.0F, z, 0.0F, 0.0F);
          var9.draw();
          GL11.glPopMatrix();
          if (amount > 0.0F) {
             GL11.glPushMatrix();
             GL11.glScalef(0.5F, 0.5F, 0.5F);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            String am = myFormatter.format((double)amount);
+            String am = myFormatter.format(amount);
             int sw = mc.fontRenderer.getStringWidth(am);
             if (blend > 1) {
                for(int a = -1; a <= 1; ++a) {
@@ -629,20 +629,20 @@ public class UtilsFX {
          return true;
       } else {
          Minecraft mc = FMLClientHandler.instance().getClient();
-         double vT = (double)(fov + mc.gameSettings.fovSetting / 2.0F);
+         double vT = fov + mc.gameSettings.fovSetting / 2.0F;
          int j = 512;
          if (j > 400) {
             j = 400;
          }
 
-         double rD = (double)j;
+         double rD = j;
          float f1 = MathHelper.cos(-ent.rotationYaw * 0.01745329F - 3.141593F);
          float f3 = MathHelper.sin(-ent.rotationYaw * 0.01745329F - 3.141593F);
          float f5 = -MathHelper.cos(-ent.rotationPitch * 0.01745329F);
          float f7 = MathHelper.sin(-ent.rotationPitch * 0.01745329F);
-         double lx = (double)(f3 * f5);
-         double ly = (double)f7;
-         double lz = (double)(f1 * f5);
+         double lx = f3 * f5;
+         double ly = f7;
+         double lz = f1 * f5;
          double dx = x + (double)0.5F - ent.posX;
          double dy = y + (double)0.5F - ent.posY - (double)ent.getEyeHeight();
          double dz = z + (double)0.5F - ent.posZ;
@@ -688,7 +688,7 @@ public class UtilsFX {
          drawGradientRect(var15 - 3, var16 + var9 + 2, var15 + var5 + 3, var16 + var9 + 3, var12, var12);
 
          for(int var13 = 0; var13 < var4.size(); ++var13) {
-            String var14 = (String)var4.get(var13);
+            String var14 = var4.get(var13);
             if (var13 == 0) {
                var14 = "§" + Integer.toHexString(subTipColor) + var14;
             } else {
@@ -725,11 +725,11 @@ public class UtilsFX {
       Tessellator var15 = Tessellator.instance;
       var15.startDrawingQuads();
       var15.setColorRGBA_F(var8, var9, var10, var7);
-      var15.addVertex((double)par3, (double)par2, (double)300.0F);
-      var15.addVertex((double)par1, (double)par2, (double)300.0F);
+      var15.addVertex(par3, par2, 300.0F);
+      var15.addVertex(par1, par2, 300.0F);
       var15.setColorRGBA_F(var12, var13, var14, var11);
-      var15.addVertex((double)par1, (double)par4, (double)300.0F);
-      var15.addVertex((double)par3, (double)par4, (double)300.0F);
+      var15.addVertex(par1, par4, 300.0F);
+      var15.addVertex(par3, par4, 300.0F);
       var15.draw();
       GL11.glShadeModel(7424);
       GL11.glDisable(3042);
@@ -756,15 +756,15 @@ public class UtilsFX {
       GL11.glEnable(3042);
       GL11.glBlendFunc(770, 1);
       Tessellator tessellator = Tessellator.instance;
-      double dc1x = (double)((float)(x - x2));
-      double dc1y = (double)((float)(y - y2));
-      double dc1z = (double)((float)(z - z2));
+      double dc1x = (float)(x - x2);
+      double dc1y = (float)(y - y2);
+      double dc1z = (float)(z - z2);
       bindTexture(texture);
       GL11.glDisable(2884);
       tessellator.startDrawing(5);
-      double dx2 = (double)0.0F;
-      double dy2 = (double)0.0F;
-      double dz2 = (double)0.0F;
+      double dx2 = 0.0F;
+      double dy2 = 0.0F;
+      double dz2 = 0.0F;
       double d3 = x - x2;
       double d4 = y - y2;
       double d5 = z - z2;
@@ -784,8 +784,8 @@ public class UtilsFX {
          double dz = dc1z + (double)(MathHelper.sin((float)((y % (double)16.0F + (double)(dist * (1.0F - f2) * (float)Config.golemLinkQuality / 2.0F) - (double)(time % 32767.0F / 5.0F)) / (double)2.0F)) * 0.5F * f3);
          tessellator.setColorRGBA_F(r, g, b, f3);
          float f13 = (1.0F - f2) * dist - time * speed;
-         tessellator.addVertexWithUV(dx * (double)f2, dy * (double)f2 - (double)width, dz * (double)f2, (double)f13, (double)f10);
-         tessellator.addVertexWithUV(dx * (double)f2, dy * (double)f2 + (double)width, dz * (double)f2, (double)f13, (double)f9);
+         tessellator.addVertexWithUV(dx * (double)f2, dy * (double)f2 - (double)width, dz * (double)f2, f13, f10);
+         tessellator.addVertexWithUV(dx * (double)f2, dy * (double)f2 + (double)width, dz * (double)f2, f13, f9);
       }
 
       tessellator.draw();
@@ -801,8 +801,8 @@ public class UtilsFX {
          double dz = dc1z + (double)(MathHelper.sin((float)((y % (double)16.0F + (double)(dist * (1.0F - f2) * (float)Config.golemLinkQuality / 2.0F) - (double)(time % 32767.0F / 5.0F)) / (double)2.0F)) * 0.5F * f3);
          tessellator.setColorRGBA_F(r, g, b, f3);
          float f13 = (1.0F - f2) * dist - time * speed;
-         tessellator.addVertexWithUV(dx * (double)f2 - (double)width, dy * (double)f2, dz * (double)f2, (double)f13, (double)f10);
-         tessellator.addVertexWithUV(dx * (double)f2 + (double)width, dy * (double)f2, dz * (double)f2, (double)f13, (double)f9);
+         tessellator.addVertexWithUV(dx * (double)f2 - (double)width, dy * (double)f2, dz * (double)f2, f13, f10);
+         tessellator.addVertexWithUV(dx * (double)f2 + (double)width, dy * (double)f2, dz * (double)f2, f13, f9);
       }
 
       tessellator.draw();
@@ -813,7 +813,7 @@ public class UtilsFX {
 
    public static void drawFloatyGUILine(double x, double y, double x2, double y2, float partialTicks, int color, String texture, float speed, float distance) {
       GL11.glPushMatrix();
-      GL11.glTranslated(x2, y2, (double)0.0F);
+      GL11.glTranslated(x2, y2, 0.0F);
       float time = (float)(System.nanoTime() / 30000000L);
       Color co = new Color(color);
       float r = (float)co.getRed() / 255.0F;
@@ -822,8 +822,8 @@ public class UtilsFX {
       GL11.glEnable(3042);
       GL11.glBlendFunc(770, 771);
       Tessellator tessellator = Tessellator.instance;
-      double dc1x = (double)((float)(x - x2));
-      double dc1y = (double)((float)(y - y2));
+      double dc1x = (float)(x - x2);
+      double dc1y = (float)(y - y2);
       bindTexture(texture);
       tessellator.startDrawing(5);
       double d3 = x - x2;
@@ -831,7 +831,7 @@ public class UtilsFX {
       float dist = MathHelper.sqrt_double(d3 * d3 + d4 * d4);
       double dx = d3 / (double)dist;
       double var10000 = d4 / (double)dist;
-      GL11.glRotated((double)((float)(-(Math.atan2(d3, d4) * (double)180.0F / Math.PI)) + 90.0F), (double)0.0F, (double)0.0F, (double)1.0F);
+      GL11.glRotated((float)(-(Math.atan2(d3, d4) * (double)180.0F / Math.PI)) + 90.0F, 0.0F, 0.0F, 1.0F);
       float blocks = (float)Math.round(dist);
       float length = blocks * distance;
       float f9 = 0.0F;
@@ -844,8 +844,8 @@ public class UtilsFX {
          float f13 = (1.0F - f2) * length;
          float f14 = (1.0F - f2) * length + sec;
          float width = 1.0F;
-         tessellator.addVertexWithUV(dx * (double)i, (double)(0.0F - width), (double)0.0F, (double)(f13 / width), (double)f10);
-         tessellator.addVertexWithUV(dx * (double)i, (double)(0.0F + width), (double)0.0F, (double)(f14 / width), (double)f9);
+         tessellator.addVertexWithUV(dx * (double)i, 0.0F - width, 0.0F, f13 / width, f10);
+         tessellator.addVertexWithUV(dx * (double)i, 0.0F + width, 0.0F, f14 / width, f9);
       }
 
       tessellator.draw();
@@ -855,7 +855,7 @@ public class UtilsFX {
 
    public static float getEquippedProgress(ItemRenderer ir) {
       try {
-         return (Float)ReflectionHelper.getPrivateValue(ItemRenderer.class, ir, new String[]{"field_78454_c", "f", "equippedProgress"});
+         return ReflectionHelper.getPrivateValue(ItemRenderer.class, ir, new String[]{"equippedProgress", "f", "field_78454_c"});
       } catch (Exception var2) {
          return 0.0F;
       }
@@ -863,7 +863,7 @@ public class UtilsFX {
 
    public static float getPrevEquippedProgress(ItemRenderer ir) {
       try {
-         return (Float)ReflectionHelper.getPrivateValue(ItemRenderer.class, ir, new String[]{"field_78451_d", "g", "prevEquippedProgress"});
+         return ReflectionHelper.getPrivateValue(ItemRenderer.class, ir, new String[]{"prevEquippedProgress", "g", "field_78451_d"});
       } catch (Exception var2) {
          return 0.0F;
       }
@@ -871,7 +871,7 @@ public class UtilsFX {
 
    public static Timer getTimer(Minecraft mc) {
       try {
-         return (Timer)ReflectionHelper.getPrivateValue(Minecraft.class, mc, new String[]{"field_71428_T", "Q", "timer"});
+         return ReflectionHelper.getPrivateValue(Minecraft.class, mc, new String[]{"timer", "Q", "field_71428_T"});
       } catch (Exception var2) {
          return new Timer(20.0F);
       }
@@ -879,7 +879,7 @@ public class UtilsFX {
 
    public static int getGuiXSize(GuiContainer gui) {
       try {
-         return (Integer)ReflectionHelper.getPrivateValue(GuiContainer.class, gui, new String[]{"field_146999_f", "f", "xSize"});
+         return ReflectionHelper.getPrivateValue(GuiContainer.class, gui, new String[]{"xSize", "f", "field_146999_f"});
       } catch (Exception var2) {
          return 0;
       }
@@ -887,7 +887,7 @@ public class UtilsFX {
 
    public static int getGuiYSize(GuiContainer gui) {
       try {
-         return (Integer)ReflectionHelper.getPrivateValue(GuiContainer.class, gui, new String[]{"field_147000_g", "g", "ySize"});
+         return ReflectionHelper.getPrivateValue(GuiContainer.class, gui, new String[]{"ySize", "g", "field_147000_g"});
       } catch (Exception var2) {
          return 0;
       }
@@ -895,7 +895,7 @@ public class UtilsFX {
 
    public static float getGuiZLevel(Gui gui) {
       try {
-         return (Float)ReflectionHelper.getPrivateValue(Gui.class, gui, new String[]{"field_77023_b", "e", "zLevel"});
+         return ReflectionHelper.getPrivateValue(Gui.class, gui, new String[]{"zLevel", "e", "field_77023_b"});
       } catch (Exception var2) {
          return 0.0F;
       }
@@ -907,7 +907,7 @@ public class UtilsFX {
 
                  EffectRenderer.class,
                  null,
-                 new String[]{"field_110737_b", "b", "particleTextures"}
+                 new String[]{"particleTextures", "b", "field_110737_b"}
          );
       } catch (Exception var1) {
          return null;

@@ -34,7 +34,7 @@ public class BlockMetalDeviceItem extends ItemBlock {
          Block bi = world.getBlock(x, y, z);
          int md = world.getBlockMetadata(x, y, z);
          if (stack.getItemDamage() == 12) {
-            return bi != ConfigBlocks.blockMetalDevice || md != 10 && md != 11 ? false : super.onItemUse(stack, player, world, x, y, z, side, par8, par9, par10);
+            return bi == ConfigBlocks.blockMetalDevice && (md == 10 || md == 11) && super.onItemUse(stack, player, world, x, y, z, side, par8, par9, par10);
          } else {
             if (bi == ConfigBlocks.blockMetalDevice && md == 0) {
                if (side == 0 || side == 1) {
@@ -75,7 +75,7 @@ public class BlockMetalDeviceItem extends ItemBlock {
                      Block bid = world.getBlock(xx, yy, zz);
                      int meta = world.getBlockMetadata(xx, yy, zz);
                      if (bid == ConfigBlocks.blockMetalDevice && meta == 0 && this.placeBlockAt(stack, player, world, x, y, z, side, par8, par9, par10, stack.getItemDamage())) {
-                        world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), this.field_150939_a.stepSound.getStepResourcePath(), (this.field_150939_a.stepSound.getVolume() + 1.0F) / 2.0F, this.field_150939_a.stepSound.getPitch() * 0.8F);
+                        world.playSoundEffect((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, this.field_150939_a.stepSound.getStepResourcePath(), (this.field_150939_a.stepSound.getVolume() + 1.0F) / 2.0F, this.field_150939_a.stepSound.getPitch() * 0.8F);
                         --stack.stackSize;
                         world.setBlock(x, y, z, ConfigBlocks.blockMetalDevice, dir.getOpposite().ordinal() - 1, 3);
                         return true;
@@ -95,31 +95,31 @@ public class BlockMetalDeviceItem extends ItemBlock {
       boolean ret = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
       if (metadata == 7) {
          TileArcaneLamp tile = (TileArcaneLamp)world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileArcaneLamp) {
+         if (tile instanceof TileArcaneLamp) {
             tile.facing = ForgeDirection.getOrientation(side).getOpposite();
             world.markBlockForUpdate(x, y, x);
          }
       } else if (metadata == 8) {
          TileArcaneLampGrowth tile = (TileArcaneLampGrowth)world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileArcaneLampGrowth) {
+         if (tile instanceof TileArcaneLampGrowth) {
             tile.facing = ForgeDirection.getOrientation(side).getOpposite();
             world.markBlockForUpdate(x, y, x);
          }
       } else if (metadata == 12) {
          TileBrainbox tile = (TileBrainbox)world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileBrainbox) {
+         if (tile instanceof TileBrainbox) {
             tile.facing = ForgeDirection.getOrientation(side).getOpposite();
             world.markBlockForUpdate(x, y, x);
          }
       } else if (metadata == 13) {
          TileArcaneLampFertility tile = (TileArcaneLampFertility)world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileArcaneLampFertility) {
+         if (tile instanceof TileArcaneLampFertility) {
             tile.facing = ForgeDirection.getOrientation(side).getOpposite();
             world.markBlockForUpdate(x, y, x);
          }
       } else if (metadata == 14) {
          TileVisRelay tile = (TileVisRelay)world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileVisRelay) {
+         if (tile instanceof TileVisRelay) {
             tile.orientation = (short)side;
             world.markBlockForUpdate(x, y, x);
          }

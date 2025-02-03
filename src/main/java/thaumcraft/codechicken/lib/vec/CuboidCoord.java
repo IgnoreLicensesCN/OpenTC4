@@ -142,7 +142,7 @@ public class CuboidCoord implements Iterable<BlockCoord>, Copyable<CuboidCoord> 
    }
 
    public Cuboid6 bounds() {
-      return new Cuboid6((double)this.min.x, (double)this.min.y, (double)this.min.z, (double)(this.max.x + 1), (double)(this.max.y + 1), (double)(this.max.z + 1));
+      return new Cuboid6(this.min.x, this.min.y, this.min.z, this.max.x + 1, this.max.y + 1, this.max.z + 1);
    }
 
    public AxisAlignedBB toAABB() {

@@ -34,7 +34,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
         output = result.copy();
         this.research = research;
         this.aspects = aspects;
-        String shape = "";
+        StringBuilder shape = new StringBuilder();
         
         int idx = 0;
 
@@ -58,7 +58,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
             for (String s : parts)
             {
                 width = s.length();
-                shape += s;
+                shape.append(s);
             }
 
             height = parts.length;
@@ -68,7 +68,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
             while (recipe[idx] instanceof String)
             {
                 String s = (String)recipe[idx++];
-                shape += s;
+                shape.append(s);
                 width = s.length();
                 height++;
             }
@@ -76,16 +76,16 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
 
         if (width * height != shape.length())
         {
-            String ret = "Invalid shaped ore recipe: ";
+            StringBuilder ret = new StringBuilder("Invalid shaped ore recipe: ");
             for (Object tmp :  recipe)
             {
-                ret += tmp + ", ";
+                ret.append(tmp).append(", ");
             }
-            ret += output;
-            throw new RuntimeException(ret);
+            ret.append(output);
+            throw new RuntimeException(ret.toString());
         }
 
-        HashMap<Character, Object> itemMap = new HashMap<Character, Object>();
+        HashMap<Character, Object> itemMap = new HashMap<>();
 
         for (; idx < recipe.length; idx += 2)
         {
@@ -110,19 +110,19 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
             }
             else
             {
-                String ret = "Invalid shaped ore recipe: ";
+                StringBuilder ret = new StringBuilder("Invalid shaped ore recipe: ");
                 for (Object tmp :  recipe)
                 {
-                    ret += tmp + ", ";
+                    ret.append(tmp).append(", ");
                 }
-                ret += output;
-                throw new RuntimeException(ret);
+                ret.append(output);
+                throw new RuntimeException(ret.toString());
             }
         }
 
         input = new Object[width * height];
         int x = 0;
-        for (char chr : shape.toCharArray())
+        for (char chr : shape.toString().toCharArray())
         {
             input[x++] = itemMap.get(chr);
         }

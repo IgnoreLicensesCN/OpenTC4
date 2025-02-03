@@ -76,8 +76,8 @@ public class BlockEldritch extends BlockContainer {
          TileEntity te = ba.getTileEntity(x, y, z);
          return te instanceof TileEldritchLock && ((TileEldritchLock)te).getFacing() == side ? this.insIcon[3] : this.insIcon[4];
       } else if (md == 10) {
-         String l = x + "" + y + "" + z;
-         Random r1 = new Random((long)(Math.abs(l.hashCode() * 100) + 1));
+         String l = x + "" + y + z;
+         Random r1 = new Random(Math.abs(l.hashCode() * 100) + 1);
          int i = r1.nextInt(12345 + side) % 4;
          return this.insIcon[5 + i];
       } else {
@@ -191,7 +191,7 @@ public class BlockEldritch extends BlockContainer {
             }
          }
 
-         world.createExplosion((Entity)null, (double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, 1.0F, false);
+         world.createExplosion(null, (double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, 1.0F, false);
       }
 
       super.breakBlock(world, x, y, z, block, meta);
@@ -229,7 +229,7 @@ public class BlockEldritch extends BlockContainer {
       int metadata = world.getBlockMetadata(x, y, z);
       if (metadata == 0 && !world.isRemote && !player.isSneaking() && player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemEldritchObject && player.getHeldItem().getItemDamage() == 0) {
          TileEntity te = world.getTileEntity(x, y, z);
-         if (te != null && te instanceof TileEldritchAltar) {
+         if (te instanceof TileEldritchAltar) {
             TileEldritchAltar tile = (TileEldritchAltar)te;
             if (tile.getEyes() < 4) {
                if (tile.getEyes() >= 2) {
@@ -242,19 +242,19 @@ public class BlockEldritch extends BlockContainer {
                --player.getHeldItem().stackSize;
                tile.markDirty();
                world.markBlockForUpdate(x, y, z);
-               world.playSoundEffect((double)x, (double)y, (double)z, "thaumcraft:crystal", 0.2F, 1.0F);
+               world.playSoundEffect(x, y, z, "thaumcraft:crystal", 0.2F, 1.0F);
             }
          }
       }
 
       if (metadata == 8 && player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() instanceof ItemEldritchObject && player.inventory.getCurrentItem().getItemDamage() == 2) {
          TileEntity te = world.getTileEntity(x, y, z);
-         if (te != null && te instanceof TileEldritchLock && ((TileEldritchLock)te).count < 0) {
+         if (te instanceof TileEldritchLock && ((TileEldritchLock) te).count < 0) {
             ((TileEldritchLock)te).count = 0;
             world.markBlockForUpdate(x, y, z);
             te.markDirty();
             --player.getHeldItem().stackSize;
-            world.playSoundEffect((double)x, (double)y, (double)z, "thaumcraft:runicShieldCharge", 1.0F, 1.0F);
+            world.playSoundEffect(x, y, z, "thaumcraft:runicShieldCharge", 1.0F, 1.0F);
          }
       }
 
@@ -266,11 +266,11 @@ public class BlockEldritch extends BlockContainer {
       int md = w.getBlockMetadata(i, j, k);
       if (md == 8) {
          TileEntity te = w.getTileEntity(i, j, k);
-         if (te == null || !(te instanceof TileEldritchLock) || ((TileEldritchLock)te).count < 0) {
+         if (!(te instanceof TileEldritchLock) || ((TileEldritchLock) te).count < 0) {
             return;
          }
 
-         FXSpark ef = new FXSpark(w, (double)((float)i + w.rand.nextFloat()), (double)((float)j + w.rand.nextFloat()), (double)((float)k + w.rand.nextFloat()), 0.5F);
+         FXSpark ef = new FXSpark(w, (float)i + w.rand.nextFloat(), (float)j + w.rand.nextFloat(), (float)k + w.rand.nextFloat(), 0.5F);
          ef.setRBGColorF(0.65F + w.rand.nextFloat() * 0.1F, 1.0F, 1.0F);
          ef.setAlphaF(0.8F);
          ParticleEngine.instance.addEffect(w, ef);
@@ -279,7 +279,7 @@ public class BlockEldritch extends BlockContainer {
          int y = j + r.nextInt(2) - r.nextInt(2);
          int z = k + r.nextInt(2) - r.nextInt(2);
          if (w.isAirBlock(x, y, z)) {
-            Thaumcraft.proxy.blockRunes(w, (double)((float)x + r.nextFloat()), (double)((float)y + r.nextFloat()), (double)((float)z + r.nextFloat()), 0.5F + r.nextFloat() * 0.5F, r.nextFloat() * 0.3F, 0.9F + r.nextFloat() * 0.1F, 16 + r.nextInt(4), 0.0F);
+            Thaumcraft.proxy.blockRunes(w, (float)x + r.nextFloat(), (float)y + r.nextFloat(), (float)z + r.nextFloat(), 0.5F + r.nextFloat() * 0.5F, r.nextFloat() * 0.3F, 0.9F + r.nextFloat() * 0.1F, 16 + r.nextInt(4), 0.0F);
          }
       }
 

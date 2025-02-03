@@ -23,9 +23,9 @@ public class EntityCultist extends EntityMob {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue((double)32.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(32.0F);
       this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.3);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)4.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(4.0F);
    }
 
    protected void entityInit() {
@@ -48,7 +48,7 @@ public class EntityCultist extends EntityMob {
       int r = this.rand.nextInt(10);
       if (r == 0) {
          this.entityDropItem(new ItemStack(ConfigItems.itemResource, 1, 9), 1.5F);
-      } else if (r <= 1) {
+      } else if (r == 1) {
          this.entityDropItem(new ItemStack(ConfigItems.itemResource, 1, 17), 1.5F);
       } else if (r <= 3 + i) {
          this.entityDropItem(new ItemStack(ConfigItems.itemResource, 1, 18), 1.5F);
@@ -105,6 +105,6 @@ public class EntityCultist extends EntityMob {
    }
 
    public boolean canAttackClass(Class clazz) {
-      return clazz != EntityCultistCleric.class && clazz != EntityCultistLeader.class && clazz != EntityCultistKnight.class ? super.canAttackClass(clazz) : false;
+      return clazz != EntityCultistCleric.class && clazz != EntityCultistLeader.class && clazz != EntityCultistKnight.class && super.canAttackClass(clazz);
    }
 }

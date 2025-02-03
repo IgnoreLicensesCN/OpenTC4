@@ -23,7 +23,7 @@ public class PotionInfectiousVisExhaust extends Potion {
    public static void init() {
       instance.setPotionName("potion.infvisexhaust");
       instance.setIconIndex(6, 1);
-      instance.setEffectiveness((double)0.25F);
+      instance.setEffectiveness(0.25F);
    }
 
    public boolean isBadEffect() {
@@ -37,7 +37,7 @@ public class PotionInfectiousVisExhaust extends Potion {
    }
 
    public void performEffect(EntityLivingBase target, int par2) {
-      List<EntityLivingBase> targets = target.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, target.boundingBox.expand((double)4.0F, (double)4.0F, (double)4.0F));
+      List<EntityLivingBase> targets = target.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, target.boundingBox.expand(4.0F, 4.0F, 4.0F));
       if (targets.size() > 0) {
          for(EntityLivingBase e : targets) {
             if (!e.isPotionActive(Config.potionInfVisExhaustID)) {

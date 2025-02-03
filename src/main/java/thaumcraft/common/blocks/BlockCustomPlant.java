@@ -71,11 +71,11 @@ public class BlockCustomPlant extends BlockBush {
    }
 
    public boolean hasTileEntity(int metadata) {
-      return metadata == 4 ? true : super.hasTileEntity(metadata);
+      return metadata == 4 || super.hasTileEntity(metadata);
    }
 
    public TileEntity createTileEntity(World world, int metadata) {
-      return (TileEntity)(metadata == 4 ? new TileEtherealBloom() : super.createTileEntity(world, metadata));
+      return metadata == 4 ? new TileEtherealBloom() : super.createTileEntity(world, metadata);
    }
 
    public int damageDropped(int par1) {
@@ -166,20 +166,20 @@ public class BlockCustomPlant extends BlockBush {
          float xr = (float)i + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.1F;
          float yr = (float)j + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.15F;
          float zr = (float)k + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.1F;
-         FXWisp ef = new FXWisp(world, (double)xr, (double)yr, (double)zr, 0.2F, cr, cg, cb);
+         FXWisp ef = new FXWisp(world, xr, yr, zr, 0.2F, cr, cg, cb);
          ef.tinkle = false;
          ParticleEngine.instance.addEffect(world, ef);
       } else if (md == 3 && random.nextBoolean()) {
          float xr = (float)i + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.1F;
          float yr = (float)j + 0.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.1F;
          float zr = (float)k + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.1F;
-         world.spawnParticle("smoke", (double)xr, (double)yr, (double)zr, (double)0.0F, (double)0.0F, (double)0.0F);
-         world.spawnParticle("flame", (double)xr, (double)yr, (double)zr, (double)0.0F, (double)0.0F, (double)0.0F);
+         world.spawnParticle("smoke", xr, yr, zr, 0.0F, 0.0F, 0.0F);
+         world.spawnParticle("flame", xr, yr, zr, 0.0F, 0.0F, 0.0F);
       } else if (md == 5 && random.nextInt(3) == 0) {
          float xr = (float)i + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.4F;
          float yr = (float)j + 0.3F;
          float zr = (float)k + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.4F;
-         FXWisp ef = new FXWisp(world, (double)xr, (double)yr, (double)zr, 0.1F, 0.5F, 0.3F, 0.8F);
+         FXWisp ef = new FXWisp(world, xr, yr, zr, 0.1F, 0.5F, 0.3F, 0.8F);
          ef.tinkle = false;
          ef.shrink = true;
          ef.setGravity(0.015F);

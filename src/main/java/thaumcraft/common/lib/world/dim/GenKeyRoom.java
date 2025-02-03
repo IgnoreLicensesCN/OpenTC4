@@ -90,19 +90,19 @@ public class GenKeyRoom extends GenCommon {
       GenCommon.generateConnections(world, random, cx, cz, y, cell, 3, true);
       world.setBlock(x + 8, y + 2, z + 8, ConfigBlocks.blockEldritch, 3, 3);
       EntityPermanentItem entityitem = new EntityPermanentItem(world, (double)x + (double)8.5F, (double)y + (double)3.5F, (double)z + (double)8.5F, new ItemStack(ConfigItems.itemEldritchObject, 1, 2));
-      entityitem.motionY = (double)0.0F;
-      entityitem.motionX = (double)0.0F;
-      entityitem.motionZ = (double)0.0F;
+      entityitem.motionY = 0.0F;
+      entityitem.motionX = 0.0F;
+      entityitem.motionZ = 0.0F;
       world.spawnEntityInWorld(entityitem);
       int zz = 2 + (world.difficultySetting == EnumDifficulty.HARD ? 2 : (world.difficultySetting == EnumDifficulty.NORMAL ? 1 : 0));
 
       for(int qq = 0; qq < zz; ++qq) {
          EntityEldritchGuardian eg = new EntityEldritchGuardian(world);
          double i1 = (double)x + (double)8.5F + (double)(MathHelper.getRandomIntegerInRange(world.rand, 1, 3) * MathHelper.getRandomIntegerInRange(world.rand, -1, 1));
-         double j1 = (double)(y + 2);
+         double j1 = y + 2;
          double k1 = (double)z + (double)8.5F + (double)(MathHelper.getRandomIntegerInRange(world.rand, 1, 3) * MathHelper.getRandomIntegerInRange(world.rand, -1, 1));
          eg.setPosition(i1, j1, k1);
-         eg.onSpawnWithEgg((IEntityLivingData)null);
+         eg.onSpawnWithEgg(null);
          eg.setHomeArea(x + 8, y + 2, z + 8, 16);
          if (qq == 0 && zz >= 4) {
             EntityUtils.makeChampion(eg, true);

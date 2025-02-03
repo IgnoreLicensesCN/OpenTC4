@@ -17,15 +17,15 @@ public class TCVec3 {
 
    protected TCVec3(TCVec3Pool par1Vec3Pool, double par2, double par4, double par6) {
       if (par2 == (double)-0.0F) {
-         par2 = (double)0.0F;
+         par2 = 0.0F;
       }
 
       if (par4 == (double)-0.0F) {
-         par4 = (double)0.0F;
+         par4 = 0.0F;
       }
 
       if (par6 == (double)-0.0F) {
-         par6 = (double)0.0F;
+         par6 = 0.0F;
       }
 
       this.xCoord = par2;
@@ -47,8 +47,8 @@ public class TCVec3 {
    }
 
    public TCVec3 normalize() {
-      double var1 = (double)MathHelper.sqrt_double(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
-      return var1 < 1.0E-4 ? this.myVec3LocalPool.getVecFromPool((double)0.0F, (double)0.0F, (double)0.0F) : this.myVec3LocalPool.getVecFromPool(this.xCoord / var1, this.yCoord / var1, this.zCoord / var1);
+      double var1 = MathHelper.sqrt_double(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
+      return var1 < 1.0E-4 ? this.myVec3LocalPool.getVecFromPool(0.0F, 0.0F, 0.0F) : this.myVec3LocalPool.getVecFromPool(this.xCoord / var1, this.yCoord / var1, this.zCoord / var1);
    }
 
    public double dotProduct(TCVec3 par1Vec3) {
@@ -68,7 +68,7 @@ public class TCVec3 {
       double var2 = par1Vec3.xCoord - this.xCoord;
       double var4 = par1Vec3.yCoord - this.yCoord;
       double var6 = par1Vec3.zCoord - this.zCoord;
-      return (double)MathHelper.sqrt_double(var2 * var2 + var4 * var4 + var6 * var6);
+      return MathHelper.sqrt_double(var2 * var2 + var4 * var4 + var6 * var6);
    }
 
    public double squareDistanceTo(TCVec3 par1Vec3) {
@@ -86,7 +86,7 @@ public class TCVec3 {
    }
 
    public double lengthVector() {
-      return (double)MathHelper.sqrt_double(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
+      return MathHelper.sqrt_double(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
    }
 
    public TCVec3 getIntermediateWithXValue(TCVec3 par1Vec3, double par2) {

@@ -46,9 +46,7 @@ public abstract class AITarget extends EntityAIBase {
          if (this.shouldCheckSight) {
             if (this.taskOwner.getEntitySenses().canSee(var1)) {
                this.field_75298_g = 0;
-            } else if (++this.field_75298_g > 60) {
-               return false;
-            }
+            } else return ++this.field_75298_g <= 60;
          }
 
          return true;
@@ -62,7 +60,7 @@ public abstract class AITarget extends EntityAIBase {
    }
 
    public void resetTask() {
-      this.taskOwner.setAttackTarget((EntityLiving)null);
+      this.taskOwner.setAttackTarget(null);
    }
 
    protected boolean isSuitableTarget(EntityLivingBase par1EntityLiving, boolean par2) {
@@ -88,7 +86,7 @@ public abstract class AITarget extends EntityAIBase {
                return false;
             }
 
-            if (par1EntityLiving instanceof EntityPlayer && ((EntityPlayer)par1EntityLiving).getCommandSenderName().equals(((EntityGolemBase)this.taskOwner).getOwnerName())) {
+            if (par1EntityLiving instanceof EntityPlayer && par1EntityLiving.getCommandSenderName().equals(((EntityGolemBase)this.taskOwner).getOwnerName())) {
                return false;
             }
          }
@@ -107,9 +105,7 @@ public abstract class AITarget extends EntityAIBase {
                   this.targetSearchStatus = this.canEasilyReach(par1EntityLiving) ? 1 : 2;
                }
 
-               if (this.targetSearchStatus == 2) {
-                  return false;
-               }
+                return this.targetSearchStatus != 2;
             }
 
             return true;

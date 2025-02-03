@@ -86,7 +86,7 @@ public class ItemGolemBell extends Item {
       int gid = getGolemId(stack);
       if (gid > -1) {
          golem = world.getEntityByID(gid);
-         if (golem != null && golem instanceof EntityGolemBase) {
+         if (golem instanceof EntityGolemBase) {
             stack.setTagInfo("markers", new NBTTagList());
             ((EntityGolemBase)golem).setMarkers(new ArrayList());
             world.playSoundAtEntity(player, "random.orb", 0.7F, 1.0F + world.rand.nextFloat() * 0.1F);
@@ -102,7 +102,7 @@ public class ItemGolemBell extends Item {
       int gid = getGolemId(stack);
       if (gid > -1) {
          golem = world.getEntityByID(gid);
-         if (golem != null && golem instanceof EntityGolemBase && ((EntityGolemBase)golem).getUpgradeAmount(4) > 0) {
+         if (golem instanceof EntityGolemBase && ((EntityGolemBase) golem).getUpgradeAmount(4) > 0) {
             markMultipleColors = true;
          }
       }
@@ -161,7 +161,7 @@ public class ItemGolemBell extends Item {
 
          stack.setTagInfo("markers", tl);
          if (gid > -1) {
-            if (golem != null && golem instanceof EntityGolemBase) {
+            if (golem instanceof EntityGolemBase) {
                ((EntityGolemBase)golem).setMarkers(markers);
             } else {
                stack.getTagCompound().removeTag("golemid");
@@ -174,7 +174,7 @@ public class ItemGolemBell extends Item {
          }
       }
 
-      world.playSoundEffect((double)par4, (double)par5, (double)par6, "random.orb", 0.7F, 1.0F + world.rand.nextFloat() * 0.1F);
+      world.playSoundEffect(par4, par5, par6, "random.orb", 0.7F, 1.0F + world.rand.nextFloat() * 0.1F);
    }
 
    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int par4, int par5, int par6, int side, float par8, float par9, float par10) {
@@ -253,7 +253,7 @@ public class ItemGolemBell extends Item {
             ItemStack dropped = new ItemStack(ConfigItems.itemTrunkSpawner);
             if (player.isSneaking()) {
                if (upgrade > -1 && entity.worldObj.rand.nextBoolean()) {
-                  ((EntityTravelingTrunk)entity).entityDropItem(new ItemStack(ConfigItems.itemGolemUpgrade, 1, upgrade), 0.5F);
+                  entity.entityDropItem(new ItemStack(ConfigItems.itemGolemUpgrade, 1, upgrade), 0.5F);
                }
             } else {
                if (((EntityTravelingTrunk)entity).hasCustomNameTag()) {
@@ -266,7 +266,7 @@ public class ItemGolemBell extends Item {
                }
             }
 
-            ((EntityTravelingTrunk)entity).entityDropItem(dropped, 0.5F);
+            entity.entityDropItem(dropped, 0.5F);
             if (upgrade != 4 || player.isSneaking()) {
                ((EntityTravelingTrunk)entity).inventory.dropAllItems();
             }
@@ -292,12 +292,12 @@ public class ItemGolemBell extends Item {
 
             if (player.isSneaking()) {
                if (core > -1) {
-                  ((EntityGolemBase)entity).entityDropItem(new ItemStack(ConfigItems.itemGolemCore, 1, core), 0.5F);
+                  entity.entityDropItem(new ItemStack(ConfigItems.itemGolemCore, 1, core), 0.5F);
                }
 
                for(byte b : upgrades) {
                   if (b > -1 && entity.worldObj.rand.nextBoolean()) {
-                     ((EntityGolemBase)entity).entityDropItem(new ItemStack(ConfigItems.itemGolemUpgrade, 1, b), 0.5F);
+                     entity.entityDropItem(new ItemStack(ConfigItems.itemGolemUpgrade, 1, b), 0.5F);
                   }
                }
             } else {
@@ -332,7 +332,7 @@ public class ItemGolemBell extends Item {
                dropped.setTagInfo("Inventory", ((EntityGolemBase)entity).inventory.writeToNBT(new NBTTagList()));
             }
 
-            ((EntityGolemBase)entity).entityDropItem(dropped, 0.5F);
+            entity.entityDropItem(dropped, 0.5F);
             ((EntityGolemBase)entity).dropStuff();
             entity.worldObj.playSoundAtEntity(entity, "thaumcraft:zap", 0.5F, 1.0F);
             entity.setDead();

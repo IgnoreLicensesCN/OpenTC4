@@ -72,30 +72,28 @@ public class InventoryMob implements IInventory {
          k = this.getFirstEmptyStack();
       }
 
-      if (k < 0) {
-         return j;
-      } else {
-         if (this.inventory[k] == null) {
-            this.inventory[k] = new ItemStack(i, 0, itemstack.getItemDamage());
-         }
+       if (k >= 0) {
+           if (this.inventory[k] == null) {
+               this.inventory[k] = new ItemStack(i, 0, itemstack.getItemDamage());
+           }
 
-         int l = j;
-         if (j > this.inventory[k].getMaxStackSize() - this.inventory[k].stackSize) {
-            l = this.inventory[k].getMaxStackSize() - this.inventory[k].stackSize;
-         }
+           int l = j;
+           if (j > this.inventory[k].getMaxStackSize() - this.inventory[k].stackSize) {
+               l = this.inventory[k].getMaxStackSize() - this.inventory[k].stackSize;
+           }
 
-         if (l > this.getInventoryStackLimit() - this.inventory[k].stackSize) {
-            l = this.getInventoryStackLimit() - this.inventory[k].stackSize;
-         }
+           if (l > this.getInventoryStackLimit() - this.inventory[k].stackSize) {
+               l = this.getInventoryStackLimit() - this.inventory[k].stackSize;
+           }
 
-          if (l != 0) {
-              j -= l;
-              ItemStack var10000 = this.inventory[k];
-              var10000.stackSize += l;
-              this.inventory[k].animationsToGo = 5;
-          }
-          return j;
-      }
+           if (l != 0) {
+               j -= l;
+               ItemStack var10000 = this.inventory[k];
+               var10000.stackSize += l;
+               this.inventory[k].animationsToGo = 5;
+           }
+       }
+       return j;
    }
 
    public boolean addItemStackToInventory(ItemStack itemstack) {
@@ -193,11 +191,11 @@ public class InventoryMob implements IInventory {
    }
 
    public boolean func_28018_c(ItemStack itemstack) {
-      for(int j = 0; j < this.inventory.length; ++j) {
-         if (this.inventory[j] != null && ItemStack.areItemStacksEqual(this.inventory[j], itemstack)) {
-            return true;
-         }
-      }
+       for (ItemStack itemStack : this.inventory) {
+           if (itemStack != null && ItemStack.areItemStacksEqual(itemStack, itemstack)) {
+               return true;
+           }
+       }
 
       return false;
    }
@@ -263,7 +261,7 @@ public class InventoryMob implements IInventory {
                } else {
                   int od = OreDictionary.getOreID(this.inventory[a]);
                   if (od != -1) {
-                     ItemStack[] ores = (ItemStack[])OreDictionary.getOres(od).toArray(new ItemStack[0]);
+                     ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[0]);
                      if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{stackInSlot}, ores)) {
                         amt += this.inventory[a].stackSize;
                      }
@@ -287,7 +285,7 @@ public class InventoryMob implements IInventory {
             if (fuzzy) {
                int od = OreDictionary.getOreID(this.inventory[a]);
                if (od != -1) {
-                  ItemStack[] ores = (ItemStack[])OreDictionary.getOres(od).toArray(new ItemStack[0]);
+                  ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[0]);
 
                   for(ItemStack ore : ores) {
                      needed.add(ore.copy());

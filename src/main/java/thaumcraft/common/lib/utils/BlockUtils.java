@@ -30,7 +30,7 @@ public class BlockUtils {
    static int lastx = 0;
    static int lasty = 0;
    static int lastz = 0;
-   static double lastdistance = (double)0.0F;
+   static double lastdistance = 0.0F;
 
    public static boolean harvestBlock(World world, EntityPlayer player, int x, int y, int z) {
       return harvestBlock(world, player, x, y, z, false, 0);
@@ -56,7 +56,7 @@ public class BlockUtils {
             if (flag && flag1) {
                block.harvestBlock(world, player, x, y, z, i1);
                if (followItem) {
-                  ArrayList<Entity> entities = EntityUtils.getEntitiesInRange(world, (double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, player, EntityItem.class, (double)2.0F);
+                  ArrayList<Entity> entities = EntityUtils.getEntitiesInRange(world, (double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, player, EntityItem.class, 2.0F);
                   if (entities != null && entities.size() > 0) {
                      for(Entity e : entities) {
                         if (!e.isDead && e instanceof EntityItem && e.ticksExisted == 0 && !(e instanceof EntityFollowingItem)) {
@@ -94,7 +94,7 @@ public class BlockUtils {
       ItemStack dropped = null;
 
       try {
-         Method m = ReflectionHelper.findMethod(Block.class, block, new String[]{"createStackedBlock", "createStackedBlock"}, new Class[]{Integer.TYPE});
+         Method m = ReflectionHelper.findMethod(Block.class, block, new String[]{"createStackedBlock", "func_149644_j"}, Integer.TYPE);
          dropped = (ItemStack)m.invoke(block, md);
       } catch (Exception var4) {
          Thaumcraft.log.warn("Could not invoke net.minecraft.block.Block method createStackedBlock");
@@ -105,7 +105,7 @@ public class BlockUtils {
 
    public static void dropBlockAsItem(World world, int x, int y, int z, ItemStack stack, Block block) {
       try {
-         Method m = ReflectionHelper.findMethod(Block.class, block, new String[]{"dropBlockAsItem", "dropBlockAsItem"}, new Class[]{World.class, Integer.TYPE, Integer.TYPE, Integer.TYPE, ItemStack.class});
+         Method m = ReflectionHelper.findMethod(Block.class, block, new String[]{"dropBlockAsItem", "func_149642_a"}, World.class, Integer.TYPE, Integer.TYPE, Integer.TYPE, ItemStack.class);
          m.invoke(block, world, x, y, z, stack);
       } catch (Exception var7) {
          Thaumcraft.log.warn("Could not invoke net.minecraft.block.Block method createStackedBlock");
@@ -175,9 +175,9 @@ public class BlockUtils {
                }
 
                if (world.getBlock(lastx + xx, lasty + yy, lastz + zz) == block && Utils.isWoodLog(world, lastx + xx, lasty + yy, lastz + zz) && block.getBlockHardness(world, lastx + xx, lasty + yy, lastz + zz) >= 0.0F) {
-                  double xd = (double)(lastx + xx - x);
-                  double yd = (double)(lasty + yy - y);
-                  double zd = (double)(lastz + zz - z);
+                  double xd = lastx + xx - x;
+                  double yd = lasty + yy - y;
+                  double zd = lastz + zz - z;
                   double d = xd * xd + yd * yd + zd * zd;
                   if (d > lastdistance) {
                      lastdistance = d;
@@ -202,7 +202,7 @@ public class BlockUtils {
       lastx = x;
       lasty = y;
       lastz = z;
-      lastdistance = (double)0.0F;
+      lastdistance = 0.0F;
       findBlocks(world, x, y, z, block);
       boolean worked = harvestBlock(world, player, lastx, lasty, lastz, followitem, color);
       world.markBlockForUpdate(x, y, z);
@@ -247,7 +247,7 @@ public class BlockUtils {
       float var17 = MathHelper.sin(-var5 * ((float)Math.PI / 180F));
       float var18 = var15 * var16;
       float var20 = var14 * var16;
-      double var21 = (double)10.0F;
+      double var21 = 10.0F;
       Vec3 var23 = var13.addVector((double)var18 * var21, (double)var17 * var21, (double)var20 * var21);
       return world.func_147447_a(var13, var23, par3, !par3, false);
    }
@@ -278,9 +278,11 @@ public class BlockUtils {
       return count >= amount;
    }
 
-   public static List getContentsOfBlock(World world, int x, int y, int z) {
-      List<EntityItem> list = world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox((double)x, (double)y, (double)z, (double)x + (double)1.0F, (double)y + (double)1.0F, (double)z + (double)1.0F));
-      return list;
+   public static List<EntityItem> getContentsOfBlock(World world, int x, int y, int z) {
+       return (List<EntityItem>)world.getEntitiesWithinAABB(
+               EntityItem.class,
+               AxisAlignedBB.getBoundingBox(x, y, z, (double)x + (double)1.0F, (double)y + (double)1.0F, (double)z + (double)1.0F)
+       );
    }
 
    public static int countExposedSides(World world, int x, int y, int z) {

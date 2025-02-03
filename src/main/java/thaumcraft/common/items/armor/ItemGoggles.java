@@ -37,7 +37,7 @@ public class ItemGoggles extends ItemArmor implements IRepairable, IVisDiscountG
 
    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
       super.addInformation(stack, player, list, par4);
-      list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": " + this.getVisDiscount(stack, player, (Aspect)null) + "%");
+      list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": " + this.getVisDiscount(stack, player, null) + "%");
    }
 
    @SideOnly(Side.CLIENT)
@@ -59,7 +59,7 @@ public class ItemGoggles extends ItemArmor implements IRepairable, IVisDiscountG
    }
 
    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
-      return par2ItemStack.isItemEqual(new ItemStack(Items.gold_ingot)) ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
+      return par2ItemStack.isItemEqual(new ItemStack(Items.gold_ingot)) || super.getIsRepairable(par1ItemStack, par2ItemStack);
    }
 
    public int getVisDiscount(ItemStack stack, EntityPlayer player, Aspect aspect) {

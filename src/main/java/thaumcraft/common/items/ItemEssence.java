@@ -114,7 +114,7 @@ public class ItemEssence extends Item implements IEssentiaContainerItem {
             if (tile.takeFromContainer(tile.aspect, 8)) {
                --itemstack.stackSize;
                if (!player.inventory.addItemStackToInventory(phial)) {
-                  world.spawnEntityInWorld(new EntityItem(world, (double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), phial));
+                  world.spawnEntityInWorld(new EntityItem(world, (float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, phial));
                }
 
                world.playSoundAtEntity(player, "game.neutral.swim", 0.25F, 1.0F);
@@ -138,7 +138,7 @@ public class ItemEssence extends Item implements IEssentiaContainerItem {
                ItemStack phial = new ItemStack(this, 1, 1);
                this.setAspects(phial, (new AspectList()).add(asp, 8));
                if (!player.inventory.addItemStackToInventory(phial)) {
-                  world.spawnEntityInWorld(new EntityItem(world, (double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), phial));
+                  world.spawnEntityInWorld(new EntityItem(world, (float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, phial));
                }
 
                world.playSoundAtEntity(player, "game.neutral.swim", 0.25F, 1.0F);
@@ -164,7 +164,7 @@ public class ItemEssence extends Item implements IEssentiaContainerItem {
                   tile.markDirty();
                   --itemstack.stackSize;
                   if (!player.inventory.addItemStackToInventory(new ItemStack(this, 1, 0))) {
-                     world.spawnEntityInWorld(new EntityItem(world, (double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), new ItemStack(this, 1, 0)));
+                     world.spawnEntityInWorld(new EntityItem(world, (float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, new ItemStack(this, 1, 0)));
                   }
 
                   world.playSoundAtEntity(player, "game.neutral.swim", 0.25F, 1.0F);

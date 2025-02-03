@@ -32,7 +32,7 @@ public class BlockStoneDeviceRenderer extends BlockRenderer implements ISimpleBl
          drawFaces(renderer, block, ((BlockStoneDevice)block).iconPedestal[1], ((BlockStoneDevice)block).iconPedestal[1], ((BlockStoneDevice)block).iconPedestal[0], ((BlockStoneDevice)block).iconPedestal[0], ((BlockStoneDevice)block).iconPedestal[0], ((BlockStoneDevice)block).iconPedestal[0], true);
       } else if (metadata == 2) {
          GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileInfusionMatrix(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileInfusionMatrix(), 0.0F, 0.0F, 0.0F, 0.0F);
       } else if (metadata == 5) {
          block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 1.0F);
          renderer.setRenderBoundsFromBlock(block);
@@ -79,18 +79,18 @@ public class BlockStoneDeviceRenderer extends BlockRenderer implements ISimpleBl
                drawFaces(renderer, block, ((BlockStoneDevice)block).iconPedestal[1], ((BlockStoneDevice)block).iconSpa[1], ((BlockStoneDevice)block).iconSpa[0], ((BlockStoneDevice)block).iconSpa[0], ((BlockStoneDevice)block).iconSpa[0], ((BlockStoneDevice)block).iconSpa[0], true);
             } else if (metadata == 13) {
                GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-               TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileFocalManipulator(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+               TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileFocalManipulator(), 0.0F, 0.0F, 0.0F, 0.0F);
             } else if (metadata == 14) {
                GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-               TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileFluxScrubber(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+               TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileFluxScrubber(), 0.0F, 0.0F, 0.0F, 0.0F);
             }
          } else {
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileNodeConverter(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileNodeConverter(), 0.0F, 0.0F, 0.0F, 0.0F);
          }
       } else {
          GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileNodeStabilizer(metadata), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileNodeStabilizer(metadata), 0.0F, 0.0F, 0.0F, 0.0F);
       }
 
    }

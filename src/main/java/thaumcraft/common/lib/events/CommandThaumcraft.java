@@ -53,18 +53,18 @@ public class CommandThaumcraft extends CommandBase {
 
    public void processCommand(ICommandSender icommandsender, String[] astring) {
       if (astring.length == 0) {
-         icommandsender.addChatMessage(new ChatComponentTranslation("§cInvalid arguments", new Object[0]));
-         icommandsender.addChatMessage(new ChatComponentTranslation("§cUse /thaumcraft help to get help", new Object[0]));
+         icommandsender.addChatMessage(new ChatComponentTranslation("§cInvalid arguments"));
+         icommandsender.addChatMessage(new ChatComponentTranslation("§cUse /thaumcraft help to get help"));
       } else {
          if (astring[0].equalsIgnoreCase("help")) {
-            icommandsender.addChatMessage(new ChatComponentTranslation("§3You can also use /thaum or /tc instead of /thaumcraft.", new Object[0]));
-            icommandsender.addChatMessage(new ChatComponentTranslation("§3Use this to give research to a player.", new Object[0]));
-            icommandsender.addChatMessage(new ChatComponentTranslation("  /thaumcraft research <list|player> <all|reset|<research>>", new Object[0]));
-            icommandsender.addChatMessage(new ChatComponentTranslation("§3Use this to give aspect research points to a player.", new Object[0]));
-            icommandsender.addChatMessage(new ChatComponentTranslation("  /thaumcraft aspect <player> <aspect|all> <amount>", new Object[0]));
-            icommandsender.addChatMessage(new ChatComponentTranslation("§3Use this to give set a players warp level.", new Object[0]));
-            icommandsender.addChatMessage(new ChatComponentTranslation("  /thaumcraft warp <player> <add|set> <amount> <PERM|TEMP>", new Object[0]));
-            icommandsender.addChatMessage(new ChatComponentTranslation("  not specifying perm or temp will just add normal warp", new Object[0]));
+            icommandsender.addChatMessage(new ChatComponentTranslation("§3You can also use /thaum or /tc instead of /thaumcraft."));
+            icommandsender.addChatMessage(new ChatComponentTranslation("§3Use this to give research to a player."));
+            icommandsender.addChatMessage(new ChatComponentTranslation("  /thaumcraft research <list|player> <all|reset|<research>>"));
+            icommandsender.addChatMessage(new ChatComponentTranslation("§3Use this to give aspect research points to a player."));
+            icommandsender.addChatMessage(new ChatComponentTranslation("  /thaumcraft aspect <player> <aspect|all> <amount>"));
+            icommandsender.addChatMessage(new ChatComponentTranslation("§3Use this to give set a players warp level."));
+            icommandsender.addChatMessage(new ChatComponentTranslation("  /thaumcraft warp <player> <add|set> <amount> <PERM|TEMP>"));
+            icommandsender.addChatMessage(new ChatComponentTranslation("  not specifying perm or temp will just add normal warp"));
          } else if (astring.length >= 2) {
             if (astring[0].equalsIgnoreCase("research") && astring[1].equalsIgnoreCase("list")) {
                this.listResearch(icommandsender);
@@ -80,16 +80,16 @@ public class CommandThaumcraft extends CommandBase {
                         this.giveResearch(icommandsender, entityplayermp, astring[2]);
                      }
                   } else {
-                     icommandsender.addChatMessage(new ChatComponentTranslation("§cInvalid arguments", new Object[0]));
-                     icommandsender.addChatMessage(new ChatComponentTranslation("§cUse /thaumcraft research <list|player> <all|reset|<research>>", new Object[0]));
+                     icommandsender.addChatMessage(new ChatComponentTranslation("§cInvalid arguments"));
+                     icommandsender.addChatMessage(new ChatComponentTranslation("§cUse /thaumcraft research <list|player> <all|reset|<research>>"));
                   }
                } else if (astring[0].equalsIgnoreCase("aspect")) {
                   if (astring.length == 4) {
                      int i = parseIntWithMin(icommandsender, astring[3], 1);
                      this.giveAspect(icommandsender, entityplayermp, astring[2], i);
                   } else {
-                     icommandsender.addChatMessage(new ChatComponentTranslation("§cInvalid arguments", new Object[0]));
-                     icommandsender.addChatMessage(new ChatComponentTranslation("§cUse /thaumcraft aspect <player> <aspect|all> <amount>", new Object[0]));
+                     icommandsender.addChatMessage(new ChatComponentTranslation("§cInvalid arguments"));
+                     icommandsender.addChatMessage(new ChatComponentTranslation("§cUse /thaumcraft aspect <player> <aspect|all> <amount>"));
                   }
                } else if (astring[0].equalsIgnoreCase("warp")) {
                   if (astring.length >= 4 && astring[2].equalsIgnoreCase("set")) {
@@ -99,17 +99,17 @@ public class CommandThaumcraft extends CommandBase {
                      int i = parseIntBounded(icommandsender, astring[3], -100, 100);
                      this.addWarp(icommandsender, entityplayermp, i, astring.length == 5 ? astring[4] : "");
                   } else {
-                     icommandsender.addChatMessage(new ChatComponentTranslation("§cInvalid arguments", new Object[0]));
-                     icommandsender.addChatMessage(new ChatComponentTranslation("§cUse /thaumcraft warp <player> <add|set> <amount> <PERM|TEMP>", new Object[0]));
+                     icommandsender.addChatMessage(new ChatComponentTranslation("§cInvalid arguments"));
+                     icommandsender.addChatMessage(new ChatComponentTranslation("§cUse /thaumcraft warp <player> <add|set> <amount> <PERM|TEMP>"));
                   }
                } else {
-                  icommandsender.addChatMessage(new ChatComponentTranslation("§cInvalid arguments", new Object[0]));
-                  icommandsender.addChatMessage(new ChatComponentTranslation("§cUse /thaumcraft help to get help", new Object[0]));
+                  icommandsender.addChatMessage(new ChatComponentTranslation("§cInvalid arguments"));
+                  icommandsender.addChatMessage(new ChatComponentTranslation("§cUse /thaumcraft help to get help"));
                }
             }
          } else {
-            icommandsender.addChatMessage(new ChatComponentTranslation("§cInvalid arguments", new Object[0]));
-            icommandsender.addChatMessage(new ChatComponentTranslation("§cUse /thaumcraft help to get help", new Object[0]));
+            icommandsender.addChatMessage(new ChatComponentTranslation("§cInvalid arguments"));
+            icommandsender.addChatMessage(new ChatComponentTranslation("§cUse /thaumcraft help to get help"));
          }
 
       }
@@ -122,8 +122,8 @@ public class CommandThaumcraft extends CommandBase {
          }
 
          ResearchManager.scheduleSave(player);
-         player.addChatMessage(new ChatComponentTranslation("§5" + icommandsender.getCommandSenderName() + " gave you " + i + " of all the aspects.", new Object[0]));
-         icommandsender.addChatMessage(new ChatComponentTranslation("§5Success!", new Object[0]));
+         player.addChatMessage(new ChatComponentTranslation("§5" + icommandsender.getCommandSenderName() + " gave you " + i + " of all the aspects."));
+         icommandsender.addChatMessage(new ChatComponentTranslation("§5Success!"));
          PacketHandler.INSTANCE.sendTo(new PacketSyncAspects(player), player);
       } else {
          Aspect aspect = Aspect.getAspect(string);
@@ -140,10 +140,10 @@ public class CommandThaumcraft extends CommandBase {
             Thaumcraft.proxy.playerKnowledge.addAspectPool(player.getCommandSenderName(), aspect, (short)i);
             ResearchManager.scheduleSave(player);
             PacketHandler.INSTANCE.sendTo(new PacketSyncAspects(player), player);
-            player.addChatMessage(new ChatComponentTranslation("§5" + icommandsender.getCommandSenderName() + " gave you " + i + " " + aspect.getName(), new Object[0]));
-            icommandsender.addChatMessage(new ChatComponentTranslation("§5Success!", new Object[0]));
+            player.addChatMessage(new ChatComponentTranslation("§5" + icommandsender.getCommandSenderName() + " gave you " + i + " " + aspect.getName()));
+            icommandsender.addChatMessage(new ChatComponentTranslation("§5Success!"));
          } else {
-            icommandsender.addChatMessage(new ChatComponentTranslation("§cAspect does not exist.", new Object[0]));
+            icommandsender.addChatMessage(new ChatComponentTranslation("§cAspect does not exist."));
          }
       }
 
@@ -164,8 +164,8 @@ public class CommandThaumcraft extends CommandBase {
          PacketHandler.INSTANCE.sendTo(new PacketSyncWarp(player, (byte)1), player);
       }
 
-      player.addChatMessage(new ChatComponentTranslation("§5" + icommandsender.getCommandSenderName() + " set your warp to " + i, new Object[0]));
-      icommandsender.addChatMessage(new ChatComponentTranslation("§5Success!", new Object[0]));
+      player.addChatMessage(new ChatComponentTranslation("§5" + icommandsender.getCommandSenderName() + " set your warp to " + i));
+      icommandsender.addChatMessage(new ChatComponentTranslation("§5Success!"));
    }
 
    private void addWarp(ICommandSender icommandsender, EntityPlayerMP player, int i, String type) {
@@ -186,14 +186,14 @@ public class CommandThaumcraft extends CommandBase {
          PacketHandler.INSTANCE.sendTo(new PacketWarpMessage(player, (byte)1, i), player);
       }
 
-      player.addChatMessage(new ChatComponentTranslation("§5" + icommandsender.getCommandSenderName() + " added " + i + " warp to your total.", new Object[0]));
-      icommandsender.addChatMessage(new ChatComponentTranslation("§5Success!", new Object[0]));
+      player.addChatMessage(new ChatComponentTranslation("§5" + icommandsender.getCommandSenderName() + " added " + i + " warp to your total."));
+      icommandsender.addChatMessage(new ChatComponentTranslation("§5Success!"));
    }
 
    private void listResearch(ICommandSender icommandsender) {
       for(ResearchCategoryList cat : ResearchCategories.researchCategories.values()) {
          for(ResearchItem ri : cat.research.values()) {
-            icommandsender.addChatMessage(new ChatComponentTranslation("§5" + ri.key, new Object[0]));
+            icommandsender.addChatMessage(new ChatComponentTranslation("§5" + ri.key));
          }
       }
 
@@ -203,10 +203,10 @@ public class CommandThaumcraft extends CommandBase {
       if (ResearchCategories.getResearch(research) != null) {
          this.giveRecursiveResearch(player, research);
          PacketHandler.INSTANCE.sendTo(new PacketSyncResearch(player), player);
-         player.addChatMessage(new ChatComponentTranslation("§5" + icommandsender.getCommandSenderName() + " gave you " + research + " research and its requisites.", new Object[0]));
-         icommandsender.addChatMessage(new ChatComponentTranslation("§5Success!", new Object[0]));
+         player.addChatMessage(new ChatComponentTranslation("§5" + icommandsender.getCommandSenderName() + " gave you " + research + " research and its requisites."));
+         icommandsender.addChatMessage(new ChatComponentTranslation("§5Success!"));
       } else {
-         icommandsender.addChatMessage(new ChatComponentTranslation("§cResearch does not exist.", new Object[0]));
+         icommandsender.addChatMessage(new ChatComponentTranslation("§cResearch does not exist."));
       }
 
    }
@@ -244,8 +244,8 @@ public class CommandThaumcraft extends CommandBase {
          }
       }
 
-      player.addChatMessage(new ChatComponentTranslation("§5" + icommandsender.getCommandSenderName() + " has given you all research.", new Object[0]));
-      icommandsender.addChatMessage(new ChatComponentTranslation("§5Success!", new Object[0]));
+      player.addChatMessage(new ChatComponentTranslation("§5" + icommandsender.getCommandSenderName() + " has given you all research."));
+      icommandsender.addChatMessage(new ChatComponentTranslation("§5Success!"));
       PacketHandler.INSTANCE.sendTo(new PacketSyncResearch(player), player);
    }
 
@@ -260,8 +260,8 @@ public class CommandThaumcraft extends CommandBase {
          }
       }
 
-      player.addChatMessage(new ChatComponentTranslation("§5" + icommandsender.getCommandSenderName() + " has reset you research.", new Object[0]));
-      icommandsender.addChatMessage(new ChatComponentTranslation("§5Success!", new Object[0]));
+      player.addChatMessage(new ChatComponentTranslation("§5" + icommandsender.getCommandSenderName() + " has reset you research."));
+      icommandsender.addChatMessage(new ChatComponentTranslation("§5Success!"));
       PacketHandler.INSTANCE.sendTo(new PacketSyncResearch(player), player);
    }
 }

@@ -136,7 +136,7 @@ public class PlayerKnowledge {
       }
 
       if (aspect != null) {
-         al.aspects.put(aspect, Integer.valueOf(amount));
+         al.aspects.put(aspect, (int) amount);
          this.aspectsDiscovered.put(username, al);
          return true;
       } else {
@@ -149,7 +149,7 @@ public class PlayerKnowledge {
       if (!this.warpCount.containsKey(player)) {
          this.warpCount.put(player, 0);
       } else {
-         known = (Integer)this.warpCount.get(player);
+         known = this.warpCount.get(player);
       }
 
       return known;
@@ -168,7 +168,7 @@ public class PlayerKnowledge {
       if (!this.warp.containsKey(player)) {
          this.warp.put(player, 0);
       } else {
-         known = (Integer)this.warp.get(player);
+         known = this.warp.get(player);
       }
 
       return known;
@@ -179,7 +179,7 @@ public class PlayerKnowledge {
       if (!this.warpTemp.containsKey(player)) {
          this.warpTemp.put(player, 0);
       } else {
-         known = (Integer)this.warpTemp.get(player);
+         known = this.warpTemp.get(player);
       }
 
       return known;
@@ -190,7 +190,7 @@ public class PlayerKnowledge {
       if (!this.warpSticky.containsKey(player)) {
          this.warpSticky.put(player, 0);
       } else {
-         known = (Integer)this.warpSticky.get(player);
+         known = this.warpSticky.get(player);
       }
 
       return known;

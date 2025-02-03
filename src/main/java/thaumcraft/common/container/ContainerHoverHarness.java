@@ -33,7 +33,7 @@ public class ContainerHoverHarness extends Container {
          try {
             ItemStack jar = ItemStack.loadItemStackFromNBT(this.armor.stackTagCompound.getCompoundTag("jar"));
             this.input.setInventorySlotContents(0, jar);
-         } catch (Exception var7) {
+         } catch (Exception ignored) {
          }
       }
 
@@ -71,7 +71,7 @@ public class ContainerHoverHarness extends Container {
             }
 
             if (stackInSlot.stackSize == 0) {
-               slotObject.putStack((ItemStack)null);
+               slotObject.putStack(null);
             } else {
                slotObject.onSlotChanged();
             }

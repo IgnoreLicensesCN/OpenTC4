@@ -37,7 +37,7 @@ public class ContainerFocusPouch extends Container {
       if (!par2World.isRemote) {
          try {
             ((InventoryFocusPouch)this.input).stackList = ((ItemFocusPouch)this.pouch.getItem()).getInventory(this.pouch);
-         } catch (Exception var7) {
+         } catch (Exception ignored) {
          }
       }
 
@@ -75,7 +75,7 @@ public class ContainerFocusPouch extends Container {
             }
 
             if (stackInSlot.stackSize == 0) {
-               slotObject.putStack((ItemStack)null);
+               slotObject.putStack(null);
             } else {
                slotObject.onSlotChanged();
             }

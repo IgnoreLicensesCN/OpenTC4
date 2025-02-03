@@ -7,7 +7,7 @@ import net.minecraft.entity.ai.EntityAIArrowAttack;
 
 public class AILongRangeAttack extends EntityAIArrowAttack {
    private final EntityLiving wielder;
-   double minDistance = (double)0.0F;
+   double minDistance = 0.0F;
 
    public AILongRangeAttack(IRangedAttackMob par1IRangedAttackMob, double min, double p_i1650_2_, int p_i1650_4_, int p_i1650_5_, float p_i1650_6_) {
       super(par1IRangedAttackMob, p_i1650_2_, p_i1650_4_, p_i1650_5_, p_i1650_6_);
@@ -24,7 +24,7 @@ public class AILongRangeAttack extends EntityAIArrowAttack {
          }
 
          if (var1.isDead) {
-            this.wielder.setAttackTarget((EntityLivingBase)null);
+            this.wielder.setAttackTarget(null);
             return false;
          }
 

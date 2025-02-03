@@ -46,7 +46,7 @@ public class ItemCompassStone extends Item {
          this.t = null;
 
          for(WorldCoordinates wc : sinisterNodes.keySet()) {
-            if ((Long)sinisterNodes.get(wc) < System.currentTimeMillis() - 10000L) {
+            if (sinisterNodes.get(wc) < System.currentTimeMillis() - 10000L) {
                del.add(wc);
             }
 

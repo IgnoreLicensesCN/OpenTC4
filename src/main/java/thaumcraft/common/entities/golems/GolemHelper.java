@@ -26,7 +26,7 @@ import thaumcraft.common.tiles.TileJarFillable;
 import thaumcraft.common.tiles.TileJarFillableVoid;
 
 public class GolemHelper {
-   public static final double ADJACENT_RANGE = (double)4.0F;
+   public static final double ADJACENT_RANGE = 4.0F;
    static HashMap<String,TileJarFillable> jarlist = new HashMap<>();
    private static ArrayList<Integer> reggedLiquids = null;
    static ArrayList<SortingItemTimeout> itemTimeout = new ArrayList<>();
@@ -170,7 +170,7 @@ public class GolemHelper {
                   break;
                }
             }
-         } catch (Exception var9) {
+         } catch (Exception ignored) {
          }
       }
 
@@ -220,14 +220,14 @@ public class GolemHelper {
                         ISidedInventory isidedinventory = (ISidedInventory)tile;
                         int[] aint = isidedinventory.getAccessibleSlotsFromSide(facing.ordinal());
 
-                        for(int j = 0; j < aint.length; ++j) {
-                           if (InventoryUtils.areItemStacksEqual(((ISidedInventory)tile).getStackInSlot(aint[j]), toCheck, golem.checkOreDict(), golem.ignoreDamage(), golem.ignoreNBT())) {
-                              foundAmount += ((ISidedInventory)tile).getStackInSlot(aint[j]).stackSize;
-                              if (foundAmount >= golem.inventory.getAmountNeededSmart(((ISidedInventory)tile).getStackInSlot(aint[j]), golem.getUpgradeAmount(5) > 0)) {
-                                 continue label105;
-                              }
-                           }
-                        }
+                         for (int i : aint) {
+                             if (InventoryUtils.areItemStacksEqual(((ISidedInventory) tile).getStackInSlot(i), toCheck, golem.checkOreDict(), golem.ignoreDamage(), golem.ignoreNBT())) {
+                                 foundAmount += ((ISidedInventory) tile).getStackInSlot(i).stackSize;
+                                 if (foundAmount >= golem.inventory.getAmountNeededSmart(((ISidedInventory) tile).getStackInSlot(i), golem.getUpgradeAmount(5) > 0)) {
+                                     continue label105;
+                                 }
+                             }
+                         }
                      } else {
                         if (!(tile instanceof IInventory)) {
                            break;
@@ -274,18 +274,18 @@ public class GolemHelper {
 
       for(Marker marker : golem.getMarkers()) {
          TileEntity te = world.getTileEntity(marker.x, marker.y, marker.z);
-         if (marker.dim == world.provider.dimensionId && te != null && te instanceof TileJarFillable) {
-            if (te.getDistanceFrom((double)golem.getHomePosition().posX, (double)golem.getHomePosition().posY, (double)golem.getHomePosition().posZ) <= (double)dmod) {
-               jars.add((TileJarFillable)te);
+         if (marker.dim == world.provider.dimensionId && te instanceof TileJarFillable) {
+            if (te.getDistanceFrom(golem.getHomePosition().posX, golem.getHomePosition().posY, golem.getHomePosition().posZ) <= (double)dmod) {
+               jars.add(te);
             }
-         } else if (marker.dim == world.provider.dimensionId && te != null && te instanceof TileEssentiaReservoir) {
+         } else if (marker.dim == world.provider.dimensionId && te instanceof TileEssentiaReservoir) {
             TileEssentiaReservoir res = (TileEssentiaReservoir)te;
-            if (res.getSuctionAmount(res.facing) > 0 && (res.getSuctionType(res.facing) == null || res.getSuctionType(res.facing) == golem.essentia) && te.getDistanceFrom((double)golem.getHomePosition().posX, (double)golem.getHomePosition().posY, (double)golem.getHomePosition().posZ) <= (double)dmod) {
+            if (res.getSuctionAmount(res.facing) > 0 && (res.getSuctionType(res.facing) == null || res.getSuctionType(res.facing) == golem.essentia) && te.getDistanceFrom(golem.getHomePosition().posX, golem.getHomePosition().posY, golem.getHomePosition().posZ) <= (double)dmod) {
                others.add(te);
             }
-         } else if (marker.dim == world.provider.dimensionId && te != null && te instanceof IEssentiaTransport) {
+         } else if (marker.dim == world.provider.dimensionId && te instanceof IEssentiaTransport) {
             IEssentiaTransport trans = (IEssentiaTransport)te;
-            if (golem.essentia != null && golem.essentiaAmount > 0 && trans.canInputFrom(ForgeDirection.getOrientation(marker.side)) && trans.getSuctionAmount(ForgeDirection.getOrientation(marker.side)) > 0 && (trans.getSuctionType(ForgeDirection.getOrientation(marker.side)) == null || trans.getSuctionType(ForgeDirection.getOrientation(marker.side)) == golem.essentia) && te.getDistanceFrom((double)golem.getHomePosition().posX, (double)golem.getHomePosition().posY, (double)golem.getHomePosition().posZ) <= (double)dmod) {
+            if (golem.essentia != null && golem.essentiaAmount > 0 && trans.canInputFrom(ForgeDirection.getOrientation(marker.side)) && trans.getSuctionAmount(ForgeDirection.getOrientation(marker.side)) > 0 && (trans.getSuctionType(ForgeDirection.getOrientation(marker.side)) == null || trans.getSuctionType(ForgeDirection.getOrientation(marker.side)) == golem.essentia) && te.getDistanceFrom(golem.getHomePosition().posX, golem.getHomePosition().posY, golem.getHomePosition().posZ) <= (double)dmod) {
                others.add(te);
             }
          }
@@ -302,12 +302,10 @@ public class GolemHelper {
          return null;
       }
 
-      jars = new ArrayList<>();
-
-       jars.addAll(others);
+       jars = new ArrayList<>(others);
 
       for(TileJarFillable jar : jarlist.values()) {
-         if (jar.aspect != null && jar.amount > 0 && jar.amount < jar.maxAmount && jar.aspectFilter != null && golem.essentia != null && golem.essentiaAmount > 0 && jar.aspect.equals(golem.essentia) && jar.doesContainerAccept(golem.essentia)) {
+         if (jar.aspect != null && jar.amount > 0 && jar.amount < jar.maxAmount && jar.aspectFilter != null && golem.essentiaAmount > 0 && jar.aspect.equals(golem.essentia) && jar.doesContainerAccept(golem.essentia)) {
             jars.add(jar);
          }
       }
@@ -322,7 +320,7 @@ public class GolemHelper {
 
       if (jars.size() == 0) {
          for(TileJarFillable jar : jarlist.values()) {
-            if (jar.aspect != null && jar.amount >= jar.maxAmount && jar instanceof TileJarFillableVoid && jar.aspectFilter != null && golem.essentia != null && golem.essentiaAmount > 0 && jar.aspect.equals(golem.essentia) && jar.doesContainerAccept(golem.essentia)) {
+            if (jar.aspect != null && jar.amount >= jar.maxAmount && jar instanceof TileJarFillableVoid && jar.aspectFilter != null && golem.essentiaAmount > 0 && jar.aspect.equals(golem.essentia) && jar.doesContainerAccept(golem.essentia)) {
                jars.add(jar);
             }
          }
@@ -330,7 +328,7 @@ public class GolemHelper {
 
       if (jars.size() == 0) {
          for(TileJarFillable jar : jarlist.values()) {
-            if (jar.aspect != null && jar.amount > 0 && jar.amount < jar.maxAmount && jar.aspectFilter == null && golem.essentia != null && golem.essentiaAmount > 0 && jar.aspect.equals(golem.essentia) && jar.doesContainerAccept(golem.essentia)) {
+            if (jar.aspect != null && jar.amount > 0 && jar.amount < jar.maxAmount && jar.aspectFilter == null && golem.essentiaAmount > 0 && jar.aspect.equals(golem.essentia) && jar.doesContainerAccept(golem.essentia)) {
                jars.add(jar);
             }
          }
@@ -346,7 +344,7 @@ public class GolemHelper {
 
       if (jars.size() == 0) {
          for(TileJarFillable jar : jarlist.values()) {
-            if (jar.aspect != null && jar instanceof TileJarFillableVoid && jar.aspectFilter == null && golem.essentia != null && golem.essentiaAmount > 0 && jar.aspect.equals(golem.essentia) && jar.doesContainerAccept(golem.essentia)) {
+            if (jar.aspect != null && jar instanceof TileJarFillableVoid && jar.aspectFilter == null && golem.essentiaAmount > 0 && jar.aspect.equals(golem.essentia) && jar.doesContainerAccept(golem.essentia)) {
                jars.add(jar);
             }
          }
@@ -363,9 +361,9 @@ public class GolemHelper {
       double dist = Double.MAX_VALUE;
 
       for(TileEntity jar : jars) {
-         double d = jar.getDistanceFrom((double)golem.getHomePosition().posX, (double)golem.getHomePosition().posY, (double)golem.getHomePosition().posZ);
+         double d = jar.getDistanceFrom(golem.getHomePosition().posX, golem.getHomePosition().posY, golem.getHomePosition().posZ);
          if (jar instanceof TileJarFillableVoid) {
-            d += (double)dmod;
+            d += dmod;
          }
 
          if (d < dist) {
@@ -388,7 +386,7 @@ public class GolemHelper {
          int zz = jar.zCoord + fd.offsetZ;
          if (!jarlist.containsKey(xx + ":" + yy + ":" + zz)) {
             TileEntity te = world.getTileEntity(xx, yy, zz);
-            if (te != null && te instanceof TileJarFillable) {
+            if (te instanceof TileJarFillable) {
                jarlist.put(te.xCoord + ":" + te.yCoord + ":" + te.zCoord, (TileJarFillable)te);
                getConnectedJars((TileJarFillable)te);
             }
@@ -415,7 +413,7 @@ public class GolemHelper {
       int cY = home.posY - facing.offsetY;
       int cZ = home.posZ - facing.offsetZ;
       TileEntity tile = golem.worldObj.getTileEntity(cX, cY, cZ);
-      if (tile != null && tile instanceof IFluidHandler) {
+      if (tile instanceof IFluidHandler) {
          IFluidHandler fluidhandler = (IFluidHandler)tile;
          Iterator<Integer> i$ = getReggedLiquids().iterator();
 
@@ -426,7 +424,7 @@ public class GolemHelper {
                   return out;
                }
 
-               id = (Integer)i$.next();
+               id = i$.next();
                if ((golem.fluidCarried == null || golem.fluidCarried.amount <= 0 || golem.fluidCarried.getFluidID() == id) && fluidhandler.canFill(facing, FluidRegistry.getFluid(id))) {
                   FluidStack fs = new FluidStack(FluidRegistry.getFluid(id), Integer.MAX_VALUE);
                   if (!golem.inventory.hasSomething()) {
@@ -496,7 +494,7 @@ public class GolemHelper {
          }
       }
 
-      return v != null ? Vec3.createVectorHelper((double)v.posX, (double)v.posY, (double)v.posZ) : null;
+      return v != null ? Vec3.createVectorHelper(v.posX, v.posY, v.posZ) : null;
    }
 
    public static ArrayList<Marker> getMarkedFluidHandlersAdjacentToGolem(FluidStack ls, World world, EntityGolemBase golem) {
@@ -504,7 +502,7 @@ public class GolemHelper {
 
       for(Marker marker : golem.getMarkers()) {
          TileEntity te = world.getTileEntity(marker.x, marker.y, marker.z);
-         if (marker.dim == world.provider.dimensionId && te != null && te instanceof IFluidHandler && golem.getDistanceSq((double)te.xCoord + (double)0.5F, (double)te.yCoord + (double)0.5F, (double)te.zCoord + (double)0.5F) < (double)4.0F) {
+         if (marker.dim == world.provider.dimensionId && te instanceof IFluidHandler && golem.getDistanceSq((double) te.xCoord + (double) 0.5F, (double) te.yCoord + (double) 0.5F, (double) te.zCoord + (double) 0.5F) < (double) 4.0F) {
             FluidStack fs = ((IFluidHandler)te).drain(ForgeDirection.getOrientation(marker.side), new FluidStack(ls.getFluid(), 1), false);
             if (fs != null && fs.amount > 0) {
                results.add(marker);
@@ -520,7 +518,7 @@ public class GolemHelper {
 
       for(Marker marker : golem.getMarkers()) {
          TileEntity te = world.getTileEntity(marker.x, marker.y, marker.z);
-         if (marker.dim == world.provider.dimensionId && te != null && te instanceof IFluidHandler) {
+         if (marker.dim == world.provider.dimensionId && te instanceof IFluidHandler) {
             FluidStack fs = ((IFluidHandler)te).drain(ForgeDirection.getOrientation(marker.side), new FluidStack(ls.getFluid(), 1), false);
             if (fs != null && fs.amount > 0) {
                results.add((IFluidHandler)te);
@@ -694,7 +692,7 @@ public class GolemHelper {
       SortingItemTimeout tos = new SortingItemTimeout(golem.getEntityId(), stack, 0L);
       if (itemTimeout.contains(tos)) {
          int q = itemTimeout.indexOf(tos);
-         SortingItemTimeout tos2 = (SortingItemTimeout)itemTimeout.get(q);
+         SortingItemTimeout tos2 = itemTimeout.get(q);
          if (System.currentTimeMillis() < tos2.time) {
             return true;
          }
@@ -744,24 +742,24 @@ public class GolemHelper {
          ISidedInventory isidedinventory = (ISidedInventory)inventory;
          int[] aint = isidedinventory.getAccessibleSlotsFromSide(side);
 
-         for(int j = 0; j < aint.length; ++j) {
-            if (stack1 == null && inventory.getStackInSlot(aint[j]) != null) {
-               if (isOnTimeOut(golem, inventory.getStackInSlot(aint[j]))) {
-                  continue;
-               }
+          for (int i : aint) {
+              if (stack1 == null && inventory.getStackInSlot(i) != null) {
+                  if (isOnTimeOut(golem, inventory.getStackInSlot(i))) {
+                      continue;
+                  }
 
-               stack1 = inventory.getStackInSlot(aint[j]).copy();
-               stack1.stackSize = golem.getCarrySpace();
-            }
+                  stack1 = inventory.getStackInSlot(i).copy();
+                  stack1.stackSize = golem.getCarrySpace();
+              }
 
-            if (stack1 != null) {
-               stack1 = InventoryUtils.attemptExtraction(inventory, stack1, aint[j], side, false, false, false, doit);
-            }
+              if (stack1 != null) {
+                  stack1 = InventoryUtils.attemptExtraction(inventory, stack1, i, side, false, false, false, doit);
+              }
 
-            if (stack1 != null) {
-               break;
-            }
-         }
+              if (stack1 != null) {
+                  break;
+              }
+          }
       } else {
          int k = inventory.getSizeInventory();
 
@@ -803,7 +801,7 @@ public class GolemHelper {
       int cY = home.posY - facing.offsetY;
       int cZ = home.posZ - facing.offsetZ;
       TileEntity tile = golem.worldObj.getTileEntity(cX, cY, cZ);
-      if (tile != null && tile instanceof IInventory) {
+      if (tile instanceof IInventory) {
          int[] aint = null;
          ArrayList<ItemStack> out = new ArrayList<>();
          IInventory inv = (IInventory)tile;
@@ -817,11 +815,11 @@ public class GolemHelper {
          }
 
          if (aint != null && aint.length > 0) {
-            for(int j = 0; j < aint.length; ++j) {
-               if (inv.getStackInSlot(aint[j]) != null) {
-                  out.add(inv.getStackInSlot(aint[j]).copy());
-               }
-            }
+             for (int i : aint) {
+                 if (inv.getStackInSlot(i) != null) {
+                     out.add(inv.getStackInSlot(i).copy());
+                 }
+             }
          }
 
          return out;

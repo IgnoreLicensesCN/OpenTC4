@@ -19,7 +19,7 @@ public class FXScorch extends EntityFX {
    public boolean lance = false;
 
    public FXScorch(World world, double x, double y, double z, Vec3 v, float spread, boolean lance) {
-      super(world, x, y, z, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, x, y, z, 0.0F, 0.0F, 0.0F);
       this.posX = x;
       this.posY = y;
       this.posZ = z;
@@ -28,9 +28,9 @@ public class FXScorch extends EntityFX {
       this.py = y + v.yCoord * (double)100.0F;
       this.pz = z + v.zCoord * (double)100.0F;
       if (!lance) {
-         this.px += (double)((this.rand.nextFloat() - this.rand.nextFloat()) * spread);
-         this.py += (double)((this.rand.nextFloat() - this.rand.nextFloat()) * spread);
-         this.pz += (double)((this.rand.nextFloat() - this.rand.nextFloat()) * spread);
+         this.px += (this.rand.nextFloat() - this.rand.nextFloat()) * spread;
+         this.py += (this.rand.nextFloat() - this.rand.nextFloat()) * spread;
+         this.pz += (this.rand.nextFloat() - this.rand.nextFloat()) * spread;
       } else {
          this.px += (double)(this.rand.nextFloat() - this.rand.nextFloat()) * (double)0.5F;
          this.py += (double)(this.rand.nextFloat() - this.rand.nextFloat()) * (double)0.5F;
@@ -64,26 +64,26 @@ public class FXScorch extends EntityFX {
       double dx = this.px - this.posX;
       double dy = this.py - this.posY;
       double dz = this.pz - this.posZ;
-      double distance = (double)MathHelper.sqrt_double(dx * dx + dy * dy + dz * dz);
+      double distance = MathHelper.sqrt_double(dx * dx + dy * dy + dz * dz);
       this.motionX = dx / (distance * (double)1.25F);
       this.motionY = dy / (distance * (double)1.25F);
       this.motionZ = dz / (distance * (double)1.25F);
-      this.motionX *= (double)((float)(this.particleMaxAge - this.particleAge) / (float)this.particleMaxAge);
-      this.motionY *= (double)((float)(this.particleMaxAge - this.particleAge) / (float)this.particleMaxAge);
-      this.motionZ *= (double)((float)(this.particleMaxAge - this.particleAge) / (float)this.particleMaxAge);
+      this.motionX *= (float)(this.particleMaxAge - this.particleAge) / (float)this.particleMaxAge;
+      this.motionY *= (float)(this.particleMaxAge - this.particleAge) / (float)this.particleMaxAge;
+      this.motionZ *= (float)(this.particleMaxAge - this.particleAge) / (float)this.particleMaxAge;
       this.prevPosX = this.posX;
       this.prevPosY = this.posY;
       this.prevPosZ = this.posZ;
-      this.motionX += (double)(this.rand.nextFloat() * 0.07F - 0.035F);
-      this.motionY += (double)(this.rand.nextFloat() * 0.07F - 0.035F);
-      this.motionZ += (double)(this.rand.nextFloat() * 0.07F - 0.035F);
+      this.motionX += this.rand.nextFloat() * 0.07F - 0.035F;
+      this.motionY += this.rand.nextFloat() * 0.07F - 0.035F;
+      this.motionZ += this.rand.nextFloat() * 0.07F - 0.035F;
       int var7 = MathHelper.floor_double(this.posX);
       int var8 = MathHelper.floor_double(this.posY);
       int var9 = MathHelper.floor_double(this.posZ);
       if (this.particleAge > 1 && this.worldObj.getBlock(var7, var8, var9).isOpaqueCube()) {
-         this.motionX = (double)0.0F;
-         this.motionY = (double)0.0F;
-         this.motionZ = (double)0.0F;
+         this.motionX = 0.0F;
+         this.motionY = 0.0F;
+         this.motionZ = 0.0F;
          this.particleAge += 10;
       }
 

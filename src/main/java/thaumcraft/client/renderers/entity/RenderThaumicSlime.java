@@ -44,7 +44,7 @@ public class RenderThaumicSlime extends RenderLiving {
    }
 
    protected void scaleSlime(EntityThaumicSlime par1EntitySlime, float par2) {
-      float f1 = (float)Math.sqrt((double)par1EntitySlime.getSlimeSize());
+      float f1 = (float)Math.sqrt(par1EntitySlime.getSlimeSize());
       float f2 = (par1EntitySlime.prevSquishFactor + (par1EntitySlime.squishFactor - par1EntitySlime.prevSquishFactor) * par2) / (f1 * 0.25F + 1.0F);
       float f3 = 1.0F / (f2 + 1.0F);
       GL11.glScalef(f3 * f1 + 0.1F, 1.0F / f3 * f1 + 0.1F, f3 * f1 + 0.1F);

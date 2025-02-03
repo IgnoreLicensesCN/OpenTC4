@@ -36,7 +36,7 @@ public abstract class AIDoorInteract extends EntityAIBase {
                this.entityPosX = var4.xCoord;
                this.entityPosY = var4.yCoord;
                this.entityPosZ = var4.zCoord;
-               if (this.theEntity.getDistanceSq((double)this.entityPosX, this.theEntity.posY, (double)this.entityPosZ) <= (double)2.25F) {
+               if (this.theEntity.getDistanceSq(this.entityPosX, this.theEntity.posY, this.entityPosZ) <= (double)2.25F) {
                   this.targetDoor = this.findUsableDoor(this.entityPosX, this.entityPosY, this.entityPosZ);
                   if (this.targetDoor != null && this.targetDoor != Blocks.air) {
                      this.count = 200;

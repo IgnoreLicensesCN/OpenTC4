@@ -24,7 +24,7 @@ public class TileEtherealBloom extends TileEntity {
       if (!this.worldObj.isRemote && this.counter % 20 == 0) {
          int x = this.worldObj.rand.nextInt(8) - this.worldObj.rand.nextInt(8);
          int z = this.worldObj.rand.nextInt(8) - this.worldObj.rand.nextInt(8);
-         if ((this.worldObj.getBiomeGenForCoords(x + this.xCoord, z + this.zCoord).biomeID == Config.biomeTaintID || this.worldObj.getBiomeGenForCoords(x + this.xCoord, z + this.zCoord).biomeID == Config.biomeEerieID || this.worldObj.getBiomeGenForCoords(x + this.xCoord, z + this.zCoord).biomeID == Config.biomeMagicalForestID) && this.getDistanceFrom((double)(x + this.xCoord) + (double)0.5F, (double)this.yCoord, (double)(z + this.zCoord) + (double)0.5F) <= (double)81.0F) {
+         if ((this.worldObj.getBiomeGenForCoords(x + this.xCoord, z + this.zCoord).biomeID == Config.biomeTaintID || this.worldObj.getBiomeGenForCoords(x + this.xCoord, z + this.zCoord).biomeID == Config.biomeEerieID || this.worldObj.getBiomeGenForCoords(x + this.xCoord, z + this.zCoord).biomeID == Config.biomeMagicalForestID) && this.getDistanceFrom((double)(x + this.xCoord) + (double)0.5F, this.yCoord, (double)(z + this.zCoord) + (double)0.5F) <= (double)81.0F) {
             BiomeGenBase[] biomesForGeneration = null;
             biomesForGeneration = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(biomesForGeneration, x + this.xCoord, z + this.zCoord, 1, 1);
             if (biomesForGeneration != null && biomesForGeneration[0] != null) {

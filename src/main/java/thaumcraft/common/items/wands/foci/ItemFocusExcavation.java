@@ -100,25 +100,15 @@ public class ItemFocusExcavation extends ItemFocusBasic {
             pp = "S" + p.getCommandSenderName();
          }
 
-         if (soundDelay.get(pp) == null) {
-            soundDelay.put(pp, 0L);
-         }
+          soundDelay.putIfAbsent(pp, 0L);
 
-         if (breakcount.get(pp) == null) {
-            breakcount.put(pp, 0.0F);
-         }
+          breakcount.putIfAbsent(pp, 0.0F);
 
-         if (lastX.get(pp) == null) {
-            lastX.put(pp, 0);
-         }
+          lastX.putIfAbsent(pp, 0);
 
-         if (lastY.get(pp) == null) {
-            lastY.put(pp, 0);
-         }
+          lastY.putIfAbsent(pp, 0);
 
-         if (lastZ.get(pp) == null) {
-            lastZ.put(pp, 0);
-         }
+          lastZ.putIfAbsent(pp, 0);
 
          MovingObjectPosition mop = BlockUtils.getTargetBlock(p.worldObj, p, false);
          Vec3 v = p.getLookVec();
@@ -263,27 +253,17 @@ public class ItemFocusExcavation extends ItemFocusBasic {
          pp = "S" + p.getCommandSenderName();
       }
 
-      if (soundDelay.get(pp) == null) {
-         soundDelay.put(pp, 0L);
-      }
+       soundDelay.putIfAbsent(pp, 0L);
 
-      if (breakcount.get(pp) == null) {
-         breakcount.put(pp, 0.0F);
-      }
+       breakcount.putIfAbsent(pp, 0.0F);
 
-      if (lastX.get(pp) == null) {
-         lastX.put(pp, 0);
-      }
+       lastX.putIfAbsent(pp, 0);
 
-      if (lastY.get(pp) == null) {
-         lastY.put(pp, 0);
-      }
+       lastY.putIfAbsent(pp, 0);
 
-      if (lastZ.get(pp) == null) {
-         lastZ.put(pp, 0);
-      }
+       lastZ.putIfAbsent(pp, 0);
 
-      beam.put(pp, (Object)null);
+      beam.put(pp, null);
       lastX.put(pp, Integer.MAX_VALUE);
       lastY.put(pp, Integer.MAX_VALUE);
       lastZ.put(pp, Integer.MAX_VALUE);

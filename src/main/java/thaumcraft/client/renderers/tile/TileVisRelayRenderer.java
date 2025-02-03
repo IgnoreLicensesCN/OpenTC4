@@ -40,8 +40,8 @@ public class TileVisRelayRenderer extends TileEntitySpecialRenderer {
       GL11.glPushMatrix();
       UtilsFX.bindTexture("textures/models/vis_relay.png");
       GL11.glPushMatrix();
-      GL11.glScaled((double)0.75F, (double)0.75F, (double)0.75F);
-      GL11.glTranslated((double)0.0F, (double)0.0F, -0.16);
+      GL11.glScaled(0.75F, 0.75F, 0.75F);
+      GL11.glTranslated(0.0F, 0.0F, -0.16);
       this.model.renderPart("RingBase");
       GL11.glPopMatrix();
       this.model.renderPart("RingFloat");

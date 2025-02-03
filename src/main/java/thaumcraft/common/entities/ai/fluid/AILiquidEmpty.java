@@ -27,7 +27,7 @@ public class AILiquidEmpty extends EntityAIBase {
 
    public boolean shouldExecute() {
       ChunkCoordinates home = this.theGolem.getHomePosition();
-      if (this.theGolem.getNavigator().noPath() && this.theGolem.fluidCarried != null && this.theGolem.fluidCarried.amount != 0 && !(this.theGolem.getDistanceSq((double)((float)home.posX + 0.5F), (double)((float)home.posY + 0.5F), (double)((float)home.posZ + 0.5F)) > (double)5.0F)) {
+      if (this.theGolem.getNavigator().noPath() && this.theGolem.fluidCarried != null && this.theGolem.fluidCarried.amount != 0 && !(this.theGolem.getDistanceSq((float)home.posX + 0.5F, (float)home.posY + 0.5F, (float)home.posZ + 0.5F) > (double)5.0F)) {
          ArrayList<FluidStack> fluids = GolemHelper.getMissingLiquids(this.theGolem);
           if (fluids != null) {
               for (FluidStack fluid : fluids) {
@@ -52,7 +52,7 @@ public class AILiquidEmpty extends EntityAIBase {
       int cY = home.posY - facing.offsetY;
       int cZ = home.posZ - facing.offsetZ;
       TileEntity tile = this.theWorld.getTileEntity(cX, cY, cZ);
-      if (tile != null && tile instanceof IFluidHandler) {
+      if (tile instanceof IFluidHandler) {
          IFluidHandler fh = (IFluidHandler)tile;
          int amt = fh.fill(ForgeDirection.getOrientation(this.theGolem.homeFacing), this.theGolem.fluidCarried, true);
          FluidStack var10000 = this.theGolem.fluidCarried;

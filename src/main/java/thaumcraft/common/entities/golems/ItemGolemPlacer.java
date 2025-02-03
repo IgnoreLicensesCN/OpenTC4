@@ -2,6 +2,8 @@ package thaumcraft.common.entities.golems;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Arrays;
 import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -86,15 +88,15 @@ public class ItemGolemPlacer extends Item {
 
          if (stack.stackTagCompound.hasKey("upgrades")) {
             byte[] ba = stack.stackTagCompound.getByteArray("upgrades");
-            String text = "§9";
+            StringBuilder text = new StringBuilder("§9");
 
             for(byte b : ba) {
                if (b > -1) {
-                  text = text + StatCollector.translateToLocal("item.ItemGolemUpgrade." + b + ".name") + " ";
+                  text.append(StatCollector.translateToLocal("item.ItemGolemUpgrade." + b + ".name")).append(" ");
                }
             }
 
-            list.add(text);
+            list.add(text.toString());
          }
 
          if (stack.stackTagCompound.hasKey("markers")) {
@@ -153,9 +155,9 @@ public class ItemGolemPlacer extends Item {
          par4 += Facing.offsetsXForSide[side];
          par5 += Facing.offsetsYForSide[side];
          par6 += Facing.offsetsZForSide[side];
-         double var12 = (double)0.0F;
+         double var12 = 0.0F;
          if (side == 1 && var11 == Blocks.fence || var11 == Blocks.nether_brick_fence) {
-            var12 = (double)0.5F;
+            var12 = 0.5F;
          }
 
          if (this.spawnCreature(world, (double)par4 + (double)0.5F, (double)par5 + var12, (double)par6 + (double)0.5F, side, stack, player) && !player.capabilities.isCreativeMode) {
@@ -177,12 +179,9 @@ public class ItemGolemPlacer extends Item {
    }
 
    public boolean spawnCreature(World par0World, double par2, double par4, double par6, int side, ItemStack stack, EntityPlayer player) {
-      boolean adv = false;
-      if (stack.hasTagCompound() && stack.stackTagCompound.hasKey("advanced")) {
-         adv = true;
-      }
+      boolean adv = stack.hasTagCompound() && stack.stackTagCompound.hasKey("advanced");
 
-      EntityGolemBase golem = new EntityGolemBase(par0World, EnumGolemType.getType(stack.getItemDamage()), adv);
+       EntityGolemBase golem = new EntityGolemBase(par0World, EnumGolemType.getType(stack.getItemDamage()), adv);
       if (golem != null) {
          golem.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0F, 0.0F);
          golem.playLivingSound();
@@ -197,9 +196,7 @@ public class ItemGolemPlacer extends Item {
             if (ul != golem.upgrades.length) {
                byte[] tt = new byte[ul];
 
-               for(int a = 0; a < ul; ++a) {
-                  tt[a] = -1;
-               }
+                Arrays.fill(tt, (byte) -1);
 
                for(int a = 0; a < golem.upgrades.length; ++a) {
                   if (a < ul) {

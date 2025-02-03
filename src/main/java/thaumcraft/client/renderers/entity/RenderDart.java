@@ -44,27 +44,27 @@ public class RenderDart extends Render {
       GL11.glTranslatef(-4.0F, 0.0F, 0.0F);
       GL11.glNormal3f(var20, 0.0F, 0.0F);
       var10.startDrawingQuads();
-      var10.addVertexWithUV((double)-7.0F, (double)-2.0F, (double)-2.0F, (double)var16, (double)var18);
-      var10.addVertexWithUV((double)-7.0F, (double)-2.0F, (double)2.0F, (double)var17, (double)var18);
-      var10.addVertexWithUV((double)-7.0F, (double)2.0F, (double)2.0F, (double)var17, (double)var19);
-      var10.addVertexWithUV((double)-7.0F, (double)2.0F, (double)-2.0F, (double)var16, (double)var19);
+      var10.addVertexWithUV(-7.0F, -2.0F, -2.0F, var16, var18);
+      var10.addVertexWithUV(-7.0F, -2.0F, 2.0F, var17, var18);
+      var10.addVertexWithUV(-7.0F, 2.0F, 2.0F, var17, var19);
+      var10.addVertexWithUV(-7.0F, 2.0F, -2.0F, var16, var19);
       var10.draw();
       GL11.glNormal3f(-var20, 0.0F, 0.0F);
       var10.startDrawingQuads();
-      var10.addVertexWithUV((double)-7.0F, (double)2.0F, (double)-2.0F, (double)var16, (double)var18);
-      var10.addVertexWithUV((double)-7.0F, (double)2.0F, (double)2.0F, (double)var17, (double)var18);
-      var10.addVertexWithUV((double)-7.0F, (double)-2.0F, (double)2.0F, (double)var17, (double)var19);
-      var10.addVertexWithUV((double)-7.0F, (double)-2.0F, (double)-2.0F, (double)var16, (double)var19);
+      var10.addVertexWithUV(-7.0F, 2.0F, -2.0F, var16, var18);
+      var10.addVertexWithUV(-7.0F, 2.0F, 2.0F, var17, var18);
+      var10.addVertexWithUV(-7.0F, -2.0F, 2.0F, var17, var19);
+      var10.addVertexWithUV(-7.0F, -2.0F, -2.0F, var16, var19);
       var10.draw();
 
       for(int var23 = 0; var23 < 4; ++var23) {
          GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
          GL11.glNormal3f(0.0F, 0.0F, var20);
          var10.startDrawingQuads();
-         var10.addVertexWithUV((double)-8.0F, (double)-2.0F, (double)0.0F, (double)var12, (double)var14);
-         var10.addVertexWithUV((double)8.0F, (double)-2.0F, (double)0.0F, (double)var13, (double)var14);
-         var10.addVertexWithUV((double)8.0F, (double)2.0F, (double)0.0F, (double)var13, (double)var15);
-         var10.addVertexWithUV((double)-8.0F, (double)2.0F, (double)0.0F, (double)var12, (double)var15);
+         var10.addVertexWithUV(-8.0F, -2.0F, 0.0F, var12, var14);
+         var10.addVertexWithUV(8.0F, -2.0F, 0.0F, var13, var14);
+         var10.addVertexWithUV(8.0F, 2.0F, 0.0F, var13, var15);
+         var10.addVertexWithUV(-8.0F, 2.0F, 0.0F, var12, var15);
          var10.draw();
       }
 

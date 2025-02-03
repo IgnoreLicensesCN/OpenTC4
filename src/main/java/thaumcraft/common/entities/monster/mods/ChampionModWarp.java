@@ -22,7 +22,7 @@ public class ChampionModWarp implements IChampionModifierEffect {
          float w = boss.worldObj.rand.nextFloat() * boss.width;
          float d = boss.worldObj.rand.nextFloat() * boss.width;
          float h = boss.worldObj.rand.nextFloat() * boss.height;
-         Thaumcraft.proxy.drawGenericParticles(boss.worldObj, boss.boundingBox.minX + (double)w, boss.boundingBox.minY + (double)h, boss.boundingBox.minZ + (double)d, (double)0.0F, (double)0.0F, (double)0.0F, 0.8F + boss.worldObj.rand.nextFloat() * 0.2F, 0.0F, 0.9F + boss.worldObj.rand.nextFloat() * 0.1F, 0.7F, true, 72, 8, 1, 10 + boss.worldObj.rand.nextInt(4), 0, 0.6F + boss.worldObj.rand.nextFloat() * 0.4F);
+         Thaumcraft.proxy.drawGenericParticles(boss.worldObj, boss.boundingBox.minX + (double)w, boss.boundingBox.minY + (double)h, boss.boundingBox.minZ + (double)d, 0.0F, 0.0F, 0.0F, 0.8F + boss.worldObj.rand.nextFloat() * 0.2F, 0.0F, 0.9F + boss.worldObj.rand.nextFloat() * 0.1F, 0.7F, true, 72, 8, 1, 10 + boss.worldObj.rand.nextInt(4), 0, 0.6F + boss.worldObj.rand.nextFloat() * 0.4F);
       }
    }
 }

@@ -67,7 +67,7 @@ public class BlockEldritchPortal extends Block {
    }
 
    public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
-      return AxisAlignedBB.getBoundingBox((double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F);
+      return AxisAlignedBB.getBoundingBox(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
    }
 
    public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {

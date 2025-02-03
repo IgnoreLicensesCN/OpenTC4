@@ -14,7 +14,7 @@ import thaumcraft.api.crafting.InfusionEnchantmentRecipe;
 import thaumcraft.api.crafting.InfusionRecipe;
 
 public class ResearchPage {
-	public static enum PageType
+	public enum PageType
     {
         TEXT,
         TEXT_CONCEALED,

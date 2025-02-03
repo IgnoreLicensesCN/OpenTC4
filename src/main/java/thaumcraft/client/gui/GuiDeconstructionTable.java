@@ -36,7 +36,7 @@ public class GuiDeconstructionTable extends GuiContainer {
       }
 
       if (this.tableInventory.aspect != null) {
-         UtilsFX.drawTag(k + 64, l + 48, this.tableInventory.aspect, 0.0F, 0, (double)this.zLevel);
+         UtilsFX.drawTag(k + 64, l + 48, this.tableInventory.aspect, 0.0F, 0, this.zLevel);
          GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
          RenderHelper.disableStandardItemLighting();
          int var7 = par2 - (k + 64);

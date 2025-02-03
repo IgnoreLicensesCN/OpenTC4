@@ -57,7 +57,7 @@ public class GenCommon {
 
                if (world.getBlock(x, y, z) != ConfigBlocks.blockEldritchNothing) {
                   if (world.rand.nextInt(25) == 0) {
-                     boolean crab = cell.feature == 7 ? true : world.rand.nextInt(50) == 0;
+                     boolean crab = cell.feature == 7 || world.rand.nextInt(50) == 0;
                      if ((!crab || cell.feature != 0) && (!crab || cell.feature != 7)) {
                         decoCommon.add(new ChunkCoordinates(x, y, z));
                      } else {
@@ -227,7 +227,7 @@ public class GenCommon {
                block = ConfigBlocks.blockEldritch;
                meta = 4;
             } else if (world.rand.nextInt(25) == 0) {
-               boolean crab = cell.feature == 7 ? true : (cell.feature == 12 && world.rand.nextBoolean() ? true : world.rand.nextInt(25) == 0);
+               boolean crab = cell.feature == 7 || (cell.feature == 12 && world.rand.nextBoolean() || world.rand.nextInt(25) == 0);
                if (crab && cell.feature == 0 || crab && cell.feature == 7 || crab && cell.feature == 12) {
                   crabSpawner.add(new ChunkCoordinates(x, y, z));
                }
@@ -282,7 +282,7 @@ public class GenCommon {
          if (exp == 1 && !BlockUtils.isBlockAdjacentToAtleast(world, cc.posX, cc.posY, cc.posZ, ConfigBlocks.blockEldritch, 32767, 1)) {
             world.setBlock(cc.posX, cc.posY, cc.posZ, ConfigBlocks.blockEldritch, 9, 3);
             TileEntity te = world.getTileEntity(cc.posX, cc.posY, cc.posZ);
-            if (te != null && te instanceof TileEldritchCrabSpawner) {
+            if (te instanceof TileEldritchCrabSpawner) {
                for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
                   if (world.isAirBlock(cc.posX + dir.offsetX, cc.posY + dir.offsetY, cc.posZ + dir.offsetZ)) {
                      ((TileEldritchCrabSpawner)te).setFacing((byte)dir.ordinal());

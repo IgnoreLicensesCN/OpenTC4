@@ -33,10 +33,10 @@ public class TileArcaneWorkbenchRenderer extends TileEntitySpecialRenderer {
          GL11.glRotatef(20.0F, 0.0F, 0.0F, 1.0F);
          ItemStack is = table.getStackInSlot(10).copy();
          is.stackSize = 1;
-         EntityItem entityitem = new EntityItem(table.getWorldObj(), (double)0.0F, (double)0.0F, (double)0.0F, is);
+         EntityItem entityitem = new EntityItem(table.getWorldObj(), 0.0F, 0.0F, 0.0F, is);
          entityitem.hoverStart = 0.0F;
          RenderItem.renderInFrame = true;
-         RenderManager.instance.renderEntityWithPosYaw(entityitem, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F, 0.0F);
+         RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
          RenderItem.renderInFrame = false;
          GL11.glPopMatrix();
       }

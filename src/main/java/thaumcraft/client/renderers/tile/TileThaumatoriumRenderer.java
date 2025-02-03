@@ -55,7 +55,7 @@ public class TileThaumatoriumRenderer extends TileEntitySpecialRenderer {
       float ticks = (float)Minecraft.getMinecraft().renderViewEntity.ticksExisted + par8;
       if (tile != null && tile.getWorldObj() != null && tile.recipeHash != null && tile.recipeHash.size() > 0) {
          int stack = Minecraft.getMinecraft().renderViewEntity.ticksExisted / 40 % tile.recipeHash.size();
-         CrucibleRecipe recipe = ThaumcraftApi.getCrucibleRecipeFromHash((Integer)tile.recipeHash.get(stack));
+         CrucibleRecipe recipe = ThaumcraftApi.getCrucibleRecipeFromHash(tile.recipeHash.get(stack));
          if (recipe != null) {
             GL11.glPushMatrix();
             GL11.glTranslatef((float)par2 + 0.5F + (float)tile.facing.offsetX / 1.99F, (float)par4 + 1.325F, (float)par6 + 0.5F + (float)tile.facing.offsetZ / 1.99F);
@@ -72,13 +72,13 @@ public class TileThaumatoriumRenderer extends TileEntitySpecialRenderer {
                   GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
             }
 
-            GL11.glScaled((double)0.75F, (double)0.75F, (double)0.75F);
+            GL11.glScaled(0.75F, 0.75F, 0.75F);
             ItemStack is = recipe.getRecipeOutput().copy();
             is.stackSize = 1;
-            this.entityitem = new EntityItem(tile.getWorldObj(), (double)0.0F, (double)0.0F, (double)0.0F, is);
+            this.entityitem = new EntityItem(tile.getWorldObj(), 0.0F, 0.0F, 0.0F, is);
             this.entityitem.hoverStart = 0.0F;
             RenderItem.renderInFrame = true;
-            RenderManager.instance.renderEntityWithPosYaw(this.entityitem, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F, 0.0F);
+            RenderManager.instance.renderEntityWithPosYaw(this.entityitem, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
             RenderItem.renderInFrame = false;
             GL11.glPopMatrix();
          }

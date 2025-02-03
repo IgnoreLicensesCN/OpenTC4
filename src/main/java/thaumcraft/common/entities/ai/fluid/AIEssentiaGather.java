@@ -34,7 +34,7 @@ public class AIEssentiaGather extends EntityAIBase {
          int cX = home.posX - facing.offsetX;
          int cY = home.posY - facing.offsetY;
          int cZ = home.posZ - facing.offsetZ;
-         if (this.theGolem.getDistanceSq((double)((float)cX + 0.5F), (double)((float)cY + 0.5F), (double)((float)cZ + 0.5F)) > (double)6.0F) {
+         if (this.theGolem.getDistanceSq((float)cX + 0.5F, (float)cY + 0.5F, (float)cZ + 0.5F) > (double)6.0F) {
             return false;
          } else {
             this.start = 0;
@@ -53,7 +53,7 @@ public class AIEssentiaGather extends EntityAIBase {
 
                   for(int prevTot = -1; a >= 0; --a) {
                      te = this.theWorld.getTileEntity(cX, cY + a, cZ);
-                     if (te != null && te instanceof TileAlembic) {
+                     if (te instanceof TileAlembic) {
                         TileAlembic ta = (TileAlembic)te;
                         if ((this.theGolem.essentiaAmount == 0 || (this.theGolem.essentia == null || this.theGolem.essentia.equals(ta.aspect)) && this.theGolem.essentiaAmount < this.theGolem.getCarryLimit()) && ta.amount > prevTot) {
                            this.delay = System.currentTimeMillis() + 1000L;
@@ -63,9 +63,7 @@ public class AIEssentiaGather extends EntityAIBase {
                      }
                   }
 
-                  if (this.start >= 0) {
-                     return true;
-                  }
+                   return this.start >= 0;
                }
             }
 
@@ -83,7 +81,7 @@ public class AIEssentiaGather extends EntityAIBase {
       int cY = home.posY - facing.offsetY;
       int cZ = home.posZ - facing.offsetZ;
       TileEntity te = this.theWorld.getTileEntity(cX, cY + this.start, cZ);
-      if (te != null && te instanceof IEssentiaTransport) {
+      if (te instanceof IEssentiaTransport) {
          if (te instanceof TileAlembic || te instanceof TileJarFillable) {
             facing = ForgeDirection.UP;
          }

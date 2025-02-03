@@ -69,7 +69,7 @@ public class TileJarRenderer extends TileEntitySpecialRenderer {
                GL11.glRotatef(rot, 0.0F, 0.0F, 1.0F);
             }
 
-            UtilsFX.renderQuadCenteredFromTexture((String)"textures/models/label.png", 0.5F, 1.0F, 1.0F, 1.0F, -99, 771, 1.0F);
+            UtilsFX.renderQuadCenteredFromTexture("textures/models/label.png", 0.5F, 1.0F, 1.0F, 1.0F, -99, 771, 1.0F);
             GL11.glPopMatrix();
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, -0.4F, 0.316F);
@@ -109,7 +109,7 @@ public class TileJarRenderer extends TileEntitySpecialRenderer {
          GL11.glDisable(2896);
          float level = (float)te.amount / (float)te.maxAmount * 0.625F;
          Tessellator t = Tessellator.instance;
-         renderBlocks.setRenderBounds((double)0.25F, (double)0.0625F, (double)0.25F, (double)0.75F, (double)0.0625F + (double)level, (double)0.75F);
+         renderBlocks.setRenderBounds(0.25F, 0.0625F, 0.25F, 0.75F, (double)0.0625F + (double)level, 0.75F);
          t.startDrawingQuads();
          if (te.aspect != null) {
             t.setColorOpaque_I(te.aspect.getColor());
@@ -123,12 +123,12 @@ public class TileJarRenderer extends TileEntitySpecialRenderer {
          t.setBrightness(bright);
          IIcon icon = ((BlockJar)ConfigBlocks.blockJar).iconLiquid;
          this.field_147501_a.field_147553_e.bindTexture(TextureMap.locationBlocksTexture);
-         renderBlocks.renderFaceYNeg(ConfigBlocks.blockJar, (double)-0.5F, (double)0.0F, (double)-0.5F, icon);
-         renderBlocks.renderFaceYPos(ConfigBlocks.blockJar, (double)-0.5F, (double)0.0F, (double)-0.5F, icon);
-         renderBlocks.renderFaceZNeg(ConfigBlocks.blockJar, (double)-0.5F, (double)0.0F, (double)-0.5F, icon);
-         renderBlocks.renderFaceZPos(ConfigBlocks.blockJar, (double)-0.5F, (double)0.0F, (double)-0.5F, icon);
-         renderBlocks.renderFaceXNeg(ConfigBlocks.blockJar, (double)-0.5F, (double)0.0F, (double)-0.5F, icon);
-         renderBlocks.renderFaceXPos(ConfigBlocks.blockJar, (double)-0.5F, (double)0.0F, (double)-0.5F, icon);
+         renderBlocks.renderFaceYNeg(ConfigBlocks.blockJar, -0.5F, 0.0F, -0.5F, icon);
+         renderBlocks.renderFaceYPos(ConfigBlocks.blockJar, -0.5F, 0.0F, -0.5F, icon);
+         renderBlocks.renderFaceZNeg(ConfigBlocks.blockJar, -0.5F, 0.0F, -0.5F, icon);
+         renderBlocks.renderFaceZPos(ConfigBlocks.blockJar, -0.5F, 0.0F, -0.5F, icon);
+         renderBlocks.renderFaceXNeg(ConfigBlocks.blockJar, -0.5F, 0.0F, -0.5F, icon);
+         renderBlocks.renderFaceXPos(ConfigBlocks.blockJar, -0.5F, 0.0F, -0.5F, icon);
          t.draw();
          GL11.glEnable(2896);
          GL11.glPopMatrix();

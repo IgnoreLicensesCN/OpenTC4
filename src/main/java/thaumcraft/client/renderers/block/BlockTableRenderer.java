@@ -26,14 +26,14 @@ public class BlockTableRenderer extends BlockRenderer implements ISimpleBlockRen
       GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
       GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
       if (metadata == 0) {
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileTable(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileTable(), 0.0F, 0.0F, 0.0F, 0.0F);
       } else if (metadata == 14) {
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileDeconstructionTable(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileDeconstructionTable(), 0.0F, 0.0F, 0.0F, 0.0F);
       } else if (metadata == 15) {
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileArcaneWorkbench(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileArcaneWorkbench(), 0.0F, 0.0F, 0.0F, 0.0F);
       } else {
          GL11.glTranslatef(-0.5F, 0.0F, 0.0F);
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(this.trt, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(this.trt, 0.0F, 0.0F, 0.0F, 0.0F);
       }
 
       GL11.glEnable(32826);

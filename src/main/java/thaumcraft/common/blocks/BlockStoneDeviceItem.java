@@ -27,7 +27,7 @@ public class BlockStoneDeviceItem extends ItemBlock {
       boolean ret = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
       if (metadata == 14) {
          TileFluxScrubber tile = (TileFluxScrubber)world.getTileEntity(x, y, z);
-         if (tile != null && tile instanceof TileFluxScrubber) {
+         if (tile instanceof TileFluxScrubber) {
             tile.facing = ForgeDirection.getOrientation(side).getOpposite();
             tile.markDirty();
             world.markBlockForUpdate(x, y, x);

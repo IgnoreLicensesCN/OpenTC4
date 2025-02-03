@@ -34,7 +34,7 @@ public class TileEldritchLockRenderer extends TileEntitySpecialRenderer {
    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {
       double var10002 = (double)te.xCoord + (double)0.5F;
       double var10003 = (double)te.yCoord + (double)0.5F;
-      double var10004 = (double)te.zCoord;
+      double var10004 = te.zCoord;
       this.inrange = Minecraft.getMinecraft().renderViewEntity.getDistanceSq(var10002, var10003, var10004 + (double)0.5F) < (double)512.0F;
       if (this.is == null) {
          this.is = new ItemStack(ConfigItems.itemEldritchObject, 1, 2);
@@ -49,17 +49,17 @@ public class TileEldritchLockRenderer extends TileEntitySpecialRenderer {
 
       for(int u = 0; u < 4; ++u) {
          GL11.glPushMatrix();
-         GL11.glRotated((double)(90 * u), (double)dir.offsetX, (double)dir.offsetY, (double)dir.offsetZ);
+         GL11.glRotated(90 * u, dir.offsetX, dir.offsetY, dir.offsetZ);
 
          for(int a = 1; a < 5 - (((TileEldritchLock)te).count + u * 5) / 20; ++a) {
             GL11.glPushMatrix();
-            GL11.glTranslated((double)0.0F, (double)(0.25F + 0.5F * (float)a), (double)0.0F);
+            GL11.glTranslated(0.0F, 0.25F + 0.5F * (float)a, 0.0F);
             float w = MathHelper.sin((count + (float)(a * 10) + (float)(u * 20)) / 20.0F) * 0.1F;
             if (a == 1 || a == 4) {
                w = w / 2.0F + 0.2F;
             }
 
-            GL11.glScaled((double)0.5F + (double)w, (double)0.5F, (double)0.5F + (double)w);
+            GL11.glScaled((double)0.5F + (double)w, 0.5F, (double)0.5F + (double)w);
             this.model.render();
             GL11.glPopMatrix();
          }
@@ -84,14 +84,14 @@ public class TileEldritchLockRenderer extends TileEntitySpecialRenderer {
                GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
          }
 
-         GL11.glScaled((double)1.0F, (double)1.0F, (double)1.0F);
+         GL11.glScaled(1.0F, 1.0F, 1.0F);
          if (this.entityitem == null) {
-            this.entityitem = new EntityItem(te.getWorldObj(), (double)0.0F, (double)0.0F, (double)0.0F, this.is);
+            this.entityitem = new EntityItem(te.getWorldObj(), 0.0F, 0.0F, 0.0F, this.is);
          }
 
          this.entityitem.hoverStart = 0.0F;
          RenderItem.renderInFrame = true;
-         RenderManager.instance.renderEntityWithPosYaw(this.entityitem, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F, 0.0F);
+         RenderManager.instance.renderEntityWithPosYaw(this.entityitem, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
          RenderItem.renderInFrame = false;
          GL11.glPopMatrix();
       }
@@ -202,10 +202,10 @@ public class TileEldritchLockRenderer extends TileEntitySpecialRenderer {
          tessellator.startDrawingQuads();
          tessellator.setBrightness(180);
          tessellator.setColorRGBA_F(0.5F, 0.5F, 0.5F, 1.0F);
-         tessellator.addVertexWithUV(x - (double)2.0F, y + (double)3.0F, z + (double)offset, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV(x - (double)2.0F, y - (double)2.0F, z + (double)offset, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)3.0F, y - (double)2.0F, z + (double)offset, (double)0.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)3.0F, y + (double)3.0F, z + (double)offset, (double)0.0F, (double)1.0F);
+         tessellator.addVertexWithUV(x - (double)2.0F, y + (double)3.0F, z + (double)offset, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(x - (double)2.0F, y - (double)2.0F, z + (double)offset, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)3.0F, y - (double)2.0F, z + (double)offset, 0.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)3.0F, y + (double)3.0F, z + (double)offset, 0.0F, 1.0F);
          tessellator.draw();
          GL11.glPopMatrix();
       }
@@ -304,10 +304,10 @@ public class TileEldritchLockRenderer extends TileEntitySpecialRenderer {
          tessellator.startDrawingQuads();
          tessellator.setBrightness(180);
          tessellator.setColorRGBA_F(0.5F, 0.5F, 0.5F, 1.0F);
-         tessellator.addVertexWithUV(x - (double)2.0F, y - (double)2.0F, z + (double)offset, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV(x - (double)2.0F, y + (double)3.0F, z + (double)offset, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)3.0F, y + (double)3.0F, z + (double)offset, (double)0.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)3.0F, y - (double)2.0F, z + (double)offset, (double)0.0F, (double)1.0F);
+         tessellator.addVertexWithUV(x - (double)2.0F, y - (double)2.0F, z + (double)offset, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(x - (double)2.0F, y + (double)3.0F, z + (double)offset, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)3.0F, y + (double)3.0F, z + (double)offset, 0.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)3.0F, y - (double)2.0F, z + (double)offset, 0.0F, 1.0F);
          tessellator.draw();
          GL11.glPopMatrix();
       }
@@ -406,10 +406,10 @@ public class TileEldritchLockRenderer extends TileEntitySpecialRenderer {
          tessellator.startDrawingQuads();
          tessellator.setBrightness(180);
          tessellator.setColorRGBA_F(0.5F, 0.5F, 0.5F, 1.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y + (double)3.0F, z - (double)2.0F, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y + (double)3.0F, z + (double)3.0F, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y - (double)2.0F, z + (double)3.0F, (double)0.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y - (double)2.0F, z - (double)2.0F, (double)0.0F, (double)1.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y + (double)3.0F, z - (double)2.0F, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y + (double)3.0F, z + (double)3.0F, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y - (double)2.0F, z + (double)3.0F, 0.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y - (double)2.0F, z - (double)2.0F, 0.0F, 1.0F);
          tessellator.draw();
          GL11.glPopMatrix();
       }
@@ -508,10 +508,10 @@ public class TileEldritchLockRenderer extends TileEntitySpecialRenderer {
          tessellator.startDrawingQuads();
          tessellator.setBrightness(180);
          tessellator.setColorRGBA_F(0.5F, 0.5F, 0.5F, 1.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y - (double)2.0F, z - (double)2.0F, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y - (double)2.0F, z + (double)3.0F, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y + (double)3.0F, z + (double)3.0F, (double)0.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y + (double)3.0F, z - (double)2.0F, (double)0.0F, (double)1.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y - (double)2.0F, z - (double)2.0F, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y - (double)2.0F, z + (double)3.0F, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y + (double)3.0F, z + (double)3.0F, 0.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y + (double)3.0F, z - (double)2.0F, 0.0F, 1.0F);
          tessellator.draw();
          GL11.glPopMatrix();
       }

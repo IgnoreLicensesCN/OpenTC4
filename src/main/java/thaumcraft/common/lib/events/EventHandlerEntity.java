@@ -131,7 +131,7 @@ public class EventHandlerEntity {
                if (fb.exists()) {
                   fb.delete();
                }
-            } catch (IOException var12) {
+            } catch (IOException ignored) {
             }
          } else {
             File filet = this.getLegacyPlayerFile(p);
@@ -140,7 +140,7 @@ public class EventHandlerEntity {
                   Files.copy(filet, file1);
                    Thaumcraft.log.info("Using pre MC 1.7.10 Thaumcraft savefile for {}", p.getCommandSenderName());
                   legacy = true;
-               } catch (IOException var11) {
+               } catch (IOException ignored) {
                }
             }
          }
@@ -196,7 +196,7 @@ public class EventHandlerEntity {
 
             for(Aspect a : cost.getAspects()) {
                if (a != null) {
-                  finalCost.merge(a, (int)Math.sqrt((double)(cost.getAmount(a) * 2)) * level);
+                  finalCost.merge(a, (int)Math.sqrt(cost.getAmount(a) * 2) * level);
                }
             }
 
@@ -267,7 +267,7 @@ public class EventHandlerEntity {
 
          this.updateSpeed(player);
          if (player.worldObj.isRemote && (player.isSneaking() || player.inventory.armorItemInSlot(0) == null || player.inventory.armorItemInSlot(0).getItem() != ConfigItems.itemBootsTraveller) && this.prevStep.containsKey(player.getEntityId())) {
-            player.stepHeight = (Float)this.prevStep.get(player.getEntityId());
+            player.stepHeight = this.prevStep.get(player.getEntityId());
             this.prevStep.remove(player.getEntityId());
          }
       }
@@ -276,7 +276,7 @@ public class EventHandlerEntity {
          EntityMob mob = (EntityMob)event.entity;
          int t = (int)mob.getEntityAttribute(EntityUtils.CHAMPION_MOD).getAttributeValue();
          if (t >= 0 && ChampionModifier.mods[t].type == 0) {
-            ChampionModifier.mods[t].effect.performEffect(mob, (EntityLivingBase)null, (DamageSource)null, 0.0F);
+            ChampionModifier.mods[t].effect.performEffect(mob, null, null, 0.0F);
          }
       }
 
@@ -299,7 +299,7 @@ public class EventHandlerEntity {
                player.moveFlying(0.0F, 1.0F, bonus);
             }
          }
-      } catch (Exception var4) {
+      } catch (Exception ignored) {
       }
 
    }
@@ -308,7 +308,7 @@ public class EventHandlerEntity {
    public void playerJumps(LivingEvent.LivingJumpEvent event) {
       if (event.entity instanceof EntityPlayer && ((EntityPlayer)event.entity).inventory.armorItemInSlot(0) != null && ((EntityPlayer)event.entity).inventory.armorItemInSlot(0).getItem() == ConfigItems.itemBootsTraveller) {
          EntityLivingBase var10000 = event.entityLiving;
-         var10000.motionY += (double)0.275F;
+         var10000.motionY += 0.275F;
       }
 
    }
@@ -317,7 +317,7 @@ public class EventHandlerEntity {
    public void playerInteract(EntityInteractEvent event) {
       if (event.target instanceof EntityGolemBase && ((EntityGolemBase)event.target).getOwnerName().length() > 0 && !((EntityGolemBase)event.target).getOwnerName().equals(event.entityPlayer.getCommandSenderName())) {
          if (!event.entityPlayer.worldObj.isRemote) {
-            event.entityPlayer.addChatMessage(new ChatComponentTranslation("You are not my Master!", new Object[0]));
+            event.entityPlayer.addChatMessage(new ChatComponentTranslation("You are not my Master!"));
          }
 
          event.setCanceled(true);
@@ -338,7 +338,7 @@ public class EventHandlerEntity {
                for(int yy = -5; yy <= 5; ++yy) {
                   for(int zz = -5; zz <= 5; ++zz) {
                      TileEntity tile = event.world.getTileEntity(x + xx, y + yy, z + zz);
-                     if (tile != null && tile instanceof TileOwned) {
+                     if (tile instanceof TileOwned) {
                         if (((EntityEnderPearl)event.entity).getThrower() instanceof EntityPlayer) {
                            ((EntityPlayer)((EntityEnderPearl)event.entity).getThrower()).addChatMessage(new ChatComponentText("§5§oThe magic of a nearby warded object destroys the ender pearl."));
                         }
@@ -352,7 +352,7 @@ public class EventHandlerEntity {
          }
 
          if (event.entity instanceof EntityPlayer) {
-            ArrayList<WeakReference<Entity>> dudes = (ArrayList)linkedEntities.get(event.entity.getCommandSenderName());
+            ArrayList<WeakReference<Entity>> dudes = linkedEntities.get(event.entity.getCommandSenderName());
             if (dudes != null) {
                for(WeakReference dude : dudes) {
                   if (dude.get() != null && ((Entity)dude.get()).timeUntilPortal == 0) {
@@ -393,7 +393,7 @@ public class EventHandlerEntity {
                   if (clazz.isAssignableFrom(event.entity.getClass())) {
                      whitelisted = true;
                      if (Config.championMobs || event.entity instanceof EntityThaumcraftBoss) {
-                        cc = Math.max(cc, (Integer)ConfigEntities.championModWhitelist.get(clazz) - 1);
+                        cc = Math.max(cc, ConfigEntities.championModWhitelist.get(clazz) - 1);
                      }
                   }
                }
@@ -417,9 +417,7 @@ public class EventHandlerEntity {
          int xx = x >> 4;
          int zz = z >> 4;
          Cell c = MazeHandler.getFromHashMap(new CellLoc(xx, zz));
-         if (c != null && (c.feature == 6 || c.feature == 8)) {
-            return true;
-         }
+          return c != null && (c.feature == 6 || c.feature == 8);
       }
 
       return false;
@@ -429,7 +427,7 @@ public class EventHandlerEntity {
    public void entityConstuct(EntityEvent.EntityConstructing event) {
       if (event.entity instanceof EntityMob) {
          EntityMob mob = (EntityMob)event.entity;
-         mob.getAttributeMap().registerAttribute(EntityUtils.CHAMPION_MOD).setBaseValue((double)-2.0F);
+         mob.getAttributeMap().registerAttribute(EntityUtils.CHAMPION_MOD).setBaseValue(-2.0F);
       }
 
    }
@@ -597,12 +595,9 @@ public class EventHandlerEntity {
 
          event.bow.damageItem(1, event.entityPlayer);
          event.entityPlayer.worldObj.playSoundAtEntity(event.entityPlayer, "random.bow", 1.0F, 1.0F / (event.entityPlayer.worldObj.rand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-         boolean flag = false;
-         if (EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, event.bow) > 0 && event.entityPlayer.worldObj.rand.nextFloat() < 0.33F) {
-            flag = true;
-         }
+         boolean flag = EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, event.bow) > 0 && event.entityPlayer.worldObj.rand.nextFloat() < 0.33F;
 
-         if (!event.entityPlayer.capabilities.isCreativeMode || !flag) {
+          if (!event.entityPlayer.capabilities.isCreativeMode || !flag) {
             InventoryUtils.consumeInventoryItem(event.entityPlayer, ConfigItems.itemPrimalArrow, type);
          }
 

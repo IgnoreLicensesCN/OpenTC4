@@ -17,10 +17,10 @@ public class FXBlockWard extends EntityFX {
    float sz = 0.0F;
 
    public FXBlockWard(World world, double d, double d1, double d2, ForgeDirection side, float f, float f1, float f2) {
-      super(world, d, d1, d2, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(world, d, d1, d2, 0.0F, 0.0F, 0.0F);
       this.side = side;
       this.particleGravity = 0.0F;
-      this.motionX = this.motionY = this.motionZ = (double)0.0F;
+      this.motionX = this.motionY = this.motionZ = 0.0F;
       this.particleMaxAge = 12 + this.rand.nextInt(5);
       this.noClip = false;
       this.setSize(0.01F, 0.01F);
@@ -60,14 +60,14 @@ public class FXBlockWard extends EntityFX {
       float var13 = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)f - interpPosX);
       float var14 = (float)(this.prevPosY + (this.posY - this.prevPosY) * (double)f - interpPosY);
       float var15 = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * (double)f - interpPosZ);
-      GL11.glTranslated((double)(var13 + this.sx), (double)(var14 + this.sy), (double)(var15 + this.sz));
+      GL11.glTranslated(var13 + this.sx, var14 + this.sy, var15 + this.sz);
       GL11.glRotatef(90.0F, (float)this.side.offsetY, (float)(-this.side.offsetX), (float)this.side.offsetZ);
       GL11.glRotatef((float)this.rotation, 0.0F, 0.0F, 1.0F);
       if (this.side.offsetZ > 0) {
-         GL11.glTranslated((double)0.0F, (double)0.0F, (double)0.505F);
+         GL11.glTranslated(0.0F, 0.0F, 0.505F);
          GL11.glRotatef(180.0F, 0.0F, -1.0F, 0.0F);
       } else {
-         GL11.glTranslated((double)0.0F, (double)0.0F, (double)-0.505F);
+         GL11.glTranslated(0.0F, 0.0F, -0.505F);
       }
 
       float var12 = this.particleScale;
@@ -75,10 +75,10 @@ public class FXBlockWard extends EntityFX {
       tessellator.startDrawingQuads();
       tessellator.setBrightness(240);
       tessellator.setColorRGBA_F(this.particleRed * var16, this.particleGreen * var16, this.particleBlue * var16, this.particleAlpha / 2.0F);
-      tessellator.addVertexWithUV((double)-0.5F * (double)var12, (double)0.5F * (double)var12, (double)0.0F, (double)0.0F, (double)1.0F);
-      tessellator.addVertexWithUV((double)0.5F * (double)var12, (double)0.5F * (double)var12, (double)0.0F, (double)1.0F, (double)1.0F);
-      tessellator.addVertexWithUV((double)0.5F * (double)var12, (double)-0.5F * (double)var12, (double)0.0F, (double)1.0F, (double)0.0F);
-      tessellator.addVertexWithUV((double)-0.5F * (double)var12, (double)-0.5F * (double)var12, (double)0.0F, (double)0.0F, (double)0.0F);
+      tessellator.addVertexWithUV((double)-0.5F * (double)var12, (double)0.5F * (double)var12, 0.0F, 0.0F, 1.0F);
+      tessellator.addVertexWithUV((double)0.5F * (double)var12, (double)0.5F * (double)var12, 0.0F, 1.0F, 1.0F);
+      tessellator.addVertexWithUV((double)0.5F * (double)var12, (double)-0.5F * (double)var12, 0.0F, 1.0F, 0.0F);
+      tessellator.addVertexWithUV((double)-0.5F * (double)var12, (double)-0.5F * (double)var12, 0.0F, 0.0F, 0.0F);
       tessellator.draw();
       GL11.glDisable(3042);
       GL11.glDepthMask(true);

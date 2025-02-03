@@ -64,7 +64,7 @@ public class EntityPech extends EntityMob implements IRangedAttackMob {
    private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 0.6, 20, 50, 15.0F);
    private EntityAIArrowAttack aiBlastAttack = new EntityAIArrowAttack(this, 0.6, 20, 30, 15.0F);
    private AIAttackOnCollide aiMeleeAttack = new AIAttackOnCollide(this, EntityLivingBase.class, 0.6, false);
-   private EntityAIAvoidEntity aiAvoidPlayer = new EntityAIAvoidEntity(this, EntityPlayer.class, 8.0F, (double)0.5F, 0.6);
+   private EntityAIAvoidEntity aiAvoidPlayer = new EntityAIAvoidEntity(this, EntityPlayer.class, 8.0F, 0.5F, 0.6);
    public float mumble = 0.0F;
    int chargecount = 0;
    static HashMap valuedItems = new HashMap<>();
@@ -75,9 +75,7 @@ public class EntityPech extends EntityMob implements IRangedAttackMob {
          return this.getCustomNameTag();
       } else {
          switch (this.getPechType()) {
-            case 0:
-               return StatCollector.translateToLocal("entity.Thaumcraft.Pech.name");
-            case 1:
+             case 1:
                return StatCollector.translateToLocal("entity.Thaumcraft.Pech.1.name");
             case 2:
                return StatCollector.translateToLocal("entity.Thaumcraft.Pech.2.name");
@@ -96,8 +94,8 @@ public class EntityPech extends EntityMob implements IRangedAttackMob {
       this.tasks.addTask(1, new AIPechTradePlayer(this));
       this.tasks.addTask(3, new AIPechItemEntityGoto(this));
       this.tasks.addTask(5, new EntityAIOpenDoor(this, true));
-      this.tasks.addTask(6, new EntityAIMoveTowardsRestriction(this, (double)0.5F));
-      this.tasks.addTask(6, new EntityAIMoveThroughVillage(this, (double)1.0F, false));
+      this.tasks.addTask(6, new EntityAIMoveTowardsRestriction(this, 0.5F));
+      this.tasks.addTask(6, new EntityAIMoveThroughVillage(this, 1.0F, false));
       this.tasks.addTask(9, new EntityAIWander(this, 0.6));
       this.tasks.addTask(9, new EntityAIWatchClosest2(this, EntityPlayer.class, 3.0F, 1.0F));
       this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityLiving.class, 8.0F));
@@ -194,11 +192,11 @@ public class EntityPech extends EntityMob implements IRangedAttackMob {
       int count = 0;
 
       try {
-         List l = this.worldObj.getEntitiesWithinAABB(EntityPech.class, this.boundingBox.expand((double)16.0F, (double)16.0F, (double)16.0F));
+         List l = this.worldObj.getEntitiesWithinAABB(EntityPech.class, this.boundingBox.expand(16.0F, 16.0F, 16.0F));
          if (l != null) {
             count = l.size();
          }
-      } catch (Exception var5) {
+      } catch (Exception ignored) {
       }
 
       if (this.worldObj.provider.dimensionId != 0 && biome.biomeID != Config.biomeMagicalForestID && biome.biomeID != Config.biomeEerieID) {
@@ -218,9 +216,9 @@ public class EntityPech extends EntityMob implements IRangedAttackMob {
 
    protected void entityInit() {
       super.entityInit();
-      this.dataWatcher.addObject(13, new Byte((byte)0));
-      this.dataWatcher.addObject(14, new Short((short)0));
-      this.dataWatcher.addObject(16, new Byte((byte)0));
+      this.dataWatcher.addObject(13, (byte) 0);
+      this.dataWatcher.addObject(14, (short) 0);
+      this.dataWatcher.addObject(16, (byte) 0);
    }
 
    public int getPechType() {
@@ -244,7 +242,7 @@ public class EntityPech extends EntityMob implements IRangedAttackMob {
    }
 
    public void setTamed(boolean par1) {
-      this.dataWatcher.updateObject(16, Byte.valueOf((byte)(par1 ? 1 : 0)));
+      this.dataWatcher.updateObject(16, (byte) (par1 ? 1 : 0));
    }
 
    public boolean isAIEnabled() {
@@ -253,9 +251,9 @@ public class EntityPech extends EntityMob implements IRangedAttackMob {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)30.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)6.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue((double)0.5F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(30.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(6.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.5F);
    }
 
    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
@@ -265,14 +263,14 @@ public class EntityPech extends EntityMob implements IRangedAttackMob {
       par1NBTTagCompound.setBoolean("Tamed", this.isTamed());
       NBTTagList nbttaglist = new NBTTagList();
 
-      for(int i = 0; i < this.loot.length; ++i) {
-         NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-         if (this.loot[i] != null) {
-            this.loot[i].writeToNBT(nbttagcompound1);
-         }
+       for (ItemStack itemStack : this.loot) {
+           NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+           if (itemStack != null) {
+               itemStack.writeToNBT(nbttagcompound1);
+           }
 
-         nbttaglist.appendTag(nbttagcompound1);
-      }
+           nbttaglist.appendTag(nbttagcompound1);
+       }
 
       par1NBTTagCompound.setTag("Loot", nbttaglist);
    }
@@ -322,13 +320,13 @@ public class EntityPech extends EntityMob implements IRangedAttackMob {
    }
 
    protected void dropFewItems(boolean flag, int i) {
-      for(int a = 0; a < this.loot.length; ++a) {
-         if (this.loot[a] != null && this.worldObj.rand.nextFloat() < 0.88F) {
-            this.entityDropItem(this.loot[a].copy(), 1.5F);
-         }
-      }
+       for (ItemStack itemStack : this.loot) {
+           if (itemStack != null && this.worldObj.rand.nextFloat() < 0.88F) {
+               this.entityDropItem(itemStack.copy(), 1.5F);
+           }
+       }
 
-      Aspect[] aspects = (Aspect[])Aspect.getPrimalAspects().toArray(new Aspect[0]);
+      Aspect[] aspects = Aspect.getPrimalAspects().toArray(new Aspect[0]);
 
       for(int a = 0; a < 1 + i; ++a) {
          if (this.rand.nextBoolean()) {
@@ -382,16 +380,16 @@ public class EntityPech extends EntityMob implements IRangedAttackMob {
    public void playLivingSound() {
       if (!this.worldObj.isRemote) {
          if (this.rand.nextInt(3) == 0) {
-            List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand((double)4.0F, (double)2.0F, (double)4.0F));
+            List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(4.0F, 2.0F, 4.0F));
 
-            for(int i = 0; i < list.size(); ++i) {
-               Entity entity1 = (Entity)list.get(i);
-               if (entity1 instanceof EntityPech) {
-                  this.worldObj.setEntityState(this, (byte)17);
-                  this.playSound("thaumcraft:pech_trade", this.getSoundVolume(), this.getSoundPitch());
-                  return;
-               }
-            }
+             for (Object o : list) {
+                 Entity entity1 = (Entity) o;
+                 if (entity1 instanceof EntityPech) {
+                     this.worldObj.setEntityState(this, (byte) 17);
+                     this.playSound("thaumcraft:pech_trade", this.getSoundVolume(), this.getSoundPitch());
+                     return;
+                 }
+             }
          }
 
          this.worldObj.setEntityState(this, (byte)16);
@@ -503,15 +501,15 @@ public class EntityPech extends EntityMob implements IRangedAttackMob {
       } else {
          Entity entity = damSource.getEntity();
          if (entity instanceof EntityPlayer) {
-            List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand((double)32.0F, (double)16.0F, (double)32.0F));
+            List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(32.0F, 16.0F, 32.0F));
 
-            for(int i = 0; i < list.size(); ++i) {
-               Entity entity1 = (Entity)list.get(i);
-               if (entity1 instanceof EntityPech) {
-                  EntityPech entitypech = (EntityPech)entity1;
-                  entitypech.becomeAngryAt(entity);
-               }
-            }
+             for (Object o : list) {
+                 Entity entity1 = (Entity) o;
+                 if (entity1 instanceof EntityPech) {
+                     EntityPech entitypech = (EntityPech) entity1;
+                     entitypech.becomeAngryAt(entity);
+                 }
+             }
 
             this.becomeAngryAt(entity);
          }

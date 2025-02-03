@@ -49,7 +49,7 @@ public class WandRod {
 	 */
 	boolean glow;
 
-	public static LinkedHashMap<String,WandRod> rods = new LinkedHashMap<String,WandRod>();
+	public static LinkedHashMap<String,WandRod> rods = new LinkedHashMap<>();
 	
 	public WandRod (String tag, int capacity, ItemStack item, int craftCost, ResourceLocation texture) {
 		this.setTag(tag);

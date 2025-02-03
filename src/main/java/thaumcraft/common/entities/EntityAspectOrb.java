@@ -28,7 +28,7 @@ public class EntityAspectOrb extends Entity implements IEntityAdditionalSpawnDat
    private EntityPlayer closestPlayer;
 
    public boolean isInRangeToRenderDist(double par1) {
-      double d1 = (double)0.5F;
+      double d1 = 0.5F;
       d1 *= (double)64.0F * this.renderDistanceWeight;
       return par1 < d1 * d1;
    }
@@ -39,9 +39,9 @@ public class EntityAspectOrb extends Entity implements IEntityAdditionalSpawnDat
       this.yOffset = this.height / 2.0F;
       this.setPosition(par2, par4, par6);
       this.rotationYaw = (float)(Math.random() * (double)360.0F);
-      this.motionX = (double)((float)(Math.random() * (double)0.2F - (double)0.1F) * 2.0F);
-      this.motionY = (double)((float)(Math.random() * 0.2) * 2.0F);
-      this.motionZ = (double)((float)(Math.random() * (double)0.2F - (double)0.1F) * 2.0F);
+      this.motionX = (float)(Math.random() * (double)0.2F - (double)0.1F) * 2.0F;
+      this.motionY = (float)(Math.random() * 0.2) * 2.0F;
+      this.motionZ = (float)(Math.random() * (double)0.2F - (double)0.1F) * 2.0F;
       this.aspectValue = par8;
       this.setAspect(aspect);
    }
@@ -90,23 +90,23 @@ public class EntityAspectOrb extends Entity implements IEntityAdditionalSpawnDat
       this.prevPosX = this.posX;
       this.prevPosY = this.posY;
       this.prevPosZ = this.posZ;
-      this.motionY -= (double)0.03F;
+      this.motionY -= 0.03F;
       if (this.worldObj.getBlock(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)).getMaterial() == Material.lava) {
-         this.motionY = (double)0.2F;
-         this.motionX = (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F);
-         this.motionZ = (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F);
+         this.motionY = 0.2F;
+         this.motionX = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F;
+         this.motionZ = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F;
          this.playSound("random.fizz", 0.4F, 2.0F + this.rand.nextFloat() * 0.4F);
       }
 
       this.func_145771_j(this.posX, (this.boundingBox.minY + this.boundingBox.maxY) / (double)2.0F, this.posZ);
-      double d0 = (double)8.0F;
+      double d0 = 8.0F;
       if (this.ticksExisted % 5 == 0 && this.closestPlayer == null) {
          List<Entity> targets = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ).expand(d0, d0, d0));
          if (targets.size() > 0) {
             double distance = Double.MAX_VALUE;
 
             for(Entity t : targets) {
-               double d = ((EntityPlayer)t).getDistanceSqToEntity(this);
+               double d = t.getDistanceSqToEntity(this);
                if (d < distance && InventoryUtils.isWandInHotbarWithRoom(this.getAspect(), this.aspectValue, (EntityPlayer)t) >= 0) {
                   distance = d;
                   this.closestPlayer = (EntityPlayer)t;
@@ -139,11 +139,11 @@ public class EntityAspectOrb extends Entity implements IEntityAdditionalSpawnDat
          }
       }
 
-      this.motionX *= (double)f;
-      this.motionY *= (double)0.98F;
-      this.motionZ *= (double)f;
+      this.motionX *= f;
+      this.motionY *= 0.98F;
+      this.motionZ *= f;
       if (this.onGround) {
-         this.motionY *= (double)-0.9F;
+         this.motionY *= -0.9F;
       }
 
       ++this.orbAge;
@@ -176,7 +176,7 @@ public class EntityAspectOrb extends Entity implements IEntityAdditionalSpawnDat
    }
 
    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
-      par1NBTTagCompound.setShort("Health", (short)((byte)this.orbHealth));
+      par1NBTTagCompound.setShort("Health", (byte)this.orbHealth);
       par1NBTTagCompound.setShort("Age", (short)this.orbAge);
       par1NBTTagCompound.setShort("Value", (short)this.aspectValue);
       par1NBTTagCompound.setString("Aspect", this.getAspect().getTag());
@@ -224,7 +224,7 @@ public class EntityAspectOrb extends Entity implements IEntityAdditionalSpawnDat
          }
 
          this.setAspect(Aspect.getAspect(s.toString()));
-      } catch (Exception var5) {
+      } catch (Exception ignored) {
       }
 
    }

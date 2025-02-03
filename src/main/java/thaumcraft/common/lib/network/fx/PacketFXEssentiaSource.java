@@ -55,7 +55,7 @@ public class PacketFXEssentiaSource implements IMessage, IMessageHandler<PacketF
       int tz = message.z - message.dz;
       String key = message.x + ":" + message.y + ":" + message.z + ":" + tx + ":" + ty + ":" + tz + ":" + message.color;
       if (EssentiaHandler.sourceFX.containsKey(key)) {
-         EssentiaHandler.EssentiaSourceFX sf = (EssentiaHandler.EssentiaSourceFX)EssentiaHandler.sourceFX.get(key);
+         EssentiaHandler.EssentiaSourceFX sf = EssentiaHandler.sourceFX.get(key);
          sf.ticks = 15;
          EssentiaHandler.sourceFX.remove(key);
          EssentiaHandler.sourceFX.put(key, sf);

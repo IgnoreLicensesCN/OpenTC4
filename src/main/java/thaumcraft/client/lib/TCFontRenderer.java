@@ -60,7 +60,7 @@ public class TCFontRenderer {
          int j = (i >> 3 & 1) * 85;
          int k = (i >> 2 & 1) * 170 + j;
          int l = (i >> 1 & 1) * 170 + j;
-         int i1 = (i >> 0 & 1) * 170 + j;
+         int i1 = (i & 1) * 170 + j;
          if (i == 6) {
             k += 85;
          }
@@ -112,12 +112,13 @@ public class TCFontRenderer {
             int k1 = l * 8 + j1;
             boolean flag = true;
 
-            for(int l1 = 0; l1 < 8 && flag; ++l1) {
+            for(int l1 = 0; l1 < 8; ++l1) {
                int i2 = (i1 * 8 + l1) * i;
                int j2 = aint[k1 + i2] & 255;
-               if (j2 > 0) {
-                  flag = false;
-               }
+                if (j2 > 0) {
+                    flag = false;
+                    break;
+                }
             }
 
             if (!flag) {
@@ -377,10 +378,10 @@ public class TCFontRenderer {
                Tessellator tessellator = Tessellator.instance;
                GL11.glDisable(3553);
                tessellator.startDrawingQuads();
-               tessellator.addVertex((double)this.posX, (double)(this.posY + (float)(this.FONT_HEIGHT / 2)), (double)0.0F);
-               tessellator.addVertex((double)(this.posX + f1), (double)(this.posY + (float)(this.FONT_HEIGHT / 2)), (double)0.0F);
-               tessellator.addVertex((double)(this.posX + f1), (double)(this.posY + (float)(this.FONT_HEIGHT / 2) - 1.0F), (double)0.0F);
-               tessellator.addVertex((double)this.posX, (double)(this.posY + (float)(this.FONT_HEIGHT / 2) - 1.0F), (double)0.0F);
+               tessellator.addVertex(this.posX, this.posY + (float)(this.FONT_HEIGHT / 2), 0.0F);
+               tessellator.addVertex(this.posX + f1, this.posY + (float)(this.FONT_HEIGHT / 2), 0.0F);
+               tessellator.addVertex(this.posX + f1, this.posY + (float)(this.FONT_HEIGHT / 2) - 1.0F, 0.0F);
+               tessellator.addVertex(this.posX, this.posY + (float)(this.FONT_HEIGHT / 2) - 1.0F, 0.0F);
                tessellator.draw();
                GL11.glEnable(3553);
             }
@@ -390,10 +391,10 @@ public class TCFontRenderer {
                GL11.glDisable(3553);
                tessellator.startDrawingQuads();
                int l = this.underlineStyle ? -1 : 0;
-               tessellator.addVertex((double)(this.posX + (float)l), (double)(this.posY + (float)this.FONT_HEIGHT), (double)0.0F);
-               tessellator.addVertex((double)(this.posX + f1), (double)(this.posY + (float)this.FONT_HEIGHT), (double)0.0F);
-               tessellator.addVertex((double)(this.posX + f1), (double)(this.posY + (float)this.FONT_HEIGHT - 1.0F), (double)0.0F);
-               tessellator.addVertex((double)(this.posX + (float)l), (double)(this.posY + (float)this.FONT_HEIGHT - 1.0F), (double)0.0F);
+               tessellator.addVertex(this.posX + (float)l, this.posY + (float)this.FONT_HEIGHT, 0.0F);
+               tessellator.addVertex(this.posX + f1, this.posY + (float)this.FONT_HEIGHT, 0.0F);
+               tessellator.addVertex(this.posX + f1, this.posY + (float)this.FONT_HEIGHT - 1.0F, 0.0F);
+               tessellator.addVertex(this.posX + (float)l, this.posY + (float)this.FONT_HEIGHT - 1.0F, 0.0F);
                tessellator.draw();
                GL11.glEnable(3553);
             }
@@ -639,9 +640,9 @@ public class TCFontRenderer {
          found = false;
          par1Str = par1Str.replaceAll("<BR>", "\n");
          par1Str = par1Str.replaceAll("<BR/>", "\n");
-         if (par1Str.indexOf("<LINE>") >= 0 || par1Str.indexOf("<LINE/>") >= 0) {
+         if (par1Str.contains("<LINE>") || par1Str.contains("<LINE/>")) {
             this.inserts.add("<LINE>");
-            if (par1Str.indexOf("<LINE>") >= 0) {
+            if (par1Str.contains("<LINE>")) {
                par1Str = par1Str.replaceFirst("<LINE>", "\n@" + count + "@\n");
             } else {
                par1Str = par1Str.replaceFirst("<LINE/>", "\n@" + count + "@\n");
@@ -732,7 +733,7 @@ public class TCFontRenderer {
    }
 
    private static String getFormatFromString(String par0Str) {
-      String s1 = "";
+      StringBuilder s1 = new StringBuilder();
       int i = -1;
       int j = par0Str.length();
 
@@ -740,14 +741,14 @@ public class TCFontRenderer {
          if (i < j - 1) {
             char c0 = par0Str.charAt(i + 1);
             if (isFormatColor(c0)) {
-               s1 = "§" + c0;
+               s1 = new StringBuilder("§" + c0);
             } else if (isFormatSpecial(c0)) {
-               s1 = s1 + "§" + c0;
+               s1.append("§").append(c0);
             }
          }
       }
 
-      return s1;
+      return s1.toString();
    }
 
    public boolean getBidiFlag() {

@@ -72,7 +72,7 @@ public class BlockCoord implements Comparable<BlockCoord>, Copyable<BlockCoord> 
    }
 
    public double mag() {
-      return Math.sqrt((double)(this.x * this.x + this.y * this.y + this.z * this.z));
+      return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
    }
 
    public int mag2() {

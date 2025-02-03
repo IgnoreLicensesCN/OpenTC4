@@ -70,7 +70,7 @@ public class ItemHoverHarness extends ItemArmor implements IRepairable, IVisDisc
    }
 
    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
-      return par2ItemStack.isItemEqual(new ItemStack(Items.gold_ingot)) ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
+      return par2ItemStack.isItemEqual(new ItemStack(Items.gold_ingot)) || super.getIsRepairable(par1ItemStack, par2ItemStack);
    }
 
    public int getVisDiscount(ItemStack stack, EntityPlayer player, Aspect aspect) {
@@ -108,11 +108,11 @@ public class ItemHoverHarness extends ItemArmor implements IRepairable, IVisDisc
                   }
                }
             }
-         } catch (Exception var11) {
+         } catch (Exception ignored) {
          }
       }
 
-      list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": " + this.getVisDiscount(is, player, (Aspect)null) + "%");
+      list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": " + this.getVisDiscount(is, player, null) + "%");
       list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + " (Aer): " + this.getVisDiscount(is, player, Aspect.AIR) + "%");
    }
 }

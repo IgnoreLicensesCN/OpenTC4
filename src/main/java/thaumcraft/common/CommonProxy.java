@@ -91,11 +91,11 @@ public class CommonProxy implements IGuiHandler {
    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
       switch (ID) {
          case 0:
-            return new ContainerGolem(player.inventory, ((EntityGolemBase)((WorldServer)world).getEntityByID(x)).inventory);
+            return new ContainerGolem(player.inventory, ((EntityGolemBase) world.getEntityByID(x)).inventory);
          case 1:
-            return new ContainerPech(player.inventory, world, (EntityPech)((WorldServer)world).getEntityByID(x));
+            return new ContainerPech(player.inventory, world, (EntityPech) world.getEntityByID(x));
          case 2:
-            return new ContainerTravelingTrunk(player.inventory, world, (EntityTravelingTrunk)((WorldServer)world).getEntityByID(x));
+            return new ContainerTravelingTrunk(player.inventory, world, (EntityTravelingTrunk) world.getEntityByID(x));
          case 3:
             return new ContainerThaumatorium(player.inventory, (TileThaumatorium)world.getTileEntity(x, y, z));
          case 4:

@@ -43,7 +43,7 @@ public class TileMagicWorkbenchChargerRenderer extends TileEntitySpecialRenderer
       this.model.renderPart("RingFloat");
       GL11.glPushMatrix();
       GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
-      GL11.glTranslated((double)0.0F, (double)0.0F, (double)0.5F);
+      GL11.glTranslated(0.0F, 0.0F, 0.5F);
 
       for(int a = 0; a < 4; ++a) {
          this.model.renderPart("Support");

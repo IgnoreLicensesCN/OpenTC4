@@ -15,37 +15,37 @@ public class FXArc extends EntityFX {
    public int particle = 16;
    ArrayList points = new ArrayList<>();
    private Entity targetEntity = null;
-   private double tX = (double)0.0F;
-   private double tY = (double)0.0F;
-   private double tZ = (double)0.0F;
+   private double tX = 0.0F;
+   private double tY = 0.0F;
+   private double tZ = 0.0F;
    public int blendmode = 1;
    public float length = 1.0F;
 
    public FXArc(World par1World, double x, double y, double z, double tx, double ty, double tz, float red, float green, float blue, double hg) {
-      super(par1World, x, y, z, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(par1World, x, y, z, 0.0F, 0.0F, 0.0F);
       this.particleRed = red;
       this.particleGreen = green;
       this.particleBlue = blue;
       this.setSize(0.02F, 0.02F);
       this.noClip = true;
-      this.motionX = (double)0.0F;
-      this.motionY = (double)0.0F;
-      this.motionZ = (double)0.0F;
+      this.motionX = 0.0F;
+      this.motionY = 0.0F;
+      this.motionZ = 0.0F;
       this.tX = tx - x;
       this.tY = ty - y;
       this.tZ = tz - z;
       this.particleMaxAge = 1;
-      double xx = (double)0.0F;
-      double yy = (double)0.0F;
-      double zz = (double)0.0F;
+      double xx = 0.0F;
+      double yy = 0.0F;
+      double zz = 0.0F;
       double gravity = 0.115;
-      double noise = (double)0.25F;
+      double noise = 0.25F;
       Vec3 vs = Vec3.createVectorHelper(xx, yy, zz);
       Vec3 ve = Vec3.createVectorHelper(this.tX, this.tY, this.tZ);
       Vec3 vc = Vec3.createVectorHelper(xx, yy, zz);
       this.length = (float)ve.lengthVector();
       Vec3 vv = Utils.calculateVelocity(vs, ve, hg, gravity);
-      double l = Utils.distanceSquared3d(Vec3.createVectorHelper((double)0.0F, (double)0.0F, (double)0.0F), vv);
+      double l = Utils.distanceSquared3d(Vec3.createVectorHelper(0.0F, 0.0F, 0.0F), vv);
       this.points.add(vs);
 
       for(int c = 0; Utils.distanceSquared3d(ve, vc) > l && c < 50; ++c) {
@@ -102,8 +102,8 @@ public class FXArc extends EntityFX {
          double dx = v.xCoord;
          double dy = v.yCoord;
          double dz = v.zCoord;
-         tessellator.addVertexWithUV(dx, dy - (double)size, dz, (double)f13, (double)f10);
-         tessellator.addVertexWithUV(dx, dy + (double)size, dz, (double)f13, (double)f9);
+         tessellator.addVertexWithUV(dx, dy - (double)size, dz, f13, f10);
+         tessellator.addVertexWithUV(dx, dy + (double)size, dz, f13, f9);
       }
 
       tessellator.draw();
@@ -117,8 +117,8 @@ public class FXArc extends EntityFX {
          double dx = v.xCoord;
          double dy = v.yCoord;
          double dz = v.zCoord;
-         tessellator.addVertexWithUV(dx - (double)size, dy, dz - (double)size, (double)f13, (double)f10);
-         tessellator.addVertexWithUV(dx + (double)size, dy, dz + (double)size, (double)f13, (double)f9);
+         tessellator.addVertexWithUV(dx - (double)size, dy, dz - (double)size, f13, f10);
+         tessellator.addVertexWithUV(dx + (double)size, dy, dz + (double)size, f13, f9);
       }
 
       tessellator.draw();

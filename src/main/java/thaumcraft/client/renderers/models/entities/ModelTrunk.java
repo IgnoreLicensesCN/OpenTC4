@@ -67,10 +67,10 @@ public class ModelTrunk extends ModelBase {
       RenderManager.instance.renderEngine.bindTexture(TextureMap.locationItemsTexture);
       tessellator.startDrawingQuads();
       tessellator.setNormal(0.0F, 0.0F, 1.0F);
-      tessellator.addVertexWithUV((double)0.0F, (double)0.0F, (double)0.0F, (double)ff1, (double)ff4);
-      tessellator.addVertexWithUV((double)1.0F, (double)0.0F, (double)0.0F, (double)ff3, (double)ff4);
-      tessellator.addVertexWithUV((double)1.0F, (double)1.0F, (double)0.0F, (double)ff3, (double)ff2);
-      tessellator.addVertexWithUV((double)0.0F, (double)1.0F, (double)0.0F, (double)ff1, (double)ff2);
+      tessellator.addVertexWithUV(0.0F, 0.0F, 0.0F, ff1, ff4);
+      tessellator.addVertexWithUV(1.0F, 0.0F, 0.0F, ff3, ff4);
+      tessellator.addVertexWithUV(1.0F, 1.0F, 0.0F, ff3, ff2);
+      tessellator.addVertexWithUV(0.0F, 1.0F, 0.0F, ff1, ff2);
       tessellator.draw();
       GL11.glPopMatrix();
       GL11.glDisable(3042);

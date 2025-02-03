@@ -21,7 +21,7 @@ public class PotionUnnaturalHunger extends Potion {
    public static void init() {
       instance.setPotionName("potion.unhunger");
       instance.setIconIndex(7, 1);
-      instance.setEffectiveness((double)0.25F);
+      instance.setEffectiveness(0.25F);
    }
 
    public boolean isBadEffect() {

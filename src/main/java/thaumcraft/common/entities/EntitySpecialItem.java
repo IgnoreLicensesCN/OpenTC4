@@ -13,9 +13,9 @@ public class EntitySpecialItem extends EntityItem {
       this.setPosition(par2, par4, par6);
       this.setEntityItemStack(par8ItemStack);
       this.rotationYaw = (float)(Math.random() * (double)360.0F);
-      this.motionX = (double)((float)(Math.random() * (double)0.2F - (double)0.1F));
-      this.motionY = (double)0.2F;
-      this.motionZ = (double)((float)(Math.random() * (double)0.2F - (double)0.1F));
+      this.motionX = (float)(Math.random() * (double)0.2F - (double)0.1F);
+      this.motionY = 0.2F;
+      this.motionZ = (float)(Math.random() * (double)0.2F - (double)0.1F);
    }
 
    public EntitySpecialItem(World par1World) {
@@ -26,14 +26,14 @@ public class EntitySpecialItem extends EntityItem {
 
    public void onUpdate() {
       if (this.motionY > (double)0.0F) {
-         this.motionY *= (double)0.9F;
+         this.motionY *= 0.9F;
       }
 
-      this.motionY += (double)0.04F;
+      this.motionY += 0.04F;
       super.onUpdate();
    }
 
    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_) {
-      return p_70097_1_.isExplosion() ? false : super.attackEntityFrom(p_70097_1_, p_70097_2_);
+      return !p_70097_1_.isExplosion() && super.attackEntityFrom(p_70097_1_, p_70097_2_);
    }
 }

@@ -20,8 +20,8 @@ public class EntityTaintSpider extends EntitySpider implements ITaintedMob {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)5.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)2.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(5.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0F);
    }
 
    protected float getSoundPitch() {
@@ -29,7 +29,7 @@ public class EntityTaintSpider extends EntitySpider implements ITaintedMob {
    }
 
    protected Entity findPlayerToAttack() {
-      double d0 = (double)12.0F;
+      double d0 = 12.0F;
       return this.worldObj.getClosestVulnerablePlayerToEntity(this, d0);
    }
 

@@ -34,7 +34,7 @@ public class EntityFireBat extends EntityMob {
 
    public void entityInit() {
       super.entityInit();
-      this.dataWatcher.addObject(16, new Byte((byte)0));
+      this.dataWatcher.addObject(16, (byte) 0);
    }
 
    @SideOnly(Side.CLIENT)
@@ -166,19 +166,19 @@ public class EntityFireBat extends EntityMob {
    public void onUpdate() {
       super.onUpdate();
       if (this.worldObj.isRemote && this.getIsExplosive()) {
-         Thaumcraft.proxy.drawGenericParticles(this.worldObj, this.prevPosX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F), this.prevPosY + (double)(this.height / 2.0F) + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F), this.prevPosZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F), (double)0.0F, (double)0.0F, (double)0.0F, 1.0F, 1.0F, 1.0F, 0.8F, false, 151, 9, 1, 7 + this.rand.nextInt(5), 0, 1.0F + this.rand.nextFloat() * 0.5F);
+         Thaumcraft.proxy.drawGenericParticles(this.worldObj, this.prevPosX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F), this.prevPosY + (double)(this.height / 2.0F) + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F), this.prevPosZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F), 0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F, 0.8F, false, 151, 9, 1, 7 + this.rand.nextInt(5), 0, 1.0F + this.rand.nextFloat() * 0.5F);
       }
 
       if (this.getIsBatHanging()) {
-         this.motionX = this.motionY = this.motionZ = (double)0.0F;
+         this.motionX = this.motionY = this.motionZ = 0.0F;
          this.posY = (double)MathHelper.floor_double(this.posY) + (double)1.0F - (double)this.height;
       } else {
-         this.motionY *= (double)0.6F;
+         this.motionY *= 0.6F;
       }
 
       if (this.worldObj.isRemote && !this.getIsVampire()) {
-         this.worldObj.spawnParticle("smoke", this.prevPosX + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), this.prevPosY + (double)(this.height / 2.0F) + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), this.prevPosZ + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), (double)0.0F, (double)0.0F, (double)0.0F);
-         this.worldObj.spawnParticle("flame", this.prevPosX + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), this.prevPosY + (double)(this.height / 2.0F) + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), this.prevPosZ + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), (double)0.0F, (double)0.0F, (double)0.0F);
+         this.worldObj.spawnParticle("smoke", this.prevPosX + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), this.prevPosY + (double)(this.height / 2.0F) + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), this.prevPosZ + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), 0.0F, 0.0F, 0.0F);
+         this.worldObj.spawnParticle("flame", this.prevPosX + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), this.prevPosY + (double)(this.height / 2.0F) + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), this.prevPosZ + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), 0.0F, 0.0F, 0.0F);
       }
 
    }
@@ -188,15 +188,15 @@ public class EntityFireBat extends EntityMob {
       if (this.getIsBatHanging()) {
          if (!this.worldObj.isBlockNormalCubeDefault(MathHelper.floor_double(this.posX), (int)this.posY + 1, MathHelper.floor_double(this.posZ), false)) {
             this.setIsBatHanging(false);
-            this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1015, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
+            this.worldObj.playAuxSFXAtEntity(null, 1015, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
          } else {
             if (this.rand.nextInt(200) == 0) {
                this.rotationYawHead = (float)this.rand.nextInt(360);
             }
 
-            if (this.worldObj.getClosestPlayerToEntity(this, (double)4.0F) != null) {
+            if (this.worldObj.getClosestPlayerToEntity(this, 4.0F) != null) {
                this.setIsBatHanging(false);
-               this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1015, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
+               this.worldObj.playAuxSFXAtEntity(null, 1015, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
             }
          }
       } else {
@@ -314,7 +314,7 @@ public class EntityFireBat extends EntityMob {
    }
 
    protected Entity findPlayerToAttack() {
-      double var1 = (double)12.0F;
+      double var1 = 12.0F;
       return this.getIsSummoned() ? null : this.worldObj.getClosestVulnerablePlayerToEntity(this, var1);
    }
 
@@ -336,7 +336,7 @@ public class EntityFireBat extends EntityMob {
       int var3 = MathHelper.floor_double(this.posZ);
       int var4 = this.worldObj.getBlockLightValue(var2, var1, var3);
       byte var5 = 7;
-      return var4 > this.rand.nextInt(var5) ? false : super.getCanSpawnHere();
+      return var4 <= this.rand.nextInt(var5) && super.getCanSpawnHere();
    }
 
    protected Item getDropItem() {

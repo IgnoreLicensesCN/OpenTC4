@@ -85,8 +85,8 @@ public class BlockTaint extends Block {
 
    @SideOnly(Side.CLIENT)
    public int getBlockColor() {
-      double d0 = (double)0.5F;
-      double d1 = (double)1.0F;
+      double d0 = 0.5F;
+      double d1 = 1.0F;
       return ColorizerGrass.getGrassColor(d0, d1);
    }
 
@@ -163,11 +163,11 @@ public class BlockTaint extends Block {
 
             if (md == 0) {
                if (Config.spawnTaintSpore && world.isAirBlock(x, y + 1, z) && random.nextInt(200) == 0) {
-                  List<Entity> targets = world.getEntitiesWithinAABB(EntityTaintSporeSwarmer.class, AxisAlignedBB.getBoundingBox((double)x, (double)y, (double)z, (double)(x + 1), (double)(y + 1), (double)(z + 1)).expand((double)16.0F, (double)16.0F, (double)16.0F));
-                  if (targets.size() <= 0) {
+                  List<Entity> targets = world.getEntitiesWithinAABB(EntityTaintSporeSwarmer.class, AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(16.0F, 16.0F, 16.0F));
+                  if (targets.size() == 0) {
                      world.setBlockToAir(x, y, z);
                      EntityTaintSporeSwarmer spore = new EntityTaintSporeSwarmer(world);
-                     spore.setLocationAndAngles((double)((float)x + 0.5F), (double)y, (double)((float)z + 0.5F), 0.0F, 0.0F);
+                     spore.setLocationAndAngles((float)x + 0.5F, y, (float)z + 0.5F, 0.0F, 0.0F);
                      world.spawnEntityInWorld(spore);
                      world.playSoundAtEntity(spore, "thaumcraft:roots", 0.1F, 0.9F + world.rand.nextFloat() * 0.2F);
                   }
@@ -210,7 +210,7 @@ public class BlockTaint extends Block {
    }
 
    public boolean canSilkHarvest(World world, EntityPlayer player, int x, int y, int z, int metadata) {
-      return metadata == 2 ? true : super.canSilkHarvest(world, player, x, y, z, metadata);
+      return metadata == 2 || super.canSilkHarvest(world, player, x, y, z, metadata);
    }
 
    public int quantityDropped(int meta, int fortune, Random random) {
@@ -250,7 +250,7 @@ public class BlockTaint extends Block {
          if (l.isReplaceable(par0World, par1, par2, par3)) {
             return true;
          } else {
-            return l.getMaterial() == Material.water ? true : l.getMaterial() == Material.lava;
+            return l.getMaterial() == Material.water || l.getMaterial() == Material.lava;
          }
       } else {
          return true;
@@ -263,7 +263,7 @@ public class BlockTaint extends Block {
          byte b0 = 32;
          if (par1World.checkChunksExist(x2 - b0, y2 - b0, z2 - b0, x2 + b0, y2 + b0, z2 + b0)) {
             if (!par1World.isRemote) {
-               EntityFallingTaint entityfalling = new EntityFallingTaint(par1World, (double)((float)x2 + 0.5F), (double)((float)y2 + 0.5F), (double)((float)z2 + 0.5F), this, md, x, y, z);
+               EntityFallingTaint entityfalling = new EntityFallingTaint(par1World, (float)x2 + 0.5F, (float)y2 + 0.5F, (float)z2 + 0.5F, this, md, x, y, z);
                this.onStartFalling(entityfalling);
                par1World.spawnEntityInWorld(entityfalling);
                return true;
@@ -317,7 +317,7 @@ public class BlockTaint extends Block {
    public boolean onBlockEventReceived(World world, int x, int y, int z, int id, int cd) {
       if (id == 1) {
          if (world.isRemote) {
-            world.playSound((double)x, (double)y, (double)z, "thaumcraft:roots", 0.1F, 0.9F + world.rand.nextFloat() * 0.2F, false);
+            world.playSound(x, y, z, "thaumcraft:roots", 0.1F, 0.9F + world.rand.nextFloat() * 0.2F, false);
          }
 
          return true;

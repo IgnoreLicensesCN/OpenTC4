@@ -16,7 +16,7 @@ public class BlockEssentiaReservoirRenderer extends BlockRenderer implements ISi
       renderer.setRenderBoundsFromBlock(block);
       drawFaces(renderer, block, ((BlockEssentiaReservoir)block).icon, true);
       GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-      TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileEssentiaReservoir(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+      TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileEssentiaReservoir(), 0.0F, 0.0F, 0.0F, 0.0F);
       GL11.glEnable(32826);
    }
 

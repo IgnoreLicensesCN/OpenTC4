@@ -22,7 +22,7 @@ public class ChampionModSpined implements IChampionModifierEffect {
          float d = boss.worldObj.rand.nextFloat() * boss.width;
          float h = boss.worldObj.rand.nextFloat() * boss.height;
          int p = 176 + boss.worldObj.rand.nextInt(4) * 3;
-         Thaumcraft.proxy.drawGenericParticles(boss.worldObj, boss.boundingBox.minX + (double)w, boss.boundingBox.minY + (double)h, boss.boundingBox.minZ + (double)d, (double)0.0F, (double)0.0F, (double)0.0F, 0.5F + boss.worldObj.rand.nextFloat() * 0.2F, 0.1F + boss.worldObj.rand.nextFloat() * 0.2F, 0.1F + boss.worldObj.rand.nextFloat() * 0.2F, 0.7F, false, p, 3, 1, 3, 0, 1.2F + boss.worldObj.rand.nextFloat() * 0.3F);
+         Thaumcraft.proxy.drawGenericParticles(boss.worldObj, boss.boundingBox.minX + (double)w, boss.boundingBox.minY + (double)h, boss.boundingBox.minZ + (double)d, 0.0F, 0.0F, 0.0F, 0.5F + boss.worldObj.rand.nextFloat() * 0.2F, 0.1F + boss.worldObj.rand.nextFloat() * 0.2F, 0.1F + boss.worldObj.rand.nextFloat() * 0.2F, 0.7F, false, p, 3, 1, 3, 0, 1.2F + boss.worldObj.rand.nextFloat() * 0.3F);
       }
    }
 }

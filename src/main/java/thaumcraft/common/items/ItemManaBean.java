@@ -58,7 +58,7 @@ public class ItemManaBean extends ItemFood implements IEssentiaContainerItem {
          Potion p = Potion.potionTypes[world.rand.nextInt(Potion.potionTypes.length)];
          if (p != null) {
             if (p.isInstant()) {
-               p.affectEntity(player, player, 2, (double)3.0F);
+               p.affectEntity(player, player, 2, 3.0F);
             } else {
                player.addPotionEffect(new PotionEffect(p.id, 160 + world.rand.nextInt(80), 0));
             }
@@ -69,7 +69,7 @@ public class ItemManaBean extends ItemFood implements IEssentiaContainerItem {
             if (al != null && al.size() > 0) {
                Thaumcraft.proxy.playerKnowledge.addAspectPool(player.getCommandSenderName(), al.getAspects()[0], (short)1);
                ResearchManager.scheduleSave(player);
-               PacketHandler.INSTANCE.sendTo(new PacketAspectPool(al.getAspects()[0].getTag(), Short.valueOf((short)1), Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), al.getAspects()[0])), (EntityPlayerMP)player);
+               PacketHandler.INSTANCE.sendTo(new PacketAspectPool(al.getAspects()[0].getTag(), (short) 1, Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), al.getAspects()[0])), (EntityPlayerMP)player);
             }
          }
       }
@@ -169,7 +169,7 @@ public class ItemManaBean extends ItemFood implements IEssentiaContainerItem {
                   int k1 = ConfigBlocks.blockManaPod.onBlockPlaced(par3World, par4, par5, par6, par7, par8, par9, par10, 0);
                   par3World.setBlock(par4, par5, par6, ConfigBlocks.blockManaPod, k1, 2);
                   TileEntity tile = par3World.getTileEntity(par4, par5, par6);
-                  if (tile != null && tile instanceof TileManaPod && this.getAspects(par1ItemStack) != null && this.getAspects(par1ItemStack).size() > 0) {
+                  if (tile instanceof TileManaPod && this.getAspects(par1ItemStack) != null && this.getAspects(par1ItemStack).size() > 0) {
                      ((TileManaPod)tile).aspect = this.getAspects(par1ItemStack).getAspects()[0];
                   }
 
@@ -187,6 +187,6 @@ public class ItemManaBean extends ItemFood implements IEssentiaContainerItem {
    }
 
    static {
-      displayAspects = (Aspect[])Aspect.aspects.values().toArray(new Aspect[0]);
+      displayAspects = Aspect.aspects.values().toArray(new Aspect[0]);
    }
 }

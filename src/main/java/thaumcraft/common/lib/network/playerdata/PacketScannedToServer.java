@@ -67,7 +67,7 @@ public class PacketScannedToServer implements IMessage, IMessageHandler<PacketSc
                e = world.getEntityByID(message.entityid);
            }
 
-           if (player != null && player instanceof EntityPlayer) {
+           if (player instanceof EntityPlayer) {
                ScanManager.completeScan((EntityPlayer) player, new ScanResult(message.type, message.id, message.md, e, message.phenomena), message.prefix);
            }
 

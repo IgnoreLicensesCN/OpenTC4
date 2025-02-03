@@ -111,7 +111,7 @@ public class ContainerPech extends Container {
                   }
                }
 
-               int r = (Integer)loot.get(this.theWorld.rand.nextInt(loot.size()));
+               int r = loot.get(this.theWorld.rand.nextInt(loot.size()));
                ItemStack is = this.pech.loot[r].copy();
                is.stackSize = 1;
                this.mergeItemStack(is, 1, 5, false);
@@ -140,7 +140,7 @@ public class ContainerPech extends Container {
                List it = null;
 
                do {
-                  it = (List)pos.get(this.theWorld.rand.nextInt(pos.size()));
+                  it = pos.get(this.theWorld.rand.nextInt(pos.size()));
                } while((Integer)it.get(0) != am);
 
                ItemStack is = ((ItemStack)it.get(1)).copy();
@@ -181,7 +181,7 @@ public class ContainerPech extends Container {
          }
 
          if (itemstack1.stackSize == 0) {
-            slot.putStack((ItemStack)null);
+            slot.putStack(null);
          } else {
             slot.onSlotChanged();
          }

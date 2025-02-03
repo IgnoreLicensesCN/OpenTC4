@@ -37,7 +37,7 @@ public class BlockWoodenDeviceItem extends ItemBlock {
       if (ret) {
          if (metadata == 0) {
             TileEntity tile = world.getTileEntity(x, y, z);
-            if (tile != null && tile instanceof TileBellows) {
+            if (tile instanceof TileBellows) {
                ForgeDirection dir = ForgeDirection.getOrientation(side).getOpposite();
                ((TileBellows)tile).orientation = (byte)dir.ordinal();
                int xx = x + dir.offsetX;
@@ -55,7 +55,7 @@ public class BlockWoodenDeviceItem extends ItemBlock {
 
          if (metadata == 4) {
             TileArcaneBoreBase tile = (TileArcaneBoreBase)world.getTileEntity(x, y, z);
-            if (tile != null && tile instanceof TileArcaneBoreBase) {
+            if (tile instanceof TileArcaneBoreBase) {
                int var6 = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + (double)0.5F) & 3;
                switch (var6) {
                   case 0:
@@ -78,7 +78,7 @@ public class BlockWoodenDeviceItem extends ItemBlock {
 
          if (metadata == 5) {
             TileArcaneBore tile = (TileArcaneBore)world.getTileEntity(x, y, z);
-            if (tile != null && tile instanceof TileArcaneBore) {
+            if (tile instanceof TileArcaneBore) {
                tile.baseOrientation = ForgeDirection.getOrientation(side);
                int var6 = BlockPistonBase.determineOrientation(world, x, y, z, player);
                tile.orientation = ForgeDirection.getOrientation(var6);

@@ -62,7 +62,7 @@ public class WRVector3 {
    }
 
    public float length() {
-      return (float)Math.sqrt((double)(this.x * this.x + this.y * this.y + this.z * this.z));
+      return (float)Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
    }
 
    public float lengthPow2() {
@@ -70,19 +70,19 @@ public class WRVector3 {
    }
 
    public WRVector3 copy() {
-      return new WRVector3((double)this.x, (double)this.y, (double)this.z);
+      return new WRVector3(this.x, this.y, this.z);
    }
 
    public static WRVector3 crossProduct(WRVector3 vec1, WRVector3 vec2) {
-      return new WRVector3((double)(vec1.y * vec2.z - vec1.z * vec2.y), (double)(vec1.z * vec2.x - vec1.x * vec2.z), (double)(vec1.x * vec2.y - vec1.y * vec2.x));
+      return new WRVector3(vec1.y * vec2.z - vec1.z * vec2.y, vec1.z * vec2.x - vec1.x * vec2.z, vec1.x * vec2.y - vec1.y * vec2.x);
    }
 
    public static WRVector3 xCrossProduct(WRVector3 vec) {
-      return new WRVector3((double)0.0F, (double)vec.z, (double)(-vec.y));
+      return new WRVector3(0.0F, vec.z, -vec.y);
    }
 
    public static WRVector3 zCrossProduct(WRVector3 vec) {
-      return new WRVector3((double)(-vec.y), (double)vec.x, (double)0.0F);
+      return new WRVector3(-vec.y, vec.x, 0.0F);
    }
 
    public static float dotProduct(WRVector3 vec1, WRVector3 vec2) {
@@ -94,11 +94,11 @@ public class WRVector3 {
    }
 
    public static float anglePreNorm(WRVector3 vec1, WRVector3 vec2) {
-      return (float)Math.acos((double)dotProduct(vec1, vec2));
+      return (float)Math.acos(dotProduct(vec1, vec2));
    }
 
    public WRVector3 rotate(float angle, WRVector3 axis) {
-      return WRMat4.rotationMat((double)angle, axis).translate(this);
+      return WRMat4.rotationMat(angle, axis).translate(this);
    }
 
    public String toString() {
@@ -106,7 +106,7 @@ public class WRVector3 {
    }
 
    public Vec3 toVec3D() {
-      return Vec3.createVectorHelper((double)this.x, (double)this.y, (double)this.z);
+      return Vec3.createVectorHelper(this.x, this.y, this.z);
    }
 
    public static WRVector3 getPerpendicular(WRVector3 vec) {

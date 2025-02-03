@@ -42,7 +42,7 @@ public class ItemInkwell extends Item implements IScribeTools {
       TileEntity tile = world.getTileEntity(x, y, z);
       int md = world.getBlockMetadata(x, y, z);
       Block bi = world.getBlock(x, y, z);
-      if (tile != null && tile instanceof TileTable && md != 6) {
+      if (tile instanceof TileTable && md != 6) {
          if (world.isRemote) {
             return false;
          }
@@ -50,14 +50,14 @@ public class ItemInkwell extends Item implements IScribeTools {
          for(int a = 2; a < 6; ++a) {
             TileEntity tile2 = world.getTileEntity(x + ForgeDirection.getOrientation(a).offsetX, y + ForgeDirection.getOrientation(a).offsetY, z + ForgeDirection.getOrientation(a).offsetZ);
             int md2 = world.getBlockMetadata(x + ForgeDirection.getOrientation(a).offsetX, y + ForgeDirection.getOrientation(a).offsetY, z + ForgeDirection.getOrientation(a).offsetZ);
-            if (tile2 != null && tile2 instanceof TileTable && md2 < 6) {
+            if (tile2 instanceof TileTable && md2 < 6) {
                world.setBlock(x, y, z, bi, a, 0);
                world.setTileEntity(x, y, z, new TileResearchTable());
                world.setBlock(x + ForgeDirection.getOrientation(a).offsetX, y + ForgeDirection.getOrientation(a).offsetY, z + ForgeDirection.getOrientation(a).offsetZ, bi, ForgeDirection.getOrientation(a).getOpposite().ordinal() + 4, 0);
                world.markBlockForUpdate(x, y, z);
                world.markBlockForUpdate(x + ForgeDirection.getOrientation(a).offsetX, y + ForgeDirection.getOrientation(a).offsetY, z + ForgeDirection.getOrientation(a).offsetZ);
                TileEntity tile3 = world.getTileEntity(x, y, z);
-               if (tile3 != null && tile3 instanceof TileResearchTable) {
+               if (tile3 instanceof TileResearchTable) {
                   ((TileResearchTable)tile3).setInventorySlotContents(0, stack.copy());
                   if (!player.capabilities.isCreativeMode) {
                      player.inventory.decrStackSize(player.inventory.currentItem, 1);

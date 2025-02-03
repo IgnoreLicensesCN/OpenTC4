@@ -35,27 +35,27 @@ public class CCRenderState
    /**
     * Represents an operation to be run for each vertex that operates on and modifies the current state
     */
-   public static interface IVertexOperation
+   public interface IVertexOperation
    {
       /**
        * Load any required references and add dependencies to the pipeline based on the current model (may be null)
        * Return false if this operation is redundant in the pipeline with the given model
        */
-      public boolean load();
+      boolean load();
 
       /**
        * Perform the operation on the current render state
        */
-      public void operate();
+      void operate();
 
       /**
        * Get the unique id representing this type of operation. Duplicate operation IDs within the pipeline may have unexpected results.
        * ID shoulld be obtained from CCRenderState.registerOperation() and stored in a static variable
        */
-      public int operationID();
+      int operationID();
    }
 
-   private static ArrayList<VertexAttribute<?>> vertexAttributes = new ArrayList<VertexAttribute<?>>();
+   private static ArrayList<VertexAttribute<?>> vertexAttributes = new ArrayList<>();
    private static int registerVertexAttribute(VertexAttribute<?> attr) {
       vertexAttributes.add(attr);
       return vertexAttributes.size()-1;
@@ -107,9 +107,9 @@ public class CCRenderState
       return dst;
    }
 
-   public static interface IVertexSource
+   public interface IVertexSource
    {
-      public Vertex5[] getVertices();
+      Vertex5[] getVertices();
 
       /**
        * Gets an array of vertex attrutes
@@ -117,17 +117,17 @@ public class CCRenderState
        * @param <T> The attrute array type
        * @return An array, or null if not computed
        */
-      public <T> T getAttributes(VertexAttribute<T> attr);
+      <T> T getAttributes(VertexAttribute<T> attr);
 
       /**
        * @return True if the specified attrute is provided by this model, either by returning an array from getAttributes or by setting the state in prepareVertex
        */
-      public boolean hasAttribute(VertexAttribute<?> attr);
+      boolean hasAttribute(VertexAttribute<?> attr);
 
       /**
        * Callback to set CCRenderState for a vertex before the pipeline runs
        */
-      public void prepareVertex();
+      void prepareVertex();
    }
 
    public static VertexAttribute<Vector3[]> normalAttrib = new VertexAttribute<Vector3[]>() {

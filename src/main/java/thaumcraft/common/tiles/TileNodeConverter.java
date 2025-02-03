@@ -27,13 +27,13 @@ public class TileNodeConverter extends TileThaumcraft {
 
       if (this.status == 1 && !this.worldObj.isRemote && this.count >= 1000) {
          TileEntity tile = this.worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord);
-         if (tile != null && tile instanceof TileNode) {
+         if (tile instanceof TileNode) {
             AspectList base = ((TileNode)tile).getAspectsBase();
             NodeType type = ((TileNode)tile).getNodeType();
             NodeModifier mod = ((TileNode)tile).getNodeModifier();
             this.worldObj.setBlock(this.xCoord, this.yCoord - 1, this.zCoord, ConfigBlocks.blockAiry, 5, 3);
             TileEntity tilenew = this.worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord);
-            if (tilenew != null && tilenew instanceof TileNodeEnergized) {
+            if (tilenew instanceof TileNodeEnergized) {
                ((TileNodeEnergized)tilenew).setNodeModifier(mod);
                ((TileNodeEnergized)tilenew).setNodeType(type);
                ((TileNodeEnergized)tilenew).setAspects(base.copy());
@@ -49,13 +49,13 @@ public class TileNodeConverter extends TileThaumcraft {
 
       if (this.status == 2 && !this.worldObj.isRemote && this.count <= 50) {
          TileEntity tile = this.worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord);
-         if (tile != null && tile instanceof TileNodeEnergized) {
+         if (tile instanceof TileNodeEnergized) {
             AspectList base = ((TileNodeEnergized)tile).getAuraBase();
             NodeType type = ((TileNodeEnergized)tile).getNodeType();
             NodeModifier mod = ((TileNodeEnergized)tile).getNodeModifier();
             this.worldObj.setBlock(this.xCoord, this.yCoord - 1, this.zCoord, ConfigBlocks.blockAiry, 0, 3);
             TileEntity tilenew = this.worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord);
-            if (tilenew != null && tilenew instanceof TileNode) {
+            if (tilenew instanceof TileNode) {
                ((TileNode)tilenew).setNodeModifier(mod);
                ((TileNode)tilenew).setNodeType(type);
                ((TileNode)tilenew).setAspects(base.copy());
@@ -77,7 +77,7 @@ public class TileNodeConverter extends TileThaumcraft {
             ++this.count;
             if (!this.worldObj.isRemote) {
                TileEntity tilenew = this.worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord);
-               if (tilenew != null && tilenew instanceof TileNode) {
+               if (tilenew instanceof TileNode) {
                   TileNode nd = (TileNode)tilenew;
                   AspectList al = nd.getAspects();
                   if (al.getAspects().length > 0) {
@@ -120,7 +120,7 @@ public class TileNodeConverter extends TileThaumcraft {
 
    private boolean hasStabilizer() {
       TileEntity te = this.worldObj.getTileEntity(this.xCoord, this.yCoord - 2, this.zCoord);
-      return !this.worldObj.isBlockIndirectlyGettingPowered(this.xCoord, this.yCoord - 2, this.zCoord) && te != null && te instanceof TileNodeStabilizer;
+      return !this.worldObj.isBlockIndirectlyGettingPowered(this.xCoord, this.yCoord - 2, this.zCoord) && te instanceof TileNodeStabilizer;
    }
 
    public void checkStatus() {

@@ -24,7 +24,7 @@ public class EntityCultistKnight extends EntityCultist {
    public EntityCultistKnight(World p_i1745_1_) {
       super(p_i1745_1_);
       this.tasks.addTask(0, new EntityAISwimming(this));
-      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityLivingBase.class, (double)1.0F, false));
+      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityLivingBase.class, 1.0F, false));
       this.tasks.addTask(4, new EntityAIRestrictOpenDoor(this));
       this.tasks.addTask(5, new EntityAIOpenDoor(this, true));
       this.tasks.addTask(6, new EntityAIMoveTowardsRestriction(this, 0.8));
@@ -37,7 +37,7 @@ public class EntityCultistKnight extends EntityCultist {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)36.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(36.0F);
    }
 
    protected void addRandomArmor() {
@@ -53,7 +53,7 @@ public class EntityCultistKnight extends EntityCultist {
          } else {
             this.setCurrentItemOrArmor(0, new ItemStack(ConfigItems.itemSwordThaumium));
             if (this.rand.nextBoolean()) {
-               this.setCurrentItemOrArmor(4, (ItemStack)null);
+               this.setCurrentItemOrArmor(4, null);
             }
          }
       } else {

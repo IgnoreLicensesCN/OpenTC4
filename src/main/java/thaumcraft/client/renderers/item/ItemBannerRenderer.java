@@ -28,7 +28,7 @@ public class ItemBannerRenderer implements IItemRenderer {
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       short var11 = 0;
       if (type != ItemRenderType.EQUIPPED && type != ItemRenderType.EQUIPPED_FIRST_PERSON) {
-         GL11.glRotatef((float)var11, 0.0F, 1.0F, 0.0F);
+         GL11.glRotatef(var11, 0.0F, 1.0F, 0.0F);
       } else {
          GL11.glTranslatef(1.0F, 1.0F, 1.0F);
       }
@@ -42,7 +42,7 @@ public class ItemBannerRenderer implements IItemRenderer {
          tb.setAspect(Aspect.getAspect(item.stackTagCompound.getString("aspect")));
       }
 
-      TileEntityRendererDispatcher.instance.renderTileEntityAt(tb, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+      TileEntityRendererDispatcher.instance.renderTileEntityAt(tb, 0.0F, 0.0F, 0.0F, 0.0F);
       GL11.glPopMatrix();
    }
 }

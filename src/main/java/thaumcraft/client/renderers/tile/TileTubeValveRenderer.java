@@ -28,8 +28,8 @@ public class TileTubeValveRenderer extends TileEntitySpecialRenderer {
       }
 
       GL11.glRotatef(90.0F, (float)valve.facing.offsetX, (float)valve.facing.offsetY, (float)valve.facing.offsetZ);
-      GL11.glRotated((double)(-valve.rotation) * (double)1.5F, (double)0.0F, (double)1.0F, (double)0.0F);
-      GL11.glTranslated((double)0.0F, (double)(-(valve.rotation / 360.0F) * 0.12F), (double)0.0F);
+      GL11.glRotated((double)(-valve.rotation) * (double)1.5F, 0.0F, 1.0F, 0.0F);
+      GL11.glTranslated(0.0F, -(valve.rotation / 360.0F) * 0.12F, 0.0F);
       GL11.glPushMatrix();
       this.model.render();
       GL11.glPopMatrix();
@@ -41,7 +41,7 @@ public class TileTubeValveRenderer extends TileEntitySpecialRenderer {
       GL11.glPushMatrix();
       GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
       GL11.glTranslatef(-0.25F, -0.25F, -0.25F);
-      GL11.glScaled((double)0.5F, (double)0.5F, (double)0.5F);
+      GL11.glScaled(0.5F, 0.5F, 0.5F);
       Tessellator tessellator = Tessellator.instance;
       IIcon icon = ((BlockTube)ConfigBlocks.blockTube).iconValve;
       float f1 = icon.getMaxU();

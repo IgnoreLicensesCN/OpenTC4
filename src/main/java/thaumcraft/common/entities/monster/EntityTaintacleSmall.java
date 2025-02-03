@@ -17,8 +17,8 @@ public class EntityTaintacleSmall extends EntityTaintacle implements ITaintedMob
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)8.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)2.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(8.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0F);
    }
 
    public void onUpdate() {

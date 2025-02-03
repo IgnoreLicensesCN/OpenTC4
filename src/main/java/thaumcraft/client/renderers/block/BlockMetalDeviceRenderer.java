@@ -21,7 +21,7 @@ public class BlockMetalDeviceRenderer extends BlockRenderer implements ISimpleBl
       if (metadata != 0 && metadata != 6) {
          if (metadata == 1) {
             GL11.glTranslatef(-0.5F, 0.0F, -0.5F);
-            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileAlembic(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileAlembic(), 0.0F, 0.0F, 0.0F, 0.0F);
             GL11.glEnable(32826);
          } else if (metadata == 5) {
             GL11.glTranslatef(0.0F, -0.3F, 0.0F);
@@ -55,15 +55,15 @@ public class BlockMetalDeviceRenderer extends BlockRenderer implements ISimpleBl
             drawFaces(renderer, block, ((BlockMetalDevice)block).icon[19], ((BlockMetalDevice)block).icon[19], ((BlockMetalDevice)block).icon[18], ((BlockMetalDevice)block).icon[18], ((BlockMetalDevice)block).icon[18], ((BlockMetalDevice)block).icon[18], true);
          } else if (metadata == 14) {
             GL11.glPushMatrix();
-            GL11.glScaled((double)1.5F, (double)1.5F, (double)1.5F);
+            GL11.glScaled(1.5F, 1.5F, 1.5F);
             GL11.glTranslatef(-0.5F, -0.25F, -0.5F);
-            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileVisRelay(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileVisRelay(), 0.0F, 0.0F, 0.0F, 0.0F);
             GL11.glEnable(32826);
             GL11.glPopMatrix();
          } else if (metadata == 2) {
             GL11.glPushMatrix();
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileMagicWorkbenchCharger(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileMagicWorkbenchCharger(), 0.0F, 0.0F, 0.0F, 0.0F);
             GL11.glEnable(32826);
             GL11.glPopMatrix();
          }
@@ -85,16 +85,16 @@ public class BlockMetalDeviceRenderer extends BlockRenderer implements ISimpleBl
          IIcon bottom = ((BlockMetalDevice)block).icon[6];
          float f5 = 0.123F;
          TileEntity te = world.getTileEntity(x, y, z);
-         if (te != null && te instanceof TileCrucible && ((TileCrucible)te).aspects.size() > 0) {
+         if (te instanceof TileCrucible && ((TileCrucible) te).aspects.size() > 0) {
             setBrightness(world, x, y, z, block);
          }
 
-         renderer.renderFaceXPos(block, (double)((float)x - 1.0F + f5), (double)y, (double)z, innerSide);
-         renderer.renderFaceXNeg(block, (double)((float)x + 1.0F - f5), (double)y, (double)z, innerSide);
-         renderer.renderFaceZPos(block, (double)x, (double)y, (double)((float)z - 1.0F + f5), innerSide);
-         renderer.renderFaceZNeg(block, (double)x, (double)y, (double)((float)z + 1.0F - f5), innerSide);
-         renderer.renderFaceYPos(block, (double)x, (double)((float)y - 1.0F + 0.25F), (double)z, bottom);
-         renderer.renderFaceYNeg(block, (double)x, (double)((float)y + 1.0F - 0.75F), (double)z, bottom);
+         renderer.renderFaceXPos(block, (float)x - 1.0F + f5, y, z, innerSide);
+         renderer.renderFaceXNeg(block, (float)x + 1.0F - f5, y, z, innerSide);
+         renderer.renderFaceZPos(block, x, y, (float)z - 1.0F + f5, innerSide);
+         renderer.renderFaceZNeg(block, x, y, (float)z + 1.0F - f5, innerSide);
+         renderer.renderFaceYPos(block, x, (float)y - 1.0F + 0.25F, z, bottom);
+         renderer.renderFaceYNeg(block, x, (float)y + 1.0F - 0.75F, z, bottom);
       } else if (metadata != 5 && metadata != 6) {
          if (metadata != 7 && metadata != 8 && metadata != 13) {
             if (metadata != 3 && metadata != 9) {
@@ -103,7 +103,7 @@ public class BlockMetalDeviceRenderer extends BlockRenderer implements ISimpleBl
                   renderer.setRenderBoundsFromBlock(block);
                   renderer.renderStandardBlock(block, x, y, z);
                   TileEntity te = world.getTileEntity(x, y, z);
-                  if (te != null && te instanceof TileBrainbox) {
+                  if (te instanceof TileBrainbox) {
                      switch (((TileBrainbox)te).facing) {
                         case UP:
                            block.setBlockBounds(W6, W13, W6, W10, 1.0F, W10);
@@ -152,14 +152,14 @@ public class BlockMetalDeviceRenderer extends BlockRenderer implements ISimpleBl
          block.setBlockBounds(0.0F, 0.8125F, 0.0F, 1.0F, 1.0F, 1.0F);
          renderer.setRenderBoundsFromBlock(block);
          renderer.renderStandardBlock(block, x, y, z);
-         renderer.renderFaceXPos(block, (double)((float)x - 1.002F + W3), (double)y, (double)z, block.getBlockTextureFromSide(0));
-         renderer.renderFaceXNeg(block, (double)((float)x + 1.002F - W3), (double)y, (double)z, block.getBlockTextureFromSide(0));
-         renderer.renderFaceZPos(block, (double)x, (double)y, (double)((float)z - 1.002F + W3), block.getBlockTextureFromSide(0));
-         renderer.renderFaceZNeg(block, (double)x, (double)y, (double)((float)z + 1.002F - W3), block.getBlockTextureFromSide(0));
-         renderer.renderFaceXPos(block, (double)((float)x - 1.002F + W9), (double)y, (double)z, block.getBlockTextureFromSide(0));
-         renderer.renderFaceXNeg(block, (double)((float)x + 1.002F - W9), (double)y, (double)z, block.getBlockTextureFromSide(0));
-         renderer.renderFaceZPos(block, (double)x, (double)y, (double)((float)z - 1.002F + W9), block.getBlockTextureFromSide(0));
-         renderer.renderFaceZNeg(block, (double)x, (double)y, (double)((float)z + 1.002F - W9), block.getBlockTextureFromSide(0));
+         renderer.renderFaceXPos(block, (float)x - 1.002F + W3, y, z, block.getBlockTextureFromSide(0));
+         renderer.renderFaceXNeg(block, (float)x + 1.002F - W3, y, z, block.getBlockTextureFromSide(0));
+         renderer.renderFaceZPos(block, x, y, (float)z - 1.002F + W3, block.getBlockTextureFromSide(0));
+         renderer.renderFaceZNeg(block, x, y, (float)z + 1.002F - W3, block.getBlockTextureFromSide(0));
+         renderer.renderFaceXPos(block, (float)x - 1.002F + W9, y, z, block.getBlockTextureFromSide(0));
+         renderer.renderFaceXNeg(block, (float)x + 1.002F - W9, y, z, block.getBlockTextureFromSide(0));
+         renderer.renderFaceZPos(block, x, y, (float)z - 1.002F + W9, block.getBlockTextureFromSide(0));
+         renderer.renderFaceZNeg(block, x, y, (float)z + 1.002F - W9, block.getBlockTextureFromSide(0));
          if (metadata == 6) {
             block.setBlockBounds(W1, W14, W1, W15, W15, W15);
             renderer.setRenderBoundsFromBlock(block);

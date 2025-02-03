@@ -29,7 +29,14 @@ public class AIHurtByTarget extends AITarget {
    public void startExecuting() {
       this.taskOwner.setAttackTarget(this.taskOwner.getAITarget());
       if (this.entityCallsForHelp) {
-         for(EntityLiving var3 : (List<EntityLiving>)this.taskOwner.worldObj.getEntitiesWithinAABB(this.taskOwner.getClass(), AxisAlignedBB.getBoundingBox(this.taskOwner.posX, this.taskOwner.posY, this.taskOwner.posZ, this.taskOwner.posX + (double)1.0F, this.taskOwner.posY + (double)1.0F, this.taskOwner.posZ + (double)1.0F).expand((double)this.targetDistance, (double)4.0F, (double)this.targetDistance))) {
+         for(EntityLiving var3 : (List<EntityLiving>)
+                 this.taskOwner
+                         .worldObj
+                         .getEntitiesWithinAABB(
+                                 this.taskOwner.getClass(),
+                                 AxisAlignedBB.getBoundingBox(this.taskOwner.posX, this.taskOwner.posY, this.taskOwner.posZ, this.taskOwner.posX + (double)1.0F, this.taskOwner.posY + (double)1.0F, this.taskOwner.posZ + (double)1.0F)
+                                         .expand(this.targetDistance, 4.0F, this.targetDistance))
+         ) {
             if (this.taskOwner != var3 && var3.getAttackTarget() == null) {
                var3.setAttackTarget(this.taskOwner.getAITarget());
             }
@@ -41,7 +48,7 @@ public class AIHurtByTarget extends AITarget {
 
    public void resetTask() {
       if (this.taskOwner.getAttackTarget() != null && this.taskOwner.getAttackTarget() instanceof EntityPlayer && ((EntityPlayer)this.taskOwner.getAttackTarget()).capabilities.disableDamage) {
-         this.taskOwner.setAttackTarget((EntityLivingBase)null);
+         this.taskOwner.setAttackTarget(null);
          super.resetTask();
       }
 

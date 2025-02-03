@@ -131,7 +131,7 @@ public class TileSpa extends TileThaumcraft implements ISidedInventory, IFluidHa
    }
 
    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
-      return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + (double)0.5F, (double)this.yCoord + (double)0.5F, (double)this.zCoord + (double)0.5F) <= (double)64.0F;
+      return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && par1EntityPlayer.getDistanceSq((double) this.xCoord + (double) 0.5F, (double) this.yCoord + (double) 0.5F, (double) this.zCoord + (double) 0.5F) <= (double) 64.0F;
    }
 
    public void openInventory() {
@@ -219,14 +219,8 @@ public class TileSpa extends TileThaumcraft implements ISidedInventory, IFluidHa
             return false;
          }
 
-         if (this.itemStacks[0] == null || !(this.itemStacks[0].getItem() instanceof ItemBathSalts)) {
-            return false;
-         }
-      } else if (this.tank.getInfo().fluid == null || !this.tank.getFluid().getFluid().canBePlacedInWorld() || this.tank.getFluidAmount() < 1000) {
-         return false;
-      }
-
-      return true;
+          return this.itemStacks[0] != null && this.itemStacks[0].getItem() instanceof ItemBathSalts;
+      } else return this.tank.getInfo().fluid != null && this.tank.getFluid().getFluid().canBePlacedInWorld() && this.tank.getFluidAmount() >= 1000;
    }
 
    private void consumeIngredients() {
@@ -245,7 +239,7 @@ public class TileSpa extends TileThaumcraft implements ISidedInventory, IFluidHa
          Block bb = this.worldObj.getBlock(x, y - 1, z);
          int m = this.worldObj.getBlockMetadata(x, y, z);
          if (bb.isSideSolid(this.worldObj, x, y - 1, z, ForgeDirection.UP) && b.isReplaceable(this.worldObj, x, y, z) && (b != target || m != 0)) {
-            return !mustBeAdjacent ? true : BlockUtils.isBlockTouching(this.worldObj, x, y, z, target, 0);
+            return !mustBeAdjacent || BlockUtils.isBlockTouching(this.worldObj, x, y, z, target, 0);
          } else {
             return false;
          }

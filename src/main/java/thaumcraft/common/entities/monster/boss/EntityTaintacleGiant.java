@@ -27,8 +27,8 @@ public class EntityTaintacleGiant extends EntityTaintacle implements ITaintedMob
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)125.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)9.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(125.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(9.0F);
    }
 
    public IEntityLivingData onSpawnWithEgg(IEntityLivingData data) {
@@ -57,7 +57,7 @@ public class EntityTaintacleGiant extends EntityTaintacle implements ITaintedMob
 
    protected void entityInit() {
       super.entityInit();
-      this.getDataWatcher().addObject(14, new Short((short)0));
+      this.getDataWatcher().addObject(14, (short) 0);
    }
 
    public int getAnger() {
@@ -73,8 +73,8 @@ public class EntityTaintacleGiant extends EntityTaintacle implements ITaintedMob
    }
 
    protected void dropFewItems(boolean flag, int i) {
-      ArrayList<Entity> ents = EntityUtils.getEntitiesInRange(this.worldObj, this.posX, this.posY, this.posZ, this, EntityTaintacleGiant.class, (double)48.0F);
-      if (ents == null || ents.size() <= 0) {
+      ArrayList<Entity> ents = EntityUtils.getEntitiesInRange(this.worldObj, this.posX, this.posY, this.posZ, this, EntityTaintacleGiant.class, 48.0F);
+      if (ents == null || ents.size() == 0) {
          EntityUtils.entityDropSpecialItem(this, new ItemStack(ConfigItems.itemEldritchObject, 1, 3), this.height / 2.0F);
       }
 
@@ -100,7 +100,7 @@ public class EntityTaintacleGiant extends EntityTaintacle implements ITaintedMob
                this.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 200, (int)(damage / 40.0F)));
                this.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 200, (int)(damage / 40.0F)));
                this.setAnger(200);
-            } catch (Exception var4) {
+            } catch (Exception ignored) {
             }
 
             if (source.getEntity() != null && source.getEntity() instanceof EntityPlayer) {

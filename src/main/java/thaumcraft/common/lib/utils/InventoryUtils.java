@@ -178,20 +178,20 @@ public class InventoryUtils {
          ISidedInventory isidedinventory = (ISidedInventory)inventory;
          int[] aint = isidedinventory.getAccessibleSlotsFromSide(side);
 
-         for(int j = 0; j < aint.length; ++j) {
-            if (stack1 == null && inventory.getStackInSlot(aint[j]) != null) {
-               stack1 = inventory.getStackInSlot(aint[j]).copy();
-               stack1.stackSize = size;
-            }
+          for (int i : aint) {
+              if (stack1 == null && inventory.getStackInSlot(i) != null) {
+                  stack1 = inventory.getStackInSlot(i).copy();
+                  stack1.stackSize = size;
+              }
 
-            if (stack1 != null) {
-               stack1 = attemptExtraction(inventory, stack1, aint[j], side, false, false, false, doit);
-            }
+              if (stack1 != null) {
+                  stack1 = attemptExtraction(inventory, stack1, i, side, false, false, false, doit);
+              }
 
-            if (stack1 != null) {
-               break;
-            }
-         }
+              if (stack1 != null) {
+                  break;
+              }
+          }
       } else {
          int k = inventory.getSizeInventory();
 
@@ -259,7 +259,7 @@ public class InventoryUtils {
                outStack.stackSize -= k;
                if (doit) {
                   ItemStack var12 = null;
-                  inventory.setInventorySlotContents(slot, (ItemStack)null);
+                  inventory.setInventorySlotContents(slot, null);
                }
             } else if (doit) {
                slotStack.stackSize -= outStack.stackSize;
@@ -315,7 +315,7 @@ public class InventoryUtils {
          if (useOre) {
             int od = OreDictionary.getOreID(stack0);
             if (od != -1) {
-               ItemStack[] ores = (ItemStack[])OreDictionary.getOres(od).toArray(new ItemStack[0]);
+               ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[0]);
                if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{stack1}, ores)) {
                   return true;
                }
@@ -336,7 +336,7 @@ public class InventoryUtils {
             t2 = false;
          }
 
-         return stack0.getItem() != stack1.getItem() ? false : (t2 ? false : (stack0.stackSize > stack0.getMaxStackSize() ? false : t1));
+         return stack0.getItem() == stack1.getItem() && (!t2 && (stack0.stackSize <= stack0.getMaxStackSize() && t1));
       }
    }
 
@@ -351,7 +351,7 @@ public class InventoryUtils {
          if (useOre) {
             int od = OreDictionary.getOreID(stack0);
             if (od != -1) {
-               ItemStack[] ores = (ItemStack[])OreDictionary.getOres(od).toArray(new ItemStack[0]);
+               ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[0]);
                if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{stack1}, ores)) {
                   return true;
                }
@@ -372,7 +372,7 @@ public class InventoryUtils {
             t2 = false;
          }
 
-         return stack0.getItem() != stack1.getItem() ? false : (t2 ? false : t1);
+         return stack0.getItem() == stack1.getItem() && (!t2 && t1);
       }
    }
 
@@ -404,7 +404,7 @@ public class InventoryUtils {
                   float rx = rand.nextFloat() * 0.8F + 0.1F;
                   float ry = rand.nextFloat() * 0.8F + 0.1F;
                   float rz = rand.nextFloat() * 0.8F + 0.1F;
-                  EntityItem entityItem = new EntityItem(world, (double)((float)x + rx), (double)((float)y + ry), (double)((float)z + rz), new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
+                  EntityItem entityItem = new EntityItem(world, (float)x + rx, (float)y + ry, (float)z + rz, new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
                   if (item.hasTagCompound()) {
                      entityItem.getEntityItem().setTagCompound((NBTTagCompound)item.getTagCompound().copy());
                   }
@@ -414,7 +414,7 @@ public class InventoryUtils {
                   entityItem.motionY = rand.nextGaussian() * (double)factor + (double)0.2F;
                   entityItem.motionZ = rand.nextGaussian() * (double)factor;
                   world.spawnEntityInWorld(entityItem);
-                  inventory.setInventorySlotContents(i, (ItemStack)null);
+                  inventory.setInventorySlotContents(i, null);
                }
             }
          }
@@ -435,7 +435,7 @@ public class InventoryUtils {
                if (item != null && item.stackSize > 0) {
                   EntityItem entityItem = new EntityItem(world, entity.posX, entity.posY + (double)(entity.getEyeHeight() / 2.0F), entity.posZ, item.copy());
                   world.spawnEntityInWorld(entityItem);
-                  inventory.setInventorySlotContents(i, (ItemStack)null);
+                  inventory.setInventorySlotContents(i, null);
                }
             }
          }
@@ -521,7 +521,7 @@ public class InventoryUtils {
    }
 
    public static TileEntityChest getDoubleChest(TileEntity tile) {
-      if (tile != null && tile instanceof TileEntityChest) {
+      if (tile instanceof TileEntityChest) {
          if (((TileEntityChest)tile).adjacentChestXNeg != null) {
             return ((TileEntityChest)tile).adjacentChestXNeg;
          }

@@ -17,7 +17,7 @@ public class FXEssentiaTrail extends EntityFX {
    public int particle = 24;
 
    public FXEssentiaTrail(World par1World, double par2, double par4, double par6, double tx, double ty, double tz, int count, int color, float scale) {
-      super(par1World, par2, par4, par6, (double)0.0F, (double)0.0F, (double)0.0F);
+      super(par1World, par2, par4, par6, 0.0F, 0.0F, 0.0F);
       this.particleRed = this.particleGreen = this.particleBlue = 0.6F;
       this.particleScale = (MathHelper.sin((float)count / 2.0F) * 0.1F + 1.0F) * scale;
       this.count = count;
@@ -34,7 +34,7 @@ public class FXEssentiaTrail extends EntityFX {
 
       this.particleMaxAge = base / 2 + this.rand.nextInt(base);
       this.motionX = (double)(MathHelper.sin((float)count / 4.0F) * 0.015F) + this.rand.nextGaussian() * (double)0.002F;
-      this.motionY = (double)(0.1F + MathHelper.sin((float)count / 3.0F) * 0.01F);
+      this.motionY = 0.1F + MathHelper.sin((float)count / 3.0F) * 0.01F;
       this.motionZ = (double)(MathHelper.sin((float)count / 2.0F) * 0.015F) + this.rand.nextGaussian() * (double)0.002F;
       Color c = new Color(color);
       float mr = (float)c.getRed() / 255.0F * 0.2F;
@@ -56,7 +56,7 @@ public class FXEssentiaTrail extends EntityFX {
          if (renderentity.getDistance(this.posX, this.posY, this.posZ) > (double)visibleDistance) {
             this.particleMaxAge = 0;
          }
-      } catch (Exception var30) {
+      } catch (Exception ignored) {
       }
 
    }
@@ -76,10 +76,10 @@ public class FXEssentiaTrail extends EntityFX {
       float var16 = 1.0F;
       tessellator.setBrightness(240);
       tessellator.setColorRGBA_F(this.particleRed * var16, this.particleGreen * var16, this.particleBlue * var16, 0.5F);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 - f3 * var12 - f5 * var12), (double)t2, (double)t5);
-      tessellator.addVertexWithUV((double)(var13 - f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 - f3 * var12 + f5 * var12), (double)t3, (double)t5);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 + f4 * var12), (double)(var14 + f2 * var12), (double)(var15 + f3 * var12 + f5 * var12), (double)t3, (double)t4);
-      tessellator.addVertexWithUV((double)(var13 + f1 * var12 - f4 * var12), (double)(var14 - f2 * var12), (double)(var15 + f3 * var12 - f5 * var12), (double)t2, (double)t4);
+      tessellator.addVertexWithUV(var13 - f1 * var12 - f4 * var12, var14 - f2 * var12, var15 - f3 * var12 - f5 * var12, t2, t5);
+      tessellator.addVertexWithUV(var13 - f1 * var12 + f4 * var12, var14 + f2 * var12, var15 - f3 * var12 + f5 * var12, t3, t5);
+      tessellator.addVertexWithUV(var13 + f1 * var12 + f4 * var12, var14 + f2 * var12, var15 + f3 * var12 + f5 * var12, t3, t4);
+      tessellator.addVertexWithUV(var13 + f1 * var12 - f4 * var12, var14 - f2 * var12, var15 + f3 * var12 - f5 * var12, t2, t4);
    }
 
    public int getFXLayer() {
@@ -102,14 +102,14 @@ public class FXEssentiaTrail extends EntityFX {
          this.motionX *= 0.985;
          this.motionY *= 0.985;
          this.motionZ *= 0.985;
-         this.motionX = (double)MathHelper.clamp_float((float)this.motionX, -0.05F, 0.05F);
-         this.motionY = (double)MathHelper.clamp_float((float)this.motionY, -0.05F, 0.05F);
-         this.motionZ = (double)MathHelper.clamp_float((float)this.motionZ, -0.05F, 0.05F);
+         this.motionX = MathHelper.clamp_float((float)this.motionX, -0.05F, 0.05F);
+         this.motionY = MathHelper.clamp_float((float)this.motionY, -0.05F, 0.05F);
+         this.motionZ = MathHelper.clamp_float((float)this.motionZ, -0.05F, 0.05F);
          double dx = this.targetX - this.posX;
          double dy = this.targetY - this.posY;
          double dz = this.targetZ - this.posZ;
          double d13 = 0.01;
-         double d11 = (double)MathHelper.sqrt_double(dx * dx + dy * dy + dz * dz);
+         double d11 = MathHelper.sqrt_double(dx * dx + dy * dy + dz * dz);
          if (d11 < (double)2.0F) {
             this.particleScale *= 0.98F;
          }
@@ -120,9 +120,9 @@ public class FXEssentiaTrail extends EntityFX {
             dx /= d11;
             dy /= d11;
             dz /= d11;
-            this.motionX += dx * (d13 / Math.min((double)1.0F, d11));
-            this.motionY += dy * (d13 / Math.min((double)1.0F, d11));
-            this.motionZ += dz * (d13 / Math.min((double)1.0F, d11));
+            this.motionX += dx * (d13 / Math.min(1.0F, d11));
+            this.motionY += dy * (d13 / Math.min(1.0F, d11));
+            this.motionZ += dz * (d13 / Math.min(1.0F, d11));
          }
       }
    }
@@ -146,7 +146,7 @@ public class FXEssentiaTrail extends EntityFX {
          boolean var20 = !this.worldObj.isBlockNormalCubeDefault(var7, var8, var9 - 1, true);
          boolean var21 = !this.worldObj.isBlockNormalCubeDefault(var7, var8, var9 + 1, true);
          byte var22 = -1;
-         double var23 = (double)9999.0F;
+         double var23 = 9999.0F;
          if (var16 && var10 < var23) {
             var23 = var10;
             var22 = 0;
@@ -180,33 +180,33 @@ public class FXEssentiaTrail extends EntityFX {
          float var25 = this.rand.nextFloat() * 0.05F + 0.025F;
          float var26 = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F;
          if (var22 == 0) {
-            this.motionX = (double)(-var25);
-            this.motionY = this.motionZ = (double)var26;
+            this.motionX = -var25;
+            this.motionY = this.motionZ = var26;
          }
 
          if (var22 == 1) {
-            this.motionX = (double)var25;
-            this.motionY = this.motionZ = (double)var26;
+            this.motionX = var25;
+            this.motionY = this.motionZ = var26;
          }
 
          if (var22 == 2) {
-            this.motionY = (double)(-var25);
-            this.motionX = this.motionZ = (double)var26;
+            this.motionY = -var25;
+            this.motionX = this.motionZ = var26;
          }
 
          if (var22 == 3) {
-            this.motionY = (double)var25;
-            this.motionX = this.motionZ = (double)var26;
+            this.motionY = var25;
+            this.motionX = this.motionZ = var26;
          }
 
          if (var22 == 4) {
-            this.motionZ = (double)(-var25);
-            this.motionY = this.motionX = (double)var26;
+            this.motionZ = -var25;
+            this.motionY = this.motionX = var26;
          }
 
          if (var22 == 5) {
-            this.motionZ = (double)var25;
-            this.motionY = this.motionX = (double)var26;
+            this.motionZ = var25;
+            this.motionY = this.motionX = var26;
          }
 
          return true;

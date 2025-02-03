@@ -64,9 +64,9 @@ public class AISortingGoto extends EntityAIBase {
             }
 
             if (this.dest != null) {
-               this.movePosX = (double)tX;
-               this.movePosY = (double)tY;
-               this.movePosZ = (double)tZ;
+               this.movePosX = tX;
+               this.movePosY = tY;
+               this.movePosZ = tZ;
                return true;
             } else {
                return false;
@@ -87,7 +87,7 @@ public class AISortingGoto extends EntityAIBase {
          Vec3 var2 = RandomPositionGenerator.findRandomTarget(this.theGolem, 2, 1);
          if (var2 != null) {
             this.count = 20;
-            this.theGolem.getNavigator().tryMoveToXYZ(var2.xCoord, var2.yCoord, var2.zCoord, (double)this.theGolem.getAIMoveSpeed());
+            this.theGolem.getNavigator().tryMoveToXYZ(var2.xCoord, var2.yCoord, var2.zCoord, this.theGolem.getAIMoveSpeed());
          }
       }
 
@@ -104,6 +104,6 @@ public class AISortingGoto extends EntityAIBase {
       this.prevX = MathHelper.floor_double(this.theGolem.posX);
       this.prevY = MathHelper.floor_double(this.theGolem.posY);
       this.prevZ = MathHelper.floor_double(this.theGolem.posZ);
-      this.theGolem.getNavigator().tryMoveToXYZ(this.movePosX, this.movePosY, this.movePosZ, (double)this.theGolem.getAIMoveSpeed());
+      this.theGolem.getNavigator().tryMoveToXYZ(this.movePosX, this.movePosY, this.movePosZ, this.theGolem.getAIMoveSpeed());
    }
 }

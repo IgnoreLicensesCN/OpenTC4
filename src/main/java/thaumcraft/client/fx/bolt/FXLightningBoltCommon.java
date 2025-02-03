@@ -149,7 +149,7 @@ public class FXLightningBoltCommon {
 
    private void calculateCollisionAndDiffs() {
       HashMap lastactivesegment = new HashMap<>();
-      Collections.sort(this.segments, new SegmentSorter());
+      this.segments.sort(new SegmentSorter());
       int lastsplitcalc = 0;
       int lastactiveseg = 0;
 
@@ -186,7 +186,7 @@ public class FXLightningBoltCommon {
       if (!this.finalized) {
          this.finalized = true;
          this.calculateCollisionAndDiffs();
-         Collections.sort(this.segments, new SegmentLightSorter());
+         this.segments.sort(new SegmentLightSorter());
       }
    }
 
@@ -235,7 +235,7 @@ public class FXLightningBoltCommon {
             WRVector3 prevdiffnorm = this.prev.diff.copy().normalize();
             WRVector3 thisdiffnorm = this.diff.copy().normalize();
             this.prevdiff = thisdiffnorm.add(prevdiffnorm).normalize();
-            this.sinprev = (float)Math.sin((double)(WRVector3.anglePreNorm(thisdiffnorm, prevdiffnorm.scale(-1.0F)) / 2.0F));
+            this.sinprev = (float)Math.sin(WRVector3.anglePreNorm(thisdiffnorm, prevdiffnorm.scale(-1.0F)) / 2.0F);
          } else {
             this.prevdiff = this.diff.copy().normalize();
             this.sinprev = 1.0F;
@@ -245,7 +245,7 @@ public class FXLightningBoltCommon {
             WRVector3 nextdiffnorm = this.next.diff.copy().normalize();
             WRVector3 thisdiffnorm = this.diff.copy().normalize();
             this.nextdiff = thisdiffnorm.add(nextdiffnorm).normalize();
-            this.sinnext = (float)Math.sin((double)(WRVector3.anglePreNorm(thisdiffnorm, nextdiffnorm.scale(-1.0F)) / 2.0F));
+            this.sinnext = (float)Math.sin(WRVector3.anglePreNorm(thisdiffnorm, nextdiffnorm.scale(-1.0F)) / 2.0F);
          } else {
             this.nextdiff = this.diff.copy().normalize();
             this.sinnext = 1.0F;
@@ -268,7 +268,7 @@ public class FXLightningBoltCommon {
       }
 
       public Segment(WRVector3 start, WRVector3 end) {
-         this(FXLightningBoltCommon.this.new BoltPoint(start, new WRVector3((double)0.0F, (double)0.0F, (double)0.0F)), FXLightningBoltCommon.this.new BoltPoint(end, new WRVector3((double)0.0F, (double)0.0F, (double)0.0F)), 1.0F, 0, 0);
+         this(FXLightningBoltCommon.this.new BoltPoint(start, new WRVector3(0.0F, 0.0F, 0.0F)), FXLightningBoltCommon.this.new BoltPoint(end, new WRVector3(0.0F, 0.0F, 0.0F)), 1.0F, 0, 0);
       }
    }
 
@@ -288,8 +288,8 @@ public class FXLightningBoltCommon {
       final FXLightningBoltCommon this$0 = FXLightningBoltCommon.this;
 
       public int compare(Segment o1, Segment o2) {
-         int comp = Integer.valueOf(o1.splitno).compareTo(o2.splitno);
-         return comp == 0 ? Integer.valueOf(o1.segmentno).compareTo(o2.segmentno) : comp;
+         int comp = Integer.compare(o1.splitno, o2.splitno);
+         return comp == 0 ? Integer.compare(o1.segmentno, o2.segmentno) : comp;
       }
 
       public int compare(Object obj, Object obj1) {

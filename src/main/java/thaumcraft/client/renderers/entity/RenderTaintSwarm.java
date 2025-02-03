@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 @SideOnly(Side.CLIENT)
 public class RenderTaintSwarm extends RenderLiving {
    public RenderTaintSwarm() {
-      super((ModelBase)null, 0.0F);
+      super(null, 0.0F);
    }
 
    public void doRender(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {

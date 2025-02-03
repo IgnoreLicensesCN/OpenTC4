@@ -53,27 +53,27 @@ public class RenderPrimalArrow extends Render {
       GL11.glTranslatef(-4.0F, 0.0F, 0.0F);
       GL11.glNormal3f(f10, 0.0F, 0.0F);
       tessellator.startDrawingQuads();
-      tessellator.addVertexWithUV((double)-7.0F, (double)-2.0F, (double)-2.0F, (double)f6, (double)f8);
-      tessellator.addVertexWithUV((double)-7.0F, (double)-2.0F, (double)2.0F, (double)f7, (double)f8);
-      tessellator.addVertexWithUV((double)-7.0F, (double)2.0F, (double)2.0F, (double)f7, (double)f9);
-      tessellator.addVertexWithUV((double)-7.0F, (double)2.0F, (double)-2.0F, (double)f6, (double)f9);
+      tessellator.addVertexWithUV(-7.0F, -2.0F, -2.0F, f6, f8);
+      tessellator.addVertexWithUV(-7.0F, -2.0F, 2.0F, f7, f8);
+      tessellator.addVertexWithUV(-7.0F, 2.0F, 2.0F, f7, f9);
+      tessellator.addVertexWithUV(-7.0F, 2.0F, -2.0F, f6, f9);
       tessellator.draw();
       GL11.glNormal3f(-f10, 0.0F, 0.0F);
       tessellator.startDrawingQuads();
-      tessellator.addVertexWithUV((double)-7.0F, (double)2.0F, (double)-2.0F, (double)f6, (double)f8);
-      tessellator.addVertexWithUV((double)-7.0F, (double)2.0F, (double)2.0F, (double)f7, (double)f8);
-      tessellator.addVertexWithUV((double)-7.0F, (double)-2.0F, (double)2.0F, (double)f7, (double)f9);
-      tessellator.addVertexWithUV((double)-7.0F, (double)-2.0F, (double)-2.0F, (double)f6, (double)f9);
+      tessellator.addVertexWithUV(-7.0F, 2.0F, -2.0F, f6, f8);
+      tessellator.addVertexWithUV(-7.0F, 2.0F, 2.0F, f7, f8);
+      tessellator.addVertexWithUV(-7.0F, -2.0F, 2.0F, f7, f9);
+      tessellator.addVertexWithUV(-7.0F, -2.0F, -2.0F, f6, f9);
       tessellator.draw();
 
       for(int i = 0; i < 4; ++i) {
          GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
          GL11.glNormal3f(0.0F, 0.0F, f10);
          tessellator.startDrawingQuads();
-         tessellator.addVertexWithUV((double)-8.0F, (double)-2.0F, (double)0.0F, (double)f2, (double)f4);
-         tessellator.addVertexWithUV((double)8.0F, (double)-2.0F, (double)0.0F, (double)f3, (double)f4);
-         tessellator.addVertexWithUV((double)8.0F, (double)2.0F, (double)0.0F, (double)f3, (double)f5);
-         tessellator.addVertexWithUV((double)-8.0F, (double)2.0F, (double)0.0F, (double)f2, (double)f5);
+         tessellator.addVertexWithUV(-8.0F, -2.0F, 0.0F, f2, f4);
+         tessellator.addVertexWithUV(8.0F, -2.0F, 0.0F, f3, f4);
+         tessellator.addVertexWithUV(8.0F, 2.0F, 0.0F, f3, f5);
+         tessellator.addVertexWithUV(-8.0F, 2.0F, 0.0F, f2, f5);
          tessellator.draw();
       }
 
@@ -109,10 +109,10 @@ public class RenderPrimalArrow extends Render {
       tessellator.startDrawingQuads();
       tessellator.setBrightness(240);
       tessellator.setColorRGBA_F((float)color.getRed() / 255.0F, (float)color.getGreen() / 255.0F, (float)color.getBlue() / 255.0F, (100.0F - (float)arrow.ticksInGround) / 100.0F);
-      tessellator.addVertexWithUV((double)(-f1 * f10 - f4 * f10), (double)(-f2 * f10), (double)(-f3 * f10 - f5 * f10), (double)x1, (double)x3);
-      tessellator.addVertexWithUV((double)(-f1 * f10 + f4 * f10), (double)(f2 * f10), (double)(-f3 * f10 + f5 * f10), (double)x1, (double)x2);
-      tessellator.addVertexWithUV((double)(f1 * f10 + f4 * f10), (double)(f2 * f10), (double)(f3 * f10 + f5 * f10), (double)x0, (double)x2);
-      tessellator.addVertexWithUV((double)(f1 * f10 - f4 * f10), (double)(-f2 * f10), (double)(f3 * f10 - f5 * f10), (double)x0, (double)x3);
+      tessellator.addVertexWithUV(-f1 * f10 - f4 * f10, -f2 * f10, -f3 * f10 - f5 * f10, x1, x3);
+      tessellator.addVertexWithUV(-f1 * f10 + f4 * f10, f2 * f10, -f3 * f10 + f5 * f10, x1, x2);
+      tessellator.addVertexWithUV(f1 * f10 + f4 * f10, f2 * f10, f3 * f10 + f5 * f10, x0, x2);
+      tessellator.addVertexWithUV(f1 * f10 - f4 * f10, -f2 * f10, f3 * f10 - f5 * f10, x0, x3);
       tessellator.draw();
       GL11.glDisable(3042);
       GL11.glDepthMask(true);

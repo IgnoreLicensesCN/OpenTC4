@@ -26,7 +26,7 @@ public class Hover {
    static HashMap timing = new HashMap<>();
 
    public static boolean toggleHover(EntityPlayer player, int playerId, ItemStack armor) {
-      boolean hover = hovering.get(playerId) == null ? false : (Boolean)hovering.get(playerId);
+      boolean hover = hovering.get(playerId) != null && (Boolean) hovering.get(playerId);
       short fuel = 0;
       if (armor.hasTagCompound() && armor.stackTagCompound.hasKey("jar")) {
          ItemStack jar = ItemStack.loadItemStackFromNBT(armor.stackTagCompound.getCompoundTag("jar"));
@@ -67,7 +67,7 @@ public class Hover {
          }
       }
 
-      boolean hover = hovering.get(player.getEntityId()) == null ? false : (Boolean)hovering.get(player.getEntityId());
+      boolean hover = hovering.get(player.getEntityId()) != null && (Boolean) hovering.get(player.getEntityId());
       World world = player.worldObj;
       player.capabilities.isFlying = hover;
       if (world.isRemote && player instanceof EntityPlayerSP) {
@@ -94,8 +94,8 @@ public class Hover {
                mod = 1.0F;
             }
 
-            player.motionX *= (double)mod;
-            player.motionZ *= (double)mod;
+            player.motionX *= mod;
+            player.motionZ *= mod;
          } else if (hover) {
             toggleHover(player, player.getEntityId(), armor);
          }

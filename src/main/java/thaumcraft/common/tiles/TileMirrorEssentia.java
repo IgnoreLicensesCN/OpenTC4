@@ -53,7 +53,7 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource 
          }
 
          TileEntity te = targetWorld.getTileEntity(this.linkX, this.linkY, this.linkZ);
-         if (te != null && te instanceof TileMirrorEssentia) {
+         if (te instanceof TileMirrorEssentia) {
             TileMirrorEssentia tm = (TileMirrorEssentia)te;
             tm.linked = true;
             tm.linkX = this.xCoord;
@@ -76,7 +76,7 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource 
       if (targetWorld != null) {
          if (Utils.isChunkLoaded(targetWorld, this.linkX, this.linkZ)) {
             TileEntity te = targetWorld.getTileEntity(this.linkX, this.linkY, this.linkZ);
-            if (te != null && te instanceof TileMirrorEssentia) {
+            if (te instanceof TileMirrorEssentia) {
                TileMirrorEssentia tm = (TileMirrorEssentia)te;
                tm.linked = false;
                tm.linkedFacing = ForgeDirection.UNKNOWN;
@@ -98,7 +98,7 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource 
             return false;
          } else {
             TileEntity te = targetWorld.getTileEntity(this.linkX, this.linkY, this.linkZ);
-            if (te != null && te instanceof TileMirrorEssentia) {
+            if (te instanceof TileMirrorEssentia) {
                TileMirrorEssentia tm = (TileMirrorEssentia)te;
                if (!tm.linked) {
                   this.linked = false;
@@ -132,7 +132,7 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource 
             return false;
          } else {
             TileEntity te = targetWorld.getTileEntity(this.linkX, this.linkY, this.linkZ);
-            if (te != null && te instanceof TileMirrorEssentia) {
+            if (te instanceof TileMirrorEssentia) {
                TileMirrorEssentia tm = (TileMirrorEssentia)te;
                if (!tm.linked) {
                   return false;
@@ -152,7 +152,7 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource 
          return false;
       } else {
          TileEntity te = targetWorld.getTileEntity(this.linkX, this.linkY, this.linkZ);
-         if (te != null && te instanceof TileMirrorEssentia) {
+         if (te instanceof TileMirrorEssentia) {
             TileMirrorEssentia tm = (TileMirrorEssentia)te;
             return !tm.isLinkValid();
          } else {
@@ -187,7 +187,7 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource 
          }
 
          TileEntity te = targetWorld.getTileEntity(this.linkX, this.linkY, this.linkZ);
-         return te != null && te instanceof TileMirrorEssentia ? EssentiaHandler.drainEssentia(te, tag, this.linkedFacing, 8, true) : false;
+         return te instanceof TileMirrorEssentia && EssentiaHandler.drainEssentia(te, tag, this.linkedFacing, 8, true);
       } else {
          return false;
       }

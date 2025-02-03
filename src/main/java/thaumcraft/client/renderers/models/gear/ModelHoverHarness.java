@@ -53,11 +53,11 @@ public class ModelHoverHarness extends ModelBiped {
       this.modelBack.renderAll();
       GL11.glEnable(2896);
       GL11.glPopMatrix();
-      if (entity != null && entity instanceof EntityPlayer && !GL11.glIsEnabled(3042) && GL11.glGetInteger(2976) == 5888 && ((EntityPlayer)entity).inventory.armorItemInSlot(2).hasTagCompound() && ((EntityPlayer)entity).inventory.armorItemInSlot(2).stackTagCompound.hasKey("hover") && ((EntityPlayer)entity).inventory.armorItemInSlot(2).stackTagCompound.getByte("hover") == 1) {
+      if (entity instanceof EntityPlayer && !GL11.glIsEnabled(3042) && GL11.glGetInteger(2976) == 5888 && ((EntityPlayer) entity).inventory.armorItemInSlot(2).hasTagCompound() && ((EntityPlayer) entity).inventory.armorItemInSlot(2).stackTagCompound.hasKey("hover") && ((EntityPlayer) entity).inventory.armorItemInSlot(2).stackTagCompound.getByte("hover") == 1) {
          long currenttime = System.currentTimeMillis();
          long timeShock = 0L;
          if (this.timingShock.get(entity.getEntityId()) != null) {
-            timeShock = (Long)this.timingShock.get(entity.getEntityId());
+            timeShock = this.timingShock.get(entity.getEntityId());
          }
 
          GL11.glPushMatrix();
@@ -81,7 +81,7 @@ public class ModelHoverHarness extends ModelBiped {
          if (timeShock < currenttime) {
             timeShock = currenttime + 50L + (long)entity.worldObj.rand.nextInt(50);
             this.timingShock.put(entity.getEntityId(), timeShock);
-            MovingObjectPosition mop = BlockUtils.getTargetBlock(entity.worldObj, entity.posX, entity.posY - (double)0.45F - (double)mod, entity.posZ, ((EntityPlayer)entity).renderYawOffset - 90.0F - (float)entity.worldObj.rand.nextInt(180), (float)(-80 + entity.worldObj.rand.nextInt(160)), false, (double)6.0F);
+            MovingObjectPosition mop = BlockUtils.getTargetBlock(entity.worldObj, entity.posX, entity.posY - (double)0.45F - (double)mod, entity.posZ, ((EntityPlayer)entity).renderYawOffset - 90.0F - (float)entity.worldObj.rand.nextInt(180), (float)(-80 + entity.worldObj.rand.nextInt(160)), false, 6.0F);
             if (mop != null) {
                double px = mop.hitVec.xCoord;
                double py = mop.hitVec.yCoord;

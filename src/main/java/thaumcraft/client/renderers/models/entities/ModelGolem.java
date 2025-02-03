@@ -61,7 +61,7 @@ public class ModelGolem extends ModelBase {
       this.golemLeftLeg.render(par7);
       this.golemRightArm.render(par7);
       this.golemLeftArm.render(par7);
-      GL11.glScaled((double)1.0F, (double)1.0F, (double)1.0F);
+      GL11.glScaled(1.0F, 1.0F, 1.0F);
       if (this.pass == 2) {
          GL11.glAlphaFunc(516, 0.1F);
          GL11.glDisable(3042);

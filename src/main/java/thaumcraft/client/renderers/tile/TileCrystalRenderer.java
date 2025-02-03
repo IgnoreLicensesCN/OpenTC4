@@ -78,7 +78,7 @@ public class TileCrystalRenderer extends TileEntitySpecialRenderer {
       }
 
       UtilsFX.bindTexture("textures/models/crystal.png");
-      Random rand = new Random((long)(tco.getBlockMetadata() + tco.xCoord + tco.yCoord * tco.zCoord));
+      Random rand = new Random(tco.getBlockMetadata() + tco.xCoord + (long) tco.yCoord * tco.zCoord);
       this.drawCrystal(tco.orientation, (float)x, (float)y, (float)z, (rand.nextFloat() - rand.nextFloat()) * 5.0F, (rand.nextFloat() - rand.nextFloat()) * 5.0F, rand, color, 1.1F);
 
       for(int a = 1; a < 6; ++a) {

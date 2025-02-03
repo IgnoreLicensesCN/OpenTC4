@@ -33,11 +33,11 @@ public class EntityTaintChicken extends EntityMob implements ITaintedMob {
       super(par1World);
       this.setSize(0.5F, 0.8F);
       this.tasks.addTask(0, new EntityAISwimming(this));
-      this.tasks.addTask(2, new AIAttackOnCollide(this, EntityPlayer.class, (double)1.0F, false));
+      this.tasks.addTask(2, new AIAttackOnCollide(this, EntityPlayer.class, 1.0F, false));
       this.tasks.addTask(2, new EntityAILeapAtTarget(this, 0.3F));
-      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityVillager.class, (double)1.0F, true));
-      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityAnimal.class, (double)1.0F, true));
-      this.tasks.addTask(3, new EntityAIWander(this, (double)1.0F));
+      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityVillager.class, 1.0F, true));
+      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityAnimal.class, 1.0F, true));
+      this.tasks.addTask(3, new EntityAIWander(this, 1.0F));
       this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
       this.tasks.addTask(5, new EntityAILookIdle(this));
       this.targetTasks.addTask(0, new EntityAIHurtByTarget(this, false));
@@ -48,8 +48,8 @@ public class EntityTaintChicken extends EntityMob implements ITaintedMob {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)8.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)3.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(8.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(3.0F);
       this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.4);
    }
 

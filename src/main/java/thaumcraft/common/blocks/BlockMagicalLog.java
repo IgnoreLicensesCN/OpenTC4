@@ -87,7 +87,7 @@ public class BlockMagicalLog extends BlockRotatedPillar {
    public void onBlockHarvested(World par1World, int par2, int par3, int par4, int par5, EntityPlayer par6EntityPlayer) {
       if (limitToValidMetadata(par5) == 2 && !par1World.isRemote) {
          TileEntity te = par1World.getTileEntity(par2, par3, par4);
-         if (te != null && te instanceof INode && ((INode)te).getAspects().size() > 0) {
+         if (te instanceof INode && ((INode) te).getAspects().size() > 0) {
             for(Aspect aspect : ((INode)te).getAspects().getAspects()) {
                for(int a = 0; a <= ((INode)te).getAspects().getAmount(aspect) / 10; ++a) {
                   if (((INode)te).getAspects().getAmount(aspect) >= 5) {
@@ -131,19 +131,18 @@ public class BlockMagicalLog extends BlockRotatedPillar {
    }
 
    public int getLightValue(IBlockAccess world, int x, int y, int z) {
-      if ((world.getBlockMetadata(x, y, z) & 2) == 1) {
-         return 7;
-      } else {
-         return (world.getBlockMetadata(x, y, z) & 2) == 2 ? 7 : super.getLightValue(world, x, y, z);
-      }
+//      if ((world.getBlockMetadata(x, y, z) & 2) == 1) {
+//         return 7;
+//      }
+      return (world.getBlockMetadata(x, y, z) & 2) == 2 ? 7 : super.getLightValue(world, x, y, z);
    }
 
    public boolean hasTileEntity(int metadata) {
-      return limitToValidMetadata(metadata) == 2 ? true : super.hasTileEntity(metadata);
+      return limitToValidMetadata(metadata) == 2 || super.hasTileEntity(metadata);
    }
 
    public TileEntity createTileEntity(World world, int metadata) {
-      return (TileEntity)(limitToValidMetadata(metadata) == 2 ? new TileNode() : super.createTileEntity(world, metadata));
+      return limitToValidMetadata(metadata) == 2 ? new TileNode() : super.createTileEntity(world, metadata);
    }
 
    public boolean addDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {

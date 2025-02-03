@@ -60,9 +60,9 @@ public class AIEmptyGoto extends EntityAIBase {
                }
 
                if (this.dest != null) {
-                  this.movePosX = (double)tX;
-                  this.movePosY = (double)tY;
-                  this.movePosZ = (double)tZ;
+                  this.movePosX = tX;
+                  this.movePosY = tY;
+                  this.movePosZ = tZ;
                   return true;
                }
             }
@@ -71,9 +71,9 @@ public class AIEmptyGoto extends EntityAIBase {
          for(byte color : matchingColors) {
             for(Marker marker : this.theGolem.getMarkers()) {
                if ((marker.color == color || color == -1) && (this.theGolem.worldObj.getTileEntity(marker.x, marker.y, marker.z) == null || !(this.theGolem.worldObj.getTileEntity(marker.x, marker.y, marker.z) instanceof IInventory))) {
-                  this.movePosX = (double)marker.x;
-                  this.movePosY = (double)marker.y;
-                  this.movePosZ = (double)marker.z;
+                  this.movePosX = marker.x;
+                  this.movePosY = marker.y;
+                  this.movePosZ = marker.z;
                   return true;
                }
             }
@@ -93,7 +93,7 @@ public class AIEmptyGoto extends EntityAIBase {
          Vec3 var2 = RandomPositionGenerator.findRandomTarget(this.theGolem, 2, 1);
          if (var2 != null) {
             this.count = 20;
-            this.theGolem.getNavigator().tryMoveToXYZ(var2.xCoord, var2.yCoord, var2.zCoord, (double)this.theGolem.getAIMoveSpeed());
+            this.theGolem.getNavigator().tryMoveToXYZ(var2.xCoord, var2.yCoord, var2.zCoord, this.theGolem.getAIMoveSpeed());
          }
       }
 
@@ -110,6 +110,6 @@ public class AIEmptyGoto extends EntityAIBase {
       this.prevX = MathHelper.floor_double(this.theGolem.posX);
       this.prevY = MathHelper.floor_double(this.theGolem.posY);
       this.prevZ = MathHelper.floor_double(this.theGolem.posZ);
-      this.theGolem.getNavigator().tryMoveToXYZ(this.movePosX, this.movePosY, this.movePosZ, (double)this.theGolem.getAIMoveSpeed());
+      this.theGolem.getNavigator().tryMoveToXYZ(this.movePosX, this.movePosY, this.movePosZ, this.theGolem.getAIMoveSpeed());
    }
 }

@@ -48,11 +48,11 @@ public class ContainerHandMirror extends Container {
       if (this.input.getStackInSlot(0) != null && ItemStack.areItemStacksEqual(this.input.getStackInSlot(0), this.mirror)) {
          this.player.openContainer = this.player.inventoryContainer;
       } else if (!this.worldObj.isRemote && this.input.getStackInSlot(0) != null && this.player != null && ItemHandMirror.transport(this.mirror, this.input.getStackInSlot(0), this.player, this.worldObj)) {
-         this.input.setInventorySlotContents(0, (ItemStack)null);
+         this.input.setInventorySlotContents(0, null);
 
-         for(int var4 = 0; var4 < this.crafters.size(); ++var4) {
-            ((ICrafting)this.crafters.get(var4)).sendSlotContents(this, 0, (ItemStack)null);
-         }
+          for (Object crafter : this.crafters) {
+              ((ICrafting) crafter).sendSlotContents(this, 0, null);
+          }
       }
 
    }
@@ -72,7 +72,7 @@ public class ContainerHandMirror extends Container {
          }
 
          if (stackInSlot.stackSize == 0) {
-            slotObject.putStack((ItemStack)null);
+            slotObject.putStack(null);
          } else {
             slotObject.onSlotChanged();
          }

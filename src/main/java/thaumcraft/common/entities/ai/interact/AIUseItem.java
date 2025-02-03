@@ -48,12 +48,12 @@ public class AIUseItem extends EntityAIBase {
       this.setMutexBits(3);
       this.distance = (float)MathHelper.ceiling_float_int(this.theGolem.getRange() / 3.0F);
       if (this.theWorld instanceof WorldServer) {
-         this.player = FakePlayerFactory.get((WorldServer)this.theWorld, new GameProfile((UUID)null, "FakeThaumcraftGolem"));
+         this.player = FakePlayerFactory.get((WorldServer)this.theWorld, new GameProfile(null, "FakeThaumcraftGolem"));
       }
 
       try {
          this.nextTick = this.theGolem.ticksExisted + this.theWorld.rand.nextInt(6);
-      } catch (Exception var3) {
+      } catch (Exception ignored) {
       }
 
    }
@@ -66,7 +66,7 @@ public class AIUseItem extends EntityAIBase {
       int cY = home.posY - facing.offsetY;
       int cZ = home.posZ - facing.offsetZ;
       TileEntity tile = this.theGolem.worldObj.getTileEntity(cX, cY, cZ);
-      if (tile == null || !(tile instanceof IInventory)) {
+      if (!(tile instanceof IInventory)) {
          ignoreItem = true;
       }
 
@@ -103,7 +103,7 @@ public class AIUseItem extends EntityAIBase {
 
    public void startExecuting() {
       this.count = 200;
-      this.theGolem.getNavigator().tryMoveToXYZ((double)this.xx + (double)0.5F, (double)this.yy + (double)0.5F, (double)this.zz + (double)0.5F, (double)this.theGolem.getAIMoveSpeed());
+      this.theGolem.getNavigator().tryMoveToXYZ((double)this.xx + (double)0.5F, (double)this.yy + (double)0.5F, (double)this.zz + (double)0.5F, this.theGolem.getAIMoveSpeed());
    }
 
    void click() {
@@ -114,7 +114,7 @@ public class AIUseItem extends EntityAIBase {
       int cY = home.posY - facing.offsetY;
       int cZ = home.posZ - facing.offsetZ;
       TileEntity tile = this.theGolem.worldObj.getTileEntity(cX, cY, cZ);
-      if (tile == null || !(tile instanceof IInventory)) {
+      if (!(tile instanceof IInventory)) {
          ignoreItem = true;
       }
 
@@ -161,7 +161,7 @@ public class AIUseItem extends EntityAIBase {
                         this.player.dropPlayerItemWithRandomChoice(this.player.inventory.getStackInSlot(a), false);
                      }
 
-                     this.player.inventory.setInventorySlotContents(a, (ItemStack)null);
+                     this.player.inventory.setInventorySlotContents(a, null);
                   }
                }
 

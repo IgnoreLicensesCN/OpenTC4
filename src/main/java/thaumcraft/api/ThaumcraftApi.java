@@ -63,15 +63,15 @@ public class ThaumcraftApi {
 	 * Portable Hole Block-id Blacklist. 
 	 * Simply add the block-id's of blocks you don't want the portable hole to go through.
 	 */
-	public static ArrayList<Block> portableHoleBlackList = new ArrayList<Block>();
+	public static ArrayList<Block> portableHoleBlackList = new ArrayList<>();
 	
 	//Internal (Do not alter this unless you like pretty explosions)
 	//Calling methods from this will only work properly once Thaumcraft is past the FMLPreInitializationEvent phase.
 	public static IInternalMethodHandler internalMethods = new DummyInternalMethodHandler();	
 	
 	//RESEARCH/////////////////////////////////////////
-	public static ArrayList<IScanEventHandler> scanEventhandlers = new ArrayList<IScanEventHandler>();
-	public static ArrayList<EntityTags> scanEntities = new ArrayList<EntityTags>();
+	public static ArrayList<IScanEventHandler> scanEventhandlers = new ArrayList<>();
+	public static ArrayList<EntityTags> scanEntities = new ArrayList<>();
 	public static class EntityTagsNBT {
 		public EntityTagsNBT(String name, Object value) {
 			this.name = name;
@@ -115,7 +115,7 @@ public class ThaumcraftApi {
 	
 	//RECIPES/////////////////////////////////////////
 	private static ArrayList craftingRecipes = new ArrayList();	
-	private static HashMap<Object,ItemStack> smeltingBonus = new HashMap<Object,ItemStack>();
+	private static HashMap<Object,ItemStack> smeltingBonus = new HashMap<>();
 	
 	/**
 	 * This method is used to determine what bonus items are generated when the infernal furnace smelts items
@@ -286,7 +286,7 @@ public class ThaumcraftApi {
 	 * @param stack the item
 	 * @return the thaumcraft recipe key that produces that item. 
 	 */
-	private static HashMap<int[],Object[]> keyCache = new HashMap<int[],Object[]>();
+	private static HashMap<int[],Object[]> keyCache = new HashMap<>();
 	
 	public static Object[] getCraftingRecipeKey(EntityPlayer player, ItemStack stack) {
 		int[] key = new int[] {Item.getIdFromItem(stack.getItem()),stack.getItemDamage()};
@@ -302,7 +302,7 @@ public class ThaumcraftApi {
 				if (ri.getPages()==null) continue;
 				for (int a=0;a<ri.getPages().length;a++) {
 					ResearchPage page = ri.getPages()[a];
-					if (page.recipe!=null && page.recipe instanceof CrucibleRecipe[]) {
+					if (page.recipe instanceof CrucibleRecipe[]) {
 						CrucibleRecipe[] crs = (CrucibleRecipe[]) page.recipe;
 						for (CrucibleRecipe cr:crs) {
 							if (cr.getRecipeOutput().isItemEqual(stack)) {
@@ -328,8 +328,8 @@ public class ThaumcraftApi {
 	
 	//ASPECTS////////////////////////////////////////
 	
-	public static ConcurrentHashMap<List,AspectList> objectTags = new ConcurrentHashMap<List,AspectList>();
-	public static ConcurrentHashMap<List,int[]> groupedObjectTags = new ConcurrentHashMap<List,int[]>();
+	public static ConcurrentHashMap<List,AspectList> objectTags = new ConcurrentHashMap<>();
+	public static ConcurrentHashMap<List,int[]> groupedObjectTags = new ConcurrentHashMap<>();
 	
 	/**
 	 * Checks to see if the passed item/block already has aspects associated with it.
@@ -348,7 +348,7 @@ public class ThaumcraftApi {
 					index++;
 				} while (index<16 && tmp==null);
 			}
-			if (tmp==null) return false;
+            return tmp != null;
 		}
 		
 		return true;
@@ -364,7 +364,7 @@ public class ThaumcraftApi {
 		if (aspects==null) aspects=new AspectList();
 		try {
 		objectTags.put(Arrays.asList(item.getItem(),item.getItemDamage()), aspects);
-		} catch (Exception e) {}
+		} catch (Exception ignored) {}
 	}	
 	
 	
@@ -383,7 +383,7 @@ public class ThaumcraftApi {
 				groupedObjectTags.put(Arrays.asList(item.getItem(),m), meta);
 			}
 			
-		} catch (Exception e) {}
+		} catch (Exception ignored) {}
 	}
 	
 	/**
@@ -398,7 +398,7 @@ public class ThaumcraftApi {
 			for (ItemStack ore:ores) {
 				try {
 				objectTags.put(Arrays.asList(ore.getItem(), ore.getItemDamage()), aspects);
-				} catch (Exception e) {}
+				} catch (Exception ignored) {}
 			}
 		}
 	}
@@ -431,7 +431,7 @@ public class ThaumcraftApi {
 	}
 	
 	//WARP ///////////////////////////////////////////////////////////////////////////////////////
-		private static HashMap<Object,Integer> warpMap = new HashMap<Object,Integer>();
+		private static HashMap<Object,Integer> warpMap = new HashMap<>();
 		
 		/**
 		 * This method is used to determine how much warp is gained if the item is crafted. The warp
@@ -462,8 +462,8 @@ public class ThaumcraftApi {
 			if (in instanceof ItemStack && warpMap.containsKey(Arrays.asList(((ItemStack)in).getItem(),((ItemStack)in).getItemDamage()))) {
 				return warpMap.get(Arrays.asList(((ItemStack)in).getItem(),((ItemStack)in).getItemDamage()));
 			} else
-			if (in instanceof String && warpMap.containsKey((String)in)) {
-				return warpMap.get((String)in);
+			if (in instanceof String && warpMap.containsKey(in)) {
+				return warpMap.get(in);
 			}
 			return 0;
 		}

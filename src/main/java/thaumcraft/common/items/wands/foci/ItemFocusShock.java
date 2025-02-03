@@ -75,9 +75,9 @@ public class ItemFocusShock extends ItemFocusBasic {
          py = entityplayer.boundingBox.minY + (double)(entityplayer.height / 2.0F) + (double)0.25F;
       }
 
-      px += (double)(-MathHelper.cos(entityplayer.rotationYaw / 180.0F * 3.141593F) * 0.06F);
-      py += (double)-0.06F;
-      pz += (double)(-MathHelper.sin(entityplayer.rotationYaw / 180.0F * 3.141593F) * 0.06F);
+      px += -MathHelper.cos(entityplayer.rotationYaw / 180.0F * 3.141593F) * 0.06F;
+      py += -0.06F;
+      pz += -MathHelper.sin(entityplayer.rotationYaw / 180.0F * 3.141593F) * 0.06F;
       if (entityplayer.getEntityId() != FMLClientHandler.instance().getClient().thePlayer.getEntityId()) {
          py = entityplayer.boundingBox.minY + (double)(entityplayer.height / 2.0F) + (double)0.25F;
       }
@@ -125,7 +125,7 @@ public class ItemFocusShock extends ItemFocusBasic {
          p.stopUsingItem();
       } else {
          int potency = wand.getFocusPotency(stack);
-         Entity pointedEntity = EntityUtils.getPointedEntity(p.worldObj, p, (double)0.0F, (double)20.0F, 1.1F);
+         Entity pointedEntity = EntityUtils.getPointedEntity(p.worldObj, p, 0.0F, 20.0F, 1.1F);
          if (p.worldObj.isRemote) {
             MovingObjectPosition mop = BlockUtils.getTargetBlock(p.worldObj, p, false);
             Vec3 v = p.getLook(2.0F);
@@ -155,7 +155,7 @@ public class ItemFocusShock extends ItemFocusBasic {
             shootLightning(p.worldObj, p, px, py, pz, true);
          } else {
             p.worldObj.playSoundEffect(p.posX, p.posY, p.posZ, "thaumcraft:shock", 0.25F, 1.0F);
-            if (pointedEntity != null && pointedEntity instanceof EntityLivingBase && (!(pointedEntity instanceof EntityPlayer) || MinecraftServer.getServer().isPVPEnabled())) {
+            if (pointedEntity instanceof EntityLivingBase && (!(pointedEntity instanceof EntityPlayer) || MinecraftServer.getServer().isPVPEnabled())) {
                int cl = this.getUpgradeLevel(wand.getFocusItem(stack), chainlightning) * 2;
                pointedEntity.attackEntityFrom(DamageSource.causePlayerDamage(p), (float)((cl > 0 ? 6 : 4) + potency));
                if (cl > 0) {
@@ -166,7 +166,7 @@ public class ItemFocusShock extends ItemFocusBasic {
 
                   while(cl > 0) {
                      --cl;
-                     ArrayList<Entity> list = EntityUtils.getEntitiesInRange(p.worldObj, center.posX, center.posY, center.posZ, p, EntityLivingBase.class, (double)8.0F);
+                     ArrayList<Entity> list = EntityUtils.getEntitiesInRange(p.worldObj, center.posX, center.posY, center.posZ, p, EntityLivingBase.class, 8.0F);
                      double d = Double.MAX_VALUE;
                      Entity closest = null;
 
@@ -181,7 +181,7 @@ public class ItemFocusShock extends ItemFocusBasic {
                      }
 
                      if (closest != null) {
-                        PacketHandler.INSTANCE.sendToAllAround(new PacketFXZap(center.getEntityId(), closest.getEntityId()), new NetworkRegistry.TargetPoint(p.worldObj.provider.dimensionId, center.posX, center.posY, center.posZ, (double)64.0F));
+                        PacketHandler.INSTANCE.sendToAllAround(new PacketFXZap(center.getEntityId(), closest.getEntityId()), new NetworkRegistry.TargetPoint(p.worldObj.provider.dimensionId, center.posX, center.posY, center.posZ, 64.0F));
                         targets.add(closest.getEntityId());
                         closest.attackEntityFrom(DamageSource.causePlayerDamage(p), (float)(4 + potency));
                         center = (EntityLivingBase)closest;

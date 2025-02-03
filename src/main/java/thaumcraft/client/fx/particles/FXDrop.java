@@ -21,8 +21,8 @@ public class FXDrop extends EntityFX {
    int bobTimer;
 
    public FXDrop(World par1World, double par2, double par4, double par6, float r, float g, float b) {
-      super(par1World, par2, par4, par6, (double)0.0F, (double)0.0F, (double)0.0F);
-      this.motionX = this.motionY = this.motionZ = (double)0.0F;
+      super(par1World, par2, par4, par6, 0.0F, 0.0F, 0.0F);
+      this.motionX = this.motionY = this.motionZ = 0.0F;
       this.particleRed = r;
       this.particleGreen = g;
       this.particleBlue = b;
@@ -30,7 +30,7 @@ public class FXDrop extends EntityFX {
       this.particleGravity = 0.06F;
       this.bobTimer = 40;
       this.particleMaxAge = (int)((double)64.0F / (Math.random() * 0.8 + 0.2));
-      this.motionX = this.motionY = this.motionZ = (double)0.0F;
+      this.motionX = this.motionY = this.motionZ = 0.0F;
    }
 
    public int getBrightnessForRender(float par1) {
@@ -45,7 +45,7 @@ public class FXDrop extends EntityFX {
       this.prevPosX = this.posX;
       this.prevPosY = this.posY;
       this.prevPosZ = this.posZ;
-      this.motionY -= (double)this.particleGravity;
+      this.motionY -= this.particleGravity;
       if (this.bobTimer-- > 0) {
          this.motionX *= 0.02;
          this.motionY *= 0.02;
@@ -56,22 +56,22 @@ public class FXDrop extends EntityFX {
       }
 
       this.moveEntity(this.motionX, this.motionY, this.motionZ);
-      this.motionX *= (double)0.98F;
-      this.motionY *= (double)0.98F;
-      this.motionZ *= (double)0.98F;
+      this.motionX *= 0.98F;
+      this.motionY *= 0.98F;
+      this.motionZ *= 0.98F;
       if (this.particleMaxAge-- <= 0) {
          this.setDead();
       }
 
       if (this.onGround) {
          this.setParticleTextureIndex(114);
-         this.motionX *= (double)0.7F;
-         this.motionZ *= (double)0.7F;
+         this.motionX *= 0.7F;
+         this.motionZ *= 0.7F;
       }
 
       Material material = this.worldObj.getBlock(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)).getMaterial();
       if (material != Material.glass && (material.isLiquid() || material.isSolid())) {
-         double d0 = (double)((float)(MathHelper.floor_double(this.posY) + 1) - BlockLiquid.getLiquidHeightPercent(this.worldObj.getBlockMetadata(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ))));
+         double d0 = (float)(MathHelper.floor_double(this.posY) + 1) - BlockLiquid.getLiquidHeightPercent(this.worldObj.getBlockMetadata(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)));
          if (this.posY < d0) {
             this.setDead();
          }
@@ -91,12 +91,12 @@ public class FXDrop extends EntityFX {
          double d5 = this.posZ;
          if (this.isInWeb) {
             this.isInWeb = false;
-            par1 *= (double)0.25F;
-            par3 *= (double)0.05F;
-            par5 *= (double)0.25F;
-            this.motionX = (double)0.0F;
-            this.motionY = (double)0.0F;
-            this.motionZ = (double)0.0F;
+            par1 *= 0.25F;
+            par3 *= 0.05F;
+            par5 *= 0.25F;
+            this.motionX = 0.0F;
+            this.motionY = 0.0F;
+            this.motionZ = 0.0F;
          }
 
          double d6 = par1;
@@ -106,9 +106,9 @@ public class FXDrop extends EntityFX {
          boolean flag = this.onGround && this.isSneaking();
          if (flag) {
             double d9;
-            for(d9 = 0.05; par1 != (double)0.0F && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(par1, (double)-1.0F, (double)0.0F)).isEmpty(); d6 = par1) {
+            for(d9 = 0.05; par1 != (double)0.0F && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(par1, -1.0F, 0.0F)).isEmpty(); d6 = par1) {
                if (par1 < d9 && par1 >= -d9) {
-                  par1 = (double)0.0F;
+                  par1 = 0.0F;
                } else if (par1 > (double)0.0F) {
                   par1 -= d9;
                } else {
@@ -116,9 +116,9 @@ public class FXDrop extends EntityFX {
                }
             }
 
-            for(; par5 != (double)0.0F && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox((double)0.0F, (double)-1.0F, par5)).isEmpty(); d8 = par5) {
+            for(; par5 != (double)0.0F && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(0.0F, -1.0F, par5)).isEmpty(); d8 = par5) {
                if (par5 < d9 && par5 >= -d9) {
-                  par5 = (double)0.0F;
+                  par5 = 0.0F;
                } else if (par5 > (double)0.0F) {
                   par5 -= d9;
                } else {
@@ -126,9 +126,9 @@ public class FXDrop extends EntityFX {
                }
             }
 
-            while(par1 != (double)0.0F && par5 != (double)0.0F && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(par1, (double)-1.0F, par5)).isEmpty()) {
+            while(par1 != (double)0.0F && par5 != (double)0.0F && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(par1, -1.0F, par5)).isEmpty()) {
                if (par1 < d9 && par1 >= -d9) {
-                  par1 = (double)0.0F;
+                  par1 = 0.0F;
                } else if (par1 > (double)0.0F) {
                   par1 -= d9;
                } else {
@@ -136,7 +136,7 @@ public class FXDrop extends EntityFX {
                }
 
                if (par5 < d9 && par5 >= -d9) {
-                  par5 = (double)0.0F;
+                  par5 = 0.0F;
                } else if (par5 > (double)0.0F) {
                   par5 -= d9;
                } else {
@@ -150,39 +150,39 @@ public class FXDrop extends EntityFX {
 
          List list = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(par1, par3, par5));
 
-         for(int i = 0; i < list.size(); ++i) {
-            par3 = ((AxisAlignedBB)list.get(i)).calculateYOffset(this.boundingBox, par3);
-         }
+          for (Object o2 : list) {
+              par3 = ((AxisAlignedBB) o2).calculateYOffset(this.boundingBox, par3);
+          }
 
-         this.boundingBox.offset((double)0.0F, par3, (double)0.0F);
+         this.boundingBox.offset(0.0F, par3, 0.0F);
          if (!this.field_70135_K && d7 != par3) {
-            par5 = (double)0.0F;
-            par3 = (double)0.0F;
-            par1 = (double)0.0F;
+            par5 = 0.0F;
+            par3 = 0.0F;
+            par1 = 0.0F;
          }
 
          boolean flag1 = this.onGround || d7 != par3 && d7 < (double)0.0F;
 
-         for(int j = 0; j < list.size(); ++j) {
-            par1 = ((AxisAlignedBB)list.get(j)).calculateXOffset(this.boundingBox, par1);
-         }
+          for (Object o1 : list) {
+              par1 = ((AxisAlignedBB) o1).calculateXOffset(this.boundingBox, par1);
+          }
 
-         this.boundingBox.offset(par1, (double)0.0F, (double)0.0F);
+         this.boundingBox.offset(par1, 0.0F, 0.0F);
          if (!this.field_70135_K && d6 != par1) {
-            par5 = (double)0.0F;
-            par3 = (double)0.0F;
-            par1 = (double)0.0F;
+            par5 = 0.0F;
+            par3 = 0.0F;
+            par1 = 0.0F;
          }
 
-         for(int var46 = 0; var46 < list.size(); ++var46) {
-            par5 = ((AxisAlignedBB)list.get(var46)).calculateZOffset(this.boundingBox, par5);
-         }
+          for (Object element : list) {
+              par5 = ((AxisAlignedBB) element).calculateZOffset(this.boundingBox, par5);
+          }
 
-         this.boundingBox.offset((double)0.0F, (double)0.0F, par5);
+         this.boundingBox.offset(0.0F, 0.0F, par5);
          if (!this.field_70135_K && d8 != par5) {
-            par5 = (double)0.0F;
-            par3 = (double)0.0F;
-            par1 = (double)0.0F;
+            par5 = 0.0F;
+            par3 = 0.0F;
+            par1 = 0.0F;
          }
 
          if (this.stepHeight > 0.0F && flag1 && (flag || this.ySize < 0.05F) && (d6 != par1 || d8 != par5)) {
@@ -190,57 +190,57 @@ public class FXDrop extends EntityFX {
             double d10 = par3;
             double d11 = par5;
             par1 = d6;
-            par3 = (double)this.stepHeight;
+            par3 = this.stepHeight;
             par5 = d8;
             AxisAlignedBB axisalignedbb1 = this.boundingBox.copy();
             this.boundingBox.setBB(axisalignedbb);
             list = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(d6, par3, d8));
 
-            for(int k = 0; k < list.size(); ++k) {
-               par3 = ((AxisAlignedBB)list.get(k)).calculateYOffset(this.boundingBox, par3);
-            }
+             for (Object item : list) {
+                 par3 = ((AxisAlignedBB) item).calculateYOffset(this.boundingBox, par3);
+             }
 
-            this.boundingBox.offset((double)0.0F, par3, (double)0.0F);
+            this.boundingBox.offset(0.0F, par3, 0.0F);
             if (!this.field_70135_K && d7 != par3) {
-               par5 = (double)0.0F;
-               par3 = (double)0.0F;
-               par1 = (double)0.0F;
+               par5 = 0.0F;
+               par3 = 0.0F;
+               par1 = 0.0F;
             }
 
-            for(int var49 = 0; var49 < list.size(); ++var49) {
-               par1 = ((AxisAlignedBB)list.get(var49)).calculateXOffset(this.boundingBox, par1);
-            }
+             for (Object value : list) {
+                 par1 = ((AxisAlignedBB) value).calculateXOffset(this.boundingBox, par1);
+             }
 
-            this.boundingBox.offset(par1, (double)0.0F, (double)0.0F);
+            this.boundingBox.offset(par1, 0.0F, 0.0F);
             if (!this.field_70135_K && d6 != par1) {
-               par5 = (double)0.0F;
-               par3 = (double)0.0F;
-               par1 = (double)0.0F;
+               par5 = 0.0F;
+               par3 = 0.0F;
+               par1 = 0.0F;
             }
 
-            for(int var50 = 0; var50 < list.size(); ++var50) {
-               par5 = ((AxisAlignedBB)list.get(var50)).calculateZOffset(this.boundingBox, par5);
-            }
+             for (Object object : list) {
+                 par5 = ((AxisAlignedBB) object).calculateZOffset(this.boundingBox, par5);
+             }
 
-            this.boundingBox.offset((double)0.0F, (double)0.0F, par5);
+            this.boundingBox.offset(0.0F, 0.0F, par5);
             if (!this.field_70135_K && d8 != par5) {
-               par5 = (double)0.0F;
-               par3 = (double)0.0F;
-               par1 = (double)0.0F;
+               par5 = 0.0F;
+               par3 = 0.0F;
+               par1 = 0.0F;
             }
 
             if (!this.field_70135_K && d7 != par3) {
-               par5 = (double)0.0F;
-               par3 = (double)0.0F;
-               par1 = (double)0.0F;
+               par5 = 0.0F;
+               par3 = 0.0F;
+               par1 = 0.0F;
             } else {
-               par3 = (double)(-this.stepHeight);
+               par3 = -this.stepHeight;
 
-               for(int var51 = 0; var51 < list.size(); ++var51) {
-                  par3 = ((AxisAlignedBB)list.get(var51)).calculateYOffset(this.boundingBox, par3);
-               }
+                for (Object o : list) {
+                    par3 = ((AxisAlignedBB) o).calculateYOffset(this.boundingBox, par3);
+                }
 
-               this.boundingBox.offset((double)0.0F, par3, (double)0.0F);
+               this.boundingBox.offset(0.0F, par3, 0.0F);
             }
 
             if (d12 * d12 + d11 * d11 >= par1 * par1 + par5 * par5) {
@@ -262,15 +262,15 @@ public class FXDrop extends EntityFX {
          this.isCollided = this.isCollidedHorizontally || this.isCollidedVertically;
          this.updateFallState(par3, this.onGround);
          if (d6 != par1) {
-            this.motionX = (double)0.0F;
+            this.motionX = 0.0F;
          }
 
          if (d7 != par3) {
-            this.motionY = (double)0.0F;
+            this.motionY = 0.0F;
          }
 
          if (d8 != par5) {
-            this.motionZ = (double)0.0F;
+            this.motionZ = 0.0F;
          }
 
          double d12 = this.posX - d3;
@@ -289,7 +289,7 @@ public class FXDrop extends EntityFX {
             }
 
             if (j1 != Blocks.ladder) {
-               d10 = (double)0.0F;
+               d10 = 0.0F;
             }
 
             this.distanceWalkedModified = (float)((double)this.distanceWalkedModified + (double)MathHelper.sqrt_double(d12 * d12 + d11 * d11) * 0.6);
@@ -318,7 +318,7 @@ public class FXDrop extends EntityFX {
             this.posX = this.prevPosX;
             this.posY = this.prevPosY;
             this.posZ = this.prevPosZ;
-            this.motionY = (double)0.0F;
+            this.motionY = 0.0F;
             this.onGround = true;
          }
       }

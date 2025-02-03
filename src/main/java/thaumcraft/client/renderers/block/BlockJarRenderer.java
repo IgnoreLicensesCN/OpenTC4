@@ -19,7 +19,7 @@ public class BlockJarRenderer extends BlockRenderer implements ISimpleBlockRende
          GL11.glPushMatrix();
          GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
          GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileJarBrain(), (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileJarBrain(), 0.0F, 0.0F, 0.0F, 0.0F);
          GL11.glEnable(32826);
          GL11.glPopMatrix();
       }

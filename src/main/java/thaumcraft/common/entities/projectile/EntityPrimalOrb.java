@@ -59,20 +59,20 @@ public class EntityPrimalOrb extends EntityThrowable implements IEntityAdditiona
 
       if (this.worldObj.isRemote) {
          for(int a = 0; a < 6; ++a) {
-            Thaumcraft.proxy.wispFX4(this.worldObj, (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), this, a, true, 0.0F);
+            Thaumcraft.proxy.wispFX4(this.worldObj, (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F, (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F, (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F, this, a, true, 0.0F);
          }
 
          Thaumcraft.proxy.wispFX2(this.worldObj, this.posX + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), this.posY + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), this.posZ + (double)((this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F), 0.1F, this.rand.nextInt(6), true, true, 0.0F);
       }
 
-      Random rr = new Random((long)(this.getEntityId() + this.count));
+      Random rr = new Random(this.getEntityId() + this.count);
       if (this.ticksExisted > 20) {
          if (!this.seeker) {
-            this.motionX += (double)((rr.nextFloat() - rr.nextFloat()) * 0.01F);
-            this.motionY += (double)((rr.nextFloat() - rr.nextFloat()) * 0.01F);
-            this.motionZ += (double)((rr.nextFloat() - rr.nextFloat()) * 0.01F);
+            this.motionX += (rr.nextFloat() - rr.nextFloat()) * 0.01F;
+            this.motionY += (rr.nextFloat() - rr.nextFloat()) * 0.01F;
+            this.motionZ += (rr.nextFloat() - rr.nextFloat()) * 0.01F;
          } else {
-            List<Entity> l = EntityUtils.getEntitiesInRange(this.worldObj, this.posX, this.posY, this.posZ, this, EntityLivingBase.class, (double)16.0F);
+            List<Entity> l = EntityUtils.getEntitiesInRange(this.worldObj, this.posX, this.posY, this.posZ, this, EntityLivingBase.class, 16.0F);
             double d = Double.MAX_VALUE;
             Entity t = null;
 
@@ -97,9 +97,9 @@ public class EntityPrimalOrb extends EntityThrowable implements IEntityAdditiona
                this.motionX += dx * d13;
                this.motionY += dy * d13;
                this.motionZ += dz * d13;
-               this.motionX = (double)MathHelper.clamp_float((float)this.motionX, -0.2F, 0.2F);
-               this.motionY = (double)MathHelper.clamp_float((float)this.motionY, -0.2F, 0.2F);
-               this.motionZ = (double)MathHelper.clamp_float((float)this.motionZ, -0.2F, 0.2F);
+               this.motionX = MathHelper.clamp_float((float)this.motionX, -0.2F, 0.2F);
+               this.motionY = MathHelper.clamp_float((float)this.motionY, -0.2F, 0.2F);
+               this.motionZ = MathHelper.clamp_float((float)this.motionZ, -0.2F, 0.2F);
             }
          }
       }
@@ -131,7 +131,7 @@ public class EntityPrimalOrb extends EntityThrowable implements IEntityAdditiona
             specialchance = 10.0F;
          }
 
-         this.worldObj.createExplosion((Entity)null, this.posX, this.posY, this.posZ, expl, true);
+         this.worldObj.createExplosion(null, this.posX, this.posY, this.posZ, expl, true);
          if (!this.seeker && (float)this.rand.nextInt(100) <= specialchance) {
             if (this.rand.nextBoolean()) {
                this.taintSplosion();

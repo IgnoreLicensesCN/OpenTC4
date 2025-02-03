@@ -143,7 +143,7 @@ public class ModelGolemAccessories extends ModelBase {
          GL11.glPopMatrix();
          if (en.getCore() >= 0) {
             GL11.glPushMatrix();
-            GL11.glScaled(1.01, (double)1.0F, 1.01);
+            GL11.glScaled(1.01, 1.0F, 1.01);
             this.golemEvilHead.render(par7);
             GL11.glPopMatrix();
          }

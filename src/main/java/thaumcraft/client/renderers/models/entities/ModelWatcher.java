@@ -101,8 +101,8 @@ public class ModelWatcher extends ModelBase {
          }
 
          Vec3 vec32 = entityguardian.getLook(0.0F);
-         vec32 = Vec3.createVectorHelper(vec32.xCoord, (double)0.0F, vec32.zCoord);
-         Vec3 vec33 = Vec3.createVectorHelper(vec31.xCoord - vec3.xCoord, (double)0.0F, vec31.zCoord - vec3.zCoord).normalize();
+         vec32 = Vec3.createVectorHelper(vec32.xCoord, 0.0F, vec32.zCoord);
+         Vec3 vec33 = Vec3.createVectorHelper(vec31.xCoord - vec3.xCoord, 0.0F, vec31.zCoord - vec3.zCoord).normalize();
          vec33.rotateAroundY(((float)Math.PI / 2F));
          double d1 = vec32.dotProduct(vec33);
          this.guardianEye.rotationPointX = MathHelper.sqrt_float((float)Math.abs(d1)) * 2.0F * (float)Math.signum(d1);

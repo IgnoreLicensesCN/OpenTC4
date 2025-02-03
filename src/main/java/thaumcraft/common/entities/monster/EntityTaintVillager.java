@@ -48,14 +48,14 @@ public class EntityTaintVillager extends EntityMob implements ITaintedMob {
       this.getNavigator().setAvoidsWater(true);
       this.tasks.addTask(0, new EntityAISwimming(this));
       this.tasks.addTask(2, new EntityAIMoveIndoors(this));
-      this.tasks.addTask(2, new AIAttackOnCollide(this, EntityPlayer.class, (double)1.0F, false));
+      this.tasks.addTask(2, new AIAttackOnCollide(this, EntityPlayer.class, 1.0F, false));
       this.tasks.addTask(3, new EntityAIRestrictOpenDoor(this));
       this.tasks.addTask(4, new EntityAIOpenDoor(this, true));
-      this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, (double)1.0F));
-      this.tasks.addTask(6, new EntityAIMoveThroughVillage(this, (double)1.0F, false));
+      this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0F));
+      this.tasks.addTask(6, new EntityAIMoveThroughVillage(this, 1.0F, false));
       this.tasks.addTask(9, new EntityAIWatchClosest2(this, EntityPlayer.class, 3.0F, 1.0F));
       this.tasks.addTask(9, new EntityAIWatchClosest2(this, EntityVillager.class, 5.0F, 0.02F));
-      this.tasks.addTask(9, new EntityAIWander(this, (double)1.0F));
+      this.tasks.addTask(9, new EntityAIWander(this, 1.0F));
       this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityLivingBase.class, 8.0F));
       this.targetTasks.addTask(0, new EntityAIHurtByTarget(this, false));
       this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
@@ -63,8 +63,8 @@ public class EntityTaintVillager extends EntityMob implements ITaintedMob {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)30.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)4.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(30.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(4.0F);
       this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.3);
    }
 

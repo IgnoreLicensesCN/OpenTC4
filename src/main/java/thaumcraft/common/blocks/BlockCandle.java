@@ -109,11 +109,11 @@ public class BlockCandle extends Block implements IInfusionStabiliser {
    }
 
    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-      double var7 = (double)((float)par2 + 0.5F);
-      double var9 = (double)((float)par3 + 0.7F);
-      double var11 = (double)((float)par4 + 0.5F);
-      par1World.spawnParticle("smoke", var7, var9, var11, (double)0.0F, (double)0.0F, (double)0.0F);
-      par1World.spawnParticle("flame", var7, var9, var11, (double)0.0F, (double)0.0F, (double)0.0F);
+      double var7 = (float)par2 + 0.5F;
+      double var9 = (float)par3 + 0.7F;
+      double var11 = (float)par4 + 0.5F;
+      par1World.spawnParticle("smoke", var7, var9, var11, 0.0F, 0.0F, 0.0F);
+      par1World.spawnParticle("flame", var7, var9, var11, 0.0F, 0.0F, 0.0F);
    }
 
    public boolean canStabaliseInfusion(World world, int x, int y, int z) {

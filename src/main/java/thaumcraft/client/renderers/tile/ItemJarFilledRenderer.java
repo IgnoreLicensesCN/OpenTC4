@@ -58,7 +58,7 @@ public class ItemJarFilledRenderer implements IItemRenderer {
          tjf.facing = 5;
          tjf.blockType = ConfigBlocks.blockJar;
          tjf.blockMetadata = 0;
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(tjf, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(tjf, 0.0F, 0.0F, 0.0F, 0.0F);
          GL11.glPushMatrix();
          GL11.glTranslatef(0.5F, 0.5F, 0.5F);
          GL11.glEnable(3042);

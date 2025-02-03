@@ -18,7 +18,7 @@ public class ContainerResearchTable extends Container {
    public ContainerResearchTable(InventoryPlayer iinventory, TileResearchTable iinventory1) {
       this.player = iinventory.player;
       this.tileEntity = iinventory1;
-      this.aspects = (String[])Aspect.aspects.keySet().toArray(new String[0]);
+      this.aspects = Aspect.aspects.keySet().toArray(new String[0]);
       this.addSlotToContainer(new SlotLimitedByClass(IScribeTools.class, iinventory1, 0, 14, 10));
       this.addSlotToContainer(new SlotLimitedByClass(ItemResearchNotes.class, iinventory1, 1, 70, 10));
       this.bindPlayerInventory(iinventory);
@@ -63,7 +63,7 @@ public class ContainerResearchTable extends Container {
          }
 
          if (stackInSlot.stackSize == 0) {
-            slotObject.putStack((ItemStack)null);
+            slotObject.putStack(null);
          } else {
             slotObject.onSlotChanged();
          }

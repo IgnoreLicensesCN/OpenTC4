@@ -89,7 +89,7 @@ public class GuiResearchTable extends GuiContainer {
       long time = System.nanoTime() / 1000000L;
       if (PlayerNotifications.getListAndUpdate(time).size() > 0) {
          GL11.glPushMatrix();
-         Thaumcraft.instance.renderEventHandler.notifyHandler.renderNotifyHUD((double)this.width, (double)this.height, time);
+         Thaumcraft.instance.renderEventHandler.notifyHandler.renderNotifyHUD(this.width, this.height, time);
          GL11.glPopMatrix();
       }
 
@@ -123,7 +123,7 @@ public class GuiResearchTable extends GuiContainer {
             int count = 0;
 
             for(Aspect aspect : al.getAspectsSorted()) {
-               UtilsFX.drawTag(gx + 100 + 48 + count * 16, gy + 21, aspect, (float)al.getAmount(aspect), 0, (double)this.zLevel);
+               UtilsFX.drawTag(gx + 100 + 48 + count * 16, gy + 21, aspect, (float)al.getAmount(aspect), 0, this.zLevel);
                ++count;
             }
 
@@ -146,7 +146,7 @@ public class GuiResearchTable extends GuiContainer {
             }
          } else if (this.isMouseButtonDown == 1 && this.draggedAspect != null) {
             GL11.glEnable(3042);
-            this.drawOrb((double)(mx - 8), (double)(my - 8), this.draggedAspect.getColor());
+            this.drawOrb(mx - 8, my - 8, this.draggedAspect.getColor());
             GL11.glDisable(3042);
          }
       } else {
@@ -154,8 +154,8 @@ public class GuiResearchTable extends GuiContainer {
             if (this.note != null) {
                int mouseX = mx - (gx + 169);
                int mouseY = my - (gy + 83);
-               HexUtils.Hex hp = (new HexUtils.Pixel((double)mouseX, (double)mouseY)).toHex(9);
-               if (this.note.hexEntries.containsKey(hp.toString()) && ((ResearchManager.HexEntry)this.note.hexEntries.get(hp.toString())).type == 0) {
+               HexUtils.Hex hp = (new HexUtils.Pixel(mouseX, mouseY)).toHex(9);
+               if (this.note.hexEntries.containsKey(hp.toString()) && this.note.hexEntries.get(hp.toString()).type == 0) {
                   this.playButtonCombine();
                   this.playButtonWrite();
                   PacketHandler.INSTANCE.sendToServer(new PacketAspectPlaceToServer(this.player, (byte)hp.q, (byte)hp.r, this.tileEntity.xCoord, this.tileEntity.yCoord, this.tileEntity.zCoord, this.draggedAspect));
@@ -224,7 +224,7 @@ public class GuiResearchTable extends GuiContainer {
 
       if (this.butcount2 < System.nanoTime() && this.select1 != null && this.select2 != null) {
          this.drawTexturedModalRect(var5 + 35, var6 + 139, 184, 184, 32, 16);
-         this.drawOrb((double)(var5 + 43), (double)(var6 + 139));
+         this.drawOrb(var5 + 43, var6 + 139);
       } else if (this.butcount2 >= System.nanoTime() && this.select1 != null && this.select2 != null) {
          this.drawTexturedModalRect(var5 + 35, var6 + 139, 184, 184, 32, 16);
          this.drawTexturedModalRect(var5 + 35, var6 + 139, 184, 168, 32, 16);
@@ -254,7 +254,7 @@ public class GuiResearchTable extends GuiContainer {
                boolean faded = aspects.getAmount(aspect) <= 0 && this.tileEntity.bonusAspects.getAmount(aspect) <= 0;
                int xx = drawn / 5 * 16;
                int yy = drawn % 5 * 16;
-               UtilsFX.drawTag(x + xx, y + yy, aspect, (float)aspects.getAmount(aspect), this.tileEntity.bonusAspects.getAmount(aspect), (double)this.zLevel, 771, faded ? 0.33F : 1.0F);
+               UtilsFX.drawTag(x + xx, y + yy, aspect, (float)aspects.getAmount(aspect), this.tileEntity.bonusAspects.getAmount(aspect), this.zLevel, 771, faded ? 0.33F : 1.0F);
                ++drawn;
             }
          }
@@ -269,11 +269,11 @@ public class GuiResearchTable extends GuiContainer {
       }
 
       if (this.select1 != null) {
-         UtilsFX.drawTag(x + 3, y + 99, this.select1, 0.0F, 0, (double)this.zLevel);
+         UtilsFX.drawTag(x + 3, y + 99, this.select1, 0.0F, 0, this.zLevel);
       }
 
       if (this.select2 != null) {
-         UtilsFX.drawTag(x + 61, y + 99, this.select2, 0.0F, 0, (double)this.zLevel);
+         UtilsFX.drawTag(x + 61, y + 99, this.select2, 0.0F, 0, this.zLevel);
       }
 
    }
@@ -301,17 +301,17 @@ public class GuiResearchTable extends GuiContainer {
                      GL11.glBlendFunc(770, 771);
                      UtilsFX.bindTexture("textures/aspects/_back.png");
                      GL11.glPushMatrix();
-                     GL11.glTranslated((double)(mx + 6), (double)(my + 6), (double)0.0F);
-                     GL11.glScaled((double)1.25F, (double)1.25F, (double)0.0F);
-                     UtilsFX.drawTexturedQuadFull(0, 0, (double)0.0F);
+                     GL11.glTranslated(mx + 6, my + 6, 0.0F);
+                     GL11.glScaled(1.25F, 1.25F, 0.0F);
+                     UtilsFX.drawTexturedQuadFull(0, 0, 0.0F);
                      GL11.glPopMatrix();
                      GL11.glPushMatrix();
-                     GL11.glTranslated((double)(mx + 24), (double)(my + 6), (double)0.0F);
-                     GL11.glScaled((double)1.25F, (double)1.25F, (double)0.0F);
-                     UtilsFX.drawTexturedQuadFull(0, 0, (double)0.0F);
+                     GL11.glTranslated(mx + 24, my + 6, 0.0F);
+                     GL11.glScaled(1.25F, 1.25F, 0.0F);
+                     UtilsFX.drawTexturedQuadFull(0, 0, 0.0F);
                      GL11.glPopMatrix();
-                     UtilsFX.drawTag(mx + 26, my + 8, aspect.getComponents()[1], 0.0F, 0, (double)0.0F);
-                     UtilsFX.drawTag(mx + 8, my + 8, aspect.getComponents()[0], 0.0F, 0, (double)0.0F);
+                     UtilsFX.drawTag(mx + 26, my + 8, aspect.getComponents()[1], 0.0F, 0, 0.0F);
+                     UtilsFX.drawTag(mx + 8, my + 8, aspect.getComponents()[0], 0.0F, 0, 0.0F);
                      GL11.glDisable(3042);
                      GL11.glPopMatrix();
                   }
@@ -358,15 +358,15 @@ public class GuiResearchTable extends GuiContainer {
       UtilsFX.bindTexture("textures/gui/hex1.png");
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.25F);
       HexUtils.Pixel pix = hex.toPixel(9);
-      GL11.glTranslated((double)x + pix.x, (double)y + pix.y, (double)0.0F);
+      GL11.glTranslated((double)x + pix.x, (double)y + pix.y, 0.0F);
       Tessellator tessellator = Tessellator.instance;
       tessellator.startDrawingQuads();
       tessellator.setBrightness(240);
       tessellator.setColorRGBA_F(1.0F, 1.0F, 1.0F, 0.25F);
-      tessellator.addVertexWithUV((double)-8.0F, (double)8.0F, (double)this.zLevel, (double)0.0F, (double)1.0F);
-      tessellator.addVertexWithUV((double)8.0F, (double)8.0F, (double)this.zLevel, (double)1.0F, (double)1.0F);
-      tessellator.addVertexWithUV((double)8.0F, (double)-8.0F, (double)this.zLevel, (double)1.0F, (double)0.0F);
-      tessellator.addVertexWithUV((double)-8.0F, (double)-8.0F, (double)this.zLevel, (double)0.0F, (double)0.0F);
+      tessellator.addVertexWithUV(-8.0F, 8.0F, this.zLevel, 0.0F, 1.0F);
+      tessellator.addVertexWithUV(8.0F, 8.0F, this.zLevel, 1.0F, 1.0F);
+      tessellator.addVertexWithUV(8.0F, -8.0F, this.zLevel, 1.0F, 0.0F);
+      tessellator.addVertexWithUV(-8.0F, -8.0F, this.zLevel, 0.0F, 0.0F);
       tessellator.draw();
       GL11.glAlphaFunc(516, 0.1F);
       GL11.glPopMatrix();
@@ -380,14 +380,14 @@ public class GuiResearchTable extends GuiContainer {
       UtilsFX.bindTexture("textures/gui/hex2.png");
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       HexUtils.Pixel pix = hex.toPixel(9);
-      GL11.glTranslated((double)x + pix.x, (double)y + pix.y, (double)0.0F);
+      GL11.glTranslated((double)x + pix.x, (double)y + pix.y, 0.0F);
       Tessellator tessellator = Tessellator.instance;
       tessellator.startDrawingQuads();
       tessellator.setColorRGBA_F(1.0F, 1.0F, 1.0F, 1.0F);
-      tessellator.addVertexWithUV((double)-8.0F, (double)8.0F, (double)this.zLevel, (double)0.0F, (double)1.0F);
-      tessellator.addVertexWithUV((double)8.0F, (double)8.0F, (double)this.zLevel, (double)1.0F, (double)1.0F);
-      tessellator.addVertexWithUV((double)8.0F, (double)-8.0F, (double)this.zLevel, (double)1.0F, (double)0.0F);
-      tessellator.addVertexWithUV((double)-8.0F, (double)-8.0F, (double)this.zLevel, (double)0.0F, (double)0.0F);
+      tessellator.addVertexWithUV(-8.0F, 8.0F, this.zLevel, 0.0F, 1.0F);
+      tessellator.addVertexWithUV(8.0F, 8.0F, this.zLevel, 1.0F, 1.0F);
+      tessellator.addVertexWithUV(8.0F, -8.0F, this.zLevel, 1.0F, 0.0F);
+      tessellator.addVertexWithUV(-8.0F, -8.0F, this.zLevel, 0.0F, 0.0F);
       tessellator.draw();
       GL11.glBlendFunc(770, 771);
       GL11.glAlphaFunc(516, 0.1F);
@@ -404,8 +404,8 @@ public class GuiResearchTable extends GuiContainer {
       GL11.glBlendFunc(770, 1);
       var12.startDrawing(3);
       var12.setColorRGBA_F(0.0F, 0.6F, 0.8F, alpha);
-      var12.addVertex(x, y, (double)0.0F);
-      var12.addVertex(x2, y2, (double)0.0F);
+      var12.addVertex(x, y, 0.0F);
+      var12.addVertex(x2, y2, 0.0F);
       var12.draw();
       GL11.glBlendFunc(770, 771);
       GL11.glDisable(32826);
@@ -423,43 +423,42 @@ public class GuiResearchTable extends GuiContainer {
             this.lastRuneCheck = time + 250L;
             int k = this.mc.theWorld.rand.nextInt(120) - 60;
             int l = this.mc.theWorld.rand.nextInt(120) - 60;
-            HexUtils.Hex hp = (new HexUtils.Pixel((double)k, (double)l)).toHex(9);
+            HexUtils.Hex hp = (new HexUtils.Pixel(k, l)).toHex(9);
             if (!this.runes.containsKey(hp.toString()) && !this.note.hexes.containsKey(hp.toString())) {
-               this.runes.put(hp.toString(), new Rune(hp.q, hp.r, time, this.lastRuneCheck + 15000L + (long)this.mc.theWorld.rand.nextInt(10000), this.mc.theWorld.rand.nextInt(16)));
+               this.runes.put(hp.toString(), new Rune(hp.q, hp.r, time, this.lastRuneCheck + 15000L + (long) this.mc.theWorld.rand.nextInt(10000), this.mc.theWorld.rand.nextInt(16)));
             }
          }
 
          if (this.runes.size() > 0) {
             Rune[] rns = (Rune[])this.runes.values().toArray(new Rune[0]);
 
-            for(int a = 0; a < rns.length; ++a) {
-               Rune rune = rns[a];
-               if (rune.decay < time) {
-                  this.runes.remove(rune.q + ":" + rune.r);
-               } else {
-                  HexUtils.Pixel pix = (new HexUtils.Hex(rune.q, rune.r)).toPixel(9);
-                  float progress = (float)(time - rune.start) / (float)(rune.decay - rune.start);
-                  float alpha = 0.5F;
-                  if (progress < 0.25F) {
-                     alpha = progress * 2.0F;
-                  } else if (progress > 0.5F) {
-                     alpha = 1.0F - progress;
-                  }
+             for (Rune rune : rns) {
+                 if (rune.decay < time) {
+                     this.runes.remove(rune.q + ":" + rune.r);
+                 } else {
+                     HexUtils.Pixel pix = (new HexUtils.Hex(rune.q, rune.r)).toPixel(9);
+                     float progress = (float) (time - rune.start) / (float) (rune.decay - rune.start);
+                     float alpha = 0.5F;
+                     if (progress < 0.25F) {
+                         alpha = progress * 2.0F;
+                     } else if (progress > 0.5F) {
+                         alpha = 1.0F - progress;
+                     }
 
-                  this.drawRune((double)(x + 169) + pix.x, (double)(y + 83) + pix.y, rune.rune, alpha * 0.66F);
-               }
-            }
+                     this.drawRune((double) (x + 169) + pix.x, (double) (y + 83) + pix.y, rune.rune, alpha * 0.66F);
+                 }
+             }
          }
 
          int mouseX = mx - (x + 169);
          int mouseY = my - (y + 83);
-         HexUtils.Hex hp = (new HexUtils.Pixel((double)mouseX, (double)mouseY)).toHex(9);
+         HexUtils.Hex hp = (new HexUtils.Pixel(mouseX, mouseY)).toHex(9);
          this.lines.clear();
          this.checked.clear();
          this.highlight.clear();
 
          for(HexUtils.Hex hex : this.note.hexes.values()) {
-            if (((ResearchManager.HexEntry)this.note.hexEntries.get(hex.toString())).type == 1 && Thaumcraft.proxy.getPlayerKnowledge().hasDiscoveredAspect(this.username, ((ResearchManager.HexEntry)this.note.hexEntries.get(hex.toString())).aspect)) {
+            if (this.note.hexEntries.get(hex.toString()).type == 1 && Thaumcraft.proxy.getPlayerKnowledge().hasDiscoveredAspect(this.username, this.note.hexEntries.get(hex.toString()).aspect)) {
                this.checkConnections(hex);
             }
          }
@@ -474,7 +473,7 @@ public class GuiResearchTable extends GuiContainer {
          GL11.glPushMatrix();
          if (!this.note.isComplete()) {
             for(HexUtils.Hex hex : this.note.hexes.values()) {
-               if (((ResearchManager.HexEntry)this.note.hexEntries.get(hex.toString())).type != 1) {
+               if (this.note.hexEntries.get(hex.toString()).type != 1) {
                   if (!this.note.isComplete()) {
                      if (hex.equals(hp)) {
                         this.drawHexHighlight(hex, x + 169, y + 83);
@@ -489,25 +488,25 @@ public class GuiResearchTable extends GuiContainer {
          }
 
          for(HexUtils.Hex hex : this.note.hexes.values()) {
-            if (((ResearchManager.HexEntry)this.note.hexEntries.get(hex.toString())).aspect != null && !Thaumcraft.proxy.getPlayerKnowledge().hasDiscoveredAspect(this.username, ((ResearchManager.HexEntry)this.note.hexEntries.get(hex.toString())).aspect)) {
+            if (this.note.hexEntries.get(hex.toString()).aspect != null && !Thaumcraft.proxy.getPlayerKnowledge().hasDiscoveredAspect(this.username, this.note.hexEntries.get(hex.toString()).aspect)) {
                HexUtils.Pixel pix = hex.toPixel(9);
                UtilsFX.bindTexture("textures/aspects/_unknown.png");
                GL11.glPushMatrix();
                GL11.glColor4f(0.0F, 0.0F, 0.0F, 0.5F);
                GL11.glEnable(3042);
                GL11.glBlendFunc(770, 771);
-               GL11.glTranslated((double)(x + 161) + pix.x, (double)(y + 75) + pix.y, (double)0.0F);
-               UtilsFX.drawTexturedQuadFull(0, 0, (double)this.zLevel);
+               GL11.glTranslated((double)(x + 161) + pix.x, (double)(y + 75) + pix.y, 0.0F);
+               UtilsFX.drawTexturedQuadFull(0, 0, this.zLevel);
                GL11.glDisable(3042);
                GL11.glPopMatrix();
-            } else if (((ResearchManager.HexEntry)this.note.hexEntries.get(hex.toString())).type != 1 && !this.highlight.contains(hex.toString())) {
-               if (((ResearchManager.HexEntry)this.note.hexEntries.get(hex.toString())).type == 2) {
+            } else if (this.note.hexEntries.get(hex.toString()).type != 1 && !this.highlight.contains(hex.toString())) {
+               if (this.note.hexEntries.get(hex.toString()).type == 2) {
                   HexUtils.Pixel pix = hex.toPixel(9);
-                  UtilsFX.drawTag((double)(x + 161) + pix.x, (double)(y + 75) + pix.y, ((ResearchManager.HexEntry)this.note.hexEntries.get(hex.toString())).aspect, 0.0F, 0, (double)this.zLevel, 771, 0.66F, true);
+                  UtilsFX.drawTag((double)(x + 161) + pix.x, (double)(y + 75) + pix.y, this.note.hexEntries.get(hex.toString()).aspect, 0.0F, 0, this.zLevel, 771, 0.66F, true);
                }
             } else {
                HexUtils.Pixel pix = hex.toPixel(9);
-               UtilsFX.drawTag((double)(x + 161) + pix.x, (double)(y + 75) + pix.y, ((ResearchManager.HexEntry)this.note.hexEntries.get(hex.toString())).aspect, 0.0F, 0, (double)this.zLevel, 771, 1.0F, false);
+               UtilsFX.drawTag((double)(x + 161) + pix.x, (double)(y + 75) + pix.y, this.note.hexEntries.get(hex.toString()).aspect, 0.0F, 0, this.zLevel, 771, 1.0F, false);
             }
          }
 
@@ -522,12 +521,12 @@ public class GuiResearchTable extends GuiContainer {
 
       for(int a = 0; a < 6; ++a) {
          HexUtils.Hex target = hex.getNeighbour(a);
-         if (!this.checked.contains(target.toString()) && this.note.hexEntries.containsKey(target.toString()) && ((ResearchManager.HexEntry)this.note.hexEntries.get(target.toString())).type >= 1) {
-            Aspect aspect1 = ((ResearchManager.HexEntry)this.note.hexEntries.get(hex.toString())).aspect;
-            Aspect aspect2 = ((ResearchManager.HexEntry)this.note.hexEntries.get(target.toString())).aspect;
+         if (!this.checked.contains(target.toString()) && this.note.hexEntries.containsKey(target.toString()) && this.note.hexEntries.get(target.toString()).type >= 1) {
+            Aspect aspect1 = this.note.hexEntries.get(hex.toString()).aspect;
+            Aspect aspect2 = this.note.hexEntries.get(target.toString()).aspect;
             if (Thaumcraft.proxy.getPlayerKnowledge().hasDiscoveredAspect(this.username, aspect1) && Thaumcraft.proxy.getPlayerKnowledge().hasDiscoveredAspect(this.username, aspect2) && (!aspect1.isPrimal() && (aspect1.getComponents()[0] == aspect2 || aspect1.getComponents()[1] == aspect2) || !aspect2.isPrimal() && (aspect2.getComponents()[0] == aspect1 || aspect2.getComponents()[1] == aspect1))) {
-               String k1 = hex.toString() + ":" + target.toString();
-               String k2 = target.toString() + ":" + hex.toString();
+               String k1 = hex + ":" + target;
+               String k2 = target + ":" + hex;
                if (!this.lines.containsKey(k1) && !this.lines.containsKey(k2)) {
                   this.lines.put(k1, new HexUtils.Hex[]{hex, target});
                   this.highlight.add(target.toString());
@@ -544,7 +543,7 @@ public class GuiResearchTable extends GuiContainer {
       GL11.glPushMatrix();
       UtilsFX.bindTexture("textures/misc/script.png");
       GL11.glColor4f(0.0F, 0.0F, 0.0F, alpha);
-      GL11.glTranslated(x, y, (double)0.0F);
+      GL11.glTranslated(x, y, 0.0F);
       if (rune < 16) {
          GL11.glRotatef(90.0F, 0.0F, 0.0F, -1.0F);
       }
@@ -556,10 +555,10 @@ public class GuiResearchTable extends GuiContainer {
       float var11 = 1.0F;
       tessellator.startDrawingQuads();
       tessellator.setColorRGBA_F(0.0F, 0.0F, 0.0F, alpha);
-      tessellator.addVertexWithUV((double)-5.0F, (double)5.0F, (double)this.zLevel, (double)var9, (double)var11);
-      tessellator.addVertexWithUV((double)5.0F, (double)5.0F, (double)this.zLevel, (double)var9, (double)var10);
-      tessellator.addVertexWithUV((double)5.0F, (double)-5.0F, (double)this.zLevel, (double)var8, (double)var10);
-      tessellator.addVertexWithUV((double)-5.0F, (double)-5.0F, (double)this.zLevel, (double)var8, (double)var11);
+      tessellator.addVertexWithUV(-5.0F, 5.0F, this.zLevel, var9, var11);
+      tessellator.addVertexWithUV(5.0F, 5.0F, this.zLevel, var9, var10);
+      tessellator.addVertexWithUV(5.0F, -5.0F, this.zLevel, var8, var10);
+      tessellator.addVertexWithUV(-5.0F, -5.0F, this.zLevel, var8, var11);
       tessellator.draw();
       GL11.glPopMatrix();
    }
@@ -643,11 +642,11 @@ public class GuiResearchTable extends GuiContainer {
    private void checkClickedHex(int mx, int my, int gx, int gy) {
       int mouseX = mx - (gx + 169);
       int mouseY = my - (gy + 83);
-      HexUtils.Hex hp = (new HexUtils.Pixel((double)mouseX, (double)mouseY)).toHex(9);
-      if (this.note.hexes.containsKey(hp.toString()) && ((ResearchManager.HexEntry)this.note.hexEntries.get(hp.toString())).type == 2) {
+      HexUtils.Hex hp = (new HexUtils.Pixel(mouseX, mouseY)).toHex(9);
+      if (this.note.hexes.containsKey(hp.toString()) && this.note.hexEntries.get(hp.toString()).type == 2) {
          this.playButtonCombine();
          this.playButtonErase();
-         PacketHandler.INSTANCE.sendToServer(new PacketAspectPlaceToServer(this.player, (byte)hp.q, (byte)hp.r, this.tileEntity.xCoord, this.tileEntity.yCoord, this.tileEntity.zCoord, (Aspect)null));
+         PacketHandler.INSTANCE.sendToServer(new PacketAspectPlaceToServer(this.player, (byte)hp.q, (byte)hp.r, this.tileEntity.xCoord, this.tileEntity.yCoord, this.tileEntity.zCoord, null));
       }
    }
 
@@ -724,7 +723,7 @@ public class GuiResearchTable extends GuiContainer {
       GL11.glPushMatrix();
       UtilsFX.bindTexture(ParticleEngine.particleTexture);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-      GL11.glTranslated(x, y, (double)0.0F);
+      GL11.glTranslated(x, y, 0.0F);
       Tessellator tessellator = Tessellator.instance;
       int part = count % 8;
       float var8 = 0.5F + (float)part / 8.0F;
@@ -734,15 +733,15 @@ public class GuiResearchTable extends GuiContainer {
       tessellator.startDrawingQuads();
       tessellator.setBrightness(240);
       tessellator.setColorRGBA_F(red, green, blue, 1.0F);
-      tessellator.addVertexWithUV((double)0.0F, (double)16.0F, (double)this.zLevel, (double)var9, (double)var11);
-      tessellator.addVertexWithUV((double)16.0F, (double)16.0F, (double)this.zLevel, (double)var9, (double)var10);
-      tessellator.addVertexWithUV((double)16.0F, (double)0.0F, (double)this.zLevel, (double)var8, (double)var10);
-      tessellator.addVertexWithUV((double)0.0F, (double)0.0F, (double)this.zLevel, (double)var8, (double)var11);
+      tessellator.addVertexWithUV(0.0F, 16.0F, this.zLevel, var9, var11);
+      tessellator.addVertexWithUV(16.0F, 16.0F, this.zLevel, var9, var10);
+      tessellator.addVertexWithUV(16.0F, 0.0F, this.zLevel, var8, var10);
+      tessellator.addVertexWithUV(0.0F, 0.0F, this.zLevel, var8, var11);
       tessellator.draw();
       GL11.glPopMatrix();
    }
 
-   private class Rune {
+   private static class Rune {
       int q;
       int r;
       long start;
@@ -758,7 +757,7 @@ public class GuiResearchTable extends GuiContainer {
       }
    }
 
-   class Coord2D {
+   static class Coord2D {
       int x;
       int y;
 

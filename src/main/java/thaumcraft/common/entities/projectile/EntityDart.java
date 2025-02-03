@@ -17,7 +17,7 @@ public class EntityDart extends EntityArrow implements IProjectile, IEntityAddit
    private boolean inGround = false;
    private int ticksInGround;
    private int ticksInAir = 0;
-   private double damage = (double)1.0F;
+   private double damage = 1.0F;
    private int knockbackStrength;
    private boolean first = true;
 
@@ -39,19 +39,19 @@ public class EntityDart extends EntityArrow implements IProjectile, IEntityAddit
 
    public EntityDart(World par1World) {
       super(par1World);
-      this.renderDistanceWeight = (double)10.0F;
+      this.renderDistanceWeight = 10.0F;
       this.setSize(0.5F, 0.5F);
    }
 
    public EntityDart(World par1World, EntityLivingBase par2EntityLiving, EntityLivingBase par3EntityLiving, float par4, float par5) {
       super(par1World);
-      this.renderDistanceWeight = (double)10.0F;
+      this.renderDistanceWeight = 10.0F;
       this.shootingEntity = par2EntityLiving;
       this.posY = par2EntityLiving.posY + (double)par2EntityLiving.getEyeHeight() - (double)0.1F;
       double var6 = par3EntityLiving.posX - par2EntityLiving.posX;
       double var8 = par3EntityLiving.posY + (double)par3EntityLiving.getEyeHeight() - (double)0.7F - this.posY;
       double var10 = par3EntityLiving.posZ - par2EntityLiving.posZ;
-      double var12 = (double)MathHelper.sqrt_double(var6 * var6 + var10 * var10);
+      double var12 = MathHelper.sqrt_double(var6 * var6 + var10 * var10);
       if (var12 >= 1.0E-7) {
          float var14 = (float)(Math.atan2(var10, var6) * (double)180.0F / Math.PI) - 90.0F;
          float var15 = (float)(-(Math.atan2(var8, var12) * (double)180.0F / Math.PI));

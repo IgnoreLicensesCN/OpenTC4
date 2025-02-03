@@ -268,7 +268,7 @@ public class Config {
           Thaumcraft.log.info("Extending Potion.potionTypes array to {}", potionOffset + customPotions);
          Potion[] potionTypes = new Potion[potionOffset + customPotions];
          System.arraycopy(Potion.potionTypes, 0, potionTypes, 0, potionOffset);
-         Utils.setPrivateFinalValue(Potion.class, (Object)null, potionTypes, "potionTypes", "potionTypes", "a");
+         Utils.setPrivateFinalValue(Potion.class, null, potionTypes, "potionTypes", "potionTypes", "a");
          start = potionOffset++ - 1;
       } else {
          start = -1;
@@ -483,7 +483,7 @@ public class Config {
                if (b != null && b != Blocks.air) {
                   ThaumcraftApi.portableHoleBlackList.add(b);
                }
-            } catch (Exception var34) {
+            } catch (Exception ignored) {
             }
          }
       }
@@ -666,7 +666,7 @@ public class Config {
                   }
 
                   foundCopperIngot = true;
-                  CraftingManager.getInstance().addRecipe(new ItemStack(ConfigItems.itemNugget, 9, 1), new Object[]{"#", '#', is});
+                  CraftingManager.getInstance().addRecipe(new ItemStack(ConfigItems.itemNugget, 9, 1), "#", '#', is);
                   if (first) {
                      first = false;
                      FurnaceRecipes.smelting().func_151394_a(new ItemStack(ConfigItems.itemNugget, 1, 17), new ItemStack(is.getItem(), 2, is.getItemDamage()), 1.0F);
@@ -682,7 +682,7 @@ public class Config {
                   }
 
                   foundTinIngot = true;
-                  CraftingManager.getInstance().addRecipe(new ItemStack(ConfigItems.itemNugget, 9, 2), new Object[]{"#", '#', is});
+                  CraftingManager.getInstance().addRecipe(new ItemStack(ConfigItems.itemNugget, 9, 2), "#", '#', is);
                   if (first) {
                      first = false;
                      FurnaceRecipes.smelting().func_151394_a(new ItemStack(ConfigItems.itemNugget, 1, 18), new ItemStack(is.getItem(), 2, is.getItemDamage()), 1.0F);
@@ -698,7 +698,7 @@ public class Config {
                   }
 
                   foundSilverIngot = true;
-                  CraftingManager.getInstance().addRecipe(new ItemStack(ConfigItems.itemNugget, 9, 3), new Object[]{"#", '#', is});
+                  CraftingManager.getInstance().addRecipe(new ItemStack(ConfigItems.itemNugget, 9, 3), "#", '#', is);
                   if (first) {
                      first = false;
                      FurnaceRecipes.smelting().func_151394_a(new ItemStack(ConfigItems.itemNugget, 1, 19), new ItemStack(is.getItem(), 2, is.getItemDamage()), 1.0F);
@@ -709,43 +709,50 @@ public class Config {
                if (!ore.equals("ingotBrass") && !ore.equals("ingotBronze")) {
                   if (!ore.equals("dustBrass") && !ore.equals("dustBronze")) {
                      if (!ore.equals("gemRuby") && !ore.equals("gemGreenSapphire") && !ore.equals("gemSapphire")) {
-                        if (ore.equals("woodRubber")) {
-                           for(ItemStack is : OreDictionary.getOres(ore)) {
-                              ThaumcraftApi.registerObjectTag(is, (new AspectList()).add(Aspect.TREE, 3).add(Aspect.TOOL, 1));
-                           }
-                        } else if (ore.equals("itemRubber")) {
-                           for(ItemStack is : OreDictionary.getOres(ore)) {
-                              ThaumcraftApi.registerObjectTag(is, (new AspectList()).add(Aspect.MOTION, 2).add(Aspect.TOOL, 2));
-                           }
-                        } else if (ore.equals("ingotSteel")) {
-                           for(ItemStack is : OreDictionary.getOres(ore)) {
-                              ThaumcraftApi.registerObjectTag(is, (new AspectList()).add(Aspect.METAL, 3).add(Aspect.ORDER, 1));
-                           }
-                        } else if (ore.equals("crystalQuartz")) {
-                           for(ItemStack is : OreDictionary.getOres(ore)) {
-                              ThaumcraftApi.registerObjectTag(is, (new AspectList()).add(Aspect.CRYSTAL, 1).add(Aspect.ENERGY, 1));
-                           }
-                        } else if (ore.equals("woodLog")) {
-                           for(ItemStack is : OreDictionary.getOres(ore)) {
-                              ItemElementalAxe.oreDictLogs.add(Arrays.asList(Item.getIdFromItem(is.getItem()), is.getItemDamage()));
-                           }
-                        } else if (ore.equals("ingotLead")) {
-                           boolean first = true;
+                         switch (ore) {
+                             case "woodRubber":
+                                 for (ItemStack is : OreDictionary.getOres(ore)) {
+                                     ThaumcraftApi.registerObjectTag(is, (new AspectList()).add(Aspect.TREE, 3).add(Aspect.TOOL, 1));
+                                 }
+                                 break;
+                             case "itemRubber":
+                                 for (ItemStack is : OreDictionary.getOres(ore)) {
+                                     ThaumcraftApi.registerObjectTag(is, (new AspectList()).add(Aspect.MOTION, 2).add(Aspect.TOOL, 2));
+                                 }
+                                 break;
+                             case "ingotSteel":
+                                 for (ItemStack is : OreDictionary.getOres(ore)) {
+                                     ThaumcraftApi.registerObjectTag(is, (new AspectList()).add(Aspect.METAL, 3).add(Aspect.ORDER, 1));
+                                 }
+                                 break;
+                             case "crystalQuartz":
+                                 for (ItemStack is : OreDictionary.getOres(ore)) {
+                                     ThaumcraftApi.registerObjectTag(is, (new AspectList()).add(Aspect.CRYSTAL, 1).add(Aspect.ENERGY, 1));
+                                 }
+                                 break;
+                             case "woodLog":
+                                 for (ItemStack is : OreDictionary.getOres(ore)) {
+                                     ItemElementalAxe.oreDictLogs.add(Arrays.asList(Item.getIdFromItem(is.getItem()), is.getItemDamage()));
+                                 }
+                                 break;
+                             case "ingotLead":
+                                 boolean first = true;
 
-                           for(ItemStack is : OreDictionary.getOres(ore)) {
-                              if (is.stackSize > 1) {
-                                 is.stackSize = 1;
-                              }
+                                 for (ItemStack is : OreDictionary.getOres(ore)) {
+                                     if (is.stackSize > 1) {
+                                         is.stackSize = 1;
+                                     }
 
-                              foundLeadIngot = true;
-                              CraftingManager.getInstance().addRecipe(new ItemStack(ConfigItems.itemNugget, 9, 4), new Object[]{"#", '#', is});
-                              if (first) {
-                                 first = false;
-                                 FurnaceRecipes.smelting().func_151394_a(new ItemStack(ConfigItems.itemNugget, 1, 20), new ItemStack(is.getItem(), 2, is.getItemDamage()), 1.0F);
-                                 ConfigRecipes.oreDictRecipe(is, new Object[]{"###", "###", "###", '#', new ItemStack(ConfigItems.itemNugget, 1, 4)});
-                              }
-                           }
-                        }
+                                     foundLeadIngot = true;
+                                     CraftingManager.getInstance().addRecipe(new ItemStack(ConfigItems.itemNugget, 9, 4), new Object[]{"#", '#', is});
+                                     if (first) {
+                                         first = false;
+                                         FurnaceRecipes.smelting().func_151394_a(new ItemStack(ConfigItems.itemNugget, 1, 20), new ItemStack(is.getItem(), 2, is.getItemDamage()), 1.0F);
+                                         ConfigRecipes.oreDictRecipe(is, new Object[]{"###", "###", "###", '#', new ItemStack(ConfigItems.itemNugget, 1, 4)});
+                                     }
+                                 }
+                                 break;
+                         }
                      } else {
                         for(ItemStack is : OreDictionary.getOres(ore)) {
                            ThaumcraftApi.registerObjectTag(is, (new AspectList()).add(Aspect.CRYSTAL, 2).add(Aspect.GREED, 2));
@@ -795,16 +802,16 @@ public class Config {
             Method reg = registry.getMethod("registerSafariNetBlacklist", Class.class);
             reg.invoke(registry, blacklistedEntity);
          }
-      } catch (Exception var3) {
+      } catch (Exception ignored) {
       }
 
    }
 
    public static void registerBiomes() {
-      BiomeDictionary.registerBiomeType(ThaumcraftWorldGenerator.biomeTaint, new BiomeDictionary.Type[]{Type.MAGICAL, Type.WASTELAND});
-      BiomeDictionary.registerBiomeType(ThaumcraftWorldGenerator.biomeEerie, new BiomeDictionary.Type[]{Type.MAGICAL, Type.SPOOKY});
-      BiomeDictionary.registerBiomeType(ThaumcraftWorldGenerator.biomeEldritchLands, new BiomeDictionary.Type[]{Type.MAGICAL, Type.SPOOKY, Type.END});
-      BiomeDictionary.registerBiomeType(ThaumcraftWorldGenerator.biomeMagicalForest, new BiomeDictionary.Type[]{Type.MAGICAL, Type.FOREST});
+      BiomeDictionary.registerBiomeType(ThaumcraftWorldGenerator.biomeTaint, Type.MAGICAL, Type.WASTELAND);
+      BiomeDictionary.registerBiomeType(ThaumcraftWorldGenerator.biomeEerie, Type.MAGICAL, Type.SPOOKY);
+      BiomeDictionary.registerBiomeType(ThaumcraftWorldGenerator.biomeEldritchLands, Type.MAGICAL, Type.SPOOKY, Type.END);
+      BiomeDictionary.registerBiomeType(ThaumcraftWorldGenerator.biomeMagicalForest, Type.MAGICAL, Type.FOREST);
       BiomeHandler.registerBiomeInfo(Type.WATER, 100, Aspect.WATER, false, 0.0F);
       BiomeHandler.registerBiomeInfo(Type.OCEAN, 120, Aspect.WATER, false, 0.0F);
       BiomeHandler.registerBiomeInfo(Type.RIVER, 100, Aspect.WATER, false, 0.0F);
@@ -832,7 +839,7 @@ public class Config {
       BiomeHandler.registerBiomeInfo(Type.WASTELAND, 80, Aspect.ENTROPY, false, 0.0F);
       BiomeHandler.registerBiomeInfo(Type.JUNGLE, 100, Aspect.PLANT, false, 0.0F);
       BiomeHandler.registerBiomeInfo(Type.LUSH, 100, Aspect.PLANT, true, 0.5F);
-      BiomeHandler.registerBiomeInfo(Type.MAGICAL, 100, (Aspect)null, true, 1.0F);
+      BiomeHandler.registerBiomeInfo(Type.MAGICAL, 100, null, true, 1.0F);
       BiomeHandler.registerBiomeInfo(Type.END, 80, Aspect.VOID, false, 0.0F);
       BiomeHandler.registerBiomeInfo(Type.SPOOKY, 80, Aspect.SOUL, false, 0.0F);
       BiomeHandler.registerBiomeInfo(Type.DEAD, 50, Aspect.DEATH, false, 0.0F);
@@ -842,8 +849,8 @@ public class Config {
       CropUtils.addStandardCrop(new ItemStack(Blocks.melon_block), 32767);
       CropUtils.addStandardCrop(new ItemStack(Blocks.pumpkin), 32767);
       CropUtils.addStandardCrop(new ItemStack(ConfigBlocks.blockManaPod), 7);
-      CropUtils.addStackedCrop((Block)Blocks.reeds, 32767);
-      CropUtils.addStackedCrop((Block)Blocks.cactus, 32767);
+      CropUtils.addStackedCrop(Blocks.reeds, 32767);
+      CropUtils.addStackedCrop(Blocks.cactus, 32767);
       Utils.addSpecialMiningResult(new ItemStack(Blocks.iron_ore), new ItemStack(ConfigItems.itemNugget, 1, 16), 1.0F);
       Utils.addSpecialMiningResult(new ItemStack(Blocks.gold_ore), new ItemStack(ConfigItems.itemNugget, 1, 31), 0.9F);
       Utils.addSpecialMiningResult(new ItemStack(ConfigBlocks.blockCustomOre, 1, 0), new ItemStack(ConfigItems.itemNugget, 1, 21), 0.9F);

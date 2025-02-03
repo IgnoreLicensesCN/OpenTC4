@@ -17,8 +17,8 @@ public class WeightedRandomLoot extends WeightedRandom.Item {
         this.item = stack;
     }
     
-    public static ArrayList<WeightedRandomLoot> lootBagCommon = new ArrayList<WeightedRandomLoot>();
-    public static ArrayList<WeightedRandomLoot> lootBagUncommon = new ArrayList<WeightedRandomLoot>();
-    public static ArrayList<WeightedRandomLoot> lootBagRare = new ArrayList<WeightedRandomLoot>();
+    public static ArrayList<WeightedRandomLoot> lootBagCommon = new ArrayList<>();
+    public static ArrayList<WeightedRandomLoot> lootBagUncommon = new ArrayList<>();
+    public static ArrayList<WeightedRandomLoot> lootBagRare = new ArrayList<>();
     
 }

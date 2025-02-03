@@ -79,7 +79,7 @@ public class ItemFocusTrade extends ItemFocusBasic implements IArchitect {
       float f6 = MathHelper.sin(-f1 * ((float)Math.PI / 180F));
       float f7 = f4 * f5;
       float f8 = f3 * f5;
-      double d3 = (double)5.0F;
+      double d3 = 5.0F;
       if (par2EntityPlayer instanceof EntityPlayerMP) {
          d3 = ((EntityPlayerMP)par2EntityPlayer).theItemInWorldManager.getBlockReachDistance();
       }
@@ -108,7 +108,7 @@ public class ItemFocusTrade extends ItemFocusBasic implements IArchitect {
                         isout = is.copy();
                      }
                   }
-               } catch (Exception var18) {
+               } catch (Exception ignored) {
                }
 
                this.storePickedBlock(itemstack, isout);

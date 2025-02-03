@@ -24,7 +24,7 @@ public class AIHomeReplace extends EntityAIBase {
 
    public boolean shouldExecute() {
       ChunkCoordinates home = this.theGolem.getHomePosition();
-      if (this.theGolem.getCarried() != null && this.theGolem.ticksExisted % Config.golemDelay <= 0 && this.theGolem.getNavigator().noPath() && !(this.theGolem.getDistanceSq((double)((float)home.posX + 0.5F), (double)((float)home.posY + 0.5F), (double)((float)home.posZ + 0.5F)) > (double)5.0F)) {
+      if (this.theGolem.getCarried() != null && this.theGolem.ticksExisted % Config.golemDelay <= 0 && this.theGolem.getNavigator().noPath() && !(this.theGolem.getDistanceSq((float)home.posX + 0.5F, (float)home.posY + 0.5F, (float)home.posZ + 0.5F) > (double)5.0F)) {
          ForgeDirection facing = ForgeDirection.getOrientation(this.theGolem.homeFacing);
          int cX = home.posX - facing.offsetX;
          int cY = home.posY - facing.offsetY;
@@ -69,7 +69,7 @@ public class AIHomeReplace extends EntityAIBase {
          if (this.inv != null && Config.golemChestInteract) {
             this.inv.closeInventory();
          }
-      } catch (Exception var2) {
+      } catch (Exception ignored) {
       }
 
    }
@@ -94,7 +94,7 @@ public class AIHomeReplace extends EntityAIBase {
             repeat = false;
          }
 
-         if (tile != null && tile instanceof IInventory) {
+         if (tile instanceof IInventory) {
             ItemStack result = InventoryUtils.placeItemStackIntoInventory(this.theGolem.getCarried(), (IInventory)tile, facing.ordinal(), true);
             if (!ItemStack.areItemStacksEqual(result, this.theGolem.itemCarried)) {
                this.theGolem.setCarried(result);
@@ -103,7 +103,7 @@ public class AIHomeReplace extends EntityAIBase {
                   if (Config.golemChestInteract) {
                      ((IInventory)tile).openInventory();
                   }
-               } catch (Exception var11) {
+               } catch (Exception ignored) {
                }
 
                this.countChest = 5;

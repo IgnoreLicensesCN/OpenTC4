@@ -30,7 +30,7 @@ public class REHNotifyHandler {
       GL11.glClear(256);
       GL11.glMatrixMode(5889);
       GL11.glLoadIdentity();
-      GL11.glOrtho((double)0.0F, sw, sh, (double)0.0F, (double)1000.0F, (double)3000.0F);
+      GL11.glOrtho(0.0F, sw, sh, 0.0F, 1000.0F, 3000.0F);
       GL11.glMatrixMode(5888);
       GL11.glLoadIdentity();
       GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
@@ -45,7 +45,7 @@ public class REHNotifyHandler {
       int entry = 0;
 
       for(float shift = -8.0F; entry < notifications.size() && entry < Config.notificationMax; ++entry) {
-         PlayerNotifications.Notification li = (PlayerNotifications.Notification)notifications.get(entry);
+         PlayerNotifications.Notification li = notifications.get(entry);
          String text = li.text;
          int size = mc.fontRenderer.getStringWidth(text) / 2;
          int alpha = 255;
@@ -77,7 +77,7 @@ public class REHNotifyHandler {
             Tessellator tessellator = Tessellator.instance;
             Color c = new Color(li.color);
             GL11.glColor4f((float)c.getRed() / 255.0F, (float)c.getGreen() / 255.0F, (float)c.getBlue() / 255.0F, (float)alpha / 511.0F);
-            UtilsFX.drawTexturedQuad(0, 0, 0, 0, 256, 256, (double)-90.0F);
+            UtilsFX.drawTexturedQuad(0, 0, 0, 0, 256, 256, -90.0F);
             GL11.glPopMatrix();
          }
 
@@ -90,7 +90,7 @@ public class REHNotifyHandler {
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F - (float)alpha / 511.0F);
             UtilsFX.bindTexture(ParticleEngine.particleTexture);
             int px = 16 * ((mc.thePlayer.ticksExisted + entry * 3) % 16);
-            UtilsFX.drawTexturedQuad(0, 0, px, 80, 16, 16, (double)(-90 - notifications.size()));
+            UtilsFX.drawTexturedQuad(0, 0, px, 80, 16, 16, -90 - notifications.size());
             GL11.glPopMatrix();
          }
       }
@@ -111,7 +111,7 @@ public class REHNotifyHandler {
       GL11.glClear(256);
       GL11.glMatrixMode(5889);
       GL11.glLoadIdentity();
-      GL11.glOrtho((double)0.0F, sw, sh, (double)0.0F, (double)1000.0F, (double)3000.0F);
+      GL11.glOrtho(0.0F, sw, sh, 0.0F, 1000.0F, 3000.0F);
       GL11.glMatrixMode(5888);
       GL11.glLoadIdentity();
       GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
@@ -127,7 +127,7 @@ public class REHNotifyHandler {
       int entry = 0;
 
       for(float shift = -8.0F; entry < notifications.size(); ++entry) {
-         PlayerNotifications.AspectNotification li = (PlayerNotifications.AspectNotification)notifications.get(entry);
+         PlayerNotifications.AspectNotification li = notifications.get(entry);
          if (li.created <= time) {
             GL11.glEnable(3042);
             GL11.glBlendFunc(770, 771);
@@ -152,12 +152,12 @@ public class REHNotifyHandler {
                   mainAlpha = alpha;
                }
 
-               GL11.glTranslated(x, y, (double)0.0F);
-               GL11.glScaled((double)(0.075F * alpha), 0.075 * (double)alpha, 0.075 * (double)alpha);
+               GL11.glTranslated(x, y, 0.0F);
+               GL11.glScaled(0.075F * alpha, 0.075 * (double)alpha, 0.075 * (double)alpha);
                mc.renderEngine.bindTexture(li.aspect.getImage());
                Color c = new Color(li.aspect.getColor());
                GL11.glColor4f((float)c.getRed() / 255.0F, (float)c.getGreen() / 255.0F, (float)c.getBlue() / 255.0F, alpha * 0.66F);
-               UtilsFX.drawTexturedQuad(0, 0, 0, 0, 256, 256, (double)-90.0F);
+               UtilsFX.drawTexturedQuad(0, 0, 0, 0, 256, 256, -90.0F);
                GL11.glPopMatrix();
             }
          }
@@ -168,11 +168,11 @@ public class REHNotifyHandler {
             GL11.glPushMatrix();
             UtilsFX.bindTexture("textures/items/thaumonomicon.png");
             GL11.glColor4f(1.0F, 1.0F, 1.0F, mainAlpha);
-            GL11.glTranslated((double)(k - 16), (double)0.0F, (double)0.0F);
-            GL11.glScaled((double)0.0625F, (double)0.0625F, (double)0.0625F);
-            UtilsFX.drawTexturedQuad(0, 0, 0, 0, 256, 256, (double)-90.0F);
+            GL11.glTranslated(k - 16, 0.0F, 0.0F);
+            GL11.glScaled(0.0625F, 0.0625F, 0.0625F);
+            UtilsFX.drawTexturedQuad(0, 0, 0, 0, 256, 256, -90.0F);
             GL11.glPopMatrix();
-         } catch (Exception var29) {
+         } catch (Exception ignored) {
          }
       }
 

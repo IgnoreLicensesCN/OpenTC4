@@ -46,30 +46,30 @@ public class BlockLifterRenderer extends BlockRenderer implements ISimpleBlockRe
       Tessellator t = Tessellator.instance;
       t.setColorOpaque_I(BlockCustomOreItem.colors[4]);
       TileEntity te = world.getTileEntity(x, y, z);
-      if (te != null && te instanceof TileLifter && !((TileLifter)te).gettingPower()) {
+      if (te instanceof TileLifter && !((TileLifter) te).gettingPower()) {
          bb = 180;
       }
 
       t.setBrightness(bb);
       if (block.shouldSideBeRendered(world, x, y + 1, z, 6)) {
-         renderer.renderFaceYPos(block, (double)x, (double)((float)y - 0.01F), (double)z, ((BlockLifter)block).iconGlow);
+         renderer.renderFaceYPos(block, x, (float)y - 0.01F, z, ((BlockLifter)block).iconGlow);
       }
 
       t.setColorOpaque_I(14488063);
       if (block.shouldSideBeRendered(world, x + 1, y, z, 6)) {
-         renderer.renderFaceXPos(block, (double)((float)x - 0.01F), (double)y, (double)z, ((BlockLifter)block).iconGlow);
+         renderer.renderFaceXPos(block, (float)x - 0.01F, y, z, ((BlockLifter)block).iconGlow);
       }
 
       if (block.shouldSideBeRendered(world, x - 1, y, z, 6)) {
-         renderer.renderFaceXNeg(block, (double)((float)x + 0.01F), (double)y, (double)z, ((BlockLifter)block).iconGlow);
+         renderer.renderFaceXNeg(block, (float)x + 0.01F, y, z, ((BlockLifter)block).iconGlow);
       }
 
       if (block.shouldSideBeRendered(world, x, y, z + 1, 6)) {
-         renderer.renderFaceZPos(block, (double)x, (double)y, (double)((float)z - 0.01F), ((BlockLifter)block).iconGlow);
+         renderer.renderFaceZPos(block, x, y, (float)z - 0.01F, ((BlockLifter)block).iconGlow);
       }
 
       if (block.shouldSideBeRendered(world, x, y, z - 1, 6)) {
-         renderer.renderFaceZNeg(block, (double)x, (double)y, (double)((float)z + 0.01F), ((BlockLifter)block).iconGlow);
+         renderer.renderFaceZNeg(block, x, y, (float)z + 0.01F, ((BlockLifter)block).iconGlow);
       }
 
       renderer.clearOverrideBlockTexture();

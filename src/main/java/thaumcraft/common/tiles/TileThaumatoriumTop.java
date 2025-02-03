@@ -21,7 +21,7 @@ public class TileThaumatoriumTop extends TileThaumcraft implements IAspectContai
    public void updateEntity() {
       if (this.thaumatorium == null) {
          TileEntity tile = this.worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord);
-         if (tile != null && tile instanceof TileThaumatorium) {
+         if (tile instanceof TileThaumatorium) {
             this.thaumatorium = (TileThaumatorium)tile;
             this.worldObj.notifyBlockChange(this.xCoord, this.yCoord, this.zCoord, this.getBlockType());
             this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
@@ -38,7 +38,7 @@ public class TileThaumatoriumTop extends TileThaumcraft implements IAspectContai
    }
 
    public boolean takeFromContainer(Aspect tt, int am) {
-      return this.thaumatorium == null ? false : this.thaumatorium.takeFromContainer(tt, am);
+      return this.thaumatorium != null && this.thaumatorium.takeFromContainer(tt, am);
    }
 
    public boolean takeFromContainer(AspectList ot) {
@@ -50,7 +50,7 @@ public class TileThaumatoriumTop extends TileThaumcraft implements IAspectContai
    }
 
    public boolean doesContainerContainAmount(Aspect tt, int am) {
-      return this.thaumatorium == null ? false : this.thaumatorium.doesContainerContainAmount(tt, am);
+      return this.thaumatorium != null && this.thaumatorium.doesContainerContainAmount(tt, am);
    }
 
    public int containerContains(Aspect tt) {
@@ -62,11 +62,11 @@ public class TileThaumatoriumTop extends TileThaumcraft implements IAspectContai
    }
 
    public boolean isConnectable(ForgeDirection face) {
-      return this.thaumatorium == null ? false : this.thaumatorium.isConnectable(face);
+      return this.thaumatorium != null && this.thaumatorium.isConnectable(face);
    }
 
    public boolean canInputFrom(ForgeDirection face) {
-      return this.thaumatorium == null ? false : this.thaumatorium.canInputFrom(face);
+      return this.thaumatorium != null && this.thaumatorium.canInputFrom(face);
    }
 
    public boolean canOutputTo(ForgeDirection face) {
@@ -156,7 +156,7 @@ public class TileThaumatoriumTop extends TileThaumcraft implements IAspectContai
    }
 
    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
-      return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + (double)0.5F, (double)this.yCoord + (double)0.5F, (double)this.zCoord + (double)0.5F) <= (double)64.0F;
+      return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && par1EntityPlayer.getDistanceSq((double) this.xCoord + (double) 0.5F, (double) this.yCoord + (double) 0.5F, (double) this.zCoord + (double) 0.5F) <= (double) 64.0F;
    }
 
    public void openInventory() {

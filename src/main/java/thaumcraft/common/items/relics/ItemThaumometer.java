@@ -61,7 +61,7 @@ public class ItemThaumometer extends Item {
    }
 
    private ScanResult doScan(ItemStack stack, World world, EntityPlayer p, int count) {
-      Entity pointedEntity = EntityUtils.getPointedEntity(p.worldObj, p, (double)0.5F, (double)10.0F, 0.0F, true);
+      Entity pointedEntity = EntityUtils.getPointedEntity(p.worldObj, p, 0.5F, 10.0F, 0.0F, true);
       if (pointedEntity != null) {
          ScanResult sr = new ScanResult((byte)2, 0, 0, pointedEntity, "");
          if (ScanManager.isValidScanTarget(p, sr, "@")) {
@@ -75,9 +75,9 @@ public class ItemThaumometer extends Item {
          if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
             TileEntity tile = world.getTileEntity(mop.blockX, mop.blockY, mop.blockZ);
             if (tile instanceof INode) {
-               ScanResult sr = new ScanResult((byte)3, 0, 0, (Entity)null, "NODE" + ((INode)tile).getId());
+               ScanResult sr = new ScanResult((byte)3, 0, 0, null, "NODE" + ((INode)tile).getId());
                if (ScanManager.isValidScanTarget(p, sr, "@")) {
-                  Thaumcraft.proxy.blockRunes(world, (double)mop.blockX, (double)mop.blockY + (double)0.25F, (double)mop.blockZ, 0.3F + world.rand.nextFloat() * 0.7F, 0.0F, 0.3F + world.rand.nextFloat() * 0.7F, 15, 0.03F);
+                  Thaumcraft.proxy.blockRunes(world, mop.blockX, (double)mop.blockY + (double)0.25F, mop.blockZ, 0.3F + world.rand.nextFloat() * 0.7F, 0.0F, 0.3F + world.rand.nextFloat() * 0.7F, 15, 0.03F);
                   return sr;
                }
 
@@ -94,20 +94,20 @@ public class ItemThaumometer extends Item {
                   if (is == null) {
                      is = BlockUtils.createStackedBlock(bi, md);
                   }
-               } catch (Exception var14) {
+               } catch (Exception ignored) {
                }
 
                try {
                   if (is == null) {
-                     sr = new ScanResult((byte)1, Block.getIdFromBlock(bi), md, (Entity)null, "");
+                     sr = new ScanResult((byte)1, Block.getIdFromBlock(bi), md, null, "");
                   } else {
-                     sr = new ScanResult((byte)1, Item.getIdFromItem(is.getItem()), is.getItemDamage(), (Entity)null, "");
+                     sr = new ScanResult((byte)1, Item.getIdFromItem(is.getItem()), is.getItemDamage(), null, "");
                   }
-               } catch (Exception var13) {
+               } catch (Exception ignored) {
                }
 
                if (ScanManager.isValidScanTarget(p, sr, "@")) {
-                  Thaumcraft.proxy.blockRunes(world, (double)mop.blockX, (double)mop.blockY + (double)0.25F, (double)mop.blockZ, 0.3F + world.rand.nextFloat() * 0.7F, 0.0F, 0.3F + world.rand.nextFloat() * 0.7F, 15, 0.03F);
+                  Thaumcraft.proxy.blockRunes(world, mop.blockX, (double)mop.blockY + (double)0.25F, mop.blockZ, 0.3F + world.rand.nextFloat() * 0.7F, 0.0F, 0.3F + world.rand.nextFloat() * 0.7F, 15, 0.03F);
                   return sr;
                }
 

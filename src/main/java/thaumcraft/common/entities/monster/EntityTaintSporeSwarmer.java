@@ -22,7 +22,7 @@ public class EntityTaintSporeSwarmer extends EntityTaintSpore {
    }
 
    public void setSporeSize(int par1) {
-      this.dataWatcher.updateObject(16, new Byte((byte)par1));
+      this.dataWatcher.updateObject(16, (byte) par1);
       this.setSize(1.0F, 1.0F);
       this.setPosition(this.posX, this.posY, this.posZ);
       this.experienceValue = par1;
@@ -30,8 +30,8 @@ public class EntityTaintSporeSwarmer extends EntityTaintSpore {
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)75.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)1.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(75.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1.0F);
    }
 
    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
@@ -48,7 +48,7 @@ public class EntityTaintSporeSwarmer extends EntityTaintSpore {
          --this.spawnCounter;
       }
 
-      if (this.spawnCounter <= 0 && this.worldObj.getClosestVulnerablePlayerToEntity(this, (double)16.0F) != null) {
+      if (this.spawnCounter <= 0 && this.worldObj.getClosestVulnerablePlayerToEntity(this, 16.0F) != null) {
          this.spawnCounter = 500;
          this.swarmBurst(1);
       }
@@ -96,9 +96,9 @@ public class EntityTaintSporeSwarmer extends EntityTaintSpore {
          this.spawnCounter = 500;
          this.sploosh(25);
 
-         for(int a = 0; a < this.swarm.size(); ++a) {
-            ((Entity)this.swarm.get(a)).setDead();
-         }
+          for (Object o : this.swarm) {
+              ((Entity) o).setDead();
+          }
 
          this.swarm.clear();
       } else {

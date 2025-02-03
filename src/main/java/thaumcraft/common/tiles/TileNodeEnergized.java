@@ -66,7 +66,7 @@ public class TileNodeEnergized extends TileVisNode implements IAspectContainer {
             amt = (int)((float)amt * 0.5F);
          }
 
-         amt = MathHelper.floor_double((double)MathHelper.sqrt_double((double)amt));
+         amt = MathHelper.floor_double(MathHelper.sqrt_double(amt));
          if (this.getNodeType() == NodeType.UNSTABLE) {
             amt += this.worldObj.rand.nextInt(5) - 2;
          }
@@ -95,7 +95,7 @@ public class TileNodeEnergized extends TileVisNode implements IAspectContainer {
       if (mod >= 0) {
          this.setNodeModifier(NodeModifier.values()[mod]);
       } else {
-         this.setNodeModifier((NodeModifier)null);
+         this.setNodeModifier(null);
       }
 
       this.visBase.aspects.clear();

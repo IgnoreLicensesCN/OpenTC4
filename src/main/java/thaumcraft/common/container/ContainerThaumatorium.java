@@ -75,7 +75,7 @@ public class ContainerThaumatorium extends Container {
          boolean found = false;
 
          for(int a = 0; a < this.thaumatorium.recipeHash.size(); ++a) {
-            if (((CrucibleRecipe)this.recipes.get(button)).hash == (Integer)this.thaumatorium.recipeHash.get(a)) {
+            if (this.recipes.get(button).hash == this.thaumatorium.recipeHash.get(a)) {
                found = true;
                this.thaumatorium.recipeEssentia.remove(a);
                this.thaumatorium.recipePlayer.remove(a);
@@ -86,9 +86,9 @@ public class ContainerThaumatorium extends Container {
          }
 
          if (!found) {
-            this.thaumatorium.recipeEssentia.add(((CrucibleRecipe)this.recipes.get(button)).aspects.copy());
+            this.thaumatorium.recipeEssentia.add(this.recipes.get(button).aspects.copy());
             this.thaumatorium.recipePlayer.add(par1EntityPlayer.getCommandSenderName());
-            this.thaumatorium.recipeHash.add(((CrucibleRecipe)this.recipes.get(button)).hash);
+            this.thaumatorium.recipeHash.add(this.recipes.get(button).hash);
          }
 
          this.thaumatorium.markDirty();
@@ -128,7 +128,7 @@ public class ContainerThaumatorium extends Container {
          }
 
          if (itemstack1.stackSize == 0) {
-            slot.putStack((ItemStack)null);
+            slot.putStack(null);
          } else {
             slot.onSlotChanged();
          }

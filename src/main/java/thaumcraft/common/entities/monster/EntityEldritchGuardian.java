@@ -53,10 +53,10 @@ public class EntityEldritchGuardian extends EntityMob implements IRangedAttackMo
       super(p_i1745_1_);
       this.getNavigator().setBreakDoors(true);
       this.tasks.addTask(0, new EntityAISwimming(this));
-      this.tasks.addTask(2, new AILongRangeAttack(this, (double)8.0F, (double)1.0F, 20, 40, 24.0F));
-      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityLivingBase.class, (double)1.0F, false));
+      this.tasks.addTask(2, new AILongRangeAttack(this, 8.0F, 1.0F, 20, 40, 24.0F));
+      this.tasks.addTask(3, new AIAttackOnCollide(this, EntityLivingBase.class, 1.0F, false));
       this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 0.8));
-      this.tasks.addTask(7, new EntityAIWander(this, (double)1.0F));
+      this.tasks.addTask(7, new EntityAIWander(this, 1.0F));
       this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
       this.tasks.addTask(8, new EntityAILookIdle(this));
       this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
@@ -68,10 +68,10 @@ public class EntityEldritchGuardian extends EntityMob implements IRangedAttackMo
 
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
-      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue((double)50.0F);
-      this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue((double)40.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(40.0F);
       this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.28);
-      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue((double)7.0F);
+      this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(7.0F);
    }
 
    protected void entityInit() {
@@ -114,7 +114,7 @@ public class EntityEldritchGuardian extends EntityMob implements IRangedAttackMo
 
          float x = (float)(this.posX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F));
          float z = (float)(this.posZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F));
-         Thaumcraft.proxy.wispFXEG(this.worldObj, (double)x, (double)((float)(this.posY + 0.22 * (double)this.height)), (double)z, this);
+         Thaumcraft.proxy.wispFXEG(this.worldObj, x, (float)(this.posY + 0.22 * (double)this.height), z, this);
       } else if (this.worldObj.provider.dimensionId != Config.dimensionOuterId && (this.ticksExisted == 0 || this.ticksExisted % 100 == 0) && this.worldObj.difficultySetting != EnumDifficulty.EASY) {
          double d6 = this.worldObj.difficultySetting == EnumDifficulty.HARD ? (double)576.0F : (double)256.0F;
 
@@ -250,8 +250,8 @@ public class EntityEldritchGuardian extends EntityMob implements IRangedAttackMo
    }
 
    public boolean getCanSpawnHere() {
-      List ents = this.worldObj.getEntitiesWithinAABB(EntityEldritchGuardian.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX + (double)1.0F, this.posY + (double)1.0F, this.posZ + (double)1.0F).expand((double)32.0F, (double)16.0F, (double)32.0F));
-      return ents.size() > 0 ? false : super.getCanSpawnHere();
+      List ents = this.worldObj.getEntitiesWithinAABB(EntityEldritchGuardian.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX + (double)1.0F, this.posY + (double)1.0F, this.posZ + (double)1.0F).expand(32.0F, 16.0F, 32.0F));
+      return ents.size() <= 0 && super.getCanSpawnHere();
    }
 
    protected boolean isValidLightLevel() {
@@ -268,9 +268,9 @@ public class EntityEldritchGuardian extends EntityMob implements IRangedAttackMo
          this.lastBlast = !this.lastBlast;
          this.worldObj.setEntityState(this, (byte)(this.lastBlast ? 16 : 15));
          int rr = this.lastBlast ? 90 : 180;
-         double xx = (double)(MathHelper.cos((this.rotationYaw + (float)rr) % 360.0F / 180.0F * (float)Math.PI) * 0.5F);
+         double xx = MathHelper.cos((this.rotationYaw + (float)rr) % 360.0F / 180.0F * (float)Math.PI) * 0.5F;
          double yy = 0.057777777 * (double)this.height;
-         double zz = (double)(MathHelper.sin((this.rotationYaw + (float)rr) % 360.0F / 180.0F * (float)Math.PI) * 0.5F);
+         double zz = MathHelper.sin((this.rotationYaw + (float)rr) % 360.0F / 180.0F * (float)Math.PI) * 0.5F;
          blast.setPosition(blast.posX - xx, blast.posY - yy, blast.posZ - zz);
          double d0 = entitylivingbase.posX + entitylivingbase.motionX - this.posX;
          double d1 = entitylivingbase.posY - this.posY - (double)(entitylivingbase.height / 2.0F);
@@ -279,11 +279,11 @@ public class EntityEldritchGuardian extends EntityMob implements IRangedAttackMo
          this.playSound("thaumcraft:egattack", 2.0F, 1.0F + this.rand.nextFloat() * 0.1F);
          this.worldObj.spawnEntityInWorld(blast);
       } else if (this.canEntityBeSeen(entitylivingbase)) {
-         PacketHandler.INSTANCE.sendToAllAround(new PacketFXSonic(this.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.posX, this.posY, this.posZ, (double)32.0F));
+         PacketHandler.INSTANCE.sendToAllAround(new PacketFXSonic(this.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.posX, this.posY, this.posZ, 32.0F));
 
          try {
             entitylivingbase.addPotionEffect(new PotionEffect(Potion.wither.id, 400, 0));
-         } catch (Exception var17) {
+         } catch (Exception ignored) {
          }
 
          if (entitylivingbase instanceof EntityPlayer) {

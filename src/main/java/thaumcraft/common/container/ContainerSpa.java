@@ -55,7 +55,7 @@ public class ContainerSpa extends Container {
          }
 
          if (stackInSlot.stackSize == 0) {
-            slotObject.putStack((ItemStack)null);
+            slotObject.putStack(null);
          } else {
             slotObject.onSlotChanged();
          }

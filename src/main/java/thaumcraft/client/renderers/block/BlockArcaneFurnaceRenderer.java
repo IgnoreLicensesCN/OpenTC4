@@ -26,33 +26,33 @@ public class BlockArcaneFurnaceRenderer extends BlockRenderer implements ISimple
          renderer.renderStandardBlock(block, x, y, z);
       } else if (md == 10) {
          if (world.getBlock(x - 1, y, z) == block && world.getBlockMetadata(x - 1, y, z) == 0) {
-            renderer.renderFaceXPos(block, (double)((float)x - W10), (double)y, (double)z, ((BlockArcaneFurnace)block).icon[13]);
-            renderer.renderFaceXPos(block, (double)((float)x - 0.8F), (double)y, (double)z, ((BlockArcaneFurnace)block).icon[15]);
+            renderer.renderFaceXPos(block, (float)x - W10, y, z, ((BlockArcaneFurnace)block).icon[13]);
+            renderer.renderFaceXPos(block, (float)x - 0.8F, y, z, ((BlockArcaneFurnace)block).icon[15]);
             setBrightness(world, x, y, z, block);
             block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.5F, 1.0F);
             renderer.setRenderBoundsFromBlock(block);
-            renderer.renderFaceXPos(block, (double)((float)x - 0.9F), (double)y, (double)z, Blocks.fire.getBlockTextureFromSide(0));
+            renderer.renderFaceXPos(block, (float)x - 0.9F, y, z, Blocks.fire.getBlockTextureFromSide(0));
          } else if (world.getBlock(x + 1, y, z) == block && world.getBlockMetadata(x + 1, y, z) == 0) {
-            renderer.renderFaceXNeg(block, (double)((float)x + W10), (double)y, (double)z, ((BlockArcaneFurnace)block).icon[13]);
-            renderer.renderFaceXNeg(block, (double)((float)x + 0.8F), (double)y, (double)z, ((BlockArcaneFurnace)block).icon[15]);
+            renderer.renderFaceXNeg(block, (float)x + W10, y, z, ((BlockArcaneFurnace)block).icon[13]);
+            renderer.renderFaceXNeg(block, (float)x + 0.8F, y, z, ((BlockArcaneFurnace)block).icon[15]);
             setBrightness(world, x, y, z, block);
             block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.5F, 1.0F);
             renderer.setRenderBoundsFromBlock(block);
-            renderer.renderFaceXNeg(block, (double)((float)x + 0.9F), (double)y, (double)z, Blocks.fire.getBlockTextureFromSide(0));
+            renderer.renderFaceXNeg(block, (float)x + 0.9F, y, z, Blocks.fire.getBlockTextureFromSide(0));
          } else if (world.getBlock(x, y, z - 1) == block && world.getBlockMetadata(x, y, z - 1) == 0) {
-            renderer.renderFaceZPos(block, (double)x, (double)y, (double)((float)z - W10), ((BlockArcaneFurnace)block).icon[13]);
-            renderer.renderFaceZPos(block, (double)x, (double)y, (double)((float)z - 0.8F), ((BlockArcaneFurnace)block).icon[15]);
+            renderer.renderFaceZPos(block, x, y, (float)z - W10, ((BlockArcaneFurnace)block).icon[13]);
+            renderer.renderFaceZPos(block, x, y, (float)z - 0.8F, ((BlockArcaneFurnace)block).icon[15]);
             setBrightness(world, x, y, z, block);
             block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.5F, 1.0F);
             renderer.setRenderBoundsFromBlock(block);
-            renderer.renderFaceZPos(block, (double)x, (double)y, (double)((float)z - 0.9F), Blocks.fire.getBlockTextureFromSide(0));
+            renderer.renderFaceZPos(block, x, y, (float)z - 0.9F, Blocks.fire.getBlockTextureFromSide(0));
          } else {
-            renderer.renderFaceZNeg(block, (double)x, (double)y, (double)((float)z + W10), ((BlockArcaneFurnace)block).icon[13]);
-            renderer.renderFaceZNeg(block, (double)x, (double)y, (double)((float)z + 0.8F), ((BlockArcaneFurnace)block).icon[15]);
+            renderer.renderFaceZNeg(block, x, y, (float)z + W10, ((BlockArcaneFurnace)block).icon[13]);
+            renderer.renderFaceZNeg(block, x, y, (float)z + 0.8F, ((BlockArcaneFurnace)block).icon[15]);
             setBrightness(world, x, y, z, block);
             block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.5F, 1.0F);
             renderer.setRenderBoundsFromBlock(block);
-            renderer.renderFaceZNeg(block, (double)x, (double)y, (double)((float)z + 0.9F), Blocks.fire.getBlockTextureFromSide(0));
+            renderer.renderFaceZNeg(block, x, y, (float)z + 0.9F, Blocks.fire.getBlockTextureFromSide(0));
          }
       }
 

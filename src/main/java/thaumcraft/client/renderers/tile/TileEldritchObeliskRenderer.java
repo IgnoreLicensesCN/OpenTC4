@@ -38,7 +38,7 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {
       double var10002 = (double)te.xCoord + (double)0.5F;
       double var10003 = (double)te.yCoord + (double)0.5F;
-      double var10004 = (double)te.zCoord;
+      double var10004 = te.zCoord;
       this.inrange = Minecraft.getMinecraft().renderViewEntity.getDistanceSq(var10002, var10003, var10004 + (double)0.5F) < (double)512.0F;
       float bob = 0.0F;
       float count = (float)Minecraft.getMinecraft().renderViewEntity.ticksExisted + f;
@@ -77,7 +77,7 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
       for(int a = 0; a < 4; ++a) {
          GL11.glPushMatrix();
          GL11.glRotatef((float)(a * 90), 0.0F, 1.0F, 0.0F);
-         GL11.glTranslated((double)0.0F, (double)0.0F, (double)-0.5F);
+         GL11.glTranslated(0.0F, 0.0F, -0.5F);
          this.renderSide(3);
          GL11.glPopMatrix();
       }
@@ -85,13 +85,13 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
       GL11.glPopMatrix();
       GL11.glPushMatrix();
       GL11.glTranslated(x + (double)0.5F, y + (double)1.0F + (double)bob, z + (double)0.5F);
-      GL11.glRotated((double)90.0F, (double)1.0F, (double)0.0F, (double)0.0F);
+      GL11.glRotated(90.0F, 1.0F, 0.0F, 0.0F);
       UtilsFX.bindTexture(tempTex2);
       this.model.renderPart("Cap");
       GL11.glPopMatrix();
       GL11.glPushMatrix();
       GL11.glTranslated(x + (double)0.5F, y + (double)4.0F + (double)bob, z + (double)0.5F);
-      GL11.glRotated((double)90.0F, (double)-1.0F, (double)0.0F, (double)0.0F);
+      GL11.glRotated(90.0F, -1.0F, 0.0F, 0.0F);
       this.model.renderPart("Cap");
       GL11.glPopMatrix();
       GL11.glDisable(3042);
@@ -185,10 +185,10 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
          tessellator.startDrawingQuads();
          tessellator.setBrightness(180);
          tessellator.setColorRGBA_F(0.5F, 0.5F, 0.5F, 1.0F);
-         tessellator.addVertexWithUV(x, y + (double)height, z + (double)offset, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV(x, y, z + (double)offset, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)1.0F, y, z + (double)offset, (double)0.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)height, z + (double)offset, (double)0.0F, (double)1.0F);
+         tessellator.addVertexWithUV(x, y + (double)height, z + (double)offset, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(x, y, z + (double)offset, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)1.0F, y, z + (double)offset, 0.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)height, z + (double)offset, 0.0F, 1.0F);
          tessellator.draw();
          GL11.glPopMatrix();
       }
@@ -287,10 +287,10 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
          tessellator.startDrawingQuads();
          tessellator.setBrightness(180);
          tessellator.setColorRGBA_F(0.5F, 0.5F, 0.5F, 1.0F);
-         tessellator.addVertexWithUV(x, y, z + (double)offset, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV(x, y + (double)height, z + (double)offset, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)height, z + (double)offset, (double)0.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)1.0F, y, z + (double)offset, (double)0.0F, (double)1.0F);
+         tessellator.addVertexWithUV(x, y, z + (double)offset, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(x, y + (double)height, z + (double)offset, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)1.0F, y + (double)height, z + (double)offset, 0.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)1.0F, y, z + (double)offset, 0.0F, 1.0F);
          tessellator.draw();
          GL11.glPopMatrix();
       }
@@ -389,10 +389,10 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
          tessellator.startDrawingQuads();
          tessellator.setBrightness(180);
          tessellator.setColorRGBA_F(0.5F, 0.5F, 0.5F, 1.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y + (double)height, z, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y + (double)height, z + (double)1.0F, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y, z + (double)1.0F, (double)0.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y, z, (double)0.0F, (double)1.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y + (double)height, z, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y + (double)height, z + (double)1.0F, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y, z + (double)1.0F, 0.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y, z, 0.0F, 1.0F);
          tessellator.draw();
          GL11.glPopMatrix();
       }
@@ -491,10 +491,10 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
          tessellator.startDrawingQuads();
          tessellator.setBrightness(180);
          tessellator.setColorRGBA_F(0.5F, 0.5F, 0.5F, 1.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y, z, (double)1.0F, (double)1.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y, z + (double)1.0F, (double)1.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y + (double)height, z + (double)1.0F, (double)0.0F, (double)0.0F);
-         tessellator.addVertexWithUV(x + (double)offset, y + (double)height, z, (double)0.0F, (double)1.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y, z, 1.0F, 1.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y, z + (double)1.0F, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y + (double)height, z + (double)1.0F, 0.0F, 0.0F);
+         tessellator.addVertexWithUV(x + (double)offset, y + (double)height, z, 0.0F, 1.0F);
          tessellator.draw();
          GL11.glPopMatrix();
       }
@@ -522,10 +522,10 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       tessellator.startDrawingQuads();
       tessellator.setColorRGBA_F(1.0F, 1.0F, 1.0F, 1.0F);
-      tessellator.addVertexWithUV((double)-0.5F, (double)h, (double)0.0F, (double)0.0F, (double)1.0F);
-      tessellator.addVertexWithUV((double)0.5F, (double)h, (double)0.0F, (double)1.0F, (double)1.0F);
-      tessellator.addVertexWithUV((double)0.5F, (double)0.0F, (double)0.0F, (double)1.0F, (double)0.0F);
-      tessellator.addVertexWithUV((double)-0.5F, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F);
+      tessellator.addVertexWithUV(-0.5F, h, 0.0F, 0.0F, 1.0F);
+      tessellator.addVertexWithUV(0.5F, h, 0.0F, 1.0F, 1.0F);
+      tessellator.addVertexWithUV(0.5F, 0.0F, 0.0F, 1.0F, 0.0F);
+      tessellator.addVertexWithUV(-0.5F, 0.0F, 0.0F, 0.0F, 0.0F);
       tessellator.draw();
       GL11.glDisable(3042);
       GL11.glDisable(32826);

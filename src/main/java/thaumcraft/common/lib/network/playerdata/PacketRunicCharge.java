@@ -34,8 +34,8 @@ public class PacketRunicCharge implements IMessage, IMessageHandler<PacketRunicC
    }
 
    public IMessage onMessage(PacketRunicCharge message, MessageContext ctx) {
-      Thaumcraft.instance.runicEventHandler.runicCharge.put(message.id, Integer.valueOf(message.amount));
-      Thaumcraft.instance.runicEventHandler.runicInfo.put(message.id, new Integer[]{Integer.valueOf(message.max), 0, 0, 0, 0});
+      Thaumcraft.instance.runicEventHandler.runicCharge.put(message.id, (int) message.amount);
+      Thaumcraft.instance.runicEventHandler.runicInfo.put(message.id, new Integer[]{(int) message.max, 0, 0, 0, 0});
       return null;
    }
 }

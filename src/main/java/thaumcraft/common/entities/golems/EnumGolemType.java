@@ -40,7 +40,7 @@ public enum EnumGolemType {
 
    }
 
-   private EnumGolemType(int health, int armor, float speed, boolean fireResist, int upgrades, int carry, int regenDelay, int strength) {
+   EnumGolemType(int health, int armor, float speed, boolean fireResist, int upgrades, int carry, int regenDelay, int strength) {
       this.health = health;
       this.armor = armor;
       this.speed = speed;

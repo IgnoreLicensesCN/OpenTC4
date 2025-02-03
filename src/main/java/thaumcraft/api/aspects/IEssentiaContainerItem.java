@@ -1,7 +1,6 @@
 package thaumcraft.api.aspects;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 /**
  * 
@@ -13,8 +12,8 @@ import net.minecraft.nbt.NBTTagCompound;
  *
  */
 public interface IEssentiaContainerItem {
-	public AspectList getAspects(ItemStack itemstack);
-	public void setAspects(ItemStack itemstack, AspectList aspects);
+	AspectList getAspects(ItemStack itemstack);
+	void setAspects(ItemStack itemstack, AspectList aspects);
 }
 
 //Example implementation

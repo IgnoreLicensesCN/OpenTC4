@@ -24,32 +24,32 @@ public class BlockTaintFibreRenderer extends BlockRenderer implements ISimpleBlo
       if (metadata <= 4) {
          if (world.isSideSolid(x - 1, y, z, ForgeDirection.EAST, true) && world.getBlock(x - 1, y, z) != ConfigBlocks.blockTaint) {
             fix = false;
-            renderer.renderFaceXPos(block, (double)((float)x - 0.995F), (double)y, (double)z, block.getIcon(0, 0));
+            renderer.renderFaceXPos(block, (float)x - 0.995F, y, z, block.getIcon(0, 0));
          }
 
          if (world.isSideSolid(x + 1, y, z, ForgeDirection.WEST, true) && world.getBlock(x + 1, y, z) != ConfigBlocks.blockTaint) {
             fix = false;
-            renderer.renderFaceXNeg(block, (double)((float)x + 0.995F), (double)y, (double)z, block.getIcon(0, 0));
+            renderer.renderFaceXNeg(block, (float)x + 0.995F, y, z, block.getIcon(0, 0));
          }
 
          if (world.isSideSolid(x, y, z - 1, ForgeDirection.SOUTH, true) && world.getBlock(x, y, z - 1) != ConfigBlocks.blockTaint) {
             fix = false;
-            renderer.renderFaceZPos(block, (double)x, (double)y, (double)((float)z - 0.995F), block.getIcon(0, 0));
+            renderer.renderFaceZPos(block, x, y, (float)z - 0.995F, block.getIcon(0, 0));
          }
 
          if (world.isSideSolid(x, y, z + 1, ForgeDirection.NORTH, true) && world.getBlock(x, y, z + 1) != ConfigBlocks.blockTaint) {
             fix = false;
-            renderer.renderFaceZNeg(block, (double)x, (double)y, (double)((float)z + 0.995F), block.getIcon(0, 0));
+            renderer.renderFaceZNeg(block, x, y, (float)z + 0.995F, block.getIcon(0, 0));
          }
 
          if (world.isSideSolid(x, y - 1, z, ForgeDirection.UP, true) && world.getBlock(x, y - 1, z) != ConfigBlocks.blockTaint) {
             fix = false;
-            renderer.renderFaceYPos(block, (double)x, (double)((float)y - 0.995F), (double)z, block.getIcon(0, 0));
+            renderer.renderFaceYPos(block, x, (float)y - 0.995F, z, block.getIcon(0, 0));
          }
 
          if (world.isSideSolid(x, y + 1, z, ForgeDirection.DOWN, true) && world.getBlock(x, y + 1, z) != ConfigBlocks.blockTaint) {
             fix = false;
-            renderer.renderFaceYNeg(block, (double)x, (double)((float)y + 0.995F), (double)z, block.getIcon(0, 0));
+            renderer.renderFaceYNeg(block, x, (float)y + 0.995F, z, block.getIcon(0, 0));
          }
       }
 
@@ -58,40 +58,40 @@ public class BlockTaintFibreRenderer extends BlockRenderer implements ISimpleBlo
          t.setBrightness(200);
          if (world.isSideSolid(x - 1, y, z, ForgeDirection.EAST, true) && world.getBlock(x - 1, y, z) != ConfigBlocks.blockTaint) {
             fix = false;
-            renderer.renderFaceXPos(block, (double)((float)x - 0.98F), (double)y, (double)z, ((BlockTaintFibres)block).getOverlayBlockTexture(x, y, z, 4));
+            renderer.renderFaceXPos(block, (float)x - 0.98F, y, z, ((BlockTaintFibres)block).getOverlayBlockTexture(x, y, z, 4));
          }
 
          if (world.isSideSolid(x + 1, y, z, ForgeDirection.WEST, true) && world.getBlock(x + 1, y, z) != ConfigBlocks.blockTaint) {
             fix = false;
-            renderer.renderFaceXNeg(block, (double)((float)x + 0.98F), (double)y, (double)z, ((BlockTaintFibres)block).getOverlayBlockTexture(x, y, z, 5));
+            renderer.renderFaceXNeg(block, (float)x + 0.98F, y, z, ((BlockTaintFibres)block).getOverlayBlockTexture(x, y, z, 5));
          }
 
          if (world.isSideSolid(x, y, z - 1, ForgeDirection.SOUTH, true) && world.getBlock(x, y, z - 1) != ConfigBlocks.blockTaint) {
             fix = false;
-            renderer.renderFaceZPos(block, (double)x, (double)y, (double)((float)z - 0.98F), ((BlockTaintFibres)block).getOverlayBlockTexture(x, y, z, 2));
+            renderer.renderFaceZPos(block, x, y, (float)z - 0.98F, ((BlockTaintFibres)block).getOverlayBlockTexture(x, y, z, 2));
          }
 
          if (world.isSideSolid(x, y, z + 1, ForgeDirection.NORTH, true) && world.getBlock(x, y, z + 1) != ConfigBlocks.blockTaint) {
             fix = false;
-            renderer.renderFaceZNeg(block, (double)x, (double)y, (double)((float)z + 0.98F), ((BlockTaintFibres)block).getOverlayBlockTexture(x, y, z, 3));
+            renderer.renderFaceZNeg(block, x, y, (float)z + 0.98F, ((BlockTaintFibres)block).getOverlayBlockTexture(x, y, z, 3));
          }
 
          if (world.isSideSolid(x, y - 1, z, ForgeDirection.UP, true) && world.getBlock(x, y - 1, z) != ConfigBlocks.blockTaint) {
             fix = false;
-            renderer.renderFaceYPos(block, (double)x, (double)((float)y - 0.98F), (double)z, ((BlockTaintFibres)block).getOverlayBlockTexture(x, y, z, 0));
+            renderer.renderFaceYPos(block, x, (float)y - 0.98F, z, ((BlockTaintFibres)block).getOverlayBlockTexture(x, y, z, 0));
          }
 
          if (world.isSideSolid(x, y + 1, z, ForgeDirection.DOWN, true) && world.getBlock(x, y + 1, z) != ConfigBlocks.blockTaint) {
             fix = false;
-            renderer.renderFaceYNeg(block, (double)x, (double)((float)y + 0.98F), (double)z, ((BlockTaintFibres)block).getOverlayBlockTexture(x, y, z, 1));
+            renderer.renderFaceYNeg(block, x, (float)y + 0.98F, z, ((BlockTaintFibres)block).getOverlayBlockTexture(x, y, z, 1));
          }
       }
 
       if ((metadata == 1 || metadata == 2) && world.isSideSolid(x, y - 1, z, ForgeDirection.UP, true)) {
-         double d0 = (double)x;
-         double d1 = (double)y;
-         double d2 = (double)z;
-         long i1 = (long)(x * 3129871) ^ (long)z * 116129781L ^ (long)y;
+         double d0 = x;
+         double d1 = y;
+         double d2 = z;
+         long i1 = (long)(x * 3129871L) ^ (long)z * 116129781L ^ (long)y;
          i1 = i1 * i1 * 42317861L + i1 * 11L;
          d0 += ((double)((float)(i1 >> 16 & 15L) / 15.0F) - (double)0.5F) * (double)0.5F;
          d2 += ((double)((float)(i1 >> 24 & 15L) / 15.0F) - (double)0.5F) * (double)0.5F;

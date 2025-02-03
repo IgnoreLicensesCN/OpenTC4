@@ -19,13 +19,13 @@ public class ContainerGhostSlots extends Container {
             if (inventoryplayer.getItemStack() != null && slotClicked == -999) {
                if (button == 0) {
                   player.dropPlayerItemWithRandomChoice(inventoryplayer.getItemStack(), false);
-                  inventoryplayer.setItemStack((ItemStack)null);
+                  inventoryplayer.setItemStack(null);
                }
 
                if (button == 1) {
                   player.dropPlayerItemWithRandomChoice(inventoryplayer.getItemStack().splitStack(1), false);
                   if (inventoryplayer.getItemStack().stackSize == 0) {
-                     inventoryplayer.setItemStack((ItemStack)null);
+                     inventoryplayer.setItemStack(null);
                   }
                }
             }
@@ -37,7 +37,7 @@ public class ContainerGhostSlots extends Container {
             Slot slot2 = (Slot)this.inventorySlots.get(slotClicked);
             if (slot2 != null && slot2.getStack() != null && slot2 instanceof SlotGhost) {
                if (button == 0) {
-                  slot2.putStack((ItemStack)null);
+                  slot2.putStack(null);
                } else if (button == 1) {
                   ItemStack slotStack = slot2.getStack();
                   slotStack.stackSize += 16;
@@ -77,7 +77,7 @@ public class ContainerGhostSlots extends Container {
                      }
 
                      if (!(slot2 instanceof SlotGhost) && playerStack.stackSize == 0) {
-                        inventoryplayer.setItemStack((ItemStack)null);
+                        inventoryplayer.setItemStack(null);
                      }
                   }
                } else if (slot2.canTakeStack(player) || slot2 instanceof SlotGhost) {
@@ -89,14 +89,14 @@ public class ContainerGhostSlots extends Container {
                         }
 
                         if (slotStack.stackSize == 0) {
-                           slot2.putStack((ItemStack)null);
+                           slot2.putStack(null);
                         }
                      } else {
                         int k1 = button == 0 ? slotStack.stackSize : (slotStack.stackSize + 1) / 2;
                         ItemStack itemstack3 = slot2.decrStackSize(k1);
                         inventoryplayer.setItemStack(itemstack3);
                         if (slotStack.stackSize == 0) {
-                           slot2.putStack((ItemStack)null);
+                           slot2.putStack(null);
                         }
 
                         slot2.onPickupFromSlot(player, inventoryplayer.getItemStack());
@@ -115,7 +115,7 @@ public class ContainerGhostSlots extends Container {
                         if (!(slot2 instanceof SlotGhost)) {
                            playerStack.splitStack(k1);
                            if (playerStack.stackSize == 0) {
-                              inventoryplayer.setItemStack((ItemStack)null);
+                              inventoryplayer.setItemStack(null);
                            }
                         }
 
@@ -135,7 +135,7 @@ public class ContainerGhostSlots extends Container {
 
                         slotStack = slot2.decrStackSize(k1);
                         if (slotStack.stackSize == 0) {
-                           slot2.putStack((ItemStack)null);
+                           slot2.putStack(null);
                         }
 
                         if (!(slot2 instanceof SlotGhost)) {
@@ -172,7 +172,7 @@ public class ContainerGhostSlots extends Container {
                      }
 
                      slot2.decrStackSize(itemstack3.stackSize);
-                     slot2.putStack((ItemStack)null);
+                     slot2.putStack(null);
                      if (!(slot2 instanceof SlotGhost)) {
                         slot2.onPickupFromSlot(player, itemstack3);
                      }
@@ -186,7 +186,7 @@ public class ContainerGhostSlots extends Container {
                }
             } else if (!slot2.getHasStack() && slotStack != null && slot2.isItemValid(slotStack)) {
                if (!(slot2 instanceof SlotGhost)) {
-                  inventoryplayer.setInventorySlotContents(button, (ItemStack)null);
+                  inventoryplayer.setInventorySlotContents(button, null);
                }
 
                slot2.putStack(slotStack);
@@ -203,8 +203,8 @@ public class ContainerGhostSlots extends Container {
          }
       } else if (mod == 3) {
          Slot slot2 = (Slot)this.inventorySlots.get(slotClicked);
-         if (slot2 != null && slot2 instanceof SlotGhost && button == 3) {
-            slot2.putStack((ItemStack)null);
+         if (slot2 instanceof SlotGhost && button == 3) {
+            slot2.putStack(null);
          }
       } else if (mod == 4 && inventoryplayer.getItemStack() == null && slotClicked >= 0) {
          Slot slot2 = (Slot)this.inventorySlots.get(slotClicked);
@@ -233,7 +233,7 @@ public class ContainerGhostSlots extends Container {
                      }
 
                      if (itemstack5.stackSize <= 0) {
-                        slot3.putStack((ItemStack)null);
+                        slot3.putStack(null);
                      }
 
                      if (!(slot2 instanceof SlotGhost)) {

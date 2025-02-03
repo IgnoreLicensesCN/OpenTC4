@@ -81,8 +81,8 @@ public class BlockTaintFibres extends Block {
 
    @SideOnly(Side.CLIENT)
    public int getBlockColor() {
-      double d0 = (double)0.5F;
-      double d1 = (double)1.0F;
+      double d0 = 0.5F;
+      double d1 = 1.0F;
       return ColorizerGrass.getGrassColor(d0, d1);
    }
 
@@ -111,7 +111,7 @@ public class BlockTaintFibres extends Block {
 
    @SideOnly(Side.CLIENT)
    public IIcon getOverlayBlockTexture(int x, int y, int z, int side) {
-      Random r = new Random((long)(side + y + x * z));
+      Random r = new Random(side + y + (long) x * z);
       return r.nextInt(100) < 95 ? this.iconOver[0] : this.iconOver[r.nextInt(3) + 1];
    }
 
@@ -158,11 +158,11 @@ public class BlockTaintFibres extends Block {
                if (md == 3 && Config.spawnTaintSpore && random.nextInt(10) == 0 && world.isAirBlock(x, y + 1, z)) {
                   world.setBlockMetadataWithNotify(x, y, z, 4, 3);
                   EntityTaintSpore spore = new EntityTaintSpore(world);
-                  spore.setLocationAndAngles((double)((float)x + 0.5F), (double)(y + 1), (double)((float)z + 0.5F), 0.0F, 0.0F);
+                  spore.setLocationAndAngles((float)x + 0.5F, y + 1, (float)z + 0.5F, 0.0F, 0.0F);
                   world.spawnEntityInWorld(spore);
                } else if (md == 4) {
-                  List<Entity> targets = world.getEntitiesWithinAABB(EntityTaintSpore.class, AxisAlignedBB.getBoundingBox((double)x, (double)(y + 1), (double)z, (double)(x + 1), (double)(y + 2), (double)(z + 1)));
-                  if (targets.size() <= 0) {
+                  List<Entity> targets = world.getEntitiesWithinAABB(EntityTaintSpore.class, AxisAlignedBB.getBoundingBox(x, y + 1, z, x + 1, y + 2, z + 1));
+                  if (targets.size() == 0) {
                      world.setBlockMetadataWithNotify(x, y, z, 3, 3);
                   }
                }
@@ -258,7 +258,7 @@ public class BlockTaintFibres extends Block {
    public boolean onBlockEventReceived(World world, int x, int y, int z, int id, int cd) {
       if (id == 1) {
          if (world.isRemote) {
-            world.playSound((double)x, (double)y, (double)z, "thaumcraft:roots", 0.1F, 0.9F + world.rand.nextFloat() * 0.2F, false);
+            world.playSound(x, y, z, "thaumcraft:roots", 0.1F, 0.9F + world.rand.nextFloat() * 0.2F, false);
          }
 
          return true;
@@ -327,7 +327,7 @@ public class BlockTaintFibres extends Block {
                   return;
                }
             }
-         } catch (Throwable var9) {
+         } catch (Throwable ignored) {
          }
 
          this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, f, 1.0F);
