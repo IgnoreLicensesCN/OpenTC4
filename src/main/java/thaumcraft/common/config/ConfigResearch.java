@@ -29,7 +29,7 @@ import thaumcraft.common.lib.crafting.InfusionRunicAugmentRecipe;
 
 public class ConfigResearch {
    public static ItemStack wand = null;
-   public static HashMap recipes = new HashMap<>();
+   public static HashMap<String,Object> recipes = new HashMap<>();
 
    public static void init() {
       wand = new ItemStack(ConfigItems.itemWandCasting, 1, 0);
