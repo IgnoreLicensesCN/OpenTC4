@@ -37,3 +37,8 @@ jars/
 
 # Project exclude paths
 /decompile/
+/docs/FAQ.md
+/docs/migration.md
+/docs/porting.md
+/.github/
+/gradle/
