@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.Thaumcraft;
@@ -68,7 +69,23 @@ public class PacketAspectCombinationToServer implements IMessage, IMessageHandle
       this.ab2 = buffer.readBoolean();
    }
 
+   private static boolean sanityCheckAspectCombination0(PacketAspectCombinationToServer packet) {
+      TileResearchTable table = packet.table();
+      if (table == null) return false;
+      EntityPlayerMP player = packet.player();
+      if (player == null) return false;
+      return hasAspect(table, player, packet.lhs()) && hasAspect(table, player, packet.rhs());
+   }
+   private static boolean hasAspect(TileResearchTable table, EntityPlayerMP player, Aspect aspect) {
+      return hasAspect(player, aspect, 0) || table.bonusAspects.getAmount(aspect) > 0;
+   }
+
+   private static boolean hasAspect(EntityPlayerMP player, Aspect aspect, int threshold) {
+      return Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), aspect) > threshold;
+   }
+
    public IMessage onMessage(PacketAspectCombinationToServer message, MessageContext ctx) {
+      if (!sanityCheckAspectCombination0(message)) {return null;}
       World world = DimensionManager.getWorld(message.dim);
 
       if (world != null && (ctx.getServerHandler().playerEntity == null
@@ -113,4 +130,29 @@ public class PacketAspectCombinationToServer implements IMessage, IMessageHandle
          return null;
       }
    }
+
+   public TileResearchTable table(){
+      WorldServer worldServer = DimensionManager.getWorld(dim);
+      if (worldServer == null) {return null;}
+      TileEntity probablyTable = worldServer.getTileEntity(x, y, z);
+      if (probablyTable instanceof TileResearchTable) {
+         return (TileResearchTable)probablyTable;
+      }
+      return null;
+   };
+   public EntityPlayerMP player(){
+      WorldServer worldServer = DimensionManager.getWorld(dim);
+      if (worldServer == null) {return null;}
+      Entity probablyMP = worldServer.getEntityByID(playerid);
+      if (!(probablyMP instanceof EntityPlayerMP)) {return null;}
+      return (EntityPlayerMP)probablyMP;
+
+
+   };
+   public Aspect lhs(){
+      return aspect1;
+   };
+   public Aspect rhs(){
+      return aspect2;
+   };
 }

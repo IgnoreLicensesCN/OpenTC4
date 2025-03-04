@@ -10,6 +10,8 @@ import net.minecraft.nbt.NBTTagList;
 import thaumcraft.api.TileThaumcraft;
 import thaumcraft.common.items.wands.ItemWandCasting;
 
+import java.util.WeakHashMap;
+
 public class TileMagicWorkbench extends TileThaumcraft implements IInventory, ISidedInventory {
    public ItemStack[] stackList = new ItemStack[11];
    public Container eventHandler;
@@ -67,13 +69,30 @@ public class TileMagicWorkbench extends TileThaumcraft implements IInventory, IS
          return null;
       }
    }
-
+   public static final WeakHashMap<TileMagicWorkbench, Void> postponed = new WeakHashMap<>();
+   public static long lastUpdate = 0;
+   public static void updateCraftingMatrix(TileMagicWorkbench self) {
+      if (!self.getWorldObj().isRemote) {
+         self.eventHandler.onCraftMatrixChanged(self);
+         return;
+      }
+      long oldUpdate = lastUpdate;
+      lastUpdate = System.currentTimeMillis();
+      if (lastUpdate - oldUpdate > 1000 / 5) {
+         self.eventHandler.onCraftMatrixChanged(self); // 5 times per second at max
+      } else {
+         synchronized (postponed) {
+            postponed.put(self, null);
+         }
+      }
+   }
    public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {
       this.stackList[par1] = par2ItemStack;
       this.markDirty();
       this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
       if (this.eventHandler != null) {
          this.eventHandler.onCraftMatrixChanged(this);
+         updateCraftingMatrix(this);//TODO:Verify if it is right,from TC4Tweaks
       }
 
    }
