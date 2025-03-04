@@ -71,9 +71,7 @@ public class ItemLootBag extends Item {
 
          for(int a = 0; a < q; ++a) {
             ItemStack is = Utils.generateLoot(stack.getItemDamage(), world.rand);
-            if (is != null) {
-               world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, is.copy()));
-            }
+            world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, is.copy()));
          }
 
          world.playSoundAtEntity(player, "thaumcraft:coins", 0.75F, 1.0F);

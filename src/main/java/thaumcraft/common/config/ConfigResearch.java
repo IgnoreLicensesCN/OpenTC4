@@ -420,10 +420,46 @@ public class ConfigResearch {
       (new ResearchItem("CAP_void", "ELDRITCH", (new AspectList()).add(Aspect.VOID, 5).add(Aspect.ELDRITCH, 5).add(Aspect.TOOL, 3).add(Aspect.MAGIC, 3).add(Aspect.AURA, 3), 5, -1, 3, new ItemStack(ConfigItems.itemWandCap, 1, 7))).setPages(new ResearchPage("tc.research_page.CAP_void.1"), new ResearchPage((IArcaneRecipe)recipes.get("WandCapVoidInert")), new ResearchPage((InfusionRecipe)recipes.get("WandCapVoid"))).setConcealed().setParents("CAP_thaumium", "VOIDMETAL").registerResearchItem();
       ThaumcraftApi.addWarpToResearch("CAP_void", 1);
       (new ResearchItem("ARMORVOIDFORTRESS", "ELDRITCH", (new AspectList()).add(Aspect.ARMOR, 5).add(Aspect.ELDRITCH, 3).add(Aspect.CLOTH, 3).add(Aspect.DARKNESS, 3).add(Aspect.VOID, 5), 0, -3, 3, new ItemStack(ConfigItems.itemHelmetVoidRobe))).setPages(new ResearchPage("tc.research_page.ARMORVOIDFORTRESS.1"), new ResearchPage((InfusionRecipe)recipes.get("VoidRobeHelm")), new ResearchPage((InfusionRecipe)recipes.get("VoidRobeChest")), new ResearchPage((InfusionRecipe)recipes.get("VoidRobeLegs"))).setParents("VOIDMETAL", "ENCHFABRIC", "ELDRITCHMAJOR").setConcealed().setSecondary().registerResearchItem();
-      (new ResearchItem("FOCUSPRIMAL", "ELDRITCH", (new AspectList()).add(Aspect.AIR, 6).add(Aspect.WATER, 6).add(Aspect.FIRE, 6).add(Aspect.EARTH, 6).add(Aspect.ORDER, 6).add(Aspect.ENTROPY, 6).add(Aspect.MAGIC, 6), 4, 1, 2, new ItemStack(ConfigItems.itemFocusPrimal))).setPages(new ResearchPage("tc.research_page.FOCUSPRIMAL.1"), new ResearchPage((IArcaneRecipe)recipes.get("FocusPrimal"))).setConcealed().setParents("ELDRITCHMINOR").registerResearchItem();
+      (new ResearchItem("FOCUSPRIMAL",
+              "ELDRITCH", (new AspectList())
+              .add(Aspect.AIR, 6)
+              .add(Aspect.WATER, 6)
+              .add(Aspect.FIRE, 6)
+              .add(Aspect.EARTH, 6)
+              .add(Aspect.ORDER, 6)
+              .add(Aspect.ENTROPY, 6)
+              .add(Aspect.MAGIC, 6),
+              4, 1, 2, new ItemStack(ConfigItems.itemFocusPrimal)))
+              .setPages(new ResearchPage("tc.research_page.FOCUSPRIMAL.1"),
+                      new ResearchPage((IArcaneRecipe)recipes.get("FocusPrimal"))).setConcealed().setParents("ELDRITCHMINOR").registerResearchItem();
       ThaumcraftApi.addWarpToResearch("FOCUSPRIMAL", 2);
       ThaumcraftApi.addWarpToItem(new ItemStack(ConfigItems.itemFocusPrimal), 1);
-      (new ResearchItem("ROD_primal_staff", "ELDRITCH", (new AspectList()).add(Aspect.AIR, 9).add(Aspect.EARTH, 9).add(Aspect.FIRE, 9).add(Aspect.WATER, 9).add(Aspect.ORDER, 9).add(Aspect.ENTROPY, 9).add(Aspect.TOOL, 9).add(Aspect.MAGIC, 12), 6, 2, 3, new ItemStack(ConfigItems.itemWandRod, 1, 100))).setPages(new ResearchPage("tc.research_page.ROD_primal_staff.1"), new ResearchPage((InfusionRecipe)recipes.get("WandRodPrimalStaff"))).setHidden().setEntityTriggers("Thaumcraft.PrimalOrb").setItemTriggers(new ItemStack(ConfigItems.itemFocusPrimal)).setParents("FOCUSPRIMAL").setParentsHidden("ROD_silverwood_staff", "ROD_bone_staff", "ROD_greatwood_staff", "ROD_blaze_staff", "ROD_reed_staff", "ROD_obsidian_staff", "ROD_quartz_staff", "ROD_ice_staff").registerResearchItem();
+      (new ResearchItem("ROD_primal_staff", "ELDRITCH",
+              (new AspectList()).add(Aspect.AIR, 9)
+                      .add(Aspect.EARTH, 9)
+                      .add(Aspect.FIRE, 9)
+                      .add(Aspect.WATER, 9)
+                      .add(Aspect.ORDER, 9)
+                      .add(Aspect.ENTROPY, 9)
+                      .add(Aspect.TOOL, 9)
+                      .add(Aspect.MAGIC, 12),
+              6, 2, 3,
+              new ItemStack(ConfigItems.itemWandRod, 1, 100)))
+              .setPages(new ResearchPage("tc.research_page.ROD_primal_staff.1"),
+                      new ResearchPage((InfusionRecipe)recipes.get("WandRodPrimalStaff")))
+              .setHidden()
+              .setEntityTriggers("Thaumcraft.PrimalOrb")
+              .setItemTriggers(new ItemStack(ConfigItems.itemFocusPrimal))
+              .setParents("FOCUSPRIMAL")
+              .setParentsHidden("ROD_silverwood_staff",
+                      "ROD_bone_staff",
+                      "ROD_greatwood_staff",
+                      "ROD_blaze_staff",
+                      "ROD_reed_staff",
+                      "ROD_obsidian_staff",
+                      "ROD_quartz_staff",
+                      "ROD_ice_staff")
+              .registerResearchItem();
       ThaumcraftApi.addWarpToResearch("ROD_primal_staff", 3);
       ThaumcraftApi.addWarpToItem(new ItemStack(ConfigItems.itemWandRod, 1, 100), 1);
    }

@@ -3,6 +3,7 @@ package thaumcraft.api.aspects;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
+import fromhodgepodge.util.AspectNameSorter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -15,7 +16,7 @@ public class AspectList implements Serializable {
 	
 	/**
 	 * this creates a new aspect list with preloaded values based off the aspects of the given item.
-	 * @param the itemstack of the given item
+	 * @param stack the itemstack of the given item
 	 */
 	public AspectList(ItemStack stack) {
 		try {
@@ -83,26 +84,27 @@ public class AspectList implements Serializable {
 	 * @return an array of all the aspects in this collection sorted by name
 	 */
 	public Aspect[] getAspectsSorted() {
-		try {
-			Aspect[] out = aspects.keySet().toArray(new Aspect[]{});
-			boolean change=false;
-			do {
-				change=false;
-				for(int a=0;a<out.length-1;a++) {
-					Aspect e1 = out[a];
-					Aspect e2 = out[a+1];
-					if (e1!=null && e2!=null && e1.getTag().compareTo(e2.getTag())>0) {
-						out[a] = e2;
-						out[a+1] = e1;
-						change = true;
-						break;
-					}
-				}
-			} while (change);
-			return out;
-		} catch (Exception e) {
-			return this.getAspects(); 
-		}
+		return AspectNameSorter.sort(this);
+//		try {
+//			Aspect[] out = aspects.keySet().toArray(new Aspect[]{});
+//			boolean change=false;
+//			do {
+//				change=false;
+//				for(int a=0;a<out.length-1;a++) {
+//					Aspect e1 = out[a];
+//					Aspect e2 = out[a+1];
+//					if (e1!=null && e2!=null && e1.getTag().compareTo(e2.getTag())>0) {
+//						out[a] = e2;
+//						out[a+1] = e1;
+//						change = true;
+//						break;
+//					}
+//				}
+//			} while (change);
+//			return out;
+//		} catch (Exception e) {
+//			return this.getAspects();
+//		}
 	}
 	
 	/**
@@ -189,9 +191,10 @@ public class AspectList implements Serializable {
 	 * @return
 	 */
 	public AspectList add(Aspect aspect, int amount) {
+		if (aspect == null){return this;}
 		if (this.aspects.containsKey(aspect)) {
 			int oldamount = this.aspects.get(aspect);
-			amount+=oldamount;
+			amount += oldamount;
 		}
 		this.aspects.put( aspect, amount );
 		return this;

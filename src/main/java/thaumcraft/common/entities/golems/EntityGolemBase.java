@@ -4,6 +4,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import fromhodgepodge.mixins.hooks.ThaumcraftMixinMethods;
 import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -720,6 +721,9 @@ public class EntityGolemBase extends EntityGolem implements IEntityAdditionalSpa
       }
 
       this.dataWatcher.updateObject(22, st.toString());
+
+      NBTTagList nbtTagList = nbt.getTagList("markers", 10);
+      ThaumcraftMixinMethods.overwriteMarkersDimID(nbtTagList, this.markers);
    }
 
    public String getOwnerName() {

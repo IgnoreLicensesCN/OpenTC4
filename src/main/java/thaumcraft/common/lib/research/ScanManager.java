@@ -21,6 +21,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import tc4tweak.modules.generateItemHash.GenerateItemHash;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -117,75 +118,76 @@ public class ScanManager implements IScanEventHandler {
    }
 
    public static int generateItemHash(Item item, int meta) {
-      ItemStack t = new ItemStack(item, 1, meta);
-
-      try {
-         if (t.isItemStackDamageable() || !t.getHasSubtypes()) {
-            meta = -1;
-         }
-      } catch (Exception ignored) {
-      }
-
-      if (ThaumcraftApi.groupedObjectTags.containsKey(Arrays.asList(item, meta))) {
-         meta = ((int[])ThaumcraftApi.groupedObjectTags.get(Arrays.asList(item, meta)))[0];
-      }
-
-      StringBuilder hash;
-      try {
-         GameRegistry.UniqueIdentifier ui = GameRegistry.findUniqueIdentifierFor(item);
-         if (ui != null) {
-            hash = new StringBuilder(ui + ":" + meta);
-         } else {
-            hash = new StringBuilder(t.getUnlocalizedName() + ":" + meta);
-         }
-      } catch (Exception var14) {
-         hash = new StringBuilder("oops:" + meta);
-      }
-
-      if (!ThaumcraftApi.objectTags.containsKey(Arrays.asList(item, meta))) {
-         for(List l : ThaumcraftApi.objectTags.keySet()) {
-            String name = ((Item)l.get(0)).getUnlocalizedName();
-            if ((Item.itemRegistry.getObject(name) == item || Block.blockRegistry.getObject(name) == Block.getBlockFromItem(item)) && l.get(1) instanceof int[]) {
-               int[] range = (int[])l.get(1);
-               Arrays.sort(range);
-               if (Arrays.binarySearch(range, meta) >= 0) {
-                  GameRegistry.UniqueIdentifier ui = GameRegistry.findUniqueIdentifierFor(item);
-                  if (ui != null) {
-                     hash = new StringBuilder(ui.toString());
-                  } else {
-                     hash = new StringBuilder("" + t.getUnlocalizedName());
-                  }
-
-                  for(int r : range) {
-                     hash.append(":").append(r);
-                  }
-
-                  return hash.toString().hashCode();
-               }
-            }
-         }
-
-         if (!ThaumcraftApi.objectTags.containsKey(Arrays.asList(item, -1)) && meta == -1) {
-            int index = 0;
-            boolean found = false;
-
-            do {
-               found = ThaumcraftApi.objectTags.containsKey(Arrays.asList(item, index));
-               ++index;
-            } while(index < 16 && !found);
-
-            if (found) {
-               GameRegistry.UniqueIdentifier ui = GameRegistry.findUniqueIdentifierFor(item);
-               if (ui != null) {
-                  hash = new StringBuilder(ui + ":" + index);
-               } else {
-                  hash = new StringBuilder(t.getUnlocalizedName() + ":" + index);
-               }
-            }
-         }
-      }
-
-      return hash.toString().hashCode();
+      return GenerateItemHash.generateItemHash(item, meta);
+//      ItemStack t = new ItemStack(item, 1, meta);
+//
+//      try {
+//         if (t.isItemStackDamageable() || !t.getHasSubtypes()) {
+//            meta = -1;
+//         }
+//      } catch (Exception ignored) {
+//      }
+//
+//      if (ThaumcraftApi.groupedObjectTags.containsKey(Arrays.asList(item, meta))) {
+//         meta = ((int[])ThaumcraftApi.groupedObjectTags.get(Arrays.asList(item, meta)))[0];
+//      }
+//
+//      StringBuilder hash;
+//      try {
+//         GameRegistry.UniqueIdentifier ui = GameRegistry.findUniqueIdentifierFor(item);
+//         if (ui != null) {
+//            hash = new StringBuilder(ui + ":" + meta);
+//         } else {
+//            hash = new StringBuilder(t.getUnlocalizedName() + ":" + meta);
+//         }
+//      } catch (Exception var14) {
+//         hash = new StringBuilder("oops:" + meta);
+//      }
+//
+//      if (!ThaumcraftApi.objectTags.containsKey(Arrays.asList(item, meta))) {
+//         for(List l : ThaumcraftApi.objectTags.keySet()) {
+//            String name = ((Item)l.get(0)).getUnlocalizedName();
+//            if ((Item.itemRegistry.getObject(name) == item || Block.blockRegistry.getObject(name) == Block.getBlockFromItem(item)) && l.get(1) instanceof int[]) {
+//               int[] range = (int[])l.get(1);
+//               Arrays.sort(range);
+//               if (Arrays.binarySearch(range, meta) >= 0) {
+//                  GameRegistry.UniqueIdentifier ui = GameRegistry.findUniqueIdentifierFor(item);
+//                  if (ui != null) {
+//                     hash = new StringBuilder(ui.toString());
+//                  } else {
+//                     hash = new StringBuilder("" + t.getUnlocalizedName());
+//                  }
+//
+//                  for(int r : range) {
+//                     hash.append(":").append(r);
+//                  }
+//
+//                  return hash.toString().hashCode();
+//               }
+//            }
+//         }
+//
+//         if (!ThaumcraftApi.objectTags.containsKey(Arrays.asList(item, -1)) && meta == -1) {
+//            int index = 0;
+//            boolean found = false;
+//
+//            do {
+//               found = ThaumcraftApi.objectTags.containsKey(Arrays.asList(item, index));
+//               ++index;
+//            } while(index < 16 && !found);
+//
+//            if (found) {
+//               GameRegistry.UniqueIdentifier ui = GameRegistry.findUniqueIdentifierFor(item);
+//               if (ui != null) {
+//                  hash = new StringBuilder(ui + ":" + index);
+//               } else {
+//                  hash = new StringBuilder(t.getUnlocalizedName() + ":" + index);
+//               }
+//            }
+//         }
+//      }
+//
+//      return hash.toString().hashCode();
    }
 
    public static AspectList generateEntityAspects(Entity entity) {

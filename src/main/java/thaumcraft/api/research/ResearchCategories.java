@@ -1,6 +1,5 @@
 package thaumcraft.api.research;
 
-import java.util.Collection;
 import java.util.LinkedHashMap;
 
 import net.minecraft.util.ResourceLocation;
@@ -9,6 +8,7 @@ import net.minecraft.util.StatCollector;
 import org.apache.logging.log4j.Level;
 
 import cpw.mods.fml.common.FMLLog;
+import tc4tweak.modules.getResearch.GetResearch;
 
 public class ResearchCategories {
 	
@@ -31,20 +31,23 @@ public class ResearchCategories {
 	public static String getCategoryName(String key) {
 		return StatCollector.translateToLocal("tc.research_category."+key);
 	}
-	
+
 	/**
 	 * @param key the research key
-	 * @return the ResearchItem object. 
+	 * @return the ResearchItem object.
 	 */
 	public static ResearchItem getResearch(String key) {
-		Collection rc = researchCategories.values();
-		for (Object cat:rc) {
-			Collection rl = ((ResearchCategoryList)cat).research.values();
-			for (Object ri:rl) {
-				if ((((ResearchItem)ri).key).equals(key)) return (ResearchItem)ri;
-			}
-		}
-		return null;
+		return GetResearch.getResearch(key);
+//		Collection<ResearchCategoryList> rc = researchCategories.values();
+//		for (ResearchCategoryList cat:rc) {
+//			Collection<ResearchItem> rl = cat.research.values();
+//			for (ResearchItem ri:rl) {
+//				if (ri.key.equals(key)) {
+//					return ri;
+//				}
+//			}
+//		}
+//		return null;
 	}
 	
 	/**

@@ -3,7 +3,11 @@ package thaumcraft.api.visnet;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChunkCoordinates;
+import tc4tweak.modules.visrelay.SavedLinkHandler;
 import thaumcraft.api.TileThaumcraft;
 import thaumcraft.api.WorldCoordinates;
 import thaumcraft.api.aspects.Aspect;
@@ -19,6 +23,7 @@ public abstract class TileVisNode extends TileThaumcraft {
 	
 	WeakReference<TileVisNode> parent = null;
 	ArrayList<WeakReference<TileVisNode>> children = new ArrayList<>();
+	List<ChunkCoordinates> loadedLink = null;
 	
 	/**
 	 * @return the WorldCoordinates location of where this node is located
@@ -131,10 +136,11 @@ public abstract class TileVisNode extends TileThaumcraft {
 
 	@Override
 	public void updateEntity() {
-				
+		if (SavedLinkHandler.processSavedLink(this)){return;}
 		if (!worldObj.isRemote && ((nodeCounter++) % 40==0 || nodeRefresh)) {
 			//check for changes
-			if (!nodeRefresh && children.size()>0) {
+			if (!nodeRefresh
+					&& !children.isEmpty()) {
 				for (WeakReference<TileVisNode> n:children) {
 					if (n==null || n.get()==null || !VisNetHandler.canNodeBeSeen(this, n.get())) {
 						nodeRefresh=true;
@@ -183,6 +189,24 @@ public abstract class TileVisNode extends TileThaumcraft {
 	public byte getAttunement() {
 		return -1;
 	}
-		
-	
+
+	@Override
+	public void readFromNBT(NBTTagCompound nbttagcompound) {
+		super.readFromNBT(nbttagcompound);
+        this.loadedLink = SavedLinkHandler.readFromNBT(this, nbttagcompound);
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound nbttagcompound) {
+		super.writeToNBT(nbttagcompound);
+		SavedLinkHandler.writeToNBT(this, nbttagcompound);
+	}
+
+	public List<ChunkCoordinates> getSavedLink() {
+		return loadedLink;
+	}
+
+	public void clearSavedLink() {
+		this.loadedLink = null;
+	}
 }

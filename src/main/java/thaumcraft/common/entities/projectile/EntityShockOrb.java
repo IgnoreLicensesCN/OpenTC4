@@ -2,11 +2,14 @@ package thaumcraft.common.entities.projectile;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import tc4tweak.ConfigurationHandler;
 import thaumcraft.codechicken.lib.math.MathHelper;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigBlocks;
@@ -28,10 +31,24 @@ public class EntityShockOrb extends EntityThrowable {
       return 0.05F;
    }
 
+   public static boolean canEarthShockHurt(Entity entity) {
+      switch (ConfigurationHandler.INSTANCE.getEarthShockHarmMode()) {
+         case OnlyLiving:
+            return entity instanceof EntityLivingBase;
+         case ExceptItemXp:
+            return !(entity instanceof EntityItem) && !(entity instanceof EntityXPOrb);
+         case AllEntity:
+         default:
+            return true;
+      }
+   }
    protected void onImpact(MovingObjectPosition mop) {
       if (!this.worldObj.isRemote) {
          for(Entity e : EntityUtils.getEntitiesInRange(this.worldObj, this.posX, this.posY, this.posZ, this, Entity.class, this.area)) {
-            if (EntityUtils.canEntityBeSeen(this, e)) {
+
+            if (EntityUtils.canEntityBeSeen(this, e)
+                    && canEarthShockHurt(e)
+            ) {
                e.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, this.getThrower()), (float)this.damage);
             }
          }

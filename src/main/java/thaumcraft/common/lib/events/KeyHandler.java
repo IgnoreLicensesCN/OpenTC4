@@ -9,6 +9,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
+import org.lwjgl.input.Keyboard;
 import thaumcraft.common.entities.golems.ItemGolemBell;
 import thaumcraft.common.items.armor.Hover;
 import thaumcraft.common.items.armor.ItemHoverHarness;
@@ -18,9 +19,9 @@ import thaumcraft.common.lib.network.misc.PacketFocusChangeToServer;
 import thaumcraft.common.lib.network.misc.PacketItemKeyToServer;
 
 public class KeyHandler {
-   public KeyBinding keyF = new KeyBinding("Change Wand Focus", 33, "key.categories.misc");
-   public KeyBinding keyH = new KeyBinding("Activate Hover Harness", 35, "key.categories.misc");
-   public KeyBinding keyG = new KeyBinding("Misc Wand Toggle", 34, "key.categories.misc");
+   public KeyBinding keyF = new KeyBinding("Change Wand Focus", Keyboard.KEY_NONE, "Thaumcraft");
+   public KeyBinding keyH = new KeyBinding("Activate Hover Harness", Keyboard.KEY_NONE, "Thaumcraft");
+   public KeyBinding keyG = new KeyBinding("Misc Wand Toggle", Keyboard.KEY_NONE, "Thaumcraft");
    private boolean keyPressedF = false;
    private boolean keyPressedH = false;
    private boolean keyPressedG = false;

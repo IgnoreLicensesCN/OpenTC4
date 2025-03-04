@@ -423,6 +423,7 @@ public class ItemWandCasting extends Item implements IArchitect {
    }
 
    public ItemFocusBasic getFocus(ItemStack stack) {
+      if (stack == null) {return null;}
       if (stack.hasTagCompound() && stack.stackTagCompound.hasKey("focus")) {
          NBTTagCompound nbt = stack.stackTagCompound.getCompoundTag("focus");
          return (ItemFocusBasic)ItemStack.loadItemStackFromNBT(nbt).getItem();
@@ -432,6 +433,7 @@ public class ItemWandCasting extends Item implements IArchitect {
    }
 
    public ItemStack getFocusItem(ItemStack stack) {
+      if (stack == null) {return null;}
       if (stack.hasTagCompound() && stack.stackTagCompound.hasKey("focus")) {
          NBTTagCompound nbt = stack.stackTagCompound.getCompoundTag("focus");
          return ItemStack.loadItemStackFromNBT(nbt);

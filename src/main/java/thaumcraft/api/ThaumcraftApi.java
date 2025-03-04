@@ -114,7 +114,7 @@ public class ThaumcraftApi {
 	}
 	
 	//RECIPES/////////////////////////////////////////
-	private static ArrayList craftingRecipes = new ArrayList();	
+	private static ArrayList<Object> craftingRecipes = new ArrayList<>();
 	private static HashMap<Object,ItemStack> smeltingBonus = new HashMap<>();
 	
 	/**
@@ -156,7 +156,7 @@ public class ThaumcraftApi {
 		return out;
 	}
 	
-	public static List getCraftingRecipes() {
+	public static List<Object> getCraftingRecipes() {
 		return craftingRecipes;
 	}
 	
@@ -243,7 +243,7 @@ public class ThaumcraftApi {
      * @param key the research key required for this recipe to work. 
      * @param result the output result
      * @param catalyst an itemstack of the catalyst or a string if it is an ore dictionary item
-     * @param cost the vis cost
+//     * @param cost the vis cost
      * @param tags the aspects required to craft this
      */
     public static CrucibleRecipe addCrucibleRecipe(String key, ItemStack result, Object catalyst, AspectList tags) {

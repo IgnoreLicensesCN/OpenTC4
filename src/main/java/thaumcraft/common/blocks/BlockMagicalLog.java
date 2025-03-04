@@ -66,24 +66,45 @@ public class BlockMagicalLog extends BlockRotatedPillar {
       return 1;
    }
 
-   public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6) {
+//   public void breakBlock(World par1World, int x, int y, int z, int par5, int par6) {
+//      byte b0 = 4;
+//      int j1 = b0 + 1;
+//      if (par1World.checkChunksExist(x - j1, y - j1, z - j1, x + j1, y + j1, z + j1)) {
+//         for(int k1 = -b0; k1 <= b0; ++k1) {
+//            for(int l1 = -b0; l1 <= b0; ++l1) {
+//               for(int i2 = -b0; i2 <= b0; ++i2) {
+//                  Block j2 = par1World.getBlock(x + k1, y + l1, z + i2);
+//                  if (!j2.isAir(par1World, x + k1, y + l1, z + i2)) {
+//                     j2.beginLeavesDecay(par1World, x + k1, y + l1, z + i2);
+//                  }
+//               }
+//            }
+//         }
+//      }
+//
+//   }
+
+   /**
+    * Old breakBlock() does not override the correct method.
+    */
+   @Override
+   public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta) {
       byte b0 = 4;
-      int j1 = b0 + 1;
-      if (par1World.checkChunksExist(par2 - j1, par3 - j1, par4 - j1, par2 + j1, par3 + j1, par4 + j1)) {
-         for(int k1 = -b0; k1 <= b0; ++k1) {
-            for(int l1 = -b0; l1 <= b0; ++l1) {
-               for(int i2 = -b0; i2 <= b0; ++i2) {
-                  Block j2 = par1World.getBlock(par2 + k1, par3 + l1, par4 + i2);
-                  if (!j2.isAir(par1World, par2 + k1, par3 + l1, par4 + i2)) {
-                     j2.beginLeavesDecay(par1World, par2 + k1, par3 + l1, par4 + i2);
+      int i1 = b0 + 1;
+
+      if (worldIn.checkChunksExist(x - i1, y - i1, z - i1, x + i1, y + i1, z + i1)) {
+         for (int j1 = -b0; j1 <= b0; ++j1) {
+            for (int k1 = -b0; k1 <= b0; ++k1) {
+               for (int l1 = -b0; l1 <= b0; ++l1) {
+                  Block block = worldIn.getBlock(x + j1, y + k1, z + l1);
+                  if (block.isLeaves(worldIn, x + j1, y + k1, z + l1)) {
+                     block.beginLeavesDecay(worldIn, x + j1, y + k1, z + l1);
                   }
                }
             }
          }
       }
-
    }
-
    public void onBlockHarvested(World par1World, int par2, int par3, int par4, int par5, EntityPlayer par6EntityPlayer) {
       if (limitToValidMetadata(par5) == 2 && !par1World.isRemote) {
          TileEntity te = par1World.getTileEntity(par2, par3, par4);

@@ -70,7 +70,9 @@ public class PacketAspectCombinationToServer implements IMessage, IMessageHandle
 
    public IMessage onMessage(PacketAspectCombinationToServer message, MessageContext ctx) {
       World world = DimensionManager.getWorld(message.dim);
-      if (world != null && (ctx.getServerHandler().playerEntity == null || ctx.getServerHandler().playerEntity.getEntityId() == message.playerid)) {
+
+      if (world != null && (ctx.getServerHandler().playerEntity == null
+              || ctx.getServerHandler().playerEntity.getEntityId() == message.playerid)) {
          Entity player = world.getEntityByID(message.playerid);
          if (player instanceof EntityPlayer && message.aspect1 != null) {
             Aspect combo = ResearchManager.getCombinationResult(message.aspect1, message.aspect2);

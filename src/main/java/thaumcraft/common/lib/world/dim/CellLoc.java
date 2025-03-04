@@ -1,6 +1,6 @@
 package thaumcraft.common.lib.world.dim;
 
-public class CellLoc implements Comparable {
+public class CellLoc implements Comparable<CellLoc> {
    public int x;
    public int z;
 
@@ -27,9 +27,10 @@ public class CellLoc implements Comparable {
    }
 
    public int hashCode() {
-      return this.x + this.z << 8;
+      return ((1664525 * this.x) + 1013904223) ^ ((1664525 * (this.z ^ -559038737)) + 1013904223);
    }
 
+   @Override
    public int compareTo(CellLoc c) {
       return this.z == c.z ? this.x - c.x : this.z - c.z;
    }
@@ -51,9 +52,5 @@ public class CellLoc implements Comparable {
 
    public String toString() {
       return "Pos{x=" + this.x + ", z=" + this.z + '}';
-   }
-
-   public int compareTo(Object o) {
-      return this.compareTo((CellLoc)o);
    }
 }

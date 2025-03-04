@@ -3,7 +3,9 @@ package thaumcraft.api;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
-public class WorldCoordinates implements Comparable
+import javax.annotation.Nonnull;
+
+public class WorldCoordinates implements Comparable<WorldCoordinates>
 {
     public int x;
 
@@ -54,9 +56,11 @@ public class WorldCoordinates implements Comparable
         }
     }
 
+    @Override
     public int hashCode()
     {
-        return this.x + this.y << 8 + this.z << 16 + this.dim << 24;
+        return this.y * 31 + this.x * 91 + this.z * 29303 + this.dim * 39916801;
+//        return this.x + this.y << 8 + this.z << 16 + this.dim << 24;
     }
 
     /**
@@ -95,9 +99,10 @@ public class WorldCoordinates implements Comparable
         return this.getDistanceSquared(par1ChunkCoordinates.x, par1ChunkCoordinates.y, par1ChunkCoordinates.z);
     }
 
-    public int compareTo(Object par1Obj)
+    @Override
+    public int compareTo(@Nonnull WorldCoordinates par1Obj)
     {
-        return this.compareWorldCoordinate((WorldCoordinates)par1Obj);
+        return this.compareWorldCoordinate(par1Obj);
     }
     
     public void readNBT(NBTTagCompound nbt) {
@@ -113,5 +118,6 @@ public class WorldCoordinates implements Comparable
     	nbt.setInteger("w_z",z);
     	nbt.setInteger("w_d",dim);
     }
+
     
 }

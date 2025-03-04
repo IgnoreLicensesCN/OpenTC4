@@ -5,7 +5,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.MovingObjectPosition;
@@ -24,10 +23,10 @@ public class RayTracer {
    private double s_dist;
    private int s_side;
    private IndexedCuboid6 c_cuboid;
-   private static ThreadLocal t_inst = new ThreadLocal();
+   private static final ThreadLocal<RayTracer> t_inst = new ThreadLocal<RayTracer>();
 
    public static RayTracer instance() {
-      RayTracer inst = (RayTracer)t_inst.get();
+      RayTracer inst = t_inst.get();
       if (inst == null) {
          t_inst.set(inst = new RayTracer());
       }
@@ -106,28 +105,6 @@ public class RayTracer {
       }
    }
 
-   public MovingObjectPosition rayTraceCuboid(Vector3 start, Vector3 end, Cuboid6 cuboid, BlockCoord pos) {
-      MovingObjectPosition mop = this.rayTraceCuboid(start, end, cuboid);
-      if (mop != null) {
-         mop.typeOfHit = MovingObjectType.BLOCK;
-         mop.blockX = pos.x;
-         mop.blockY = pos.y;
-         mop.blockZ = pos.z;
-      }
-
-      return mop;
-   }
-
-   public MovingObjectPosition rayTraceCuboid(Vector3 start, Vector3 end, Cuboid6 cuboid, Entity e) {
-      MovingObjectPosition mop = this.rayTraceCuboid(start, end, cuboid);
-      if (mop != null) {
-         mop.typeOfHit = MovingObjectType.ENTITY;
-         mop.entityHit = e;
-      }
-
-      return mop;
-   }
-
    public MovingObjectPosition rayTraceCuboids(Vector3 start, Vector3 end, List<IndexedCuboid6> cuboids) {
       double c_dist = Double.MAX_VALUE;
       MovingObjectPosition c_hit = null;
@@ -135,9 +112,8 @@ public class RayTracer {
       for(IndexedCuboid6 cuboid : cuboids) {
          MovingObjectPosition mop = this.rayTraceCuboid(start, end, cuboid);
          if (mop != null && this.s_dist < c_dist) {
-            MovingObjectPosition var10 = new ExtendedMOP(mop, cuboid.data, this.s_dist);
             c_dist = this.s_dist;
-            c_hit = var10;
+            c_hit = mop;
             this.c_cuboid = cuboid;
          }
       }
@@ -145,7 +121,7 @@ public class RayTracer {
       return c_hit;
    }
 
-   public MovingObjectPosition rayTraceCuboids(Vector3 start, Vector3 end, List cuboids, BlockCoord pos, Block block) {
+   public MovingObjectPosition rayTraceCuboids(Vector3 start, Vector3 end, List<IndexedCuboid6> cuboids, BlockCoord pos, Block block) {
       MovingObjectPosition mop = this.rayTraceCuboids(start, end, cuboids);
       if (mop != null) {
          mop.typeOfHit = MovingObjectType.BLOCK;
@@ -160,27 +136,15 @@ public class RayTracer {
       return mop;
    }
 
-   public void rayTraceCuboids(Vector3 start, Vector3 end, List<IndexedCuboid6> cuboids, BlockCoord pos, Block block, List hitList) {
-      for(IndexedCuboid6 cuboid : cuboids) {
-         MovingObjectPosition mop = this.rayTraceCuboid(start, end, cuboid);
-         if (mop != null) {
-            ExtendedMOP emop = new ExtendedMOP(mop, cuboid.data, this.s_dist);
-            emop.typeOfHit = MovingObjectType.BLOCK;
-            emop.blockX = pos.x;
-            emop.blockY = pos.y;
-            emop.blockZ = pos.z;
-            hitList.add(emop);
-         }
-      }
-
-   }
 
    public static MovingObjectPosition retraceBlock(World world, EntityPlayer player, int x, int y, int z) {
       Block block = world.getBlock(x, y, z);
       Vec3 headVec = getCorrectedHeadVec(player);
       Vec3 lookVec = player.getLook(1.0F);
       double reach = getBlockReachDistance(player);
-      Vec3 endVec = headVec.addVector(lookVec.xCoord * reach, lookVec.yCoord * reach, lookVec.zCoord * reach);
+      Vec3 endVec = headVec.addVector(lookVec.xCoord * reach,
+              lookVec.yCoord * reach,
+              lookVec.zCoord * reach);
       return block.collisionRayTrace(world, x, y, z, headVec, endVec);
    }
 
@@ -191,17 +155,6 @@ public class RayTracer {
    @SideOnly(Side.CLIENT)
    private static double getBlockReachDistance_client() {
       return Minecraft.getMinecraft().playerController.getBlockReachDistance();
-   }
-
-   public static MovingObjectPosition reTrace(World world, EntityPlayer player) {
-      return reTrace(world, player, getBlockReachDistance(player));
-   }
-
-   public static MovingObjectPosition reTrace(World world, EntityPlayer player, double reach) {
-      Vec3 headVec = getCorrectedHeadVec(player);
-      Vec3 lookVec = player.getLook(1.0F);
-      Vec3 endVec = headVec.addVector(lookVec.xCoord * reach, lookVec.yCoord * reach, lookVec.zCoord * reach);
-      return world.func_147447_a(headVec, endVec, true, false, true);
    }
 
    public static Vec3 getCorrectedHeadVec(EntityPlayer player) {
@@ -217,19 +170,8 @@ public class RayTracer {
 
       return v;
    }
-
-   public static Vec3 getStartVec(EntityPlayer player) {
-      return getCorrectedHeadVec(player);
-   }
-
    public static double getBlockReachDistance(EntityPlayer player) {
       return player.worldObj.isRemote ? getBlockReachDistance_client() : (player instanceof EntityPlayerMP ? getBlockReachDistance_server((EntityPlayerMP)player) : (double)5.0F);
    }
 
-   public static Vec3 getEndVec(EntityPlayer player) {
-      Vec3 headVec = getCorrectedHeadVec(player);
-      Vec3 lookVec = player.getLook(1.0F);
-      double reach = getBlockReachDistance(player);
-      return headVec.addVector(lookVec.xCoord * reach, lookVec.yCoord * reach, lookVec.zCoord * reach);
-   }
 }

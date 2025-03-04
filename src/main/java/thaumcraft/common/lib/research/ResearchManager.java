@@ -448,7 +448,8 @@ public class ResearchManager {
             if (entityplayermp != null) {
                IPlayerFileData playerNBTManagerObj = MinecraftServer.getServer().worldServerForDimension(0).getSaveHandler().getSaveHandler();
                SaveHandler sh = (SaveHandler)playerNBTManagerObj;
-               File dir = ObfuscationReflectionHelper.getPrivateValue(SaveHandler.class, sh, new String[]{"playersDirectory", "field_75771_c"});
+               File dir = ObfuscationReflectionHelper.getPrivateValue(SaveHandler.class, sh, new String[]{
+                       "playersDirectory", "field_75771_c"});
                File file1 = new File(dir, id + ".thaum");
                File file2 = new File(dir, id + ".thaumbak");
                loadPlayerData(entityplayermp, file1, file2, false);

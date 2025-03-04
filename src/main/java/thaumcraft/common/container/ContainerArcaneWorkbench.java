@@ -41,7 +41,6 @@ public class ContainerArcaneWorkbench extends Container {
 
       this.onCraftMatrixChanged(this.tileEntity);
    }
-
    public void onCraftMatrixChanged(IInventory par1IInventory) {
       InventoryCrafting ic = new InventoryCrafting(new ContainerDummy(), 3, 3);
 
@@ -49,10 +48,18 @@ public class ContainerArcaneWorkbench extends Container {
          ic.setInventorySlotContents(a, this.tileEntity.getStackInSlot(a));
       }
 
-      this.tileEntity.setInventorySlotContentsSoftly(9, CraftingManager.getInstance().findMatchingRecipe(ic, this.tileEntity.getWorldObj()));
-      if (this.tileEntity.getStackInSlot(9) == null && this.tileEntity.getStackInSlot(10) != null && this.tileEntity.getStackInSlot(10).getItem() instanceof ItemWandCasting) {
+      this.tileEntity.setInventorySlotContentsSoftly(
+              9,
+              CraftingManager.getInstance().findMatchingRecipe(ic, this.tileEntity.getWorldObj())
+      );
+      if (this.tileEntity.getStackInSlot(9) == null
+              && this.tileEntity.getStackInSlot(10) != null
+              && this.tileEntity.getStackInSlot(10).getItem() instanceof ItemWandCasting
+      ) {
          ItemWandCasting wand = (ItemWandCasting)this.tileEntity.getStackInSlot(10).getItem();
-         if (wand.consumeAllVisCrafting(this.tileEntity.getStackInSlot(10), this.ip.player, ThaumcraftCraftingManager.findMatchingArcaneRecipeAspects(this.tileEntity, this.ip.player), false)) {
+         if (wand.consumeAllVisCrafting(
+                 this.tileEntity.getStackInSlot(10), this.ip.player,
+                 ThaumcraftCraftingManager.findMatchingArcaneRecipeAspects(this.tileEntity, this.ip.player), false)) {
             this.tileEntity.setInventorySlotContentsSoftly(9, ThaumcraftCraftingManager.findMatchingArcaneRecipe(this.tileEntity, this.ip.player));
          }
       }

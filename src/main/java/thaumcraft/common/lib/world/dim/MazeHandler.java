@@ -1,11 +1,11 @@
 package thaumcraft.common.lib.world.dim;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+
+import fromhodgepodge.util.WorldDataSaver;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -99,31 +99,48 @@ public class MazeHandler {
    }
 
    public static void saveMaze(World world) {
-      NBTTagCompound nbttagcompound = writeNBT();
-      NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-      nbttagcompound1.setTag("Data", nbttagcompound);
+      NBTTagCompound tag = writeNBT();
+      NBTTagCompound parentTag = new NBTTagCompound();
+      parentTag.setTag("data", tag);
+      final String filename;
 
-      try {
-         File file1 = new File(world.getSaveHandler().getWorldDirectory(), "labyrinth.dat_new");
-         File file2 = new File(world.getSaveHandler().getWorldDirectory(), "labyrinth.dat_old");
-         File file3 = new File(world.getSaveHandler().getWorldDirectory(), "labyrinth.dat");
-         CompressedStreamTools.writeCompressed(nbttagcompound1, Files.newOutputStream(file1.toPath()));
-         if (file2.exists()) {
-            file2.delete();
-         }
-
-         file3.renameTo(file2);
-         if (file3.exists()) {
-            file3.delete();
-         }
-
-         file1.renameTo(file3);
-         if (file1.exists()) {
-            file1.delete();
-         }
-      } catch (Exception exception) {
-         exception.printStackTrace();
+      // Adds support for Salis Arcana updating the labyrinth file format
+      if (tag.hasKey("version")) {
+         filename = "labyrinth_v" + tag.getInteger("version") + ".dat";
+      } else {
+         filename = "labyrinth.dat";
       }
+
+      final File file = new File(world.getSaveHandler().getWorldDirectory(), filename);
+
+      WorldDataSaver.INSTANCE.saveData(file, parentTag, true, true);
+//      HodgepodgeCore.saveWorldDataBackup(file, parentTag);
+
+//      NBTTagCompound nbttagcompound = writeNBT();
+//      NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+//      nbttagcompound1.setTag("Data", nbttagcompound);
+//
+//      try {
+//         File file1 = new File(world.getSaveHandler().getWorldDirectory(), "labyrinth.dat_new");
+//         File file2 = new File(world.getSaveHandler().getWorldDirectory(), "labyrinth.dat_old");
+//         File file3 = new File(world.getSaveHandler().getWorldDirectory(), "labyrinth.dat");
+//         CompressedStreamTools.writeCompressed(nbttagcompound1, Files.newOutputStream(file1.toPath()));
+//         if (file2.exists()) {
+//            file2.delete();
+//         }
+//
+//         file3.renameTo(file2);
+//         if (file3.exists()) {
+//            file3.delete();
+//         }
+//
+//         file1.renameTo(file3);
+//         if (file1.exists()) {
+//            file1.delete();
+//         }
+//      } catch (Exception exception) {
+//         exception.printStackTrace();
+//      }
 
    }
 

@@ -64,6 +64,7 @@ public class ItemWispEssence extends Item implements IEssentiaContainerItem {
 
    @SideOnly(Side.CLIENT)
    public int getColorFromItemStack(ItemStack stack, int par2) {
+      if (stack == null){return 0;}
       if (this.getAspects(stack) != null) {
          return this.getAspects(stack).getAspects()[0].getColor();
       } else {
@@ -73,6 +74,9 @@ public class ItemWispEssence extends Item implements IEssentiaContainerItem {
    }
 
    public AspectList getAspects(ItemStack itemstack) {
+      if (itemstack == null) {
+         return null;
+      }
       if (itemstack.hasTagCompound()) {
          AspectList aspects = new AspectList();
          aspects.readFromNBT(itemstack.getTagCompound());

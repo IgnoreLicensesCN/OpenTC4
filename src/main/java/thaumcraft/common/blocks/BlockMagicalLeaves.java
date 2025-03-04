@@ -119,10 +119,10 @@ public class BlockMagicalLeaves extends Block implements IShearable {
 
    }
 
-   public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
+   public void updateTick(World par1World, int x, int y, int z, Random par5Random) {
       if (!par1World.isRemote) {
-         int var6 = par1World.getBlockMetadata(par2, par3, par4);
-         if ((var6 & 8) != 0 && (var6 & 4) == 0) {
+         int metadata = par1World.getBlockMetadata(x, y, z);
+         if ((metadata & 8) != 0 && (metadata & 4) == 0) {
             byte var7 = 4;
             int var8 = var7 + 1;
             byte var9 = 32;
@@ -132,16 +132,16 @@ public class BlockMagicalLeaves extends Block implements IShearable {
                this.adjacentTreeBlocks = new int[var9 * var9 * var9];
             }
 
-            if (par1World.checkChunksExist(par2 - var8, par3 - var8, par4 - var8, par2 + var8, par3 + var8, par4 + var8)) {
+            if (par1World.checkChunksExist(x - var8, y - var8, z - var8, x + var8, y + var8, z + var8)) {
                for(int var12 = -var7; var12 <= var7; ++var12) {
                   for(int var13 = -var7; var13 <= var7; ++var13) {
                      for(int var14 = -var7; var14 <= var7; ++var14) {
-                        Block block = par1World.getBlock(par2 + var12, par3 + var13, par4 + var14);
+                        Block block = par1World.getBlock(x + var12, y + var13, z + var14);
 
                         int i = (var12 + var11) * var10 + (var13 + var11) * var9 + var14 + var11;
-                        if (block != null && block.canSustainLeaves(par1World, par2 + var12, par3 + var13, par4 + var14)) {
+                        if (block != null && block.canSustainLeaves(par1World, x + var12, y + var13, z + var14)) {
                            this.adjacentTreeBlocks[i] = 0;
-                        } else if (block != null && block.isLeaves(par1World, par2 + var12, par3 + var13, par4 + var14)) {
+                        } else if (block != null && block.isLeaves(par1World, x + var12, y + var13, z + var14)) {
                            this.adjacentTreeBlocks[i] = -2;
                         } else {
                            this.adjacentTreeBlocks[i] = -1;
@@ -189,9 +189,10 @@ public class BlockMagicalLeaves extends Block implements IShearable {
 
             int var12 = this.adjacentTreeBlocks[var11 * var10 + var11 * var9 + var11];
             if (var12 >= 0) {
-               par1World.setBlock(par2, par3, par4, this, var6 & -9, 3);
+               par1World.setBlockMetadataWithNotify(x, y, z, metadata, 4);
+//               par1World.setBlock(x, y, z, this, metadata & -9, 3);
             } else {
-               this.removeLeaves(par1World, par2, par3, par4);
+               this.removeLeaves(par1World, x, y, z);
             }
          }
       }

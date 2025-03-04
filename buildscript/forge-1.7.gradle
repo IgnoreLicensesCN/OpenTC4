@@ -123,7 +123,9 @@ def getCommitHash(){
 jar {
     manifest {
         attributes (
-            'Commit-ID': getCommitHash(),
+            'FMLCorePlugin': 'thaumcraft.codechicken.core.launch.DepLoader',
+            'FMLCorePluginContainsFMLMod': 'true',
+//            'Commit-ID': getCommitHash(),
         )
     }
 }

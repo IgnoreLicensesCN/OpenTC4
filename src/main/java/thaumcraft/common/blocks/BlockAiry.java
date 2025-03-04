@@ -36,6 +36,7 @@ import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigItems;
+import thaumcraft.common.entities.projectile.EntityShockOrb;
 import thaumcraft.common.items.ItemWispEssence;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 import thaumcraft.common.tiles.TileNitor;
@@ -350,7 +351,7 @@ public class BlockAiry extends BlockContainer {
 
    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
       int md = world.getBlockMetadata(x, y, z);
-      if (md == 10) {
+      if (md == 10 && entity instanceof EntityLivingBase && EntityShockOrb.canEarthShockHurt(entity)) {
          entity.attackEntityFrom(DamageSource.magic, (float)(1 + world.rand.nextInt(2)));
          entity.motionX *= 0.8;
          entity.motionZ *= 0.8;

@@ -3,6 +3,8 @@ package thaumcraft.common.entities.golems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
+
+import fromhodgepodge.mixins.hooks.ThaumcraftMixinMethods;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -61,7 +63,7 @@ public class ItemGolemBell extends Item {
       return stack.hasTagCompound() && stack.stackTagCompound.hasKey("golemhomex") ? new ChunkCoordinates(stack.stackTagCompound.getInteger("golemhomex"), stack.stackTagCompound.getInteger("golemhomey"), stack.stackTagCompound.getInteger("golemhomez")) : null;
    }
 
-   public static ArrayList getMarkers(ItemStack stack) {
+   public static ArrayList<Marker> getMarkers(ItemStack stack) {
       ArrayList<Marker> markers = new ArrayList<>();
       if (stack.hasTagCompound() && stack.stackTagCompound.hasKey("markers")) {
          NBTTagList tl = stack.stackTagCompound.getTagList("markers", 10);
@@ -78,6 +80,10 @@ public class ItemGolemBell extends Item {
          }
       }
 
+      if (stack.hasTagCompound()) {
+         NBTTagList nbtTagList = stack.stackTagCompound.getTagList("markers", 10);
+         return ThaumcraftMixinMethods.overwriteMarkersDimID(nbtTagList, markers);
+      }
       return markers;
    }
 
