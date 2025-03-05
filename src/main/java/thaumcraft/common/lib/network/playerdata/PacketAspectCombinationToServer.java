@@ -19,6 +19,8 @@ import thaumcraft.common.lib.research.ResearchManager;
 import thaumcraft.common.lib.research.ScanManager;
 import thaumcraft.common.tiles.TileResearchTable;
 
+import static tc4tweak.PacketCheck.hasAspect;
+
 public class PacketAspectCombinationToServer implements IMessage, IMessageHandler<PacketAspectCombinationToServer,IMessage> {
    private int dim;
    private int playerid;
@@ -75,13 +77,6 @@ public class PacketAspectCombinationToServer implements IMessage, IMessageHandle
       EntityPlayerMP player = packet.player();
       if (player == null) return false;
       return hasAspect(table, player, packet.lhs()) && hasAspect(table, player, packet.rhs());
-   }
-   private static boolean hasAspect(TileResearchTable table, EntityPlayerMP player, Aspect aspect) {
-      return hasAspect(player, aspect, 0) || table.bonusAspects.getAmount(aspect) > 0;
-   }
-
-   private static boolean hasAspect(EntityPlayerMP player, Aspect aspect, int threshold) {
-      return Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), aspect) > threshold;
    }
 
    public IMessage onMessage(PacketAspectCombinationToServer message, MessageContext ctx) {

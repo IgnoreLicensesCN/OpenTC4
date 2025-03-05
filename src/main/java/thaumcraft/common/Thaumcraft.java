@@ -13,6 +13,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import java.io.File;
@@ -62,16 +63,18 @@ import thaumcraft.common.lib.world.VillageBankerManager;
 import thaumcraft.common.lib.world.VillageWizardManager;
 import thaumcraft.common.lib.world.dim.WorldProviderOuter;
 
+import static thaumcraft.common.Thaumcraft.VERSION;
+
 @Mod(
-   modid = "Thaumcraft",
-   name = "Thaumcraft",
-   version = "4.2.3.5",
+   modid = Thaumcraft.MOD_ID,
+   name = Thaumcraft.MOD_NAME,
+   version = VERSION,
    guiFactory = "thaumcraft.client.ThaumcraftGuiFactory",
    dependencies = "required-after:Forge@[10.13.2,);required-after:Baubles@[1.0.1.10,)"
 )
 public class Thaumcraft {
-   public static final String MODID = "Thaumcraft";
-   public static final String MODNAME = "Thaumcraft";
+   public static final String MOD_ID = "Thaumcraft";
+   public static final String MOD_NAME = "Thaumcraft";
    public static final String VERSION = "4.2.3.5";
    @SidedProxy(
       clientSide = "thaumcraft.client.ClientProxy",
@@ -93,6 +96,7 @@ public class Thaumcraft {
    public static boolean isHalloween = false;
    public static CreativeTabs tabTC = new CreativeTabThaumcraft(CreativeTabs.getNextID(), "thaumcraft");
    public boolean aspectShift = false;
+   public final SimpleNetworkWrapper CHANNEL = new SimpleNetworkWrapper(MOD_ID);
 
    @EventHandler
    public void preInit(FMLPreInitializationEvent event) {

@@ -2,9 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EffectRenderer;
@@ -25,6 +22,10 @@ import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigItems;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class BlockCustomOre extends Block {
    public IIcon[] icon = new IIcon[5];

@@ -2,8 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -13,17 +11,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -40,17 +34,10 @@ import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.entities.EntitySpecialItem;
 import thaumcraft.common.items.ItemShard;
 import thaumcraft.common.lib.utils.InventoryUtils;
-import thaumcraft.common.tiles.TileAlembic;
-import thaumcraft.common.tiles.TileArcaneLamp;
-import thaumcraft.common.tiles.TileArcaneLampFertility;
-import thaumcraft.common.tiles.TileArcaneLampGrowth;
-import thaumcraft.common.tiles.TileBrainbox;
-import thaumcraft.common.tiles.TileCrucible;
-import thaumcraft.common.tiles.TileGrate;
-import thaumcraft.common.tiles.TileMagicWorkbenchCharger;
-import thaumcraft.common.tiles.TileThaumatorium;
-import thaumcraft.common.tiles.TileThaumatoriumTop;
-import thaumcraft.common.tiles.TileVisRelay;
+import thaumcraft.common.tiles.*;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockMetalDevice extends BlockContainer {
    public IIcon[] icon = new IIcon[23];
@@ -66,31 +53,27 @@ public class BlockMetalDevice extends BlockContainer {
       this.setCreativeTab(Thaumcraft.tabTC);
    }
 
-   @SideOnly(Side.CLIENT)
-   public void registerBlockIcons(IIconRegister ir) {
-      this.icon[0] = ir.registerIcon("thaumcraft:metalbase");
-
-      for(int a = 1; a <= 6; ++a) {
-         this.icon[a] = ir.registerIcon("thaumcraft:crucible" + a);
+   public static boolean addToPlayerInventoryBiased(InventoryPlayer inv, ItemStack s) {
+      if (s == null || s.stackSize == 0 || s.getItem() == null) return false;
+      // logic: first try to stack, then try to place in original slot, last fallback to vanilla logic
+      for (ItemStack stack : inv.mainInventory) {
+         if (stack != null && stack.isStackable() && stack.getItem() == s.getItem() &&
+                 stack.stackSize < Math.min(stack.getMaxStackSize(), inv.getInventoryStackLimit())
+                 && (!stack.getHasSubtypes() || stack.getItemDamage() == s.getItemDamage()) &&
+                 ItemStack.areItemStackTagsEqual(stack, s)) {
+            int toAdd = Math.min(s.stackSize, Math.min(stack.getMaxStackSize(), inv.getInventoryStackLimit()) - stack.stackSize);
+            s.stackSize -= toAdd;
+            stack.stackSize += toAdd;
+            stack.animationsToGo = 5;
+            if (s.stackSize == 0) return true;
+         }
       }
-
-      this.icon[7] = ir.registerIcon("thaumcraft:goldbase");
-      this.icon[8] = ir.registerIcon("thaumcraft:grate");
-      this.icon[9] = ir.registerIcon("thaumcraft:grate_hatch");
-      this.icon[10] = ir.registerIcon("thaumcraft:lamp_side");
-      this.icon[11] = ir.registerIcon("thaumcraft:lamp_top");
-      this.icon[12] = ir.registerIcon("thaumcraft:lamp_grow_side");
-      this.icon[13] = ir.registerIcon("thaumcraft:lamp_grow_top");
-      this.icon[14] = ir.registerIcon("thaumcraft:lamp_grow_side_off");
-      this.icon[15] = ir.registerIcon("thaumcraft:lamp_grow_top_off");
-      this.icon[16] = ir.registerIcon("thaumcraft:alchemyblock");
-      this.icon[17] = ir.registerIcon("thaumcraft:brainbox");
-      this.icon[18] = ir.registerIcon("thaumcraft:lamp_fert_side");
-      this.icon[19] = ir.registerIcon("thaumcraft:lamp_fert_top");
-      this.icon[20] = ir.registerIcon("thaumcraft:lamp_fert_side_off");
-      this.icon[21] = ir.registerIcon("thaumcraft:lamp_fert_top_off");
-      this.icon[22] = ir.registerIcon("thaumcraft:alchemyblockadv");
-      this.iconGlow = ir.registerIcon("thaumcraft:animatedglow");
+      if (inv.currentItem >= 0 && inv.currentItem < InventoryPlayer.getHotbarSize() && inv.getCurrentItem() == null) {
+         inv.setInventorySlotContents(inv.currentItem, s);
+         return true;
+      } else {
+         return inv.addItemStackToInventory(s);
+      }
    }
 
    public IIcon getIcon(int i, int md) {
@@ -115,6 +98,62 @@ public class BlockMetalDevice extends BlockContainer {
       }
    }
 
+   @SideOnly(Side.CLIENT)
+   public void registerBlockIcons(IIconRegister ir) {
+      this.icon[0] = ir.registerIcon("thaumcraft:metalbase");
+
+      for (int a = 1; a <= 6; ++a) {
+         this.icon[a] = ir.registerIcon("thaumcraft:crucible" + a);
+      }
+
+      this.icon[7] = ir.registerIcon("thaumcraft:goldbase");
+      this.icon[8] = ir.registerIcon("thaumcraft:grate");
+      this.icon[9] = ir.registerIcon("thaumcraft:grate_hatch");
+      this.icon[10] = ir.registerIcon("thaumcraft:lamp_side");
+      this.icon[11] = ir.registerIcon("thaumcraft:lamp_top");
+      this.icon[12] = ir.registerIcon("thaumcraft:lamp_grow_side");
+      this.icon[13] = ir.registerIcon("thaumcraft:lamp_grow_top");
+      this.icon[14] = ir.registerIcon("thaumcraft:lamp_grow_side_off");
+      this.icon[15] = ir.registerIcon("thaumcraft:lamp_grow_top_off");
+      this.icon[16] = ir.registerIcon("thaumcraft:alchemyblock");
+      this.icon[17] = ir.registerIcon("thaumcraft:brainbox");
+      this.icon[18] = ir.registerIcon("thaumcraft:lamp_fert_side");
+      this.icon[19] = ir.registerIcon("thaumcraft:lamp_fert_top");
+      this.icon[20] = ir.registerIcon("thaumcraft:lamp_fert_side_off");
+      this.icon[21] = ir.registerIcon("thaumcraft:lamp_fert_top_off");
+      this.icon[22] = ir.registerIcon("thaumcraft:alchemyblockadv");
+      this.iconGlow = ir.registerIcon("thaumcraft:animatedglow");
+   }
+
+   @SideOnly(Side.CLIENT)
+   public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+      par3List.add(new ItemStack(par1, 1, 0));
+      par3List.add(new ItemStack(par1, 1, 1));
+      par3List.add(new ItemStack(par1, 1, 2));
+      par3List.add(new ItemStack(par1, 1, 3));
+
+      par3List.add(new ItemStack(par1, 1, 5));
+      par3List.add(new ItemStack(par1, 1, 7));
+      par3List.add(new ItemStack(par1, 1, 8));
+      par3List.add(new ItemStack(par1, 1, 9));
+
+      par3List.add(new ItemStack(par1, 1, 12));
+      par3List.add(new ItemStack(par1, 1, 13));
+      par3List.add(new ItemStack(par1, 1, 14));
+   }
+
+   public int getRenderType() {
+      return ConfigBlocks.blockMetalDeviceRI;
+   }
+
+   public boolean isOpaqueCube() {
+      return false;
+   }
+
+   public boolean renderAsNormalBlock() {
+      return false;
+   }
+
    public IIcon getIcon(IBlockAccess iblockaccess, int i, int j, int k, int side) {
       int metadata = iblockaccess.getBlockMetadata(i, j, k);
       if (metadata != 5 && metadata != 6) {
@@ -124,7 +163,7 @@ public class BlockMetalDevice extends BlockContainer {
             if (metadata == 8) {
                TileEntity te = iblockaccess.getTileEntity(i, j, k);
                if (te instanceof TileArcaneLampGrowth) {
-                  if (((TileArcaneLampGrowth)te).charges > 0) {
+                  if (((TileArcaneLampGrowth) te).charges > 0) {
                      if (side <= 1) {
                         return this.icon[13];
                      }
@@ -141,7 +180,7 @@ public class BlockMetalDevice extends BlockContainer {
             } else if (metadata == 13) {
                TileEntity te = iblockaccess.getTileEntity(i, j, k);
                if (te instanceof TileArcaneLampFertility) {
-                  if (((TileArcaneLampFertility)te).charges > 0) {
+                  if (((TileArcaneLampFertility) te).charges > 0) {
                      if (side <= 1) {
                         return this.icon[19];
                      }
@@ -182,40 +221,13 @@ public class BlockMetalDevice extends BlockContainer {
       }
    }
 
-   @SideOnly(Side.CLIENT)
-   public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
-      par3List.add(new ItemStack(par1, 1, 0));
-      par3List.add(new ItemStack(par1, 1, 1));
-      par3List.add(new ItemStack(par1, 1, 5));
-      par3List.add(new ItemStack(par1, 1, 7));
-      par3List.add(new ItemStack(par1, 1, 8));
-      par3List.add(new ItemStack(par1, 1, 13));
-      par3List.add(new ItemStack(par1, 1, 9));
-      par3List.add(new ItemStack(par1, 1, 3));
-      par3List.add(new ItemStack(par1, 1, 12));
-      par3List.add(new ItemStack(par1, 1, 14));
-      par3List.add(new ItemStack(par1, 1, 2));
-   }
-
-   public int getRenderType() {
-      return ConfigBlocks.blockMetalDeviceRI;
-   }
-
-   public boolean isOpaqueCube() {
-      return false;
-   }
-
-   public boolean renderAsNormalBlock() {
-      return false;
-   }
-
    public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity) {
       if (!world.isRemote) {
          int metadata = world.getBlockMetadata(i, j, k);
          if (metadata == 0) {
-            TileCrucible tile = (TileCrucible)world.getTileEntity(i, j, k);
+            TileCrucible tile = (TileCrucible) world.getTileEntity(i, j, k);
             if (tile != null && entity instanceof EntityItem && !(entity instanceof EntitySpecialItem) && tile.heat > 150 && tile.tank.getFluidAmount() > 0) {
-               tile.attemptSmelt((EntityItem)entity);
+               tile.attemptSmelt((EntityItem) entity);
             } else {
                ++this.delay;
                if (this.delay < 10) {
@@ -248,7 +260,7 @@ public class BlockMetalDevice extends BlockContainer {
             } else if (metadata == 14) {
                TileEntity te = world.getTileEntity(i, j, k);
                if (te instanceof TileVisRelay) {
-                  switch (ForgeDirection.getOrientation(((TileVisRelay)te).orientation).getOpposite()) {
+                  switch (ForgeDirection.getOrientation(((TileVisRelay) te).orientation).getOpposite()) {
                      case UP:
                         this.setBlockBounds(BlockRenderer.W5, 0.5F, BlockRenderer.W5, BlockRenderer.W11, 1.0F, BlockRenderer.W11);
                         break;
@@ -279,71 +291,6 @@ public class BlockMetalDevice extends BlockContainer {
       }
 
       super.setBlockBoundsBasedOnState(world, i, j, k);
-   }
-
-   public void addCollisionBoxesToList(World world, int i, int j, int k, AxisAlignedBB axisalignedbb, List arraylist, Entity par7Entity) {
-      int metadata = world.getBlockMetadata(i, j, k);
-      if (metadata == 0) {
-         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.3125F, 1.0F);
-         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
-         float f = 0.125F;
-         this.setBlockBounds(0.0F, 0.0F, 0.0F, f, 0.85F, 1.0F);
-         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
-         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.85F, f);
-         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
-         this.setBlockBounds(1.0F - f, 0.0F, 0.0F, 1.0F, 0.85F, 1.0F);
-         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
-         this.setBlockBounds(0.0F, 0.0F, 1.0F - f, 1.0F, 0.85F, 1.0F);
-         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
-      } else if (metadata == 2) {
-         this.setBlockBounds(BlockRenderer.W5, 0.5F, BlockRenderer.W5, BlockRenderer.W11, 1.0F, BlockRenderer.W11);
-         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
-      } else if (metadata == 5) {
-         if (par7Entity != null && !(par7Entity instanceof EntityItem)) {
-            this.setBlockBounds(0.0F, 0.8125F, 0.0F, 1.0F, 1.0F, 1.0F);
-            super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
-         }
-      } else if (metadata == 6) {
-         this.setBlockBounds(0.0F, 0.8125F, 0.0F, 1.0F, 1.0F, 1.0F);
-         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
-      } else if (metadata != 7 && metadata != 8 && metadata != 13) {
-         if (metadata == 12) {
-            this.setBlockBounds(BlockRenderer.W3, BlockRenderer.W3, BlockRenderer.W3, BlockRenderer.W13, BlockRenderer.W13, BlockRenderer.W13);
-            super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
-         } else if (metadata == 14) {
-            TileEntity te = world.getTileEntity(i, j, k);
-            if (te instanceof TileVisRelay) {
-               switch (ForgeDirection.getOrientation(((TileVisRelay)te).orientation).getOpposite()) {
-                  case UP:
-                     this.setBlockBounds(BlockRenderer.W5, 0.5F, BlockRenderer.W5, BlockRenderer.W11, 1.0F, BlockRenderer.W11);
-                     break;
-                  case DOWN:
-                     this.setBlockBounds(BlockRenderer.W5, 0.0F, BlockRenderer.W5, BlockRenderer.W11, 0.5F, BlockRenderer.W11);
-                     break;
-                  case EAST:
-                     this.setBlockBounds(0.5F, BlockRenderer.W5, BlockRenderer.W5, 1.0F, BlockRenderer.W11, BlockRenderer.W11);
-                     break;
-                  case WEST:
-                     this.setBlockBounds(0.0F, BlockRenderer.W5, BlockRenderer.W5, 0.5F, BlockRenderer.W11, BlockRenderer.W11);
-                     break;
-                  case SOUTH:
-                     this.setBlockBounds(BlockRenderer.W5, BlockRenderer.W5, 0.5F, BlockRenderer.W11, BlockRenderer.W11, 1.0F);
-                     break;
-                  case NORTH:
-                     this.setBlockBounds(BlockRenderer.W5, BlockRenderer.W5, 0.0F, BlockRenderer.W11, BlockRenderer.W11, 0.5F);
-               }
-
-               super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
-            }
-         } else {
-            this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-            super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
-         }
-      } else {
-         this.setBlockBounds(BlockRenderer.W4, BlockRenderer.W2, BlockRenderer.W4, BlockRenderer.W12, BlockRenderer.W14, BlockRenderer.W12);
-         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
-      }
-
    }
 
    @SideOnly(Side.CLIENT)
@@ -397,57 +344,122 @@ public class BlockMetalDevice extends BlockContainer {
       return true;
    }
 
-   public int getComparatorInputOverride(World world, int x, int y, int z, int rs) {
-      TileEntity te = world.getTileEntity(x, y, z);
-      if (te instanceof TileThaumatorium) {
-         return Container.calcRedstoneFromInventory((IInventory)te);
-      } else if (te instanceof TileAlembic) {
-         float r = (float)((TileAlembic)te).amount / (float)((TileAlembic)te).maxAmount;
-         return MathHelper.floor_float(r * 14.0F) + (((TileAlembic)te).amount > 0 ? 1 : 0);
-      } else if (te instanceof TileCrucible) {
-         float var10000 = (float)((TileCrucible)te).aspects.visSize();
-         ((TileCrucible)te).getClass();
-         float r = var10000 / 100.0F;
-         return MathHelper.floor_float(r * 14.0F) + (((TileCrucible)te).aspects.visSize() > 0 ? 1 : 0);
+   public void addCollisionBoxesToList(World world, int i, int j, int k, AxisAlignedBB axisalignedbb, List arraylist, Entity par7Entity) {
+      int metadata = world.getBlockMetadata(i, j, k);
+      if (metadata == 0) {
+         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.3125F, 1.0F);
+         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
+         float f = 0.125F;
+         this.setBlockBounds(0.0F, 0.0F, 0.0F, f, 0.85F, 1.0F);
+         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
+         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.85F, f);
+         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
+         this.setBlockBounds(1.0F - f, 0.0F, 0.0F, 1.0F, 0.85F, 1.0F);
+         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
+         this.setBlockBounds(0.0F, 0.0F, 1.0F - f, 1.0F, 0.85F, 1.0F);
+         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
+      } else if (metadata == 2) {
+         this.setBlockBounds(BlockRenderer.W5, 0.5F, BlockRenderer.W5, BlockRenderer.W11, 1.0F, BlockRenderer.W11);
+         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
+      } else if (metadata == 5) {
+         if (par7Entity != null && !(par7Entity instanceof EntityItem)) {
+            this.setBlockBounds(0.0F, 0.8125F, 0.0F, 1.0F, 1.0F, 1.0F);
+            super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
+         }
+      } else if (metadata == 6) {
+         this.setBlockBounds(0.0F, 0.8125F, 0.0F, 1.0F, 1.0F, 1.0F);
+         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
+      } else if (metadata != 7 && metadata != 8 && metadata != 13) {
+         if (metadata == 12) {
+            this.setBlockBounds(BlockRenderer.W3, BlockRenderer.W3, BlockRenderer.W3, BlockRenderer.W13, BlockRenderer.W13, BlockRenderer.W13);
+            super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
+         } else if (metadata == 14) {
+            TileEntity te = world.getTileEntity(i, j, k);
+            if (te instanceof TileVisRelay) {
+               switch (ForgeDirection.getOrientation(((TileVisRelay) te).orientation).getOpposite()) {
+                  case UP:
+                     this.setBlockBounds(BlockRenderer.W5, 0.5F, BlockRenderer.W5, BlockRenderer.W11, 1.0F, BlockRenderer.W11);
+                     break;
+                  case DOWN:
+                     this.setBlockBounds(BlockRenderer.W5, 0.0F, BlockRenderer.W5, BlockRenderer.W11, 0.5F, BlockRenderer.W11);
+                     break;
+                  case EAST:
+                     this.setBlockBounds(0.5F, BlockRenderer.W5, BlockRenderer.W5, 1.0F, BlockRenderer.W11, BlockRenderer.W11);
+                     break;
+                  case WEST:
+                     this.setBlockBounds(0.0F, BlockRenderer.W5, BlockRenderer.W5, 0.5F, BlockRenderer.W11, BlockRenderer.W11);
+                     break;
+                  case SOUTH:
+                     this.setBlockBounds(BlockRenderer.W5, BlockRenderer.W5, 0.5F, BlockRenderer.W11, BlockRenderer.W11, 1.0F);
+                     break;
+                  case NORTH:
+                     this.setBlockBounds(BlockRenderer.W5, BlockRenderer.W5, 0.0F, BlockRenderer.W11, BlockRenderer.W11, 0.5F);
+               }
+
+               super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
+            }
+         } else {
+            this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+            super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
+         }
       } else {
-         return 0;
+         this.setBlockBounds(BlockRenderer.W4, BlockRenderer.W2, BlockRenderer.W4, BlockRenderer.W12, BlockRenderer.W14, BlockRenderer.W12);
+         super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
       }
+
    }
 
    public TileEntity createNewTileEntity(World var1, int md) {
       return null;
    }
 
+   public int getComparatorInputOverride(World world, int x, int y, int z, int rs) {
+      TileEntity te = world.getTileEntity(x, y, z);
+      if (te instanceof TileThaumatorium) {
+         return Container.calcRedstoneFromInventory((IInventory) te);
+      } else if (te instanceof TileAlembic) {
+         float r = (float) ((TileAlembic) te).amount / (float) ((TileAlembic) te).maxAmount;
+         return MathHelper.floor_float(r * 14.0F) + (((TileAlembic) te).amount > 0 ? 1 : 0);
+      } else if (te instanceof TileCrucible) {
+         float var10000 = (float) ((TileCrucible) te).aspects.visSize();
+         ((TileCrucible) te).getClass();
+         float r = var10000 / 100.0F;
+         return MathHelper.floor_float(r * 14.0F) + (((TileCrucible) te).aspects.visSize() > 0 ? 1 : 0);
+      } else {
+         return 0;
+      }
+   }
+
    public void onNeighborBlockChange(World world, int x, int y, int z, Block nbid) {
       TileEntity te = world.getTileEntity(x, y, z);
       int md = world.getBlockMetadata(x, y, z);
       if (te instanceof TileCrucible) {
-         ((TileCrucible)te).getBellows();
+         ((TileCrucible) te).getBellows();
       }
 
       if (!world.isRemote) {
          if (te instanceof TileAlembic) {
             world.markBlockForUpdate(x, y, z);
          } else if (te instanceof TileArcaneLamp) {
-            TileArcaneLamp telb = (TileArcaneLamp)te;
+            TileArcaneLamp telb = (TileArcaneLamp) te;
             if (world.isAirBlock(x + telb.facing.offsetX, y + telb.facing.offsetY, z + telb.facing.offsetZ)) {
                this.dropBlockAsItem(world, x, y, z, 7, 0);
                world.setBlockToAir(x, y, z);
             }
          } else if (te instanceof TileArcaneLampGrowth) {
-            TileArcaneLampGrowth telb = (TileArcaneLampGrowth)te;
+            TileArcaneLampGrowth telb = (TileArcaneLampGrowth) te;
             if (world.isAirBlock(x + telb.facing.offsetX, y + telb.facing.offsetY, z + telb.facing.offsetZ)) {
                this.dropBlockAsItem(world, x, y, z, 8, 0);
                world.setBlockToAir(x, y, z);
             }
          } else if (te instanceof TileBrainbox) {
-            TileBrainbox telb = (TileBrainbox)te;
+            TileBrainbox telb = (TileBrainbox) te;
             if (world.isAirBlock(x + telb.facing.offsetX, y + telb.facing.offsetY, z + telb.facing.offsetZ)) {
                this.dropBlockAsItem(world, x, y, z, 12, 0);
                world.setBlockToAir(x, y, z);
             }
          } else if (te instanceof TileVisRelay && md == 14) {
-            TileVisRelay telb = (TileVisRelay)te;
+            TileVisRelay telb = (TileVisRelay) te;
             if (world.isAirBlock(x + ForgeDirection.getOrientation(telb.orientation).getOpposite().offsetX, y + ForgeDirection.getOrientation(telb.orientation).getOpposite().offsetY, z + ForgeDirection.getOrientation(telb.orientation).getOpposite().offsetZ)) {
                this.dropBlockAsItem(world, x, y, z, 14, 0);
                world.setBlockToAir(x, y, z);
@@ -462,7 +474,7 @@ public class BlockMetalDevice extends BlockContainer {
 
             TileEntity tile = world.getTileEntity(x, y, z);
             if (tile instanceof TileThaumatorium) {
-               ((TileThaumatorium)tile).getUpgrades();
+               ((TileThaumatorium) tile).getUpgrades();
             }
          } else if (md == 11) {
             if (world.getBlock(x, y - 1, z) != this || world.getBlockMetadata(x, y - 1, z) != 10) {
@@ -473,7 +485,7 @@ public class BlockMetalDevice extends BlockContainer {
 
             TileEntity tile = world.getTileEntity(x, y - 1, z);
             if (tile instanceof TileThaumatorium) {
-               ((TileThaumatorium)tile).getUpgrades();
+               ((TileThaumatorium) tile).getUpgrades();
             }
          }
 
@@ -490,11 +502,11 @@ public class BlockMetalDevice extends BlockContainer {
       InventoryUtils.dropItems(par1World, par2, par3, par4);
       TileEntity te = par1World.getTileEntity(par2, par3, par4);
       if (te instanceof TileCrucible) {
-         ((TileCrucible)te).spillRemnants();
+         ((TileCrucible) te).spillRemnants();
       } else if (te instanceof TileAlembic && ((TileAlembic) te).aspectFilter != null) {
-         par1World.spawnEntityInWorld(new EntityItem(par1World, (float)par2 + 0.5F, (float)par3 + 0.5F, (float)par4 + 0.5F, new ItemStack(ConfigItems.itemResource, 1, 13)));
+         par1World.spawnEntityInWorld(new EntityItem(par1World, (float) par2 + 0.5F, (float) par3 + 0.5F, (float) par4 + 0.5F, new ItemStack(ConfigItems.itemResource, 1, 13)));
       } else if (te instanceof TileArcaneLamp) {
-         ((TileArcaneLamp)te).removeLights();
+         ((TileArcaneLamp) te).removeLights();
       }
 
       super.breakBlock(par1World, par2, par3, par4, par5, par6);
@@ -508,7 +520,7 @@ public class BlockMetalDevice extends BlockContainer {
             int volume = fs.amount;
             TileEntity te = world.getTileEntity(x, y, z);
             if (te instanceof TileCrucible) {
-               TileCrucible tile = (TileCrucible)te;
+               TileCrucible tile = (TileCrucible) te;
                if (tile.tank.getFluidAmount() >= tile.tank.getCapacity()) {
                   return true;
                }
@@ -517,21 +529,21 @@ public class BlockMetalDevice extends BlockContainer {
                ItemStack emptyContainer = null;
                FluidContainerRegistry.FluidContainerData[] fcs = FluidContainerRegistry.getRegisteredFluidContainerData();
 
-               for(FluidContainerRegistry.FluidContainerData fcd : fcs) {
+               for (FluidContainerRegistry.FluidContainerData fcd : fcs) {
                   if (fcd.filledContainer.isItemEqual(player.inventory.getCurrentItem())) {
                      emptyContainer = fcd.emptyContainer.copy();
                   }
                }
 
                player.inventory.decrStackSize(player.inventory.currentItem, 1);
-               if (emptyContainer != null && !player.inventory.addItemStackToInventory(emptyContainer)) {
+               if (emptyContainer != null && !addToPlayerInventoryBiased(player.inventory, emptyContainer)) {
                   player.dropPlayerItemWithRandomChoice(emptyContainer, false);
                }
 
                player.inventoryContainer.detectAndSendChanges();
                te.markDirty();
                world.markBlockForUpdate(x, y, z);
-               world.playSoundEffect((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, "game.neutral.swim", 0.33F, 1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.3F);
+               world.playSoundEffect((double) x + (double) 0.5F, (double) y + (double) 0.5F, (double) z + (double) 0.5F, "game.neutral.swim", 0.33F, 1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.3F);
             }
          }
       }
@@ -539,12 +551,12 @@ public class BlockMetalDevice extends BlockContainer {
       if (metadata == 1 && !world.isRemote && !player.isSneaking() && player.getHeldItem() == null) {
          TileEntity te = world.getTileEntity(x, y, z);
          if (te instanceof TileAlembic) {
-            TileAlembic tile = (TileAlembic)te;
+            TileAlembic tile = (TileAlembic) te;
             String msg = "";
             if (tile.aspect != null && tile.amount != 0) {
-               if ((double)tile.amount < (double)tile.maxAmount * 0.4) {
+               if ((double) tile.amount < (double) tile.maxAmount * 0.4) {
                   msg = StatCollector.translateToLocal("tile.alembic.msg.2");
-               } else if ((double)tile.amount < (double)tile.maxAmount * 0.8) {
+               } else if ((double) tile.amount < (double) tile.maxAmount * 0.8) {
                   msg = StatCollector.translateToLocal("tile.alembic.msg.3");
                } else if (tile.amount < tile.maxAmount) {
                   msg = StatCollector.translateToLocal("tile.alembic.msg.4");
@@ -563,75 +575,75 @@ public class BlockMetalDevice extends BlockContainer {
       if (metadata == 1) {
          TileEntity te = world.getTileEntity(x, y, z);
          if (te instanceof TileAlembic) {
-            if (player.isSneaking() && ((TileAlembic)te).aspectFilter != null) {
-               ((TileAlembic)te).aspectFilter = null;
+            if (player.isSneaking() && ((TileAlembic) te).aspectFilter != null) {
+               ((TileAlembic) te).aspectFilter = null;
                world.markBlockForUpdate(x, y, z);
                te.markDirty();
                if (world.isRemote) {
-                  world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "thaumcraft:page", 1.0F, 1.1F, false);
+                  world.playSound((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F, "thaumcraft:page", 1.0F, 1.1F, false);
                } else {
                   ForgeDirection fd = ForgeDirection.getOrientation(side);
-                  world.spawnEntityInWorld(new EntityItem(world, (float)x + 0.5F + (float)fd.offsetX / 3.0F, (float)y + 0.5F, (float)z + 0.5F + (float)fd.offsetZ / 3.0F, new ItemStack(ConfigItems.itemResource, 1, 13)));
+                  world.spawnEntityInWorld(new EntityItem(world, (float) x + 0.5F + (float) fd.offsetX / 3.0F, (float) y + 0.5F, (float) z + 0.5F + (float) fd.offsetZ / 3.0F, new ItemStack(ConfigItems.itemResource, 1, 13)));
                }
 
                return true;
             }
 
             if (player.isSneaking() && player.getHeldItem() == null) {
-               ((TileAlembic)te).amount = 0;
-               ((TileAlembic)te).aspect = null;
+               ((TileAlembic) te).amount = 0;
+               ((TileAlembic) te).aspect = null;
                if (world.isRemote) {
-                  world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "thaumcraft:alembicknock", 0.2F, 1.0F, false);
-                  world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "game.neutral.swim", 0.5F, 1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.3F, false);
+                  world.playSound((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F, "thaumcraft:alembicknock", 0.2F, 1.0F, false);
+                  world.playSound((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F, "game.neutral.swim", 0.5F, 1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.3F, false);
                }
             } else {
-               if (player.getHeldItem() != null && ((TileAlembic)te).aspectFilter == null && player.getHeldItem().getItem() == ConfigItems.itemResource && player.getHeldItem().getItemDamage() == 13) {
-                  if (((TileAlembic)te).amount == 0 && ((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()) == null) {
+               if (player.getHeldItem() != null && ((TileAlembic) te).aspectFilter == null && player.getHeldItem().getItem() == ConfigItems.itemResource && player.getHeldItem().getItemDamage() == 13) {
+                  if (((TileAlembic) te).amount == 0 && ((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()) == null) {
                      return true;
                   }
 
-                  if (((TileAlembic)te).amount == 0 && ((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()) != null) {
-                     ((TileAlembic)te).aspect = ((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()).getAspects()[0];
+                  if (((TileAlembic) te).amount == 0 && ((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()) != null) {
+                     ((TileAlembic) te).aspect = ((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()).getAspects()[0];
                   }
 
                   --player.getHeldItem().stackSize;
-                  ((TileAlembic)te).aspectFilter = ((TileAlembic)te).aspect;
+                  ((TileAlembic) te).aspectFilter = ((TileAlembic) te).aspect;
                   world.markBlockForUpdate(x, y, z);
                   te.markDirty();
                   if (world.isRemote) {
-                     world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "thaumcraft:page", 1.0F, 0.9F, false);
+                     world.playSound((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F, "thaumcraft:page", 1.0F, 0.9F, false);
                   }
 
                   return true;
                }
 
-               if (player.getHeldItem() != null && ((TileAlembic)te).amount > 0 && (player.getHeldItem().getItem() == ConfigItems.itemJarFilled || player.getHeldItem().isItemEqual(new ItemStack(ConfigBlocks.blockJar, 1, 0)) || player.getHeldItem().isItemEqual(new ItemStack(ConfigBlocks.blockJar, 1, 3)))) {
+               if (player.getHeldItem() != null && ((TileAlembic) te).amount > 0 && (player.getHeldItem().getItem() == ConfigItems.itemJarFilled || player.getHeldItem().isItemEqual(new ItemStack(ConfigBlocks.blockJar, 1, 0)) || player.getHeldItem().isItemEqual(new ItemStack(ConfigBlocks.blockJar, 1, 3)))) {
                   boolean doit = false;
                   ItemStack drop = null;
                   if (!player.getHeldItem().isItemEqual(new ItemStack(ConfigBlocks.blockJar, 1, 0)) && !player.getHeldItem().isItemEqual(new ItemStack(ConfigBlocks.blockJar, 1, 3))) {
                      drop = player.getHeldItem();
-                     if ((((ItemJarFilled)drop.getItem()).getAspects(drop) == null || ((ItemJarFilled)drop.getItem()).getAspects(drop).visSize() == 0 || ((ItemJarFilled)drop.getItem()).getAspects(drop).getAmount(((TileAlembic)te).aspect) > 0) && (((ItemJarFilled)drop.getItem()).getFilter(drop) == null || ((ItemJarFilled)drop.getItem()).getFilter(drop) == ((TileAlembic)te).aspect)) {
-                        int amount = Math.min(((ItemJarFilled)drop.getItem()).getAspects(drop) == null ? 64 : 64 - ((ItemJarFilled)drop.getItem()).getAspects(drop).visSize(), ((TileAlembic)te).amount);
+                     if ((((ItemJarFilled) drop.getItem()).getAspects(drop) == null || ((ItemJarFilled) drop.getItem()).getAspects(drop).visSize() == 0 || ((ItemJarFilled) drop.getItem()).getAspects(drop).getAmount(((TileAlembic) te).aspect) > 0) && (((ItemJarFilled) drop.getItem()).getFilter(drop) == null || ((ItemJarFilled) drop.getItem()).getFilter(drop) == ((TileAlembic) te).aspect)) {
+                        int amount = Math.min(((ItemJarFilled) drop.getItem()).getAspects(drop) == null ? 64 : 64 - ((ItemJarFilled) drop.getItem()).getAspects(drop).visSize(), ((TileAlembic) te).amount);
                         if (drop.getItemDamage() == 3) {
-                           amount = ((TileAlembic)te).amount;
+                           amount = ((TileAlembic) te).amount;
                         }
 
                         if (amount > 0) {
-                           ((TileAlembic)te).amount -= amount;
-                           AspectList as = ((ItemJarFilled)drop.getItem()).getAspects(drop);
+                           ((TileAlembic) te).amount -= amount;
+                           AspectList as = ((ItemJarFilled) drop.getItem()).getAspects(drop);
                            if (as == null) {
                               as = new AspectList();
                            }
 
-                           as.add(((TileAlembic)te).aspect, amount);
-                           if (as.getAmount(((TileAlembic)te).aspect) > 64) {
-                              int q = as.getAmount(((TileAlembic)te).aspect) - 64;
-                              as.reduce(((TileAlembic)te).aspect, q);
+                           as.add(((TileAlembic) te).aspect, amount);
+                           if (as.getAmount(((TileAlembic) te).aspect) > 64) {
+                              int q = as.getAmount(((TileAlembic) te).aspect) - 64;
+                              as.reduce(((TileAlembic) te).aspect, q);
                            }
 
-                           ((ItemJarFilled)drop.getItem()).setAspects(drop, as);
-                           if (((TileAlembic)te).amount <= 0) {
-                              ((TileAlembic)te).aspect = null;
+                           ((ItemJarFilled) drop.getItem()).setAspects(drop, as);
+                           if (((TileAlembic) te).amount <= 0) {
+                              ((TileAlembic) te).aspect = null;
                            }
 
                            doit = true;
@@ -641,11 +653,11 @@ public class BlockMetalDevice extends BlockContainer {
                   } else {
                      drop = new ItemStack(ConfigItems.itemJarFilled, 1, player.getHeldItem().getItemDamage());
                      doit = true;
-                     ((ItemJarFilled)drop.getItem()).setAspects(drop, (new AspectList()).add(((TileAlembic)te).aspect, ((TileAlembic)te).amount));
-                     ((TileAlembic)te).amount = 0;
-                     ((TileAlembic)te).aspect = null;
+                     ((ItemJarFilled) drop.getItem()).setAspects(drop, (new AspectList()).add(((TileAlembic) te).aspect, ((TileAlembic) te).amount));
+                     ((TileAlembic) te).amount = 0;
+                     ((TileAlembic) te).aspect = null;
                      --player.getHeldItem().stackSize;
-                     if (!player.inventory.addItemStackToInventory(drop) && !world.isRemote) {
+                     if (!addToPlayerInventoryBiased(player.inventory, drop) && !world.isRemote) {
                         world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, drop));
                      }
                   }
@@ -654,7 +666,7 @@ public class BlockMetalDevice extends BlockContainer {
                      te.markDirty();
                      world.markBlockForUpdate(x, y, z);
                      if (world.isRemote) {
-                        world.playSound((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, "game.neutral.swim", 0.5F, 1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.3F, false);
+                        world.playSound((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F, "game.neutral.swim", 0.5F, 1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.3F, false);
                      }
                   }
 
@@ -691,11 +703,13 @@ public class BlockMetalDevice extends BlockContainer {
             }
          }
 
-         if ((metadata == 14 || metadata == 2) && !world.isRemote && !player.isSneaking() && player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemShard) {
+         if ((metadata == 14 || metadata == 2)
+                 && !player.isSneaking()
+                 && player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemShard) {
             TileEntity te = world.getTileEntity(x, y, z);
             if (te instanceof TileVisRelay) {
-               TileVisRelay tile = (TileVisRelay)te;
-               byte c = (byte)player.getHeldItem().getItemDamage();
+               TileVisRelay tile = (TileVisRelay) te;
+               byte c = (byte) player.getHeldItem().getItemDamage();
                if (c != tile.color && c != 6) {
                   tile.color = c;
                } else {
@@ -727,24 +741,24 @@ public class BlockMetalDevice extends BlockContainer {
    }
 
    public void onBlockPlacedBy(World world, int par2, int par3, int par4, EntityLivingBase ent, ItemStack stack) {
-      int l = MathHelper.floor_double((double)(ent.rotationYaw * 4.0F / 360.0F) + (double)0.5F) & 3;
+      int l = MathHelper.floor_double((double) (ent.rotationYaw * 4.0F / 360.0F) + (double) 0.5F) & 3;
       if (stack.getItemDamage() == 1) {
          TileEntity tile = world.getTileEntity(par2, par3, par4);
          if (tile instanceof TileAlembic) {
             if (l == 0) {
-               ((TileAlembic)tile).facing = 2;
+               ((TileAlembic) tile).facing = 2;
             }
 
             if (l == 1) {
-               ((TileAlembic)tile).facing = 5;
+               ((TileAlembic) tile).facing = 5;
             }
 
             if (l == 2) {
-               ((TileAlembic)tile).facing = 3;
+               ((TileAlembic) tile).facing = 3;
             }
 
             if (l == 3) {
-               ((TileAlembic)tile).facing = 4;
+               ((TileAlembic) tile).facing = 4;
             }
          }
       }
@@ -761,7 +775,7 @@ public class BlockMetalDevice extends BlockContainer {
          if (md == 8) {
             TileEntity te = world.getTileEntity(x, y, z);
             if (te instanceof TileArcaneLampGrowth) {
-               if (((TileArcaneLampGrowth)te).charges > 0) {
+               if (((TileArcaneLampGrowth) te).charges > 0) {
                   return 15;
                }
 
@@ -770,7 +784,7 @@ public class BlockMetalDevice extends BlockContainer {
          } else if (md == 13) {
             TileEntity te = world.getTileEntity(x, y, z);
             if (te instanceof TileArcaneLampFertility) {
-               if (((TileArcaneLampFertility)te).charges > 0) {
+               if (((TileArcaneLampFertility) te).charges > 0) {
                   return 15;
                }
 
@@ -779,7 +793,7 @@ public class BlockMetalDevice extends BlockContainer {
          } else if (md == 14) {
             TileEntity te = world.getTileEntity(x, y, z);
             if (te instanceof TileVisRelay) {
-               if (VisNetHandler.isNodeValid(((TileVisRelay)te).getParent())) {
+               if (VisNetHandler.isNodeValid(((TileVisRelay) te).getParent())) {
                   return 10;
                }
 

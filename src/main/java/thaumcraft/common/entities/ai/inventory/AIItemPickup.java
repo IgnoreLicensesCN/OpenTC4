@@ -37,7 +37,9 @@ public class AIItemPickup extends EntityAIBase {
                double distance2 = e.getDistanceSq(this.theGolem.posX, this.theGolem.posY, this.theGolem.posZ);
                if (distance2 < range && distance <= (double)(dmod * dmod)) {
                   range = distance2;
-                  this.targetEntity = e;
+                   if (e.isEntityAlive()) {
+                       this.targetEntity = e;
+                   }
                }
             }
          }

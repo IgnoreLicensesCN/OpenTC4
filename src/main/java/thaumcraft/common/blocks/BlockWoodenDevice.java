@@ -2,9 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -24,7 +21,6 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.Config;
@@ -32,13 +28,11 @@ import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.items.ItemEssence;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.lib.utils.InventoryUtils;
-import thaumcraft.common.tiles.TileArcaneBore;
-import thaumcraft.common.tiles.TileArcaneBoreBase;
-import thaumcraft.common.tiles.TileArcanePressurePlate;
-import thaumcraft.common.tiles.TileBanner;
-import thaumcraft.common.tiles.TileBellows;
-import thaumcraft.common.tiles.TileOwned;
-import thaumcraft.common.tiles.TileSensor;
+import thaumcraft.common.tiles.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class BlockWoodenDevice extends BlockContainer {
    private Random random = new Random();

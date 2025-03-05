@@ -8,11 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.common.config.ConfigBlocks;
-import thaumcraft.common.tiles.TileArcaneLamp;
-import thaumcraft.common.tiles.TileArcaneLampFertility;
-import thaumcraft.common.tiles.TileArcaneLampGrowth;
-import thaumcraft.common.tiles.TileBrainbox;
-import thaumcraft.common.tiles.TileVisRelay;
+import thaumcraft.common.tiles.*;
 
 public class BlockMetalDeviceItem extends ItemBlock {
    public BlockMetalDeviceItem(Block par1) {

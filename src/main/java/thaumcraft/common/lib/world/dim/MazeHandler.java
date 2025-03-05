@@ -2,6 +2,7 @@ package thaumcraft.common.lib.world.dim;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -55,19 +56,40 @@ public class MazeHandler {
       NBTTagCompound nbt = new NBTTagCompound();
       NBTTagList tagList = new NBTTagList();
 
-      for(CellLoc loc : labyrinth.keySet()) {
-         short v = getFromHashMapRaw(loc);
-         if (v > 0) {
-            NBTTagCompound cell = new NBTTagCompound();
-            cell.setInteger("x", loc.x);
-            cell.setInteger("z", loc.z);
-            cell.setShort("cell", v);
-            tagList.appendTag(cell);
+      for (Map.Entry<CellLoc, Short> entry : MazeHandler.labyrinth.entrySet()) {
+         if (entry.getValue() == null) {
+            continue;
          }
+         short v = entry.getValue();
+         if (v<= 0) {
+            continue;
+         }
+         CellLoc loc = entry.getKey();
+         NBTTagCompound cell = new NBTTagCompound();
+         cell.setInteger("x", loc.x);
+         cell.setInteger("z", loc.z);
+         cell.setShort("cell", v);
+         tagList.appendTag(cell);
       }
 
       nbt.setTag("cells", tagList);
       return nbt;
+//      NBTTagCompound nbt = new NBTTagCompound();
+//      NBTTagList tagList = new NBTTagList();
+//
+//      for(CellLoc loc : labyrinth.keySet()) {
+//         short v = getFromHashMapRaw(loc);
+//         if (v > 0) {
+//            NBTTagCompound cell = new NBTTagCompound();
+//            cell.setInteger("x", loc.x);
+//            cell.setInteger("z", loc.z);
+//            cell.setShort("cell", v);
+//            tagList.appendTag(cell);
+//         }
+//      }
+//
+//      nbt.setTag("cells", tagList);
+//      return nbt;
    }
 
    public static void loadMaze(World world) {

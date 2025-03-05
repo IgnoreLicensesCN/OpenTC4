@@ -2,8 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -25,6 +23,9 @@ import thaumcraft.client.fx.particles.FXSlimyBubble;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.tiles.TileAlchemyFurnaceAdvanced;
 import thaumcraft.common.tiles.TileAlchemyFurnaceAdvancedNozzle;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockAlchemyFurnace extends BlockContainer {
    public IIcon icon;

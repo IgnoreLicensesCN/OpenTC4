@@ -2,8 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
@@ -16,6 +14,9 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigBlocks;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockCosmeticWoodSlab extends BlockSlab {
    public static final String[] types = new String[]{"greatwood", "silverwood"};

@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.world.World;
 import tc4tweak.modules.visrelay.SavedLinkHandler;
 import thaumcraft.api.TileThaumcraft;
 import thaumcraft.api.WorldCoordinates;
@@ -43,7 +44,7 @@ public abstract class TileVisNode extends TileThaumcraft {
 	public abstract boolean isSource();
 		
 	/**
-	 * This method should never be called directly. Use VisNetHandler.drainVis() instead
+	 * This method should never be called directly. Use {@link VisNetHandler#drainVis(World, int, int, int, Aspect, int)} instead
 	 * @param aspect what aspect to drain
 	 * @param vis how much to drain
 	 * @return how much was actually drained

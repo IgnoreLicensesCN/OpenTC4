@@ -2,8 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -28,6 +26,9 @@ import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.lib.utils.BlockUtils;
 import thaumcraft.common.tiles.TileArcaneFurnace;
 import thaumcraft.common.tiles.TileArcaneFurnaceNozzle;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockArcaneFurnace extends BlockContainer {
    public IIcon[] icon = new IIcon[27];

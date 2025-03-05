@@ -2,7 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,6 +23,8 @@ import thaumcraft.api.nodes.NodeType;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.tiles.TileJarNode;
+
+import java.util.List;
 
 public class ItemJarNode extends Item implements IEssentiaContainerItem {
    @SideOnly(Side.CLIENT)

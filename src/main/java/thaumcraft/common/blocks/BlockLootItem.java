@@ -1,11 +1,12 @@
 package thaumcraft.common.blocks;
 
-import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+
+import java.util.List;
 
 public class BlockLootItem extends ItemBlock {
    public BlockLootItem(Block par1) {

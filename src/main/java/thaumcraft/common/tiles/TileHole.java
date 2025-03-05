@@ -6,6 +6,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import tc4tweak.network.TileHoleSyncPacket;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.items.wands.foci.ItemFocusPortableHole;
@@ -249,7 +250,14 @@ public class TileHole extends TileMemory {
    public Packet getDescriptionPacket() {
       NBTTagCompound nbttagcompound = new NBTTagCompound();
       this.writeCustomNBT(nbttagcompound);
-      return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, -999, nbttagcompound);
+      S35PacketUpdateTileEntity origin =
+              new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, -999, nbttagcompound);
+      try {
+         return Thaumcraft.instance.CHANNEL.getPacketFrom(new TileHoleSyncPacket(origin));
+      } catch (Exception ex) {
+         // fallback to original packet if anything goes wrong
+         return origin;
+      }
    }
 
    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {

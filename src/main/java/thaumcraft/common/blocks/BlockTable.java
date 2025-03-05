@@ -2,7 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -28,6 +27,8 @@ import thaumcraft.common.tiles.TileArcaneWorkbench;
 import thaumcraft.common.tiles.TileDeconstructionTable;
 import thaumcraft.common.tiles.TileResearchTable;
 import thaumcraft.common.tiles.TileTable;
+
+import java.util.List;
 
 public class BlockTable extends BlockContainer implements IWandable {
    public IIcon icon;

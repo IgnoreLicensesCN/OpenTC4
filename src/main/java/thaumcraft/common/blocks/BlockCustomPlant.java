@@ -2,8 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -26,6 +24,9 @@ import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.lib.world.WorldGenGreatwoodTrees;
 import thaumcraft.common.lib.world.WorldGenSilverwoodTrees;
 import thaumcraft.common.tiles.TileEtherealBloom;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockCustomPlant extends BlockBush {
    public IIcon[] icon = new IIcon[6];

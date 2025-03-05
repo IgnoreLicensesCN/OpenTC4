@@ -15,6 +15,10 @@ public class FindCrucibleRecipe {
 		if (cache.isEnabled())
 			return cache.getCache().get(hash);
 		List<?> list = ThaumcraftApi.getCraftingRecipes();
-		return (CrucibleRecipe) list.stream().filter(r -> r instanceof CrucibleRecipe && ((CrucibleRecipe) r).hash == hash).findAny().orElse(null);
+		return (CrucibleRecipe) list.stream().filter(
+				r ->
+						r instanceof CrucibleRecipe
+								&& ((CrucibleRecipe) r).hash == hash)
+				.findAny().orElse(null);
 	}
 }

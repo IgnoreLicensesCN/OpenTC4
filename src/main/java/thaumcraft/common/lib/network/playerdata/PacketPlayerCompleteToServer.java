@@ -11,11 +11,17 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import tc4tweak.PacketCheck;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.research.ResearchCategories;
+import thaumcraft.api.research.ResearchItem;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.research.ResearchManager;
+
+import static thaumcraft.common.Thaumcraft.log;
+import static tc4tweak.PacketCheck.isSecondaryResearch;
+import static tc4tweak.PacketCheck.securityMarker;
 
 public class PacketPlayerCompleteToServer implements IMessage, IMessageHandler<PacketPlayerCompleteToServer,IMessage> {
    private String key;
@@ -46,10 +52,33 @@ public class PacketPlayerCompleteToServer implements IMessage, IMessageHandler<P
       this.username = ByteBufUtils.readUTF8String(buffer);
       this.type = buffer.readByte();
    }
-
+   public static boolean sanityPlayerComplete(PacketPlayerCompleteToServer packet, MessageContext ctx) {
+      if (packet.type() != 0) return true;
+      EntityPlayerMP playerEntity = ctx.getServerHandler().playerEntity;
+      ResearchItem research = packet.research();
+      if (research == null) return false;
+      boolean secondary = isSecondaryResearch(research);
+      if (secondary) {
+         if (PacketCheck.hasAspect(playerEntity, research))
+            return true;
+      }
+      log.info(securityMarker.getName(),
+              "Player {} sent suspicious packet to complete research {}@{}",
+              playerEntity.getGameProfile(),
+              research.key, research.category);
+      return false;
+   }
    public IMessage onMessage(PacketPlayerCompleteToServer message, MessageContext ctx) {
+      if (!sanityPlayerComplete(message, ctx)) {
+         return null;
+      }
       World world = DimensionManager.getWorld(message.dim);
-      if (world != null && (ctx.getServerHandler().playerEntity == null || ctx.getServerHandler().playerEntity.getCommandSenderName().equals(message.username))) {
+      if (world != null
+              && (
+                      ctx.getServerHandler().playerEntity == null
+                      || ctx.getServerHandler().playerEntity.getCommandSenderName().equals(message.username)
+      )
+      ) {
          EntityPlayer player = world.getPlayerEntityByName(message.username);
          if (player != null && !ResearchManager.isResearchComplete(message.username, message.key)) {
             if (ResearchManager.doesPlayerHaveRequisites(message.username, message.key)) {
@@ -82,9 +111,14 @@ public class PacketPlayerCompleteToServer implements IMessage, IMessageHandler<P
             }
          }
 
-         return null;
-      } else {
-         return null;
       }
+       return null;
+   }
+
+   public ResearchItem research(){
+      return ResearchCategories.getResearch(key);
+   }
+   public byte type(){
+      return type;
    }
 }

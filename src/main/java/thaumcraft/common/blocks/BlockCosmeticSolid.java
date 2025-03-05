@@ -2,8 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EffectRenderer;
@@ -31,6 +29,9 @@ import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.ItemWispEssence;
 import thaumcraft.common.tiles.TileNode;
 import thaumcraft.common.tiles.TileWardingStone;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockCosmeticSolid extends Block {
    public IIcon[] icon = new IIcon[27];

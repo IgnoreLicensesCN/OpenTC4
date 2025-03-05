@@ -2,8 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.material.Material;
@@ -25,6 +23,9 @@ import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.ItemWispEssence;
 import thaumcraft.common.tiles.TileNode;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockMagicalLog extends BlockRotatedPillar {
    public static final String[] woodType = new String[]{"greatwood", "silverwood", "silverwoodknot"};

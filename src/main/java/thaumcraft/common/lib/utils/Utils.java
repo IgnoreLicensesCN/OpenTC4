@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -33,9 +35,12 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
+import tc4tweak.ConfigurationHandler;
 import thaumcraft.api.WorldCoordinates;
+import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.internal.WeightedRandomLoot;
 import thaumcraft.common.config.ConfigItems;
+import thaumcraft.common.items.baubles.ItemAmuletVis;
 import thaumcraft.common.items.equipment.ItemElementalAxe;
 import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.network.fx.PacketFXVisDrain;
@@ -332,13 +337,24 @@ public class Utils {
       return dx * dx + dy * dy + dz * dz;
    }
 
+   public static ItemStack mutateGeneratedLoot(ItemStack stack) {
+      if (!ConfigurationHandler.INSTANCE.isMoreRandomizedLoot()) return stack;//.copy();
+      if (stack.getItem() == ConfigItems.itemAmuletVis) {
+         ItemAmuletVis ai = (ItemAmuletVis)stack.getItem();
+
+         for(Aspect a : Aspect.getPrimalAspects()) {
+            ai.storeVis(stack, a, ThreadLocalRandom.current().nextInt(5) * 100);
+         }
+      }
+      return stack;
+   }
    public static ItemStack generateLoot(int rarity, Random rand) {
       ItemStack is = null;
       if (rarity > 0 && rand.nextFloat() < 0.025F * (float)rarity) {
          is = genGear(rarity, rand);
-         if (is == null) {
-            is = generateLoot(rarity, rand);
-         }
+//         if (is == null) {
+//            is = generateLoot(rarity, rand);
+//         }
       } else {
          switch (rarity) {
             case 1:
@@ -351,12 +367,16 @@ public class Utils {
                is = ((WeightedRandomLoot)WeightedRandom.getRandomItem(rand, WeightedRandomLoot.lootBagCommon)).item;
          }
       }
+      if (is == null) {
+         is = generateLoot(rarity, rand);
+      }
 
+      is = is.copy();
       if (is.getItem() == Items.book) {
          EnchantmentHelper.addRandomEnchantment(rand, is, (int)(5.0F + (float)rarity * 0.75F * (float)rand.nextInt(18)));
       }
 
-      return is.copy();
+      return mutateGeneratedLoot(is);
    }
 
    private static ItemStack genGear(int rarity, Random rand) {

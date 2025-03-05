@@ -409,7 +409,21 @@ public class ConfigResearch {
       ThaumcraftApi.addWarpToResearch("OCULUS", 6);
       (new ResearchItem("ENTEROUTER", "ELDRITCH", new AspectList(), -3, 4, 1, new ResourceLocation("thaumcraft", "textures/misc/r_outer.png"))).setPages(new ResearchPage("tc.research_page.ENTEROUTER.1")).setStub().setHidden().setRound().setParents("OCULUS").registerResearchItem();
       (new ResearchItem("OUTERREV", "ELDRITCH", (new AspectList()).add(Aspect.ELDRITCH, 4).add(Aspect.MIND, 4), -5, 3, 1, new ResourceLocation("thaumcraft", "textures/misc/r_outerrev.png"))).setPages(new ResearchPage("tc.research_page.OUTERREV.1")).setItemTriggers(new ItemStack(ConfigBlocks.blockEldritch, 1, 5), new ItemStack(ConfigBlocks.blockEldritch, 1, 10)).setLost().setSecondary().setSpecial().setParents("ENTEROUTER").registerResearchItem();
-      (new ResearchItem("PRIMPEARL", "ELDRITCH", (new AspectList()).add(Aspect.AIR, 8).add(Aspect.EARTH, 8).add(Aspect.FIRE, 8).add(Aspect.WATER, 8).add(Aspect.ORDER, 8).add(Aspect.ENTROPY, 8), 0, 4, 1, new ItemStack(ConfigItems.itemEldritchObject, 1, 3))).setPages(new ResearchPage("tc.research_page.PRIMPEARL.1"), new ResearchPage("tc.research_page.PRIMPEARL.2")).setItemTriggers(new ItemStack(ConfigItems.itemEldritchObject, 1, 3)).setLost().setSecondary().setSpecial().setParents("ELDRITCHMINOR").registerResearchItem();
+      (new ResearchItem("PRIMPEARL", "ELDRITCH",
+              (new AspectList()).add(Aspect.AIR, 8).add(Aspect.EARTH, 8).add(Aspect.FIRE, 8).add(Aspect.WATER, 8).add(Aspect.ORDER, 8).add(Aspect.ENTROPY, 8),
+              0, 4,
+              1,
+              new ItemStack(ConfigItems.itemEldritchObject, 1, 3))
+      ).setPages(
+              new ResearchPage("tc.research_page.PRIMPEARL.1"),
+              new ResearchPage("tc.research_page.PRIMPEARL.2")
+      )
+              .setItemTriggers(new ItemStack(ConfigItems.itemEldritchObject, 1, 3))
+              .setLost()
+              .setSecondary()
+              .setSpecial()
+              .setParents("ELDRITCHMINOR")
+              .registerResearchItem();
       (new ResearchItem("PRIMNODE", "ELDRITCH", (new AspectList()).add(Aspect.AURA, 1).add(Aspect.MAGIC, 1).add(Aspect.ORDER, 1).add(Aspect.ENTROPY, 1), 0, 6, 1, new ResourceLocation("thaumcraft", "textures/misc/r_nodes_2.png"))).setPages(new ResearchPage("tc.research_page.PRIMNODE.1")).setSecondary().setParents("PRIMPEARL").registerResearchItem();
       ThaumcraftApi.addWarpToResearch("PRIMNODE", 1);
       (new ResearchItem("ADVALCHEMYFURNACE", "ELDRITCH", (new AspectList()).add(Aspect.AURA, 1).add(Aspect.MAGIC, 1).add(Aspect.ORDER, 1).add(Aspect.ENTROPY, 1), -2, 6, 1, new ItemStack(ConfigBlocks.blockMetalDevice, 1, 3))).setPages(new ResearchPage("tc.research_page.ADVALCHEMYFURNACE.1"), new ResearchPage((IArcaneRecipe)recipes.get("AdvAlchemyConstruct")), new ResearchPage("tc.research_page.ADVALCHEMYFURNACE.2"), new ResearchPage((List)recipes.get("AdvAlchemyFurnace"))).setSecondary().setParents("PRIMPEARL", "DISTILESSENTIA", "VISPOWER").registerResearchItem();

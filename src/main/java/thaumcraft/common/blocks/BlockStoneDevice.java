@@ -2,8 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -17,12 +15,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -34,16 +27,10 @@ import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.items.baubles.ItemAmuletVis;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.lib.utils.InventoryUtils;
-import thaumcraft.common.tiles.TileAlchemyFurnace;
-import thaumcraft.common.tiles.TileFluxScrubber;
-import thaumcraft.common.tiles.TileFocalManipulator;
-import thaumcraft.common.tiles.TileInfusionMatrix;
-import thaumcraft.common.tiles.TileInfusionPillar;
-import thaumcraft.common.tiles.TileNodeConverter;
-import thaumcraft.common.tiles.TileNodeStabilizer;
-import thaumcraft.common.tiles.TilePedestal;
-import thaumcraft.common.tiles.TileSpa;
-import thaumcraft.common.tiles.TileWandPedestal;
+import thaumcraft.common.tiles.*;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockStoneDevice extends BlockContainer {
    public IIcon[] iconFurnace = new IIcon[5];

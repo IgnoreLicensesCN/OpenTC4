@@ -2,9 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -27,12 +24,11 @@ import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.ItemEldritchObject;
-import thaumcraft.common.tiles.TileEldritchAltar;
-import thaumcraft.common.tiles.TileEldritchCap;
-import thaumcraft.common.tiles.TileEldritchCrabSpawner;
-import thaumcraft.common.tiles.TileEldritchLock;
-import thaumcraft.common.tiles.TileEldritchObelisk;
-import thaumcraft.common.tiles.TileEldritchTrap;
+import thaumcraft.common.tiles.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class BlockEldritch extends BlockContainer {
    public IIcon icon = null;

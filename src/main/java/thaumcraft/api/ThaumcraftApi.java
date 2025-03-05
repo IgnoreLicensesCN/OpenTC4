@@ -15,6 +15,8 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
+import tc4tweak.modules.findCrucibleRecipe.FindCrucibleRecipe;
+import tc4tweak.modules.objectTag.GetObjectTags;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.CrucibleRecipe;
@@ -40,7 +42,9 @@ import thaumcraft.api.research.ResearchPage;
  *
  */
 public class ThaumcraftApi {
-	
+	static {
+		ThaumcraftApi.objectTags = GetObjectTags.newReplacementObjectTagsMap();
+	}
 	//Materials	
 	public static ToolMaterial toolMatThaumium = EnumHelper.addToolMaterial("THAUMIUM", 3, 400, 7F, 2, 22);
 	public static ToolMaterial toolMatVoid = EnumHelper.addToolMaterial("VOID", 4, 150, 8F, 3, 10);
@@ -223,7 +227,7 @@ public class ThaumcraftApi {
     }
 	
 	/**
-	 * @param stack the recipe result
+	 * @param res stack the recipe result
 	 * @return the recipe
 	 */
 	public static InfusionRecipe getInfusionRecipe(ItemStack res) {
@@ -272,13 +276,14 @@ public class ThaumcraftApi {
 	 * @return the recipe
 	 */
 	public static CrucibleRecipe getCrucibleRecipeFromHash(int hash) {
-		for (Object r:getCraftingRecipes()) {
-			if (r instanceof CrucibleRecipe) {
-				if (((CrucibleRecipe)r).hash==hash)
-					return (CrucibleRecipe)r;
-			}
-		}
-		return null;
+		return FindCrucibleRecipe.getCrucibleRecipeFromHash(hash);
+//		for (Object r:getCraftingRecipes()) {
+//			if (r instanceof CrucibleRecipe) {
+//				if (((CrucibleRecipe)r).hash==hash)
+//					return (CrucibleRecipe)r;
+//			}
+//		}
+//		return null;
 	}
 	
 	/**
@@ -333,7 +338,7 @@ public class ThaumcraftApi {
 	
 	/**
 	 * Checks to see if the passed item/block already has aspects associated with it.
-	 * @param id
+	 * @param item
 	 * @param meta
 	 * @return 
 	 */
@@ -445,7 +450,7 @@ public class ThaumcraftApi {
 		
 		/**
 		 * This method is used to determine how much permanent warp is gained if the research is completed
-		 * @param in The item crafted
+//		 * @param in The item crafted
 		 * @param amount how much warp is gained
 		 */
 		public static void addWarpToResearch(String research, int amount) {

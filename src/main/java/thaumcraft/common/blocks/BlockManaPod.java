@@ -2,9 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -27,6 +24,10 @@ import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.ItemManaBean;
 import thaumcraft.common.tiles.TileManaPod;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public class BlockManaPod extends Block {
    public IIcon[] icon = new IIcon[3];

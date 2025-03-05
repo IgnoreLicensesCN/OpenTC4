@@ -2,8 +2,6 @@ package thaumcraft.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.client.particle.EffectRenderer;
@@ -39,13 +37,10 @@ import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.entities.projectile.EntityShockOrb;
 import thaumcraft.common.items.ItemWispEssence;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
-import thaumcraft.common.tiles.TileNitor;
-import thaumcraft.common.tiles.TileNode;
-import thaumcraft.common.tiles.TileNodeConverter;
-import thaumcraft.common.tiles.TileNodeEnergized;
-import thaumcraft.common.tiles.TileNodeStabilizer;
-import thaumcraft.common.tiles.TileWardingStone;
-import thaumcraft.common.tiles.TileWardingStoneFence;
+import thaumcraft.common.tiles.*;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockAiry extends BlockContainer {
    public IIcon blankIcon;
