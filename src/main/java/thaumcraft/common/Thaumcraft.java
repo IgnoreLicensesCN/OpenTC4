@@ -29,6 +29,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.FakePlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import thaumcraft.api.ThaumcraftApi;
@@ -42,6 +43,7 @@ import thaumcraft.common.config.ConfigRecipes;
 import thaumcraft.common.config.ConfigResearch;
 import thaumcraft.common.items.BehaviorDispenseAlumetum;
 import thaumcraft.common.lib.CreativeTabThaumcraft;
+import thaumcraft.common.lib.FakeThaumcraftPlayer;
 import thaumcraft.common.lib.InternalMethodHandler;
 import thaumcraft.common.lib.events.CommandThaumcraft;
 import thaumcraft.common.lib.events.EventHandlerEntity;
@@ -83,11 +85,6 @@ public class Thaumcraft {
    )
    public static CommonProxy proxy;
 
-   @SidedProxy(
-           clientSide = "tc4tweak.CommonProxy",
-           serverSide = "tc4tweak.ClientProxy"
-   )
-   public static tc4tweak.CommonProxy tc4tweakProxy;
    @Instance("Thaumcraft")
    public static Thaumcraft instance;
    ResearchManager researchManager;
@@ -156,7 +153,7 @@ public class Thaumcraft {
       this.worldGen.initialize();
       FMLCommonHandler.instance().bus().register(instance);
       Config.registerBiomes();
-      tc4tweakProxy.preInit(event);
+      proxy.preInit(event);
    }
 
    @EventHandler
@@ -176,7 +173,7 @@ public class Thaumcraft {
       proxy.registerKeyBindings();
       DimensionManager.registerProviderType(Config.dimensionOuterId, WorldProviderOuter.class, false);
       DimensionManager.registerDimension(Config.dimensionOuterId, Config.dimensionOuterId);
-      tc4tweakProxy.init(evt);
+      proxy.init(evt);
    }
 
    @EventHandler
@@ -266,7 +263,7 @@ public class Thaumcraft {
             }
          }
       }
-      tc4tweakProxy.postInit(evt);
+      proxy.postInit(evt);
 
    }
 
@@ -278,7 +275,7 @@ public class Thaumcraft {
 
    @Mod.EventHandler
    public void serverStarted(FMLServerStartedEvent e) {
-      tc4tweakProxy.serverStarted(e);
+      proxy.serverStarted(e);
    }
 
    @SubscribeEvent
@@ -293,6 +290,9 @@ public class Thaumcraft {
    }
 
    public static void addWarpToPlayer(EntityPlayer player, int amount, boolean temporary) {
+      if (player instanceof FakeThaumcraftPlayer || player instanceof FakePlayer) {
+         return;
+      }
       if (!player.worldObj.isRemote) {
          if (proxy.getPlayerKnowledge() != null) {
             if (temporary || amount >= 0) {
@@ -319,6 +319,9 @@ public class Thaumcraft {
    }
 
    public static void addStickyWarpToPlayer(EntityPlayer player, int amount) {
+      if (player instanceof FakeThaumcraftPlayer || player instanceof FakePlayer) {
+         return;
+      }
       if (!player.worldObj.isRemote) {
          if (proxy.getPlayerKnowledge() != null) {
             if (amount != 0) {

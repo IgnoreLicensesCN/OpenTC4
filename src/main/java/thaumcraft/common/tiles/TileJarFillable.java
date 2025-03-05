@@ -1,6 +1,8 @@
 package thaumcraft.common.tiles;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.ThaumcraftApiHelper;
@@ -193,5 +195,12 @@ public class TileJarFillable extends TileJar implements IAspectSource, IEssentia
          }
       }
 
+   }
+
+
+   @Override
+   public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+      super.onDataPacket(net, pkt);
+      this.worldObj.func_147479_m(this.xCoord, this.yCoord, this.zCoord);
    }
 }

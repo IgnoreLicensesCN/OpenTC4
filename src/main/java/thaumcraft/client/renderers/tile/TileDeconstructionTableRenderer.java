@@ -47,7 +47,7 @@ public class TileDeconstructionTableRenderer extends TileEntitySpecialRenderer {
          GL11.glPushMatrix();
          GL11.glTranslatef((float)par2 + 0.5F, (float)par4 + 1.15F, (float)par6 + 0.5F);
          GL11.glRotatef(ticks % 360.0F, 0.0F, 1.0F, 0.0F);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 1);
          GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.75F);
          ItemStack is = table.getStackInSlot(0).copy();
@@ -57,7 +57,7 @@ public class TileDeconstructionTableRenderer extends TileEntitySpecialRenderer {
          RenderItem.renderInFrame = true;
          RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
          RenderItem.renderInFrame = false;
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glPopMatrix();
       }
 
@@ -73,7 +73,7 @@ public class TileDeconstructionTableRenderer extends TileEntitySpecialRenderer {
 
    }
 
-   public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {
-      this.renderTileEntityAt((TileDeconstructionTable)par1TileEntity, par2, par4, par6, par8);
+   public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
+      this.renderTileEntityAt((TileDeconstructionTable)tileEntity, par2, par4, par6, par8);
    }
 }

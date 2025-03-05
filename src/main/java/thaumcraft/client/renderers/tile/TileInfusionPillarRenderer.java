@@ -38,7 +38,7 @@ public class TileInfusionPillarRenderer extends TileEntitySpecialRenderer {
       GL11.glPopMatrix();
    }
 
-   public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {
-      this.renderTileEntityAt((TileInfusionPillar)par1TileEntity, par2, par4, par6, par8);
+   public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
+      this.renderTileEntityAt((TileInfusionPillar)tileEntity, par2, par4, par6, par8);
    }
 }

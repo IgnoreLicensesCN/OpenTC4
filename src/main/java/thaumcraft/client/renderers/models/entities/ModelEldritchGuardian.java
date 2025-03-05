@@ -453,7 +453,7 @@ public class ModelEldritchGuardian extends ModelBase {
       this.LegpanelC1.render(f5);
       if (entity instanceof EntityEldritchWarden) {
          GL11.glPushMatrix();
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 1);
          GL11.glScaled(1.01, 1.01, 1.01);
          int j = (int)(195.0F + MathHelper.sin((float)entity.ticksExisted / 3.0F) * 15.0F + 15.0F);
@@ -461,7 +461,7 @@ public class ModelEldritchGuardian extends ModelBase {
          int l = j / 65536;
          OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) k, (float) l);
          this.HoodEye.render(f5);
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glPopMatrix();
       }
 

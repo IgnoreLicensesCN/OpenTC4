@@ -48,7 +48,7 @@ public class TileCrystalRenderer extends TileEntitySpecialRenderer {
       float b = (float)c.getBlue() / 220.0F;
       GL11.glPushMatrix();
       GL11.glEnable(2977);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glEnable(32826);
       GL11.glBlendFunc(770, 771);
       this.translateFromOrientation(x, y, z, ori);
@@ -63,7 +63,7 @@ public class TileCrystalRenderer extends TileEntitySpecialRenderer {
       this.model.render();
       GL11.glScalef(1.0F, 1.0F, 1.0F);
       GL11.glDisable(32826);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       GL11.glPopMatrix();
    }
@@ -92,6 +92,6 @@ public class TileCrystalRenderer extends TileEntitySpecialRenderer {
       }
 
       GL11.glPopMatrix();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
    }
 }

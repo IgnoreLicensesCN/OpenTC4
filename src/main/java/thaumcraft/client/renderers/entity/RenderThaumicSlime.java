@@ -30,12 +30,12 @@ public class RenderThaumicSlime extends RenderLiving {
       } else if (par2 == 0) {
          this.setRenderPassModel(this.scaleAmount);
          GL11.glEnable(2977);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 771);
          return 1;
       } else {
          if (par2 == 1) {
-            GL11.glDisable(3042);
+            GL11.glDisable(GL11.GL_BLEND);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
          }
 

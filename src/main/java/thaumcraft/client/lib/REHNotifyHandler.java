@@ -60,14 +60,14 @@ public class REHNotifyHandler {
 
          int color = (alpha / 2 << 24) + 16711680 + '\uff00' + 255;
          GL11.glPushMatrix();
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 771);
          GL11.glTranslatef((float)(k - size - 10), (float)(l - entry * 8) + shift, 0.0F);
          GL11.glScalef(0.5F, 0.5F, 0.5F);
          mc.ingameGUI.drawString(mc.fontRenderer, text, -4, -8, color);
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glPopMatrix();
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 771);
          if (li.image != null) {
             GL11.glPushMatrix();
@@ -97,7 +97,7 @@ public class REHNotifyHandler {
 
       GL11.glDepthMask(true);
       GL11.glEnable(2929);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(2881);
       GL11.glEnable(3008);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -129,7 +129,7 @@ public class REHNotifyHandler {
       for(float shift = -8.0F; entry < notifications.size(); ++entry) {
          PlayerNotifications.AspectNotification li = notifications.get(entry);
          if (li.created <= time) {
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(770, 771);
             if (li.aspect.getImage() != null) {
                GL11.glPushMatrix();
@@ -178,7 +178,7 @@ public class REHNotifyHandler {
 
       GL11.glDepthMask(true);
       GL11.glEnable(2929);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(2881);
       GL11.glEnable(3008);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

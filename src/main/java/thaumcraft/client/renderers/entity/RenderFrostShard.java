@@ -25,7 +25,7 @@ public class RenderFrostShard extends Render {
       this.bindEntityTexture(shard);
       GL11.glPushMatrix();
       GL11.glEnable(32826);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       GL11.glTranslatef((float)par2, (float)par4, (float)par6);
       Random rnd = new Random(shard.getEntityId());
@@ -36,7 +36,7 @@ public class RenderFrostShard extends Render {
       GL11.glScalef(base + rnd.nextFloat() * 0.1F, base + rnd.nextFloat() * 0.1F, base + rnd.nextFloat() * 0.1F);
       this.model.renderAll();
       GL11.glPopMatrix();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(32826);
       GL11.glPopMatrix();
    }

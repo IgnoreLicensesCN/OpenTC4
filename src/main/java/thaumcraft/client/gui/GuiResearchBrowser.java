@@ -386,7 +386,7 @@ public class GuiResearchBrowser extends GuiScreen {
 
                     UtilsFX.bindTexture("textures/gui/gui_research.png");
                     GL11.glEnable(2884);
-                    GL11.glEnable(3042);
+                    GL11.glEnable(GL11.GL_BLEND);
                     GL11.glBlendFunc(770, 771);
                     if (var35.isRound()) {
                         this.drawTexturedModalRect(var42 - 2, var41 - 2, 54, 230, 26, 26);
@@ -412,23 +412,23 @@ public class GuiResearchBrowser extends GuiScreen {
                         itemRenderer.renderWithColor = false;
                     }
 
-                    GL11.glDisable(3042);
+                    GL11.glDisable(GL11.GL_BLEND);
                     if (highlightedItem.contains(var35.key)) {
                         GL11.glPushMatrix();
-                        GL11.glEnable(3042);
+                        GL11.glEnable(GL11.GL_BLEND);
                         GL11.glBlendFunc(770, 771);
                         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                         this.mc.renderEngine.bindTexture(ParticleEngine.particleTexture);
                         int px = (int) (t % 16L) * 16;
                         GL11.glTranslatef((float) (var42 - 5), (float) (var41 - 5), 0.0F);
                         UtilsFX.drawTexturedQuad(0, 0, px, 80, 16, 16, 0.0F);
-                        GL11.glDisable(3042);
+                        GL11.glDisable(GL11.GL_BLEND);
                         GL11.glPopMatrix();
                     }
 
                     if (var35.icon_item != null) {
                         GL11.glPushMatrix();
-                        GL11.glEnable(3042);
+                        GL11.glEnable(GL11.GL_BLEND);
                         GL11.glBlendFunc(770, 771);
                         RenderHelper.enableGUIStandardItemLighting();
                         GL11.glDisable(2896);
@@ -439,11 +439,11 @@ public class GuiResearchBrowser extends GuiScreen {
                         GL11.glDisable(2896);
                         GL11.glDepthMask(true);
                         GL11.glEnable(2929);
-                        GL11.glDisable(3042);
+                        GL11.glDisable(GL11.GL_BLEND);
                         GL11.glPopMatrix();
                     } else if (var35.icon_resource != null) {
                         GL11.glPushMatrix();
-                        GL11.glEnable(3042);
+                        GL11.glEnable(GL11.GL_BLEND);
                         GL11.glBlendFunc(770, 771);
                         this.mc.renderEngine.bindTexture(var35.icon_resource);
                         if (!itemRenderer.renderWithColor) {
@@ -471,7 +471,7 @@ public class GuiResearchBrowser extends GuiScreen {
         }
 
         GL11.glDisable(2929);
-        GL11.glEnable(3042);
+        GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(770, 771);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         Collection<String> cats = getTabsOnCurrentPage(this.player).keySet();
@@ -785,7 +785,7 @@ public class GuiResearchBrowser extends GuiScreen {
         GL11.glPushMatrix();
         GL11.glAlphaFunc(516, 0.003921569F);
         GL11.glDisable(3553);
-        GL11.glEnable(3042);
+        GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(770, 771);
         double d3 = x - x2;
         double d4 = y - y2;
@@ -833,7 +833,7 @@ public class GuiResearchBrowser extends GuiScreen {
         var12.draw();
         GL11.glBlendFunc(770, 771);
         GL11.glDisable(2848);
-        GL11.glDisable(3042);
+        GL11.glDisable(GL11.GL_BLEND);
         GL11.glDisable(32826);
         GL11.glEnable(3553);
         GL11.glAlphaFunc(516, 0.1F);
@@ -843,7 +843,7 @@ public class GuiResearchBrowser extends GuiScreen {
     private void drawForbidden(double x, double y) {
         int count = FMLClientHandler.instance().getClient().thePlayer.ticksExisted;
         GL11.glPushMatrix();
-        GL11.glEnable(3042);
+        GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(770, 771);
         UtilsFX.bindTexture(TileNodeRenderer.nodetex);
         int frames = 32;
@@ -851,7 +851,7 @@ public class GuiResearchBrowser extends GuiScreen {
         GL11.glTranslated(x, y, 0.0F);
         UtilsFX.renderAnimatedQuadStrip(80.0F, 0.66F, frames, 5, frames - 1 - part, 0.0F, 4456533);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GL11.glDisable(3042);
+        GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
     }
 

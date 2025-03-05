@@ -28,7 +28,7 @@ public class GuiDeconstructionTable extends GuiContainer {
       UtilsFX.bindTexture("textures/gui/gui_decontable.png");
       int k = (this.width - this.xSize) / 2;
       int l = (this.height - this.ySize) / 2;
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
       if (this.tableInventory.breaktime > 0) {
          int i1 = this.tableInventory.getBreakTimeScaled(46);
@@ -47,7 +47,7 @@ public class GuiDeconstructionTable extends GuiContainer {
          }
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
    }
 
    protected void mouseClicked(int mx, int my, int par3) {

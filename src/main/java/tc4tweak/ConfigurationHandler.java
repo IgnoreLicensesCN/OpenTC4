@@ -62,7 +62,7 @@ public enum ConfigurationHandler {
         FMLCommonHandler.instance().bus().register(this);
     }
 
-    void init(File f) {
+    public void init(File f) {
         config = new Configuration(f, ConfigurationVersion.latest().getVersionMarker());
         ConfigurationVersion.migrateToLatest(config);
         loadConfig(false);
@@ -189,7 +189,7 @@ public enum ConfigurationHandler {
         config.save();
     }
 
-    void setGUISettings() {
+    public void setGUISettings() {
         // config GUI stuff
         config.getCategory("client").get("categoryOrder").setArrayEntryClass(StringOrderingEntry.class);
     }

@@ -24,7 +24,7 @@ public class RenderPrimalArrow extends Render {
       Color color = new Color(BlockCustomOreItem.colors[arrow.type + 1]);
       this.bindEntityTexture(arrow);
       GL11.glPushMatrix();
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       GL11.glTranslatef((float)x, (float)y, (float)z);
       GL11.glRotatef(arrow.prevRotationYaw + (arrow.rotationYaw - arrow.prevRotationYaw) * prt - 90.0F, 0.0F, 1.0F, 0.0F);
@@ -78,7 +78,7 @@ public class RenderPrimalArrow extends Render {
       }
 
       GL11.glDisable(32826);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glPopMatrix();
       float f1 = ActiveRenderInfo.rotationX;
       f2 = ActiveRenderInfo.rotationXZ;
@@ -89,7 +89,7 @@ public class RenderPrimalArrow extends Render {
       GL11.glPushMatrix();
       GL11.glTranslatef((float)x, (float)y, (float)z);
       GL11.glDepthMask(false);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       if (arrow.type < 5) {
          GL11.glBlendFunc(770, 1);
       } else {
@@ -114,7 +114,7 @@ public class RenderPrimalArrow extends Render {
       tessellator.addVertexWithUV(f1 * f10 + f4 * f10, f2 * f10, f3 * f10 + f5 * f10, x0, x2);
       tessellator.addVertexWithUV(f1 * f10 - f4 * f10, -f2 * f10, f3 * f10 - f5 * f10, x0, x3);
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDepthMask(true);
       GL11.glPopMatrix();
    }

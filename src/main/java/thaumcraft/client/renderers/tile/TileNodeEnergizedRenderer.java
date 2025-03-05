@@ -19,14 +19,14 @@ public class TileNodeEnergizedRenderer extends TileEntitySpecialRenderer {
       TileNodeRenderer.renderNode(viewer, 64.0F, true, false, 1.0F, tile.xCoord, tile.yCoord, tile.zCoord, partialTicks, ((TileNodeEnergized)tile).getAuraBase(), ((TileNodeEnergized)tile).getNodeType(), ((TileNodeEnergized)tile).getNodeModifier());
       GL11.glPushMatrix();
       GL11.glAlphaFunc(516, 0.003921569F);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       long nt = System.nanoTime();
       UtilsFX.bindTexture(tx1);
       int frames = UtilsFX.getTextureAnimationSize(tx1);
       int i = (int)(((double)(nt / 40000000L) + x) % (double)frames);
       UtilsFX.renderFacingQuad((double)tile.xCoord + (double)0.5F, (double)tile.yCoord + (double)0.5F, (double)tile.zCoord + (double)0.5F, 0.0F, 0.33F, 0.9F, frames, i, partialTicks, 16777215);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glAlphaFunc(516, 0.1F);
       GL11.glPopMatrix();
    }

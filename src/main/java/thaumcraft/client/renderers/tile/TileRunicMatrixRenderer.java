@@ -38,7 +38,7 @@ public class TileRunicMatrixRenderer extends TileEntitySpecialRenderer {
       Random random = new Random(245L);
       GL11.glDisable(3553);
       GL11.glShadeModel(7425);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       GL11.glDisable(3008);
       GL11.glEnable(2884);
@@ -70,7 +70,7 @@ public class TileRunicMatrixRenderer extends TileEntitySpecialRenderer {
       GL11.glPopMatrix();
       GL11.glDepthMask(true);
       GL11.glDisable(2884);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glShadeModel(7424);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       GL11.glEnable(3553);
@@ -135,7 +135,7 @@ public class TileRunicMatrixRenderer extends TileEntitySpecialRenderer {
       if (is.active) {
          GL11.glPushMatrix();
          GL11.glAlphaFunc(516, 0.003921569F);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 1);
 
          for(int a = 0; a < 2; ++a) {
@@ -173,7 +173,7 @@ public class TileRunicMatrixRenderer extends TileEntitySpecialRenderer {
             }
          }
 
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glAlphaFunc(516, 0.1F);
          GL11.glPopMatrix();
       }
@@ -185,13 +185,13 @@ public class TileRunicMatrixRenderer extends TileEntitySpecialRenderer {
 
    }
 
-   public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {
+   public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
       switch (this.type) {
          case 0:
-            this.renderInfusionMatrix((TileInfusionMatrix)par1TileEntity, par2, par4, par6, par8);
+            this.renderInfusionMatrix((TileInfusionMatrix)tileEntity, par2, par4, par6, par8);
             break;
          case 1:
-            this.renderTileEntityAt(par1TileEntity, par2, par4, par6, par8);
+            this.renderTileEntityAt(tileEntity, par2, par4, par6, par8);
       }
 
    }

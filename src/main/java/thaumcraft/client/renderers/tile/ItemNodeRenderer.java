@@ -103,7 +103,7 @@ public class ItemNodeRenderer implements IItemRenderer {
 
             average += (float)node.getAspects().getAmount(aspect);
             GL11.glPushMatrix();
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(770, aspect.getBlend());
             scale = MathHelper.sin((float)viewer.ticksExisted / (14.0F - (float)count)) * bscale + bscale * 2.0F;
             scale = 0.2F + scale * ((float)node.getAspects().getAmount(aspect) / 50.0F);
@@ -111,7 +111,7 @@ public class ItemNodeRenderer implements IItemRenderer {
 //            UtilsFX.renderAnimatedQuadStrip
             renderAnimatedQuadStrip_tweaked
                     (scale, alpha / (float)node.getAspects().size(), frames, 0, i, 0.0F, aspect.getColor());
-            GL11.glDisable(3042);
+            GL11.glDisable(GL11.GL_BLEND);
             GL11.glPopMatrix();
             ++count;
             if (aspect.getBlend() == 771) {
@@ -121,7 +121,7 @@ public class ItemNodeRenderer implements IItemRenderer {
 
          average /= (float)node.getAspects().size();
          GL11.glPushMatrix();
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          i = (int)((nt / 40000000L + 1L) % (long)frames);
          scale = 0.1F + average / 150.0F;
          int strip = 1;
@@ -155,7 +155,7 @@ public class ItemNodeRenderer implements IItemRenderer {
 //         UtilsFX.renderAnimatedQuadStrip
          renderAnimatedQuadStrip_tweaked
                  (scale, alpha, frames, strip, i, 0.0F, 16777215);
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glPopMatrix();
          GL11.glPopMatrix();
          GL11.glEnable(2884);

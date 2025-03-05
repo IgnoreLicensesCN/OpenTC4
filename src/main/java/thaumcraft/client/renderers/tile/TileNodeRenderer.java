@@ -84,7 +84,7 @@ public class TileNodeRenderer extends TileEntitySpecialRenderer {
 
             average += (float)aspects.getAmount(aspect);
             GL11.glPushMatrix();
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(770, aspect.getBlend());
             scale = MathHelper.sin((float)viewer.ticksExisted / (14.0F - (float)count)) * bscale + bscale * 2.0F;
             scale = 0.2F + scale * ((float)aspects.getAmount(aspect) / 50.0F);
@@ -93,7 +93,7 @@ public class TileNodeRenderer extends TileEntitySpecialRenderer {
 //            UtilsFX.renderFacingStrip
             renderFacingStrip_tweaked
                     ((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, angle, scale, alpha / Math.max(1.0F, (float)aspects.size() / 2.0F), frames, 0, i, partialTicks, aspect.getColor());
-            GL11.glDisable(3042);
+            GL11.glDisable(GL11.GL_BLEND);
             GL11.glPopMatrix();
             ++count;
             if (aspect.getBlend() == 771) {
@@ -103,7 +103,7 @@ public class TileNodeRenderer extends TileEntitySpecialRenderer {
 
          average /= (float)aspects.size();
          GL11.glPushMatrix();
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          i = (int)((nt / 40000000L + (long)x) % (long)frames);
          scale = 0.1F + average / 150.0F;
          scale *= size;
@@ -139,7 +139,7 @@ public class TileNodeRenderer extends TileEntitySpecialRenderer {
 //         UtilsFX.renderFacingStrip
          renderFacingStrip_tweaked
                  ((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, angle, scale, alpha, frames, strip, i, partialTicks, 16777215);
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glPopMatrix();
          GL11.glPopMatrix();
          GL11.glEnable(2884);
@@ -153,7 +153,7 @@ public class TileNodeRenderer extends TileEntitySpecialRenderer {
       } else {
          GL11.glPushMatrix();
          GL11.glAlphaFunc(516, 0.003921569F);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 1);
          GL11.glDepthMask(false);
          int i = (int)((nt / 40000000L + (long)x) % (long)frames);
@@ -162,7 +162,7 @@ public class TileNodeRenderer extends TileEntitySpecialRenderer {
          renderFacingStrip_tweaked
                  ((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, 0.0F, 0.5F, 0.1F, frames, 1, i, partialTicks, 16777215);
          GL11.glDepthMask(true);
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glAlphaFunc(516, 0.1F);
          GL11.glPopMatrix();
       }

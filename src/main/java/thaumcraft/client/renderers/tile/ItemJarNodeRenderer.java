@@ -61,7 +61,7 @@ public class ItemJarNodeRenderer implements IItemRenderer {
          GL11.glPopMatrix();
          GL11.glPushMatrix();
          GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 771);
          GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
          Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);

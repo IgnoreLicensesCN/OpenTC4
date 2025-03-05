@@ -25,7 +25,7 @@ public class BlockJarRenderer extends BlockRenderer implements ISimpleBlockRende
       }
 
       GL11.glPushMatrix();
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
       IIcon i1 = ((BlockJar)block).iconJarTop;

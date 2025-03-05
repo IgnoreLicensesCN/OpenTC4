@@ -187,7 +187,7 @@ public class FXBeamGolemBoss extends EntityFX {
       }
 
       float var12 = -var11 * 0.2F - (float)MathHelper.floor_float(-var11 * 0.1F);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, this.blendmode);
       GL11.glDepthMask(false);
       float xx = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)f - interpPosX);
@@ -224,7 +224,7 @@ public class FXBeamGolemBoss extends EntityFX {
 
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       GL11.glDepthMask(true);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glEnable(2884);
       GL11.glPopMatrix();
       this.renderImpact(tessellator, f, f1, f2, f3, f4, f5);
@@ -236,7 +236,7 @@ public class FXBeamGolemBoss extends EntityFX {
    public void renderImpact(Tessellator tessellator, float f, float f1, float f2, float f3, float f4, float f5) {
       GL11.glPushMatrix();
       GL11.glDepthMask(false);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       UtilsFX.bindTexture(ParticleEngine.particleTexture);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.66F);
@@ -258,7 +258,7 @@ public class FXBeamGolemBoss extends EntityFX {
       tessellator.addVertexWithUV(var13 + f1 * var12 + f4 * var12, var14 + f2 * var12, var15 + f3 * var12 + f5 * var12, var8, var10);
       tessellator.addVertexWithUV(var13 + f1 * var12 - f4 * var12, var14 - f2 * var12, var15 + f3 * var12 - f5 * var12, var8, var11);
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDepthMask(true);
       GL11.glPopMatrix();
    }

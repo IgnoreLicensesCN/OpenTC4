@@ -42,7 +42,7 @@ public class RenderWisp extends Render {
 
          GL11.glPushMatrix();
          GL11.glDepthMask(false);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 1);
          UtilsFX.bindTexture("textures/misc/wisp.png");
          int i = entity.ticksExisted % 16;
@@ -67,13 +67,13 @@ public class RenderWisp extends Render {
          tessellator.addVertexWithUV(f11 + f1 * f10 + f4 * f10, f12 + f2 * f10, f13 + f3 * f10 + f5 * f10, x0, x2);
          tessellator.addVertexWithUV(f11 + f1 * f10 - f4 * f10, f12 - f2 * f10, f13 + f3 * f10 - f5 * f10, x0, x3);
          tessellator.draw();
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glDepthMask(true);
          GL11.glPopMatrix();
          GL11.glPushMatrix();
          GL11.glAlphaFunc(516, 0.003921569F);
          GL11.glDepthMask(false);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 1);
          UtilsFX.bindTexture(ParticleEngine.particleTexture);
          int qq = entity.ticksExisted % 16;
@@ -92,7 +92,7 @@ public class RenderWisp extends Render {
          tessellator.addVertexWithUV(f11 + f1 * f10 + f4 * f10, f12 + f2 * f10, f13 + f3 * f10 + f5 * f10, x0, x2);
          tessellator.addVertexWithUV(f11 + f1 * f10 - f4 * f10, f12 - f2 * f10, f13 + f3 * f10 - f5 * f10, x0, x3);
          tessellator.draw();
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glDepthMask(true);
          GL11.glAlphaFunc(516, 0.1F);
          GL11.glPopMatrix();

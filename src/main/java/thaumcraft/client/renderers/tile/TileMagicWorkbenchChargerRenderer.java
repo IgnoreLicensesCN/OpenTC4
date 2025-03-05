@@ -51,7 +51,7 @@ public class TileMagicWorkbenchChargerRenderer extends TileEntitySpecialRenderer
       }
 
       GL11.glPopMatrix();
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       if (tile.color >= 0) {
          Color c = new Color(TileMagicWorkbenchCharger.colors[tile.color]);
@@ -64,12 +64,12 @@ public class TileMagicWorkbenchChargerRenderer extends TileEntitySpecialRenderer
       int l = j / 65536;
       OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) k, (float) l);
       this.model.renderPart("Crystal");
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glPopMatrix();
       GL11.glPopMatrix();
    }
 
-   public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {
-      this.renderTileEntityAt((TileMagicWorkbenchCharger)par1TileEntity, par2, par4, par6, par8);
+   public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
+      this.renderTileEntityAt((TileMagicWorkbenchCharger)tileEntity, par2, par4, par6, par8);
    }
 }

@@ -26,7 +26,7 @@ public class GuiAlchemyFurnace extends GuiContainer {
       UtilsFX.bindTexture("textures/gui/gui_alchemyfurnace.png");
       int k = (this.width - this.xSize) / 2;
       int l = (this.height - this.ySize) / 2;
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
       if (this.furnaceInventory.isBurning()) {
          int i1 = this.furnaceInventory.getBurnTimeRemainingScaled(20);
@@ -38,6 +38,6 @@ public class GuiAlchemyFurnace extends GuiContainer {
       i1 = this.furnaceInventory.getContentsScaled(48);
       this.drawTexturedModalRect(k + 61, l + 12 + 48 - i1, 200, 48 - i1, 8, i1);
       this.drawTexturedModalRect(k + 60, l + 8, 232, 0, 10, 55);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
    }
 }

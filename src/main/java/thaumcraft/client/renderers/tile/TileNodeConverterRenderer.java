@@ -12,6 +12,7 @@ import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import org.lwjgl.opengl.GL11;
 import thaumcraft.client.lib.UtilsFX;
+import thaumcraft.common.tiles.TileChestHungry;
 import thaumcraft.common.tiles.TileNodeConverter;
 
 @SideOnly(Side.CLIENT)
@@ -24,6 +25,9 @@ public class TileNodeConverterRenderer extends TileEntitySpecialRenderer {
    }
 
    public void renderTileEntityAt(TileNodeConverter tile, double par2, double par4, double par6, float par8) {
+
+      if (!tile.hasWorldObj()) {return;}
+      if (tile.getBlockType() == null) {return;}
       int bright = 20;
       if (tile.getWorldObj() != null) {
          bright = tile.getBlockType().getMixedBrightnessForBlock(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord);
@@ -94,7 +98,8 @@ public class TileNodeConverterRenderer extends TileEntitySpecialRenderer {
       GL11.glPopMatrix();
    }
 
-   public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {
-      this.renderTileEntityAt((TileNodeConverter)par1TileEntity, par2, par4, par6, par8);
+   public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
+      if (!(tileEntity instanceof TileNodeConverter)){return;}
+      this.renderTileEntityAt((TileNodeConverter)tileEntity, par2, par4, par6, par8);
    }
 }

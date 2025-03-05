@@ -15,6 +15,8 @@ public class TileChestHungryRenderer extends TileEntitySpecialRenderer {
    private ModelChest chestModel = new ModelChest();
 
    public void renderTileEntityChestAt(TileChestHungry chest, double par2, double par4, double par6, float par8) {
+      if (!chest.hasWorldObj()) {return;}
+      if (chest.getBlockType() == null) {return;}
       int var9 = 0;
       if (!chest.hasWorldObj()) {
          var9 = 0;
@@ -60,7 +62,8 @@ public class TileChestHungryRenderer extends TileEntitySpecialRenderer {
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
    }
 
-   public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {
-      this.renderTileEntityChestAt((TileChestHungry)par1TileEntity, par2, par4, par6, par8);
+   public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
+      if (!(tileEntity instanceof TileChestHungry)){return;}
+      this.renderTileEntityChestAt((TileChestHungry)tileEntity, par2, par4, par6, par8);
    }
 }

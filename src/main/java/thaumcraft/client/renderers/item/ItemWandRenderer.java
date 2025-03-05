@@ -104,10 +104,10 @@ public class ItemWandRenderer implements IItemRenderer {
             GL11.glTranslated(0.0F, -1.0F, 0.0F);
          }
 
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 771);
          this.model.render(item);
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glPopMatrix();
       }
    }

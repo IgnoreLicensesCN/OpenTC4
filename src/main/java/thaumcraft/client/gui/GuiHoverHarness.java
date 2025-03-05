@@ -22,9 +22,9 @@ public class GuiHoverHarness extends GuiContainer {
       UtilsFX.bindTexture("textures/gui/guihoverharness.png");
       float t = this.zLevel;
       this.zLevel = 200.0F;
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       this.drawTexturedModalRect(8 + this.blockSlot * 18, 142, 240, 0, 16, 16);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       this.zLevel = t;
    }
 

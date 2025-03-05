@@ -45,7 +45,7 @@ public class FXShieldRunes extends EntityFX {
       tessellator.draw();
       GL11.glPushMatrix();
       GL11.glDisable(2884);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       if (this.model == null) {
          this.model = AdvancedModelLoader.loadModel(MODEL);
@@ -74,7 +74,7 @@ public class FXShieldRunes extends EntityFX {
       GL11.glScaled(0.4 * (double)this.target.height, 0.4 * (double)this.target.height, 0.4 * (double)this.target.height);
       GL11.glColor4f(b, b, b, Math.min(1.0F, (1.0F - fade) * 3.0F));
       this.model.renderAll();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glEnable(2884);
       GL11.glPopMatrix();
       Minecraft.getMinecraft().renderEngine.bindTexture(UtilsFX.getParticleTexture());

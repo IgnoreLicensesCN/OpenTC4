@@ -36,7 +36,7 @@ public class GuiTravelingTrunk extends GuiContainer {
 
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       UtilsFX.bindTexture("textures/gui/guitrunkbase.png");
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       int j = (this.width - this.xSize) / 2;
       int k = (this.height - this.ySize) / 2;
       this.drawTexturedModalRect(j, k, 0, 0, this.xSize, this.ySize);
@@ -50,7 +50,7 @@ public class GuiTravelingTrunk extends GuiContainer {
          this.drawTexturedModalRect(j + 112, k, 176, 0, 10, 10);
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
    }
 
    protected void mouseClicked(int i, int j, int k) {

@@ -128,6 +128,7 @@ public class FXBeamPower extends EntityFX {
       GL11.glDisable(2884);
       float var11 = slide + f;
       float var12 = -var11 * 0.2F - (float)MathHelper.floor_float(-var11 * 0.1F);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       GL11.glDepthMask(false);
       float xx = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)f - interpPosX);
@@ -167,6 +168,7 @@ public class FXBeamPower extends EntityFX {
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       GL11.glDepthMask(true);
       GL11.glBlendFunc(770, 771);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glEnable(2884);
       GL11.glPopMatrix();
       this.renderFlare(tessellator, f, f1, f2, f3, f4, f5);
@@ -184,6 +186,7 @@ public class FXBeamPower extends EntityFX {
 
       GL11.glPushMatrix();
       GL11.glDepthMask(false);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       UtilsFX.bindTexture(ParticleEngine.particleTexture);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.66F);
@@ -206,6 +209,7 @@ public class FXBeamPower extends EntityFX {
       tessellator.addVertexWithUV(var13 + f1 * var12 - f4 * var12, var14 - f2 * var12, var15 + f3 * var12 - f5 * var12, var8, var11);
       tessellator.draw();
       GL11.glBlendFunc(770, 771);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDepthMask(true);
       GL11.glPopMatrix();
    }

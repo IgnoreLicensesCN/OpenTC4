@@ -98,7 +98,7 @@ public class GuiGolem extends GuiContainer {
       int var10000 = par2 - (baseX + 139);
       var10000 = par3 - (baseY + 10);
       GL11.glPushMatrix();
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       UtilsFX.bindTexture("textures/gui/guigolem.png");
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       this.drawTexturedModalRect(baseX, baseY, 0, 0, this.xSize, this.ySize);
@@ -265,7 +265,7 @@ public class GuiGolem extends GuiContainer {
          GL11.glPopMatrix();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glPopMatrix();
       this.drawGolem(this.mc, baseX + 51, baseY + 75, 30, (float)(baseX + 51) - this.xSize_lo, (float)(baseY + 75 - 50) - this.ySize_lo);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

@@ -123,7 +123,7 @@ public class GuiFocalManipulator extends GuiContainer {
       UtilsFX.bindTexture("textures/gui/gui_wandtable.png");
       int k = (this.width - this.xSize) / 2;
       int l = (this.height - this.ySize) / 2;
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
       if (this.table.getStackInSlot(0) == null || this.table.rank < 0 || this.table.reset) {
@@ -205,7 +205,7 @@ public class GuiFocalManipulator extends GuiContainer {
          for(int a = 0; a < this.possibleUpgrades.size(); ++a) {
             FocusUpgradeType u = this.possibleUpgrades.get(a);
             GL11.glPushMatrix();
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(770, 771);
             this.mc.renderEngine.bindTexture(u.icon);
             UtilsFX.drawTexturedQuadFull(k + 48 + a * 16, l + 104, this.zLevel);
@@ -223,14 +223,14 @@ public class GuiFocalManipulator extends GuiContainer {
       for(int a = 0; a < this.upgrades.size(); ++a) {
          FocusUpgradeType u = this.upgrades.get(a);
          GL11.glPushMatrix();
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 771);
          this.mc.renderEngine.bindTexture(u.icon);
          UtilsFX.drawTexturedQuadFull(k + 56 + a * 16, l + 32, this.zLevel);
          GL11.glPopMatrix();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
    }
 
    private void gatherInfo() {
@@ -342,7 +342,7 @@ public class GuiFocalManipulator extends GuiContainer {
 
    private void drawSparkle(double x, double y, int frame, float r, float g, float b) {
       GL11.glPushMatrix();
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       GL11.glColor4f(r, g, b, 0.9F);
       GL11.glTranslated(x, y, 200.0F);
@@ -360,7 +360,7 @@ public class GuiFocalManipulator extends GuiContainer {
       tessellator.addVertexWithUV(-4.0F, -4.0F, this.zLevel, var8, var11);
       tessellator.draw();
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glPopMatrix();
    }
 

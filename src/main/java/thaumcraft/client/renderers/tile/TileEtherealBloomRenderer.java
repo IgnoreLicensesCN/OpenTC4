@@ -60,7 +60,7 @@ public class TileEtherealBloomRenderer extends TileEntitySpecialRenderer {
       Tessellator tessellator = Tessellator.instance;
       GL11.glPushMatrix();
       GL11.glAlphaFunc(516, 0.003921569F);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       GL11.glPushMatrix();
       GL11.glDepthMask(false);
@@ -120,7 +120,7 @@ public class TileEtherealBloomRenderer extends TileEntitySpecialRenderer {
       }
 
       GL11.glPopMatrix();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glAlphaFunc(516, 0.1F);
       GL11.glPopMatrix();
    }

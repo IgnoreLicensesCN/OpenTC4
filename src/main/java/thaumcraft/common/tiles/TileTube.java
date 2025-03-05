@@ -5,6 +5,8 @@ import java.util.Random;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -410,5 +412,11 @@ public class TileTube extends TileThaumcraft implements IEssentiaTransport, IWan
       }
 
       cuboids.add(new IndexedCuboid6(6, new Cuboid6((double)this.xCoord + (double)0.34375F, (double)this.yCoord + (double)0.34375F, (double)this.zCoord + (double)0.34375F, (double)this.xCoord + (double)0.65625F, (double)this.yCoord + (double)0.65625F, (double)this.zCoord + (double)0.65625F)));
+   }
+
+   @Override
+   public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+      super.onDataPacket(net, pkt);
+      this.worldObj.func_147479_m(this.xCoord, this.yCoord, this.zCoord);
    }
 }

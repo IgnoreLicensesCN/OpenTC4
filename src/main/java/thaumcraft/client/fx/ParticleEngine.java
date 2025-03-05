@@ -42,7 +42,7 @@ public class ParticleEngine {
       GL11.glPushMatrix();
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       GL11.glDepthMask(false);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glAlphaFunc(516, 0.003921569F);
       boolean rebound = false;
 
@@ -100,7 +100,7 @@ public class ParticleEngine {
          }
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDepthMask(true);
       GL11.glAlphaFunc(516, 0.1F);
       GL11.glPopMatrix();

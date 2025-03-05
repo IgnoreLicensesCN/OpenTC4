@@ -32,12 +32,12 @@ public class RenderEldritchGolem extends RenderLiving {
    }
 
    public void doRenderLiving(EntityLiving golem, double par2, double par4, double par6, float par8, float par9) {
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glAlphaFunc(516, 0.003921569F);
       GL11.glBlendFunc(770, 771);
       double d3 = par4 - (double)golem.yOffset;
       super.doRender(golem, par2, d3, par6, par8, par9);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glAlphaFunc(516, 0.1F);
    }
 

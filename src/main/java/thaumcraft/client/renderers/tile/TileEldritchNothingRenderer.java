@@ -70,13 +70,13 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
                f7 = 0.1F;
                f5 = 65.0F;
                f6 = 0.125F;
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(770, 771);
             }
 
             if (i == 1) {
                UtilsFX.bindTexture(this.t2);
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(1, 1);
                f6 = 0.5F;
             }
@@ -145,7 +145,7 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
          GL11.glPopMatrix();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(3168);
       GL11.glDisable(3169);
       GL11.glDisable(3170);
@@ -171,13 +171,13 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
                f7 = 0.1F;
                f5 = 65.0F;
                f6 = 0.125F;
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(770, 771);
             }
 
             if (i == 1) {
                UtilsFX.bindTexture(this.t2);
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(1, 1);
                f6 = 0.5F;
             }
@@ -246,7 +246,7 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
          GL11.glPopMatrix();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(3168);
       GL11.glDisable(3169);
       GL11.glDisable(3170);
@@ -272,13 +272,13 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
                f7 = 0.1F;
                f5 = 65.0F;
                f6 = 0.125F;
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(770, 771);
             }
 
             if (i == 1) {
                UtilsFX.bindTexture(this.t2);
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(1, 1);
                f6 = 0.5F;
             }
@@ -347,7 +347,7 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
          GL11.glPopMatrix();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(3168);
       GL11.glDisable(3169);
       GL11.glDisable(3170);
@@ -373,13 +373,13 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
                f7 = 0.1F;
                f5 = 65.0F;
                f6 = 0.125F;
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(770, 771);
             }
 
             if (i == 1) {
                UtilsFX.bindTexture(this.t2);
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(1, 1);
                f6 = 0.5F;
             }
@@ -448,7 +448,7 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
          GL11.glPopMatrix();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(3168);
       GL11.glDisable(3169);
       GL11.glDisable(3170);
@@ -474,13 +474,13 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
                f7 = 0.1F;
                f5 = 65.0F;
                f6 = 0.125F;
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(770, 771);
             }
 
             if (i == 1) {
                UtilsFX.bindTexture(this.t2);
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(1, 1);
                f6 = 0.5F;
             }
@@ -549,7 +549,7 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
          GL11.glPopMatrix();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(3168);
       GL11.glDisable(3169);
       GL11.glDisable(3170);
@@ -575,13 +575,13 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
                f7 = 0.1F;
                f5 = 65.0F;
                f6 = 0.125F;
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(770, 771);
             }
 
             if (i == 1) {
                UtilsFX.bindTexture(this.t2);
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(1, 1);
                f6 = 0.5F;
             }
@@ -650,7 +650,7 @@ public class TileEldritchNothingRenderer extends TileEntitySpecialRenderer {
          GL11.glPopMatrix();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(3168);
       GL11.glDisable(3169);
       GL11.glDisable(3170);

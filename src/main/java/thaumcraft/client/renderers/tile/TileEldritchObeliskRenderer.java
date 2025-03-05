@@ -36,6 +36,8 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
    }
 
    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {
+      if (!te.hasWorldObj()) {return;}
+      if (te.getBlockType() == null) {return;}
       double var10002 = (double)te.xCoord + (double)0.5F;
       double var10003 = (double)te.yCoord + (double)0.5F;
       double var10004 = te.zCoord;
@@ -55,7 +57,7 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
       GL11.glEnable(2896);
       GL11.glEnable(32826);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       String tempTex1 = this.t4;
       String tempTex2 = this.t5;
@@ -94,7 +96,7 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
       GL11.glRotated(90.0F, -1.0F, 0.0F, 0.0F);
       this.model.renderPart("Cap");
       GL11.glPopMatrix();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(32826);
       GL11.glPopMatrix();
    }
@@ -117,13 +119,13 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
                f7 = 0.1F;
                f5 = 65.0F;
                f6 = 0.125F;
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(770, 771);
             }
 
             if (i == 1) {
                UtilsFX.bindTexture(this.t2);
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(1, 1);
                f6 = 0.5F;
             }
@@ -193,7 +195,7 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
          GL11.glPopMatrix();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(3168);
       GL11.glDisable(3169);
       GL11.glDisable(3170);
@@ -219,13 +221,13 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
                f7 = 0.1F;
                f5 = 65.0F;
                f6 = 0.125F;
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(770, 771);
             }
 
             if (i == 1) {
                UtilsFX.bindTexture(this.t2);
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(1, 1);
                f6 = 0.5F;
             }
@@ -295,7 +297,7 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
          GL11.glPopMatrix();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(3168);
       GL11.glDisable(3169);
       GL11.glDisable(3170);
@@ -321,13 +323,13 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
                f7 = 0.1F;
                f5 = 65.0F;
                f6 = 0.125F;
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(770, 771);
             }
 
             if (i == 1) {
                UtilsFX.bindTexture(this.t2);
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(1, 1);
                f6 = 0.5F;
             }
@@ -397,7 +399,7 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
          GL11.glPopMatrix();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(3168);
       GL11.glDisable(3169);
       GL11.glDisable(3170);
@@ -423,13 +425,13 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
                f7 = 0.1F;
                f5 = 65.0F;
                f6 = 0.125F;
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(770, 771);
             }
 
             if (i == 1) {
                UtilsFX.bindTexture(this.t2);
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(1, 1);
                f6 = 0.5F;
             }
@@ -499,7 +501,7 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
          GL11.glPopMatrix();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(3168);
       GL11.glDisable(3169);
       GL11.glDisable(3170);
@@ -517,7 +519,7 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
    public void renderSide(int h) {
       Tessellator tessellator = Tessellator.instance;
       GL11.glEnable(32826);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       tessellator.startDrawingQuads();
@@ -527,7 +529,7 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
       tessellator.addVertexWithUV(0.5F, 0.0F, 0.0F, 1.0F, 0.0F);
       tessellator.addVertexWithUV(-0.5F, 0.0F, 0.0F, 0.0F, 0.0F);
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(32826);
    }
 }

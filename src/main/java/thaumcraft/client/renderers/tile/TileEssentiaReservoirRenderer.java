@@ -46,7 +46,7 @@ public class TileEssentiaReservoirRenderer extends TileEntitySpecialRenderer {
    public void renderLiquid(TileEssentiaReservoir te, double x, double y, double z, float f) {
       if (this.field_147501_a.field_147553_e != null && te.displayAspect != null && te.essentia.visSize() != 0) {
          GL11.glPushMatrix();
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 771);
          World world = te.getWorldObj();
          RenderBlocks renderBlocks = new RenderBlocks();
@@ -68,7 +68,7 @@ public class TileEssentiaReservoirRenderer extends TileEntitySpecialRenderer {
          renderBlocks.renderFaceXPos(ConfigBlocks.blockEssentiaReservoir, 0.0F, 0.5F, 0.0F, icon);
          t.draw();
          GL11.glEnable(2896);
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glPopMatrix();
       }
    }
@@ -92,7 +92,7 @@ public class TileEssentiaReservoirRenderer extends TileEntitySpecialRenderer {
       GL11.glTranslated(0.0F, 0.0F, -0.5F);
    }
 
-   public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {
-      this.renderTileEntityAt((TileEssentiaReservoir)par1TileEntity, par2, par4, par6, par8);
+   public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
+      this.renderTileEntityAt((TileEssentiaReservoir)tileEntity, par2, par4, par6, par8);
    }
 }

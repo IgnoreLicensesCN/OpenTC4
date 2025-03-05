@@ -54,7 +54,7 @@ public class GuiThaumatorium extends GuiContainer {
       UtilsFX.bindTexture("textures/gui/gui_thaumatorium.png");
       int k = (this.width - this.xSize) / 2;
       int l = (this.height - this.ySize) / 2;
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
       if (this.index >= this.container.recipes.size()) {
          this.index = this.container.recipes.size() - 1;
@@ -105,18 +105,18 @@ public class GuiThaumatorium extends GuiContainer {
             int y = my - (l + 16);
             if (x >= 0 && y >= 0 && x < 16 && y < 16 || this.inventory.recipeHash.contains(this.container.recipes.get(this.index).hash)) {
                GL11.glPushMatrix();
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                this.drawTexturedModalRect(k + 104, l + 8, 176, 96, 48, 48);
-               GL11.glDisable(3042);
+               GL11.glDisable(GL11.GL_BLEND);
                GL11.glPopMatrix();
             }
 
             GL11.glPushMatrix();
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             float alpha = 0.6F + MathHelper.sin((float)this.mc.thePlayer.ticksExisted / 5.0F) * 0.4F + 0.4F;
             GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
             this.drawTexturedModalRect(k + 88, l + 16, 176, 56, 24, 24);
-            GL11.glDisable(3042);
+            GL11.glDisable(GL11.GL_BLEND);
             GL11.glPopMatrix();
          }
 
@@ -134,7 +134,7 @@ public class GuiThaumatorium extends GuiContainer {
          }
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
    }
 
    private void drawAspects(int k, int l) {
@@ -190,7 +190,7 @@ public class GuiThaumatorium extends GuiContainer {
 
       GL11.glEnable(2896);
       GL11.glEnable(2884);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       itemRender.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.renderEngine, this.container.recipes.get(this.index).getRecipeOutput(), x + 112, y + 16);
       itemRender.renderItemOverlayIntoGUI(this.mc.fontRenderer, this.mc.renderEngine, this.container.recipes.get(this.index).getRecipeOutput(), x + 112, y + 16);
       int xx = mx - (x + 112);
@@ -203,7 +203,7 @@ public class GuiThaumatorium extends GuiContainer {
          itemRender.renderWithColor = true;
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(2896);
       GL11.glPopMatrix();
    }

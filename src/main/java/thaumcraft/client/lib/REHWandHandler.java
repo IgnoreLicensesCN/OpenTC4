@@ -198,20 +198,20 @@ public class REHWandHandler {
             GL11.glPushMatrix();
             GL11.glRotatef(partialTicks + (float)(mc.thePlayer.ticksExisted % 720) / 2.0F, 0.0F, 0.0F, 1.0F);
             GL11.glAlphaFunc(516, 0.003921569F);
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(770, 771);
             UtilsFX.renderQuadCenteredFromTexture(width * 2.75F * radialHudScale, 0.5F, 0.5F, 0.5F, 200, 771, 0.5F);
-            GL11.glDisable(3042);
+            GL11.glDisable(GL11.GL_BLEND);
             GL11.glAlphaFunc(516, 0.1F);
             GL11.glPopMatrix();
             UtilsFX.bindTexture("textures/misc/radial2.png");
             GL11.glPushMatrix();
             GL11.glRotatef(-(partialTicks + (float)(mc.thePlayer.ticksExisted % 720) / 2.0F), 0.0F, 0.0F, 1.0F);
             GL11.glAlphaFunc(516, 0.003921569F);
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(770, 771);
             UtilsFX.renderQuadCenteredFromTexture(width * 2.55F * radialHudScale, 0.5F, 0.5F, 0.5F, 200, 771, 0.5F);
-            GL11.glDisable(3042);
+            GL11.glDisable(GL11.GL_BLEND);
             GL11.glAlphaFunc(516, 0.1F);
             GL11.glPopMatrix();
             if (focus != null) {
@@ -278,7 +278,7 @@ public class REHWandHandler {
 
             GL11.glDepthMask(true);
             GL11.glEnable(2929);
-            GL11.glDisable(3042);
+            GL11.glDisable(GL11.GL_BLEND);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glPopMatrix();
          }
@@ -378,7 +378,7 @@ public class REHWandHandler {
       GL11.glDepthMask(false);
       GL11.glDisable(2929);
       GL11.glDisable(2884);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       GL11.glAlphaFunc(516, 0.003921569F);
       EntityPlayer player = (EntityPlayer)mc.renderViewEntity;
@@ -425,7 +425,7 @@ public class REHWandHandler {
       GL11.glTexEnvi(8960, 8704, 8448);
       GL11.glEnable(2896);
       GL11.glAlphaFunc(516, 0.1F);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       GL11.glEnable(2884);
       GL11.glEnable(2929);
@@ -447,7 +447,7 @@ public class REHWandHandler {
          GL11.glDepthMask(false);
          GL11.glDisable(2929);
          GL11.glDisable(2884);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 1);
          GL11.glTranslated(-iPX + x + (double)0.5F, -iPY + y + (double)0.5F, -iPZ + z + (double)0.5F);
          GL11.glPushMatrix();
@@ -479,7 +479,7 @@ public class REHWandHandler {
 
          GL11.glPopMatrix();
          GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glEnable(2884);
          GL11.glEnable(2929);
          GL11.glDepthMask(true);

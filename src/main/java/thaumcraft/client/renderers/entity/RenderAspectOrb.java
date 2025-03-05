@@ -23,7 +23,7 @@ public class RenderAspectOrb extends Render {
    public void renderAspectOrb(EntityAspectOrb orb, double par2, double par4, double par6, float par8, float par9) {
       GL11.glPushMatrix();
       GL11.glTranslatef((float)par2, (float)par4, (float)par6);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       if (orb.getAspect() != null) {
          GL11.glBlendFunc(770, orb.getAspect().getBlend());
       } else {
@@ -60,7 +60,7 @@ public class RenderAspectOrb extends Render {
       tessellator.addVertexWithUV(f6 - f7, 1.0F - f8, 0.0F, f3, f4);
       tessellator.addVertexWithUV(0.0F - f7, 1.0F - f8, 0.0F, f2, f4);
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(32826);
       GL11.glPopMatrix();
    }

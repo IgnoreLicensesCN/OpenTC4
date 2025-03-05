@@ -176,7 +176,7 @@ public class FXLightningBolt extends EntityFX {
          tessellator.draw();
          GL11.glPushMatrix();
          GL11.glDepthMask(false);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          this.particleRed = this.particleGreen = this.particleBlue = 1.0F;
          float ma = 1.0F;
          switch (this.type) {
@@ -274,7 +274,7 @@ public class FXLightningBolt extends EntityFX {
          tessellator.setBrightness(15728880);
          this.renderBolt(tessellator, partialframe, cosyaw, cospitch, sinyaw, cossinpitch, 1, ma);
          tessellator.draw();
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glDepthMask(true);
          GL11.glPopMatrix();
          Minecraft.getMinecraft().renderEngine.bindTexture(UtilsFX.getParticleTexture());

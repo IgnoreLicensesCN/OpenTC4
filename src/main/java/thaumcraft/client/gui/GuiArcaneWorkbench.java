@@ -36,11 +36,11 @@ public class GuiArcaneWorkbench extends GuiContainer {
    protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
       UtilsFX.bindTexture("textures/gui/gui_arcaneworkbench.png");
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       int var5 = (this.width - this.xSize) / 2;
       int var6 = (this.height - this.ySize) / 2;
       this.drawTexturedModalRect(var5, var6, 0, 0, this.xSize, this.ySize);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       ItemWandCasting wand = null;
       if (this.tileEntity.getStackInSlot(10) != null && this.tileEntity.getStackInSlot(10).getItem() instanceof ItemWandCasting) {
          wand = (ItemWandCasting)this.tileEntity.getStackInSlot(10).getItem();
@@ -79,11 +79,11 @@ public class GuiArcaneWorkbench extends GuiContainer {
          itemRender.renderWithColor = false;
          GL11.glEnable(2896);
          GL11.glEnable(2884);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          itemRender.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.renderEngine, ThaumcraftCraftingManager.findMatchingArcaneRecipe(this.tileEntity, this.ip.player), var5 + 160, var6 + 64);
          itemRender.renderItemOverlayIntoGUI(this.mc.fontRenderer, this.mc.renderEngine, ThaumcraftCraftingManager.findMatchingArcaneRecipe(this.tileEntity, this.ip.player), var5 + 160, var6 + 64);
          itemRender.renderWithColor = true;
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glDisable(2896);
          GL11.glPopMatrix();
          GL11.glPushMatrix();

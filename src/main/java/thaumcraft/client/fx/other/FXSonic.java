@@ -16,8 +16,8 @@ public class FXSonic extends EntityFX {
    Entity target = null;
    float yaw = 0.0F;
    float pitch = 0.0F;
-   private IModelCustom model;
-   private static final ResourceLocation MODEL = new ResourceLocation("thaumcraft", "textures/models/hemis.obj");
+   public static IModelCustom model = null;
+   public static final ResourceLocation MODEL = new ResourceLocation("thaumcraft", "textures/models/hemis.obj");
 
    public FXSonic(World world, double d, double d1, double d2, Entity target, int age) {
       super(world, d, d1, d2, 0.0F, 0.0F, 0.0F);
@@ -43,10 +43,10 @@ public class FXSonic extends EntityFX {
       tessellator.draw();
       GL11.glPushMatrix();
       GL11.glDisable(2884);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
-      if (this.model == null) {
-         this.model = AdvancedModelLoader.loadModel(MODEL);
+      if (model == null){
+         model = AdvancedModelLoader.loadModel(MODEL);
       }
 
       float fade = ((float)this.particleAge + f) / (float)this.particleMaxAge;
@@ -67,8 +67,8 @@ public class FXSonic extends EntityFX {
       GL11.glTranslated(0.0F, 0.0F, 2.0F * this.target.height + this.target.width / 2.0F);
       GL11.glScaled((double)0.25F * (double)this.target.height, (double)0.25F * (double)this.target.height, -1.0F * this.target.height);
       GL11.glColor4f(b, b, b, 1.0F);
-      this.model.renderAll();
-      GL11.glDisable(3042);
+      model.renderAll();
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glEnable(2884);
       GL11.glPopMatrix();
       Minecraft.getMinecraft().renderEngine.bindTexture(UtilsFX.getParticleTexture());

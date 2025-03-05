@@ -28,7 +28,7 @@ public class ModelTaintSporeSwarmer extends ModelBase {
       this.setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
       EntityTaintSporeSwarmer spore = (EntityTaintSporeSwarmer)par1Entity;
       GL11.glPushMatrix();
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       GL11.glPushMatrix();
       float f1 = spore.displaySize;
@@ -50,7 +50,7 @@ public class ModelTaintSporeSwarmer extends ModelBase {
       OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) k, (float) l);
       this.cube2.render(par7);
       GL11.glPopMatrix();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glPopMatrix();
    }
 

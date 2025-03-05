@@ -20,11 +20,13 @@ import thaumcraft.common.tiles.TileAlchemyFurnaceAdvanced;
 
 @SideOnly(Side.CLIENT)
 public class TileAlchemyFurnaceAdvancedRenderer extends TileEntitySpecialRenderer {
-   private IModelCustom model;
-   private static final ResourceLocation FURNACE = new ResourceLocation("thaumcraft", "textures/models/adv_alch_furnace.obj");
+   public static IModelCustom model = null;
+   public static final ResourceLocation FURNACE = new ResourceLocation("thaumcraft", "textures/models/adv_alch_furnace.obj");
 
    public TileAlchemyFurnaceAdvancedRenderer() {
-      this.model = AdvancedModelLoader.loadModel(FURNACE);
+      if (model == null){
+         model = AdvancedModelLoader.loadModel(FURNACE);
+      }
    }
 
    public void renderTileEntityAt(TileAlchemyFurnaceAdvanced tile, double par2, double par4, double par6, float par8) {
@@ -38,7 +40,7 @@ public class TileAlchemyFurnaceAdvancedRenderer extends TileEntitySpecialRendere
          UtilsFX.bindTexture("textures/models/alch_furnace_on.png");
       }
 
-      this.model.renderPart("Base");
+      model.renderPart("Base");
       if (tile.vis <= 0) {
          UtilsFX.bindTexture("textures/models/alch_furnace_tank.png");
       } else {
@@ -48,7 +50,7 @@ public class TileAlchemyFurnaceAdvancedRenderer extends TileEntitySpecialRendere
       for(int a = 0; a < 4; ++a) {
          GL11.glPushMatrix();
          GL11.glRotatef((float)(90 * a), 0.0F, 0.0F, 1.0F);
-         this.model.renderPart("Tank");
+         model.renderPart("Tank");
          GL11.glPopMatrix();
       }
 
@@ -114,14 +116,17 @@ public class TileAlchemyFurnaceAdvancedRenderer extends TileEntitySpecialRendere
 
    public void renderQuadCenteredFromIcon(IIcon icon, int brightness, float width) {
       Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
-      RenderHelper.disableStandardItemLighting();
+
+      GL11.glDisable(GL11.GL_LIGHTING);
+//      RenderHelper.disableStandardItemLighting();
+
       Tessellator tessellator = Tessellator.instance;
       float f1 = icon.getMaxU();
       float f2 = icon.getMinV();
       float f3 = icon.getMinU();
       float f4 = icon.getMaxV();
       GL11.glEnable(32826);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       tessellator.startDrawingQuads();
       tessellator.setBrightness(brightness);
@@ -131,12 +136,13 @@ public class TileAlchemyFurnaceAdvancedRenderer extends TileEntitySpecialRendere
       tessellator.addVertexWithUV(1.0F, width, 0.0F, f3, f2);
       tessellator.addVertexWithUV(0.0F, width, 0.0F, f1, f2);
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(32826);
-      RenderHelper.enableStandardItemLighting();
+      GL11.glEnable(GL11.GL_LIGHTING);
+//      RenderHelper.enableStandardItemLighting();
    }
 
-   public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {
-      this.renderTileEntityAt((TileAlchemyFurnaceAdvanced)par1TileEntity, par2, par4, par6, par8);
+   public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
+      this.renderTileEntityAt((TileAlchemyFurnaceAdvanced)tileEntity, par2, par4, par6, par8);
    }
 }

@@ -36,7 +36,7 @@ public class TileWardedRenderer extends TileEntitySpecialRenderer {
             ItemWandCasting wand = (ItemWandCasting)player.getCurrentEquippedItem().getItem();
             if (wand.getFocus(player.getCurrentEquippedItem()) != null && wand.getFocus(player.getCurrentEquippedItem()) instanceof ItemFocusWarding) {
                GL11.glPushMatrix();
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(770, 1);
                GL11.glAlphaFunc(516, 0.003921569F);
                GL11.glTranslatef((float)x + 0.5F, (float)y, (float)z + 0.5F);
@@ -89,7 +89,7 @@ public class TileWardedRenderer extends TileEntitySpecialRenderer {
                GL11.glTexEnvi(8960, 8704, 8448);
                GL11.glEnable(2896);
                GL11.glAlphaFunc(516, 0.1F);
-               GL11.glDisable(3042);
+               GL11.glDisable(GL11.GL_BLEND);
                GL11.glColor3f(1.0F, 1.0F, 1.0F);
                GL11.glPopMatrix();
             }
@@ -177,7 +177,7 @@ public class TileWardedRenderer extends TileEntitySpecialRenderer {
       return out;
    }
 
-   public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {
-      this.renderTileEntityAt((TileWarded)par1TileEntity, par2, par4, par6, par8);
+   public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
+      this.renderTileEntityAt((TileWarded)tileEntity, par2, par4, par6, par8);
    }
 }

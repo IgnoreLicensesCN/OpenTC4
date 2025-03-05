@@ -66,7 +66,7 @@ public class GuiSpa extends GuiContainer {
       UtilsFX.bindTexture("textures/gui/gui_spa.png");
       int k = (this.width - this.xSize) / 2;
       int l = (this.height - this.ySize) / 2;
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
       if (this.spa.getMix()) {
@@ -92,7 +92,7 @@ public class GuiSpa extends GuiContainer {
       }
 
       this.drawTexturedModalRect(k + 106, l + 11, 232, 0, 10, 55);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
    }
 
    public static void renderFluid(IIcon icon) {

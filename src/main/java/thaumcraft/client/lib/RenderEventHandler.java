@@ -311,7 +311,7 @@ public class RenderEventHandler {
                GL11.glScalef(0.04F, 0.04F, 0.04F);
                GL11.glTranslated(0.0F, 6.0F, -0.1);
                int sw = Minecraft.getMinecraft().fontRenderer.getStringWidth(am);
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                Minecraft.getMinecraft().fontRenderer.drawString(am, 14 - sw, 1, 1118481);
                GL11.glTranslated(0.0F, 0.0F, -0.1);
                Minecraft.getMinecraft().fontRenderer.drawString(am, 13 - sw, 0, 16777215);
@@ -340,7 +340,7 @@ public class RenderEventHandler {
          GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
          GL11.glScalef(0.02F, 0.02F, 0.02F);
          int sw = Minecraft.getMinecraft().fontRenderer.getStringWidth(text);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          Minecraft.getMinecraft().fontRenderer.drawString(text, 1 - sw / 2, 1, 1118481);
          GL11.glTranslated(0.0F, 0.0F, -0.1);
          Minecraft.getMinecraft().fontRenderer.drawString(text, -sw / 2, 0, 16777215);
@@ -430,14 +430,14 @@ public class RenderEventHandler {
                   this.drawSpecialBlockoverlay(this.scanX + xx, this.scanY + yy, this.scanZ + zz, partialTicks, 16734721, alpha);
                } else if (value >= 0) {
                   GL11.glPushMatrix();
-                  GL11.glEnable(3042);
+                  GL11.glEnable(GL11.GL_BLEND);
                   GL11.glBlendFunc(770, 1);
                   GL11.glAlphaFunc(516, 0.003921569F);
                   GL11.glDisable(2884);
                   UtilsFX.bindTexture(TileNodeRenderer.nodetex);
                   this.drawPickScannedObject(this.scanX + xx, this.scanY + yy, this.scanZ + zz, partialTicks, alpha, (int)(time / 50L % 32L), (float)value / 7.0F);
                   GL11.glAlphaFunc(516, 0.1F);
-                  GL11.glDisable(3042);
+                  GL11.glDisable(GL11.GL_BLEND);
                   GL11.glEnable(2884);
                   GL11.glPopMatrix();
                }
@@ -595,7 +595,7 @@ public class RenderEventHandler {
       GL11.glPushMatrix();
       GL11.glDepthMask(false);
       GL11.glDisable(2884);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       ForgeDirection dir = ForgeDirection.getOrientation(side);
       GL11.glTranslated(-iPX + x + (double)0.5F - (double)((float)dir.offsetX * 0.01F), -iPY + y + (double)0.5F - (double)((float)dir.offsetY * 0.01F), -iPZ + z + (double)0.5F - (double)((float)dir.offsetZ * 0.01F));
@@ -611,7 +611,7 @@ public class RenderEventHandler {
       GL11.glScalef(0.98F, 0.98F, 0.98F);
       UtilsFX.renderQuadCenteredFromTexture("textures/blocks/empty.png", 1.0F, r, g, b, 200, 1, 1.0F);
       GL11.glPopMatrix();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glEnable(2884);
       GL11.glDepthMask(true);
       GL11.glPopMatrix();
@@ -640,7 +640,7 @@ public class RenderEventHandler {
       GL11.glPushMatrix();
       GL11.glDepthMask(false);
       GL11.glDisable(2884);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       ForgeDirection dir = ForgeDirection.getOrientation(side);
       GL11.glTranslated(-iPX + x + (double)0.5F + (double)((float)dir.offsetX * 0.01F), -iPY + y + (double)0.5F + (double)((float)dir.offsetY * 0.01F), -iPZ + z + (double)0.5F + (double)((float)dir.offsetZ * 0.01F));
@@ -656,7 +656,7 @@ public class RenderEventHandler {
       GL11.glScalef(0.4F, 0.4F, 0.4F);
       UtilsFX.renderQuadCenteredFromTexture("textures/misc/mark.png", 1.0F, r, g, b, 200, 1, 1.0F);
       GL11.glPopMatrix();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glEnable(2884);
       GL11.glDepthMask(true);
       GL11.glPopMatrix();
@@ -677,7 +677,7 @@ public class RenderEventHandler {
       GL11.glPushMatrix();
       GL11.glDepthMask(false);
       GL11.glDisable(2884);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       ForgeDirection dir = ForgeDirection.getOrientation(side);
       GL11.glTranslated(-iPX + x + (double)0.5F + (double)((float)dir.offsetX * 0.01F), -iPY + y + (double)0.5F + (double)((float)dir.offsetY * 0.01F), -iPZ + z + (double)0.5F + (double)((float)dir.offsetZ * 0.01F));
@@ -693,7 +693,7 @@ public class RenderEventHandler {
       GL11.glScalef(0.65F, 0.65F, 0.65F);
       UtilsFX.renderQuadCenteredFromTexture("textures/misc/home.png", 1.0F, r, g, b, 200, 1, 1.0F);
       GL11.glPopMatrix();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glEnable(2884);
       GL11.glDepthMask(true);
       GL11.glPopMatrix();
@@ -720,7 +720,7 @@ public class RenderEventHandler {
       }
 
       GL11.glDepthMask(false);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       Tessellator tessellator = Tessellator.instance;
       double ds1y = ePY + (double)cc.height;
@@ -787,7 +787,7 @@ public class RenderEventHandler {
 
       tessellator.draw();
       GL11.glEnable(2884);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDepthMask(true);
    }
 

@@ -34,7 +34,7 @@ public class TileEldritchPortalRenderer extends TileEntitySpecialRenderer {
       UtilsFX.bindTexture(portaltex);
       GL11.glPushMatrix();
       GL11.glDepthMask(false);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       GL11.glColor4f(1.0F, 0.0F, 1.0F, 1.0F);
       if (Minecraft.getMinecraft().renderViewEntity instanceof EntityPlayer) {
@@ -71,7 +71,7 @@ public class TileEldritchPortalRenderer extends TileEntitySpecialRenderer {
          tessellator.draw();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDepthMask(true);
       GL11.glPopMatrix();
    }

@@ -25,7 +25,7 @@ public class FontHelper {
          matrix.load(matrixData);
          set2DMode();
          y = (float)mc.displayHeight - y * (float)sr.getScaleFactor() - font.getLineHeight() / (float)amt;
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          if (s.contains(formatEscape)) {
             String[] pars = s.split(formatEscape);
             float totalOffset = 0.0F;
@@ -45,7 +45,7 @@ public class FontHelper {
             font.drawString(x * (float)sr.getScaleFactor(), y - matrix.m31 * (float)sr.getScaleFactor(), s, scaleX / (float)amt, scaleY / (float)amt, format, rgba);
          }
 
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          set3DMode();
       }
    }

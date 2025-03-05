@@ -47,7 +47,7 @@ public class TileBellowsRenderer extends TileEntitySpecialRenderer {
       UtilsFX.bindTexture("textures/models/bellows.png");
       GL11.glPushMatrix();
       GL11.glEnable(2977);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glEnable(32826);
       GL11.glBlendFunc(770, 771);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -72,7 +72,7 @@ public class TileBellowsRenderer extends TileEntitySpecialRenderer {
       GL11.glPopMatrix();
       this.model.render();
       GL11.glDisable(32826);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       GL11.glPopMatrix();
    }

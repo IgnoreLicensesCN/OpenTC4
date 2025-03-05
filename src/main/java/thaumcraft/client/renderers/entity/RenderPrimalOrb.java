@@ -28,7 +28,7 @@ public class RenderPrimalOrb extends Render {
       GL11.glTranslatef((float)x, (float)y, (float)z);
       GL11.glDisable(3553);
       GL11.glShadeModel(7425);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       GL11.glDisable(3008);
       GL11.glEnable(2884);
@@ -60,7 +60,7 @@ public class RenderPrimalOrb extends Render {
       GL11.glPopMatrix();
       GL11.glDepthMask(true);
       GL11.glDisable(2884);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glShadeModel(7424);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       GL11.glEnable(3553);
@@ -69,7 +69,7 @@ public class RenderPrimalOrb extends Render {
       GL11.glPopMatrix();
       GL11.glPushMatrix();
       GL11.glTranslated(x, y, z);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       UtilsFX.bindTexture(ParticleEngine.particleTexture);
       f2 = (float)(entity.ticksExisted % 13) / 16.0F;
@@ -90,7 +90,7 @@ public class RenderPrimalOrb extends Render {
       tessellator.addVertexWithUV(f6 - f7, 1.0F - f8, 0.0F, f3, f4);
       tessellator.addVertexWithUV(0.0F - f7, 1.0F - f8, 0.0F, f2, f4);
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(32826);
       GL11.glPopMatrix();
    }

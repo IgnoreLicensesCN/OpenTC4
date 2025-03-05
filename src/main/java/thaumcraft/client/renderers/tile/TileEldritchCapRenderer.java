@@ -34,6 +34,8 @@ public class TileEldritchCapRenderer extends TileEntitySpecialRenderer {
    }
 
    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {
+      if (!te.hasWorldObj()) {return;}
+      if (te.getBlockType() == null) {return;}
       String tempTex = this.tex;
       GL11.glPushMatrix();
       if (te.getWorldObj() != null) {
@@ -61,7 +63,7 @@ public class TileEldritchCapRenderer extends TileEntitySpecialRenderer {
             this.entityitem.hoverStart = 0.0F;
          }
 
-         if (this.entityitem != null && this.eye != null) {
+         if (this.eye != null) {
             for(int a = 0; a < ((TileEldritchAltar)te).getEyes(); ++a) {
                GL11.glPushMatrix();
                GL11.glRotated(a * 90, 0.0F, 1.0F, 0.0F);

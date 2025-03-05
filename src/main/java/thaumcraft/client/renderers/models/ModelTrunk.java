@@ -40,7 +40,7 @@ public class ModelTrunk extends ModelBase {
       this.chestKnob.render(0.0625F);
       GL11.glPushMatrix();
       GL11.glTranslatef(this.chestKnob.offsetX, this.chestKnob.offsetY, this.chestKnob.offsetZ);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       GL11.glPushMatrix();
       GL11.glTranslatef(this.chestKnob.rotationPointX * 0.0625F, this.chestKnob.rotationPointY * 0.0625F, this.chestKnob.rotationPointZ * 0.0625F);
@@ -73,7 +73,7 @@ public class ModelTrunk extends ModelBase {
       tessellator.addVertexWithUV(0.0F, 1.0F, 0.0F, ff1, ff2);
       tessellator.draw();
       GL11.glPopMatrix();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glTranslatef(-this.chestKnob.offsetX, -this.chestKnob.offsetY, -this.chestKnob.offsetZ);
       GL11.glPopMatrix();
    }

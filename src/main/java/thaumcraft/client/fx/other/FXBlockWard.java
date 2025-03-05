@@ -54,7 +54,7 @@ public class FXBlockWard extends EntityFX {
       int frame = Math.min(15, (int)(15.0F * fade));
       UtilsFX.bindTexture("textures/models/hemis" + frame + ".png");
       GL11.glDepthMask(false);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, this.particleAlpha / 2.0F);
       float var13 = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)f - interpPosX);
@@ -80,7 +80,7 @@ public class FXBlockWard extends EntityFX {
       tessellator.addVertexWithUV((double)0.5F * (double)var12, (double)-0.5F * (double)var12, 0.0F, 1.0F, 0.0F);
       tessellator.addVertexWithUV((double)-0.5F * (double)var12, (double)-0.5F * (double)var12, 0.0F, 0.0F, 0.0F);
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDepthMask(true);
       GL11.glPopMatrix();
       Minecraft.getMinecraft().renderEngine.bindTexture(UtilsFX.getParticleTexture());

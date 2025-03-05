@@ -35,7 +35,7 @@ public class TileEssentiaCrystalizerRenderer extends TileEntitySpecialRenderer {
       GL11.glPushMatrix();
       UtilsFX.bindTexture("textures/models/crystalizer.png");
       this.model.renderAll();
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       UtilsFX.bindTexture("textures/models/vis_relay.png");
       GL11.glColor3f(tile.cr, tile.cg, tile.cb);
@@ -55,7 +55,7 @@ public class TileEssentiaCrystalizerRenderer extends TileEntitySpecialRenderer {
          GL11.glPopMatrix();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glPopMatrix();
       GL11.glPopMatrix();
    }
@@ -79,7 +79,7 @@ public class TileEssentiaCrystalizerRenderer extends TileEntitySpecialRenderer {
       GL11.glTranslated(0.0F, 0.0F, -0.5F);
    }
 
-   public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {
-      this.renderTileEntityAt((TileEssentiaCrystalizer)par1TileEntity, par2, par4, par6, par8);
+   public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
+      this.renderTileEntityAt((TileEssentiaCrystalizer)tileEntity, par2, par4, par6, par8);
    }
 }

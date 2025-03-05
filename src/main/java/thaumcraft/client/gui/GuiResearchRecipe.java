@@ -42,6 +42,7 @@ import thaumcraft.api.crafting.ShapelessArcaneRecipe;
 import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
+import thaumcraft.client.ClientProxy;
 import thaumcraft.client.lib.TCFontRenderer;
 import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.common.Thaumcraft;
@@ -211,7 +212,7 @@ public class GuiResearchRecipe extends GuiScreen {
         UtilsFX.bindTexture(this.tex1);
         GL11.glPushMatrix();
         GL11.glTranslatef(var10, var11, 0.0F);
-        GL11.glEnable(3042);
+        GL11.glEnable(GL11.GL_BLEND);
         GL11.glScalef(1.3F, 1.3F, 1.0F);
         this.drawTexturedModalRect(0, 0, 0, 0, this.paneWidth, this.paneHeight);
         GL11.glPopMatrix();
@@ -241,17 +242,17 @@ public class GuiResearchRecipe extends GuiScreen {
         var10000 = par2 - (sh + 189);
         float bob = MathHelper.sin((float) this.mc.thePlayer.ticksExisted / 3.0F) * 0.2F + 0.1F;
         if (!history.isEmpty()) {
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             this.drawTexturedModalRectScaled(sw + 118, sh + 189, 38, 202, 20, 12, bob);
         }
 
         if (this.page > 0) {
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             this.drawTexturedModalRectScaled(sw - 16, sh + 190, 0, 184, 12, 8, bob);
         }
 
         if (this.page < this.maxPages - 2) {
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             this.drawTexturedModalRectScaled(sw + 262, sh + 190, 12, 184, 12, 8, bob);
         }
 
@@ -358,7 +359,7 @@ public class GuiResearchRecipe extends GuiScreen {
             if (aspects != null && aspects.size() > 0) {
                 GL11.glPushMatrix();
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.4F);
-                GL11.glEnable(3042);
+                GL11.glEnable(GL11.GL_BLEND);
                 GL11.glTranslatef((float) (x + start), (float) (y + 174), 0.0F);
                 GL11.glScalef(2.0F, 2.0F, 1.0F);
                 this.drawTexturedModalRect(0, 0, 68, 76, 12, 12);
@@ -377,7 +378,7 @@ public class GuiResearchRecipe extends GuiScreen {
 
             GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glTranslatef((float) (-8 - xoff), (float) (-119 + Math.max(3 - dx, 3 - dz) * 8 + dx * 4 + dz * 4 + dy * 50), 0.0F);
             GL11.glScalef(2.0F, 2.0F, 1.0F);
             this.drawTexturedModalRect(0, 0, 0, 72, 64, 44);
@@ -454,12 +455,12 @@ public class GuiResearchRecipe extends GuiScreen {
                     if (mposx >= tx && mposy >= ty && mposx < tx + 40 && mposy < ty + 40) {
                         UtilsFX.bindTexture("textures/aspects/_back.png");
                         GL11.glPushMatrix();
-                        GL11.glEnable(3042);
+                        GL11.glEnable(GL11.GL_BLEND);
                         GL11.glBlendFunc(770, 771);
                         GL11.glTranslated(x + start - 5, y + count * 50 - 5, 0.0F);
                         GL11.glScaled(2.5F, 2.5F, 0.0F);
                         UtilsFX.drawTexturedQuadFull(0, 0, this.zLevel);
-                        GL11.glDisable(3042);
+                        GL11.glDisable(GL11.GL_BLEND);
                         GL11.glPopMatrix();
                     }
 
@@ -556,7 +557,7 @@ public class GuiResearchRecipe extends GuiScreen {
             UtilsFX.bindTexture(this.tex2);
             GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glTranslatef((float) (x + start), (float) y, 0.0F);
             GL11.glScalef(2.0F, 2.0F, 1.0F);
             this.drawTexturedModalRect(2, 27, 112, 15, 52, 52);
@@ -564,7 +565,7 @@ public class GuiResearchRecipe extends GuiScreen {
             GL11.glPopMatrix();
             GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.4F);
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glTranslatef((float) (x + start), (float) (y + 164), 0.0F);
             GL11.glScalef(2.0F, 2.0F, 1.0F);
             this.drawTexturedModalRect(0, 0, 68, 76, 12, 12);
@@ -714,7 +715,7 @@ public class GuiResearchRecipe extends GuiScreen {
             UtilsFX.bindTexture(this.tex2);
             GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glTranslatef((float) (x + start), (float) y, 0.0F);
             GL11.glScalef(2.0F, 2.0F, 1.0F);
             this.drawTexturedModalRect(2, 32, 60, 15, 52, 52);
@@ -858,7 +859,7 @@ public class GuiResearchRecipe extends GuiScreen {
             UtilsFX.bindTexture(this.tex2);
             GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glTranslatef((float) (x + start), (float) (y + 28), 0.0F);
             GL11.glScalef(2.0F, 2.0F, 1.0F);
             this.drawTexturedModalRect(0, 0, 0, 3, 56, 17);
@@ -962,7 +963,7 @@ public class GuiResearchRecipe extends GuiScreen {
             UtilsFX.bindTexture(this.tex2);
             GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glTranslatef((float) (x + start), (float) (y + 28), 0.0F);
             GL11.glScalef(2.0F, 2.0F, 1.0F);
             this.drawTexturedModalRect(0, 0, 0, 192, 56, 64);
@@ -1034,7 +1035,7 @@ public class GuiResearchRecipe extends GuiScreen {
             UtilsFX.bindTexture(this.tex2);
             GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glTranslatef((float) (x + start), (float) (y + 20), 0.0F);
             GL11.glScalef(2.0F, 2.0F, 1.0F);
             this.drawTexturedModalRect(0, 0, 0, 3, 56, 17);
@@ -1211,7 +1212,7 @@ public class GuiResearchRecipe extends GuiScreen {
             UtilsFX.bindTexture(this.tex2);
             GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glTranslatef((float) (x + start), (float) (y + 20), 0.0F);
             GL11.glScalef(2.0F, 2.0F, 1.0F);
             GL11.glTranslatef(0.0F, 19.0F, 0.0F);
@@ -1321,7 +1322,7 @@ public class GuiResearchRecipe extends GuiScreen {
     private void drawTextPage(int side, int x, int y, String text) {
         GL11.glPushMatrix();
         RenderHelper.enableGUIStandardItemLighting();
-        GL11.glEnable(3042);
+        GL11.glEnable(GL11.GL_BLEND);
         this.fr.drawSplitString(text, x - 15 + side * 152, y, 139, 0, this);
         GL11.glPopMatrix();
     }
@@ -1407,6 +1408,6 @@ public class GuiResearchRecipe extends GuiScreen {
     @Override
     public void handleMouseInput() {
         super.handleMouseInput();
-        tc4tweak.ClientProxy.handleMouseInput(this);
+        ClientProxy.handleMouseInput(this);
     }
 }

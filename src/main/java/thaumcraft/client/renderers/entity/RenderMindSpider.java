@@ -57,11 +57,11 @@ public class RenderMindSpider extends RenderLiving {
       GL11.glPushMatrix();
       GL11.glColor4f(1.0F, 1.0F, 1.0F, Math.min(0.1F, (float)entity.ticksExisted / 100.0F));
       GL11.glDepthMask(false);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       GL11.glAlphaFunc(516, 0.003921569F);
       this.mainModel.render(entity, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glAlphaFunc(516, 0.1F);
       GL11.glPopMatrix();
       GL11.glDepthMask(true);
@@ -77,7 +77,7 @@ public class RenderMindSpider extends RenderLiving {
       } else {
          UtilsFX.bindTexture("textures/models/taint_spider_eyes.png");
          float f1 = 1.0F;
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glDisable(3008);
          GL11.glBlendFunc(1, 1);
           GL11.glDepthMask(!par1EntitySpider.isInvisible());

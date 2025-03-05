@@ -87,7 +87,7 @@ public class FXArc extends EntityFX {
       float size = 0.25F;
       UtilsFX.bindTexture("textures/misc/beamh.png");
       GL11.glDepthMask(false);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       GL11.glDisable(2884);
       tessellator.startDrawing(5);
@@ -124,7 +124,7 @@ public class FXArc extends EntityFX {
       tessellator.draw();
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       GL11.glEnable(2884);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDepthMask(true);
       GL11.glPopMatrix();
       Minecraft.getMinecraft().renderEngine.bindTexture(UtilsFX.getParticleTexture());

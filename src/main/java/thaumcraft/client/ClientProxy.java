@@ -6,9 +6,20 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
+import cpw.mods.fml.common.network.FMLNetworkEvent;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import java.awt.Color;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -23,16 +34,34 @@ import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.world.WorldEvent;
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.lwjgl.input.Mouse;
+import tc4tweak.CommonUtils;
+import tc4tweak.ConfigurationHandler;
+import tc4tweak.modules.hudNotif.HUDNotification;
+import tc4tweak.modules.particleEngine.ParticleEngineFix;
+import tc4tweak.modules.researchBrowser.BrowserPaging;
+import tc4tweak.modules.researchBrowser.DrawResearchCompletionCounter;
+import tc4tweak.modules.researchBrowser.ThaumonomiconIndexSearcher;
+import tc4tweak.network.NetworkedConfiguration;
 import thaumcraft.client.fx.ParticleEngine;
 import thaumcraft.client.fx.beams.FXArc;
 import thaumcraft.client.fx.beams.FXBeam;
@@ -60,22 +89,7 @@ import thaumcraft.client.fx.particles.FXVent;
 import thaumcraft.client.fx.particles.FXWisp;
 import thaumcraft.client.fx.particles.FXWispArcing;
 import thaumcraft.client.fx.particles.FXWispEG;
-import thaumcraft.client.gui.GuiAlchemyFurnace;
-import thaumcraft.client.gui.GuiArcaneBore;
-import thaumcraft.client.gui.GuiArcaneWorkbench;
-import thaumcraft.client.gui.GuiDeconstructionTable;
-import thaumcraft.client.gui.GuiFocalManipulator;
-import thaumcraft.client.gui.GuiFocusPouch;
-import thaumcraft.client.gui.GuiGolem;
-import thaumcraft.client.gui.GuiHandMirror;
-import thaumcraft.client.gui.GuiHoverHarness;
-import thaumcraft.client.gui.GuiMagicBox;
-import thaumcraft.client.gui.GuiPech;
-import thaumcraft.client.gui.GuiResearchBrowser;
-import thaumcraft.client.gui.GuiResearchTable;
-import thaumcraft.client.gui.GuiSpa;
-import thaumcraft.client.gui.GuiThaumatorium;
-import thaumcraft.client.gui.GuiTravelingTrunk;
+import thaumcraft.client.gui.*;
 import thaumcraft.client.lib.ClientTickEventsFML;
 import thaumcraft.client.renderers.block.BlockArcaneFurnaceRenderer;
 import thaumcraft.client.renderers.block.BlockCandleRenderer;
@@ -258,59 +272,9 @@ import thaumcraft.common.items.wands.WandManager;
 import thaumcraft.common.lib.events.KeyHandler;
 import thaumcraft.common.lib.research.PlayerKnowledge;
 import thaumcraft.common.lib.research.ResearchManager;
-import thaumcraft.common.tiles.TileAlchemyFurnace;
-import thaumcraft.common.tiles.TileAlchemyFurnaceAdvanced;
-import thaumcraft.common.tiles.TileAlembic;
-import thaumcraft.common.tiles.TileArcaneBore;
-import thaumcraft.common.tiles.TileArcaneBoreBase;
-import thaumcraft.common.tiles.TileArcaneLamp;
-import thaumcraft.common.tiles.TileArcaneLampFertility;
-import thaumcraft.common.tiles.TileArcaneLampGrowth;
-import thaumcraft.common.tiles.TileArcaneWorkbench;
-import thaumcraft.common.tiles.TileBanner;
-import thaumcraft.common.tiles.TileBellows;
-import thaumcraft.common.tiles.TileCentrifuge;
-import thaumcraft.common.tiles.TileChestHungry;
-import thaumcraft.common.tiles.TileCrucible;
-import thaumcraft.common.tiles.TileCrystal;
-import thaumcraft.common.tiles.TileDeconstructionTable;
-import thaumcraft.common.tiles.TileEldritchAltar;
-import thaumcraft.common.tiles.TileEldritchCap;
-import thaumcraft.common.tiles.TileEldritchCrabSpawner;
-import thaumcraft.common.tiles.TileEldritchCrystal;
-import thaumcraft.common.tiles.TileEldritchLock;
-import thaumcraft.common.tiles.TileEldritchNothing;
-import thaumcraft.common.tiles.TileEldritchObelisk;
-import thaumcraft.common.tiles.TileEldritchPortal;
-import thaumcraft.common.tiles.TileEssentiaCrystalizer;
-import thaumcraft.common.tiles.TileEssentiaReservoir;
-import thaumcraft.common.tiles.TileEtherealBloom;
-import thaumcraft.common.tiles.TileFluxScrubber;
-import thaumcraft.common.tiles.TileFocalManipulator;
-import thaumcraft.common.tiles.TileHole;
-import thaumcraft.common.tiles.TileInfusionMatrix;
-import thaumcraft.common.tiles.TileInfusionPillar;
-import thaumcraft.common.tiles.TileJar;
-import thaumcraft.common.tiles.TileMagicBox;
-import thaumcraft.common.tiles.TileMagicWorkbenchCharger;
-import thaumcraft.common.tiles.TileManaPod;
-import thaumcraft.common.tiles.TileMirror;
-import thaumcraft.common.tiles.TileMirrorEssentia;
-import thaumcraft.common.tiles.TileNode;
-import thaumcraft.common.tiles.TileNodeConverter;
-import thaumcraft.common.tiles.TileNodeEnergized;
-import thaumcraft.common.tiles.TileNodeStabilizer;
-import thaumcraft.common.tiles.TilePedestal;
-import thaumcraft.common.tiles.TileResearchTable;
-import thaumcraft.common.tiles.TileSpa;
-import thaumcraft.common.tiles.TileTable;
-import thaumcraft.common.tiles.TileThaumatorium;
-import thaumcraft.common.tiles.TileTubeBuffer;
-import thaumcraft.common.tiles.TileTubeOneway;
-import thaumcraft.common.tiles.TileTubeValve;
-import thaumcraft.common.tiles.TileVisRelay;
-import thaumcraft.common.tiles.TileWandPedestal;
-import thaumcraft.common.tiles.TileWarded;
+import thaumcraft.common.tiles.*;
+
+import static tc4tweak.ClientUtils.postponed;
 
 public class ClientProxy extends CommonProxy {
    protected PlayerKnowledge playerResearch = new PlayerKnowledge();
@@ -1068,5 +1032,201 @@ public class ClientProxy extends CommonProxy {
       ParticleEngine.instance.addEffect(world, ef2);
       FXArc efa = new FXArc(world, x, y, z, tx, ty, tz, r, g, b, h);
       FMLClientHandler.instance().getClient().effectRenderer.addEffect(efa);
+   }
+
+
+   static long lastScroll = 0;
+   static Field fieldPage = null;
+   static Field fieldLastPage = null;
+   static Method methodPlayScroll = null;
+   static Method GuiResearchRecipeMouseClicked = null;
+   private static final int mPrevX = 261, mPrevY = 189, mNextX = -17, mNextY = 189;
+   private static final int paneWidth = 256, paneHeight = 181;
+
+   private long updateCounter = 0;
+
+   public static void handleMouseInput(GuiResearchTable screen) {
+      if (fieldLastPage == null || fieldPage == null || methodPlayScroll == null) return;
+      final int dwheel = Mouse.getEventDWheel();
+      if (dwheel == 0)
+         return;
+      final long currentTimeMillis = System.currentTimeMillis();
+      if (currentTimeMillis - lastScroll > 50) {
+         lastScroll = currentTimeMillis;
+         try {
+            int page = fieldPage.getInt(screen);
+            if ((dwheel < 0) != ConfigurationHandler.INSTANCE.isInverted()) {
+               int lastPage = fieldLastPage.getInt(screen);
+               if (page < lastPage) {
+                  fieldPage.setInt(screen, page + 1);
+                  methodPlayScroll.invoke(screen);
+               }
+            } else {
+               if (page > 0) {
+                  fieldPage.setInt(screen, page - 1);
+                  methodPlayScroll.invoke(screen);
+               }
+            }
+         } catch (ReflectiveOperationException err) {
+            System.err.println("Error scrolling through aspect list!");
+            err.printStackTrace();
+         }
+      }
+   }
+
+   public static void handleMouseInput(GuiResearchRecipe screen) {
+      if (GuiResearchRecipeMouseClicked == null) return;
+      final int dwheel = Mouse.getEventDWheel();
+      if (dwheel == 0)
+         return;
+      final long currentTimeMillis = System.currentTimeMillis();
+      if (currentTimeMillis - lastScroll > 50) {
+         lastScroll = currentTimeMillis;
+         // emulate a click into respective buttons
+         int mX, mY;
+         if ((dwheel < 0) != ConfigurationHandler.INSTANCE.isInverted()) {
+            mX = mPrevX;
+            mY= mPrevY;
+         } else {
+            mX = mNextX;
+            mY = mNextY;
+         }
+         mX += (screen.width - paneWidth) / 2;
+         mY += (screen.height - paneHeight) / 2;
+         try {
+            GuiResearchRecipeMouseClicked.invoke(screen, mX, mY, 0);
+         } catch (ReflectiveOperationException err) {
+            System.err.println("Error scrolling through research page!");
+            err.printStackTrace();
+         }
+      }
+   }
+
+   public ClientProxy() {
+      super();
+      MinecraftForge.EVENT_BUS.register(this);
+   }
+
+   public static boolean dev = false;//!(boolean) data.get("runtimeDeobfuscationEnabled");
+
+   @Override
+   public void preInit(FMLPreInitializationEvent e) {
+      super.preInit(e);
+      ConfigurationHandler.INSTANCE.setGUISettings();
+      try {
+         Class<GuiResearchTable> guiResearchTableClass = GuiResearchTable.class;
+         fieldPage = guiResearchTableClass.getDeclaredField("page");
+         fieldPage.setAccessible(true);
+         fieldLastPage = guiResearchTableClass.getDeclaredField("lastPage");
+         fieldLastPage.setAccessible(true);
+         methodPlayScroll = guiResearchTableClass.getDeclaredMethod("playButtonScroll");
+         methodPlayScroll.setAccessible(true);
+      } catch (Exception err) {
+         System.err.println("Cannot find thaumcraft fields. Aspect list scrolling will not properly function!");
+         err.printStackTrace();
+      }
+      String mouseClicked = dev ? "mouseClicked" : "func_73864_a";
+      try {
+         GuiResearchRecipeMouseClicked = GuiResearchRecipe.class.getDeclaredMethod(mouseClicked, int.class, int.class, int.class);
+         GuiResearchRecipeMouseClicked.setAccessible(true);
+      } catch (Exception err) {
+         System.err.println("Cannot find thaumcraft fields. Research page scrolling will not properly function!");
+         err.printStackTrace();
+      }
+//      final IResourceManager resourceManager = Minecraft.getMinecraft().getResourceManager();
+//      if (resourceManager instanceof IReloadableResourceManager) {
+//         //noinspection Convert2Lambda
+//         ((IReloadableResourceManager) resourceManager).registerReloadListener(new IResourceManagerReloadListener() {
+//            @Override
+//            public void onResourceManagerReload(IResourceManager ignored) {
+//               reflectiveReloadModel(FXSonic.class, "MODEL");
+//               reflectiveReloadModel(TileAlchemyFurnaceAdvancedRenderer.class, "FURNACE");
+//            }
+//         });
+//      }
+      ParticleEngineFix.init();
+   }
+
+   @Override
+   public void init(FMLInitializationEvent e) {
+      super.init(e);
+      ThaumonomiconIndexSearcher.init();
+      DrawResearchCompletionCounter.init();
+      HUDNotification.init();
+      BrowserPaging.init();
+   }
+
+   @Override
+   public void postInit(FMLPostInitializationEvent e) {
+      super.postInit(e);
+      try {
+         Object wgSearcher = Class.forName("witchinggadgets.client.ThaumonomiconIndexSearcher").getField("instance").get(null);
+         MinecraftForge.EVENT_BUS.unregister(wgSearcher);
+         FMLCommonHandler.instance().bus().unregister(wgSearcher);
+      } catch (ReflectiveOperationException ignored) {
+         // WG is probably not installed, ignoring
+      }
+   }
+
+   @SubscribeEvent
+   public void onWorldLoad(WorldEvent.Load e) {
+      if (e.world.isRemote)
+         CommonUtils.sortResearchCategories(false);
+   }
+
+   @SubscribeEvent(priority = EventPriority.LOWEST)
+   public void onTooltip(ItemTooltipEvent e) {
+      if (ConfigurationHandler.INSTANCE.isAddTooltip() && e.itemStack != null) {
+         if (e.itemStack.getItem() == ConfigItems.itemResearchNotes)
+            e.toolTip.add(EnumChatFormatting.GOLD + StatCollector.translateToLocal("tc4tweaks.enabled_scrolling"));
+         else if (e.itemStack.getItem() == ConfigItems.itemWandCasting) {
+            if (!ConfigurationHandler.INSTANCE.isCheckWorkbenchRecipes() || !NetworkedConfiguration.isCheckWorkbenchRecipes()) {
+               e.toolTip.add(EnumChatFormatting.RED + StatCollector.translateToLocal("tc4tweaks.disable_vanilla"));
+            }
+         }
+      }
+   }
+
+   @SubscribeEvent
+   public void onTickEnd(TickEvent.ClientTickEvent e) {
+      if (e.phase == TickEvent.Phase.END) {
+         if (++updateCounter > ConfigurationHandler.INSTANCE.getUpdateInterval()) {
+            updateCounter = 0;
+            synchronized (postponed) {
+               for (Map.Entry<TileMagicWorkbench, Void> workbench : postponed.entrySet()) {
+                  TileMagicWorkbench tile = workbench.getKey();
+                  if (tile != null && tile.eventHandler != null && !tile.isInvalid() && tile.hasWorldObj()) {
+                     // best effort guess on whether tile is valid
+                     tile.eventHandler.onCraftMatrixChanged(tile);
+                  }
+               }
+               postponed.clear();
+            }
+         }
+      }
+   }
+
+   @SubscribeEvent
+   public void onServerConnected(FMLNetworkEvent.ClientConnectedToServerEvent e) {
+      if (!e.isLocal) {
+         NetworkedConfiguration.resetClient();
+      }
+   }
+
+   private static void reflectiveReloadModel(Class<?> cls, String resLocationField) {
+      try {
+         FieldUtils.writeDeclaredStaticField(cls,
+                 "model",
+                 AdvancedModelLoader.loadModel(
+                         (ResourceLocation)
+                                 FieldUtils.readDeclaredStaticField(
+                                         cls,
+                                         resLocationField,
+                                         true)
+                 )
+                 , true);
+      } catch (ReflectiveOperationException e) {
+         // ignore
+      }
    }
 }

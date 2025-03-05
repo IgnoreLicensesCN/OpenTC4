@@ -29,13 +29,13 @@ public class GuiPech extends GuiContainer {
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       int var5 = (this.width - this.xSize) / 2;
       int var6 = (this.height - this.ySize) / 2;
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       this.drawTexturedModalRect(var5, var6, 0, 0, this.xSize, this.ySize);
       if (this.pech.isValued(this.inventorySlots.getSlot(0).getStack()) && this.inventorySlots.getSlot(0).getStack() != null && this.inventorySlots.getSlot(1).getStack() == null && this.inventorySlots.getSlot(2).getStack() == null && this.inventorySlots.getSlot(3).getStack() == null && this.inventorySlots.getSlot(4).getStack() == null) {
          this.drawTexturedModalRect(var5 + 67, var6 + 24, 176, 0, 25, 25);
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
    }
 
    protected void mouseClicked(int mx, int my, int par3) {

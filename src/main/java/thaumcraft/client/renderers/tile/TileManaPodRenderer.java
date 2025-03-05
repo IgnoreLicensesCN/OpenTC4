@@ -21,6 +21,8 @@ public class TileManaPodRenderer extends TileEntitySpecialRenderer {
    private static final ResourceLocation pod2tex = new ResourceLocation("thaumcraft", "textures/models/manapod_2.png");
 
    public void renderEntityAt(TileManaPod pod, double x, double y, double z, float fq) {
+      if (!pod.hasWorldObj()) {return;}
+      if (pod.getBlockType() == null) {return;}
       int meta = 0;
       int bright = 20;
       Aspect aspect = Aspect.PLANT;
@@ -62,7 +64,7 @@ public class TileManaPodRenderer extends TileEntitySpecialRenderer {
          Minecraft mc = FMLClientHandler.instance().getClient();
          GL11.glPushMatrix();
          GL11.glEnable(2977);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glEnable(32826);
          GL11.glBlendFunc(770, 771);
          GL11.glTranslated(x + (double)0.5F, y + (double)0.75F, z + (double)0.5F);
@@ -88,13 +90,15 @@ public class TileManaPodRenderer extends TileEntitySpecialRenderer {
          UtilsFX.bindTexture(pod2tex);
          this.model.pod2.render(0.0625F);
          GL11.glDisable(32826);
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glPopMatrix();
       }
 
    }
 
-   public void renderTileEntityAt(TileEntity tileentity, double d, double d1, double d2, float f) {
-      this.renderEntityAt((TileManaPod)tileentity, d, d1, d2, f);
+   public void renderTileEntityAt(TileEntity te, double d, double d1, double d2, float f) {
+
+      if (!(te instanceof TileManaPod)) {return;}
+      this.renderEntityAt((TileManaPod) te, d, d1, d2, f);
    }
 }

@@ -36,7 +36,7 @@ public class RenderTaintSpider extends RenderLiving {
       } else {
          UtilsFX.bindTexture("textures/models/taint_spider_eyes.png");
          float f1 = 1.0F;
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glDisable(3008);
          GL11.glBlendFunc(1, 1);
           GL11.glDepthMask(!par1EntitySpider.isInvisible());

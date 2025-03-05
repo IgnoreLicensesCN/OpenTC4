@@ -53,7 +53,7 @@ public class ModelHoverHarness extends ModelBiped {
       this.modelBack.renderAll();
       GL11.glEnable(2896);
       GL11.glPopMatrix();
-      if (entity instanceof EntityPlayer && !GL11.glIsEnabled(3042) && GL11.glGetInteger(2976) == 5888 && ((EntityPlayer) entity).inventory.armorItemInSlot(2).hasTagCompound() && ((EntityPlayer) entity).inventory.armorItemInSlot(2).stackTagCompound.hasKey("hover") && ((EntityPlayer) entity).inventory.armorItemInSlot(2).stackTagCompound.getByte("hover") == 1) {
+      if (entity instanceof EntityPlayer && !GL11.glIsEnabled(GL11.GL_BLEND) && GL11.glGetInteger(2976) == 5888 && ((EntityPlayer) entity).inventory.armorItemInSlot(2).hasTagCompound() && ((EntityPlayer) entity).inventory.armorItemInSlot(2).stackTagCompound.hasKey("hover") && ((EntityPlayer) entity).inventory.armorItemInSlot(2).stackTagCompound.getByte("hover") == 1) {
          long currenttime = System.currentTimeMillis();
          long timeShock = 0L;
          if (this.timingShock.get(entity.getEntityId()) != null) {

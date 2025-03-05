@@ -169,7 +169,7 @@ public class ItemThaumometerRenderer implements IItemRenderer {
                   if (tile instanceof INode) {
                      aspects = ((INode)tile).getAspects();
                      GL11.glPushMatrix();
-                     GL11.glEnable(3042);
+                     GL11.glEnable(GL11.GL_BLEND);
                      GL11.glBlendFunc(770, 1);
                      String t = StatCollector.translateToLocal("nodetype." + ((INode)tile).getNodeType() + ".name");
                      if (((INode)tile).getNodeModifier() != null) {
@@ -180,7 +180,7 @@ public class ItemThaumometerRenderer implements IItemRenderer {
                      float scale = 0.004F;
                      GL11.glScalef(scale, scale, scale);
                      mc.fontRenderer.drawString(t, -sw / 2, -40, 15642134);
-                     GL11.glDisable(3042);
+                     GL11.glDisable(GL11.GL_BLEND);
                      GL11.glPopMatrix();
                   }
                }
@@ -232,7 +232,7 @@ public class ItemThaumometerRenderer implements IItemRenderer {
             if (text.length() > 0) {
                RenderHelper.disableStandardItemLighting();
                GL11.glPushMatrix();
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(770, 1);
                GL11.glTranslatef(0.0F, -0.25F, 0.0F);
                int sw = mc.fontRenderer.getStringWidth(text);
@@ -243,7 +243,7 @@ public class ItemThaumometerRenderer implements IItemRenderer {
 
                GL11.glScalef(scale, scale, scale);
                mc.fontRenderer.drawString(text, -sw / 2, 0, 16777215);
-               GL11.glDisable(3042);
+               GL11.glDisable(GL11.GL_BLEND);
                GL11.glPopMatrix();
             }
          }

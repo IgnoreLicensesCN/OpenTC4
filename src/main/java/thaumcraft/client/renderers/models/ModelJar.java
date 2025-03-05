@@ -32,18 +32,18 @@ public class ModelJar extends ModelBase {
    }
 
    public void renderBrine() {
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       this.Brine.render(0.0625F);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
    }
 
    public void renderAll() {
       this.Lid.render(0.0625F);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       this.Core.render(0.0625F);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
    }
 
    private void setRotation(ModelRenderer model, float x, float y, float z) {

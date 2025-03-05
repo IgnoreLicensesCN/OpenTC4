@@ -24,7 +24,7 @@ public class CommonUtils {
         return "CrucibleRecipe{key="+r.key+",catalyst="+r.catalyst+",output="+r.getRecipeOutput()+",aspects="+toString(r.aspects)+"}";
     }
 
-    static void sortResearchCategories(boolean force) {
+    public static void sortResearchCategories(boolean force) {
         if (force || !ConfigurationHandler.INSTANCE.getCategoryOrder().isEmpty()) {
             // no need to synchronize
             // we fetch data from a practically immutable collection

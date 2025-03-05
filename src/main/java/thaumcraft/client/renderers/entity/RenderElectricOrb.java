@@ -23,7 +23,7 @@ public class RenderElectricOrb extends Render {
       Tessellator tessellator = Tessellator.instance;
       GL11.glPushMatrix();
       GL11.glTranslated(x, y, z);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       UtilsFX.bindTexture(ParticleEngine.particleTexture);
       float f2 = (float)(1 + entity.ticksExisted % 6) / 8.0F;
@@ -50,7 +50,7 @@ public class RenderElectricOrb extends Render {
       tessellator.addVertexWithUV(f6 - f7, 1.0F - f8, 0.0F, f3, f4);
       tessellator.addVertexWithUV(-f7, 1.0F - f8, 0.0F, f2, f4);
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(32826);
       GL11.glPopMatrix();
    }

@@ -217,7 +217,7 @@ public class FXBeam extends EntityFX {
       }
 
       float var12 = -var11 * 0.2F - (float)MathHelper.floor_float(-var11 * 0.1F);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, this.blendmode);
       GL11.glDepthMask(false);
       float xx = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)f - interpPosX);
@@ -254,7 +254,7 @@ public class FXBeam extends EntityFX {
 
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       GL11.glDepthMask(true);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glEnable(2884);
       GL11.glPopMatrix();
       Minecraft.getMinecraft().renderEngine.bindTexture(UtilsFX.getParticleTexture());

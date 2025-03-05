@@ -33,8 +33,8 @@ public class ItemFocusWarding extends ItemFocusBasic implements IArchitect {
    public IIcon iconOrnament;
    IIcon depthIcon = null;
    private static final AspectList cost;
-   public static HashMap delay;
-   ArrayList checked = new ArrayList<>();
+   public static HashMap<String,Long> delay;
+   ArrayList<BlockCoordinates> checked = new ArrayList<>();
 
    public ItemFocusWarding() {
       this.setCreativeTab(Thaumcraft.tabTC);

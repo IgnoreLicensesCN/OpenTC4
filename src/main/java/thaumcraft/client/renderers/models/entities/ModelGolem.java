@@ -49,7 +49,7 @@ public class ModelGolem extends ModelBase {
       this.setRotationAngles(e, par2, par3, par4, par5, par6, par7);
       GL11.glPushMatrix();
       if (this.pass == 2) {
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 771);
          GL11.glAlphaFunc(516, 0.003921569F);
       }
@@ -64,7 +64,7 @@ public class ModelGolem extends ModelBase {
       GL11.glScaled(1.0F, 1.0F, 1.0F);
       if (this.pass == 2) {
          GL11.glAlphaFunc(516, 0.1F);
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
       }
 
       GL11.glPopMatrix();

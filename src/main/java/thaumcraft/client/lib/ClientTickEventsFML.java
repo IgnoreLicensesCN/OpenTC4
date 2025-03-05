@@ -298,7 +298,7 @@ public class ClientTickEventsFML {
       int l = sr.getScaledHeight();
       GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       mc.renderEngine.bindTexture(this.HUD);
       GL11.glPushMatrix();
@@ -349,7 +349,7 @@ public class ClientTickEventsFML {
          GL11.glPopMatrix();
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glPopMatrix();
    }
 
@@ -377,7 +377,7 @@ public class ClientTickEventsFML {
       int dailLocation = Config.dialBottom ? l - 32 : 0;
       GL11.glTranslatef(0.0F, (float)dailLocation, -2000.0F);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       mc.renderEngine.bindTexture(this.HUD);
       GL11.glPushMatrix();
@@ -481,7 +481,7 @@ public class ClientTickEventsFML {
          }
       }
 
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glPopMatrix();
    }
 
@@ -501,7 +501,7 @@ public class ClientTickEventsFML {
       GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
       GL11.glDisable(2929);
       GL11.glDepthMask(false);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       GL11.glDisable(3008);
       int k = sr.getScaledWidth();
@@ -541,7 +541,7 @@ public class ClientTickEventsFML {
       GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
       GL11.glDisable(2929);
       GL11.glDepthMask(false);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       GL11.glDisable(3008);
       int k = sr.getScaledWidth();
@@ -687,23 +687,23 @@ public class ClientTickEventsFML {
                            y = var17 + 7 - 33;
                            UtilsFX.bindTexture("textures/aspects/_back.png");
                            GL11.glPushMatrix();
-                           GL11.glEnable(3042);
+                           GL11.glEnable(GL11.GL_BLEND);
                            GL11.glBlendFunc(770, 771);
                            GL11.glTranslated(x + shiftx - 2, y + shifty - 2, 0.0F);
                            GL11.glScaled(1.25F, 1.25F, 0.0F);
                            UtilsFX.drawTexturedQuadFull(0, 0, UtilsFX.getGuiZLevel(gui));
-                           GL11.glDisable(3042);
+                           GL11.glDisable(GL11.GL_BLEND);
                            GL11.glPopMatrix();
                            if (Thaumcraft.proxy.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), tag)) {
                               UtilsFX.drawTag(x + shiftx, y + shifty, tag, (float)tags.getAmount(tag), 0, UtilsFX.getGuiZLevel(gui));
                            } else {
                               UtilsFX.bindTexture("textures/aspects/_unknown.png");
                               GL11.glPushMatrix();
-                              GL11.glEnable(3042);
+                              GL11.glEnable(GL11.GL_BLEND);
                               GL11.glBlendFunc(770, 771);
                               GL11.glTranslated(x + shiftx, y + shifty, 0.0F);
                               UtilsFX.drawTexturedQuadFull(0, 0, UtilsFX.getGuiZLevel(gui));
-                              GL11.glDisable(3042);
+                              GL11.glDisable(GL11.GL_BLEND);
                               GL11.glPopMatrix();
                            }
 

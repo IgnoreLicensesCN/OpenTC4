@@ -24,18 +24,42 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import tc4tweak.ConfigurationHandler;
 import thaumcraft.common.entities.EntitySpecialItem;
 import thaumcraft.common.entities.monster.boss.EntityThaumcraftBoss;
 import thaumcraft.common.entities.monster.mods.ChampionModifier;
 
 public class EntityUtils {
+
+
+    public static class AttributeModifierTweaked extends AttributeModifier{
+
+        public AttributeModifierTweaked(UUID p_i1606_1_, String p_i1606_2_, double p_i1606_3_, int p_i1606_5_) {
+            super(p_i1606_1_, p_i1606_2_, p_i1606_3_, p_i1606_5_);
+        }
+        @Override
+        public double getAmount() {
+            return ConfigurationHandler.INSTANCE.getChampionModValue(getID(), super.getAmount());
+        }
+    }
+
    public static final IAttribute CHAMPION_MOD = (new RangedAttribute("tc.mobmod", -2.0F, -2.0F, 100.0F)).setDescription("Champion modifier").setShouldWatch(true);
-   public static final AttributeModifier CHAMPION_HEALTH = new AttributeModifier(UUID.fromString("a62bef38-48cc-42a6-ac5e-ef913841c4fd"), "Champion health buff", 30.0F, 0);
-   public static final AttributeModifier CHAMPION_DAMAGE = new AttributeModifier(UUID.fromString("a340d2db-d881-4c25-ac62-f0ad14cd63b0"), "Champion damage buff", 2.0F, 2);
-   public static final AttributeModifier BOLDBUFF = new AttributeModifier(UUID.fromString("4b1edd33-caa9-47ae-a702-d86c05701037"), "Bold speed boost", 0.3, 1);
-   public static final AttributeModifier MIGHTYBUFF = new AttributeModifier(UUID.fromString("7163897f-07f5-49b3-9ce4-b74beb83d2d3"), "Mighty damage boost", 3.0F, 2);
-   public static final AttributeModifier[] HPBUFF = new AttributeModifier[]{new AttributeModifier(UUID.fromString("54d621c1-dd4d-4b43-8bd2-5531c8875797"), "HEALTH BUFF 1", 50.0F, 0), new AttributeModifier(UUID.fromString("f51257dc-b7fa-4f7a-92d7-75d68e8592c4"), "HEALTH BUFF 2", 50.0F, 0), new AttributeModifier(UUID.fromString("3d6b2e42-4141-4364-b76d-0e8664bbd0bb"), "HEALTH BUFF 3", 50.0F, 0), new AttributeModifier(UUID.fromString("02c97a08-801c-4131-afa2-1427a6151934"), "HEALTH BUFF 4", 50.0F, 0), new AttributeModifier(UUID.fromString("0f354f6a-33c5-40be-93be-81b1338567f1"), "HEALTH BUFF 5", 50.0F, 0)};
-   public static final AttributeModifier[] DMGBUFF = new AttributeModifier[]{new AttributeModifier(UUID.fromString("534f8c57-929a-48cf-bbd6-0fd851030748"), "DAMAGE BUFF 1", 0.5F, 0), new AttributeModifier(UUID.fromString("d317a76e-0e7c-4c61-acfd-9fa286053b32"), "DAMAGE BUFF 2", 0.5F, 0), new AttributeModifier(UUID.fromString("ff462d63-26a2-4363-830e-143ed97e2a4f"), "DAMAGE BUFF 3", 0.5F, 0), new AttributeModifier(UUID.fromString("cf1eb39e-0c67-495f-887c-0d3080828d2f"), "DAMAGE BUFF 4", 0.5F, 0), new AttributeModifier(UUID.fromString("3cfab9da-2701-43d8-ac07-885f16fa4117"), "DAMAGE BUFF 5", 0.5F, 0)};
+   public static final AttributeModifierTweaked CHAMPION_HEALTH = new AttributeModifierTweaked(UUID.fromString("a62bef38-48cc-42a6-ac5e-ef913841c4fd"), "Champion health buff", 30.0F, 0);
+   public static final AttributeModifierTweaked CHAMPION_DAMAGE = new AttributeModifierTweaked(UUID.fromString("a340d2db-d881-4c25-ac62-f0ad14cd63b0"), "Champion damage buff", 2.0F, 2);
+   public static final AttributeModifierTweaked BOLDBUFF = new AttributeModifierTweaked(UUID.fromString("4b1edd33-caa9-47ae-a702-d86c05701037"), "Bold speed boost", 0.3, 1);
+   public static final AttributeModifierTweaked MIGHTYBUFF = new AttributeModifierTweaked(UUID.fromString("7163897f-07f5-49b3-9ce4-b74beb83d2d3"), "Mighty damage boost", 3.0F, 2);
+   public static final AttributeModifierTweaked[] HPBUFF = new AttributeModifierTweaked[]{
+           new AttributeModifierTweaked(UUID.fromString("54d621c1-dd4d-4b43-8bd2-5531c8875797"), "HEALTH BUFF 1", 50.0F, 0),
+           new AttributeModifierTweaked(UUID.fromString("f51257dc-b7fa-4f7a-92d7-75d68e8592c4"), "HEALTH BUFF 2", 50.0F, 0),
+           new AttributeModifierTweaked(UUID.fromString("3d6b2e42-4141-4364-b76d-0e8664bbd0bb"), "HEALTH BUFF 3", 50.0F, 0),
+           new AttributeModifierTweaked(UUID.fromString("02c97a08-801c-4131-afa2-1427a6151934"), "HEALTH BUFF 4", 50.0F, 0),
+           new AttributeModifierTweaked(UUID.fromString("0f354f6a-33c5-40be-93be-81b1338567f1"), "HEALTH BUFF 5", 50.0F, 0)};
+   public static final AttributeModifierTweaked[] DMGBUFF = new AttributeModifierTweaked[]{
+           new AttributeModifierTweaked(UUID.fromString("534f8c57-929a-48cf-bbd6-0fd851030748"), "DAMAGE BUFF 1", 0.5F, 0),
+           new AttributeModifierTweaked(UUID.fromString("d317a76e-0e7c-4c61-acfd-9fa286053b32"), "DAMAGE BUFF 2", 0.5F, 0),
+           new AttributeModifierTweaked(UUID.fromString("ff462d63-26a2-4363-830e-143ed97e2a4f"), "DAMAGE BUFF 3", 0.5F, 0),
+           new AttributeModifierTweaked(UUID.fromString("cf1eb39e-0c67-495f-887c-0d3080828d2f"), "DAMAGE BUFF 4", 0.5F, 0),
+           new AttributeModifierTweaked(UUID.fromString("3cfab9da-2701-43d8-ac07-885f16fa4117"), "DAMAGE BUFF 5", 0.5F, 0)};
 
    public static Entity getPointedEntity(World world, Entity entityplayer, double minrange, double range, float padding) {
       return getPointedEntity(world, entityplayer, minrange, range, padding, false);

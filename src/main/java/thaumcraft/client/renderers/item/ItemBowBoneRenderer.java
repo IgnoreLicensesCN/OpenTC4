@@ -78,7 +78,7 @@ public class ItemBowBoneRenderer implements IItemRenderer {
             GL11.glDepthFunc(514);
             GL11.glDisable(2896);
             this.texturemanager.bindTexture(new ResourceLocation("textures/misc/enchanted_item_glint.png"));
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(768, 1);
             float f7 = 0.76F;
             GL11.glColor4f(0.5F * f7, 0.25F * f7, 0.8F * f7, 1.0F);
@@ -99,7 +99,7 @@ public class ItemBowBoneRenderer implements IItemRenderer {
             ItemRenderer.renderItemIn2D(tessellator, 0.0F, 0.0F, 1.0F, 1.0F, 256, 256, 0.0625F);
             GL11.glPopMatrix();
             GL11.glMatrixMode(5888);
-            GL11.glDisable(3042);
+            GL11.glDisable(GL11.GL_BLEND);
             GL11.glEnable(2896);
             GL11.glDepthFunc(515);
          }

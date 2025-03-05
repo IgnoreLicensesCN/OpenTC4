@@ -88,7 +88,7 @@ public class RenderGolemBase extends RenderLiving {
          int upgrades = ((EntityGolemBase)entity).upgrades.length;
          float shift = 0.08F;
          GL11.glPushMatrix();
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 771);
 
          for(int a = 0; a < upgrades; ++a) {
@@ -113,7 +113,7 @@ public class RenderGolemBase extends RenderLiving {
             GL11.glPopMatrix();
          }
 
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glPopMatrix();
       } else {
          if (pass == 1 && (((EntityGolemBase)entity).getGolemDecoration().length() > 0 || ((EntityGolemBase)entity).advanced)) {

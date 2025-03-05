@@ -48,11 +48,11 @@ public class RenderWatcher extends RenderLiving {
          GL11.glTexParameterf(3553, 10243, 10497.0F);
          GL11.glDisable(2896);
          GL11.glDisable(2884);
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glDepthMask(true);
          float f3 = 240.0F;
          OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, f3, f3);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 1);
          float f4 = (float)p_177109_1_.worldObj.getTotalWorldTime() + p_177109_9_;
          float f5 = f4 * 0.5F % 1.0F;

@@ -112,7 +112,7 @@ public class GuiResearchTable extends GuiContainer {
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             ResearchItem rr = ResearchCategories.getResearch(this.note.key);
             String ss = StatCollector.translateToLocal("tc.research.copy");
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             UtilsFX.bindTexture("textures/gui/guiresearchtable2.png");
             this.drawTexturedModalRect(gx + 100, gy + 21, 184, 224, 48, 16);
             AspectList al = rr.tags.copy();
@@ -146,9 +146,9 @@ public class GuiResearchTable extends GuiContainer {
                this.draggedAspect = aspect;
             }
          } else if (this.isMouseButtonDown == 1 && this.draggedAspect != null) {
-            GL11.glEnable(3042);
+            GL11.glEnable(GL11.GL_BLEND);
             this.drawOrb(mx - 8, my - 8, this.draggedAspect.getColor());
-            GL11.glDisable(3042);
+            GL11.glDisable(GL11.GL_BLEND);
          }
       } else {
          if (this.isMouseButtonDown == 1 && this.draggedAspect != null) {
@@ -211,7 +211,7 @@ public class GuiResearchTable extends GuiContainer {
       int var5 = this.guiLeft;
       int var6 = this.guiTop;
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       UtilsFX.bindTexture("textures/gui/guiresearchtable2.png");
       this.drawTexturedModalRect(var5, var6, 0, 0, 255, 167);
       this.drawTexturedModalRect(var5 + 40, var6 + 167, 0, 166, 184, 88);
@@ -298,7 +298,7 @@ public class GuiResearchTable extends GuiContainer {
                   UtilsFX.drawCustomTooltip(this, itemRender, this.fontRendererObj, Arrays.asList(aspect.getName(), aspect.getLocalizedDescription()), mx, my - 8, 11);
                   if (RESEARCHER_1 && !aspect.isPrimal()) {
                      GL11.glPushMatrix();
-                     GL11.glEnable(3042);
+                     GL11.glEnable(GL11.GL_BLEND);
                      GL11.glBlendFunc(770, 771);
                      UtilsFX.bindTexture("textures/aspects/_back.png");
                      GL11.glPushMatrix();
@@ -313,7 +313,7 @@ public class GuiResearchTable extends GuiContainer {
                      GL11.glPopMatrix();
                      UtilsFX.drawTag(mx + 26, my + 8, aspect.getComponents()[1], 0.0F, 0, 0.0F);
                      UtilsFX.drawTag(mx + 8, my + 8, aspect.getComponents()[0], 0.0F, 0, 0.0F);
-                     GL11.glDisable(3042);
+                     GL11.glDisable(GL11.GL_BLEND);
                      GL11.glPopMatrix();
                   }
 
@@ -347,7 +347,7 @@ public class GuiResearchTable extends GuiContainer {
 
    private void drawResearchData(int x, int y, int mx, int my) {
       GL11.glPushMatrix();
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       this.drawSheet(x, y, mx, my);
       GL11.glPopMatrix();
    }
@@ -355,7 +355,7 @@ public class GuiResearchTable extends GuiContainer {
    private void drawHex(HexUtils.Hex hex, int x, int y) {
       GL11.glPushMatrix();
       GL11.glAlphaFunc(516, 0.003921569F);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       UtilsFX.bindTexture("textures/gui/hex1.png");
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.25F);
       HexUtils.Pixel pix = hex.toPixel(9);
@@ -376,7 +376,7 @@ public class GuiResearchTable extends GuiContainer {
    private void drawHexHighlight(HexUtils.Hex hex, int x, int y) {
       GL11.glPushMatrix();
       GL11.glAlphaFunc(516, 0.003921569F);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       UtilsFX.bindTexture("textures/gui/hex2.png");
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -494,11 +494,11 @@ public class GuiResearchTable extends GuiContainer {
                UtilsFX.bindTexture("textures/aspects/_unknown.png");
                GL11.glPushMatrix();
                GL11.glColor4f(0.0F, 0.0F, 0.0F, 0.5F);
-               GL11.glEnable(3042);
+               GL11.glEnable(GL11.GL_BLEND);
                GL11.glBlendFunc(770, 771);
                GL11.glTranslated((double)(x + 161) + pix.x, (double)(y + 75) + pix.y, 0.0F);
                UtilsFX.drawTexturedQuadFull(0, 0, this.zLevel);
-               GL11.glDisable(3042);
+               GL11.glDisable(GL11.GL_BLEND);
                GL11.glPopMatrix();
             } else if (this.note.hexEntries.get(hex.toString()).type != 1 && !this.highlight.contains(hex.toString())) {
                if (this.note.hexEntries.get(hex.toString()).type == 2) {
@@ -771,6 +771,6 @@ public class GuiResearchTable extends GuiContainer {
    @Override
    public void handleMouseInput() {
       super.handleMouseInput();
-      tc4tweak.ClientProxy.handleMouseInput(this);
+      ClientProxy.handleMouseInput(this);
    }
 }

@@ -306,7 +306,7 @@ public class UtilsFX {
       bindTexture(texture);
       Tessellator tessellator = Tessellator.instance;
       GL11.glEnable(32826);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, blend);
       GL11.glColor4f(r, g, b, trans);
       tessellator.startDrawingQuads();
@@ -317,7 +317,7 @@ public class UtilsFX {
       tessellator.addVertexWithUV(1.0F, 0.0F, 0.0F, 1.0F, 0.0F);
       tessellator.addVertexWithUV(0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(32826);
    }
 
@@ -334,7 +334,7 @@ public class UtilsFX {
    public static void renderQuadCenteredFromTexture(float scale, float red, float green, float blue, int brightness, int blend, float opacity) {
       Tessellator tessellator = Tessellator.instance;
       GL11.glScalef(scale, scale, scale);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, blend);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, opacity);
       tessellator.startDrawingQuads();
@@ -348,7 +348,7 @@ public class UtilsFX {
       tessellator.addVertexWithUV(0.5F, -0.5F, 0.0F, 1.0F, 0.0F);
       tessellator.addVertexWithUV(-0.5F, -0.5F, 0.0F, 0.0F, 0.0F);
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
    }
 
    public static void renderQuadFromTexture(String texture, int tileSize, int icon, float scale, float red, float green, float blue, int brightness, int blend, float opacity) {
@@ -367,7 +367,7 @@ public class UtilsFX {
       float f6 = 0.3F;
       GL11.glEnable(32826);
       GL11.glScalef(scale, scale, scale);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, blend);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, opacity);
       tessellator.startDrawingQuads();
@@ -379,7 +379,7 @@ public class UtilsFX {
       tessellator.addVertexWithUV(1.0F, 0.0F, 0.0F, f, f3);
       tessellator.addVertexWithUV(0.0F, 0.0F, 0.0F, f1, f3);
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(32826);
    }
 
@@ -396,7 +396,7 @@ public class UtilsFX {
       float f3 = icon.getMinU();
       float f4 = icon.getMaxV();
       GL11.glScalef(scale, scale, scale);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, blend);
       GL11.glColor4f(red, green, blue, opacity);
       tessellator.startDrawingQuads();
@@ -411,7 +411,7 @@ public class UtilsFX {
       tessellator.addVertexWithUV(1.0F, 1.0F, 0.0F, f3, f2);
       tessellator.addVertexWithUV(0.0F, 1.0F, 0.0F, f1, f2);
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
    }
 
    public static void renderQuadCenteredFromIcon(boolean isBlock, IIcon icon, float scale, float red, float green, float blue, int brightness, int blend, float opacity) {
@@ -428,7 +428,7 @@ public class UtilsFX {
       float f4 = icon.getMaxV();
       GL11.glEnable(32826);
       GL11.glScalef(scale, scale, scale);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, blend);
       GL11.glColor4f(red, green, blue, opacity);
       tessellator.startDrawingQuads();
@@ -440,7 +440,7 @@ public class UtilsFX {
       tessellator.addVertexWithUV(0.5F, -0.5F, 0.0F, f3, f2);
       tessellator.addVertexWithUV(-0.5F, -0.5F, 0.0F, f1, f2);
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDisable(32826);
    }
 
@@ -547,7 +547,7 @@ public class UtilsFX {
          GL11.glPushMatrix();
          GL11.glDisable(2896);
          GL11.glAlphaFunc(516, 0.003921569F);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, blend);
          GL11.glPushMatrix();
          mc.renderEngine.bindTexture(aspect.getImage());
@@ -617,7 +617,7 @@ public class UtilsFX {
             GL11.glPopMatrix();
          }
 
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
          GL11.glAlphaFunc(516, 0.1F);
          GL11.glEnable(2896);
@@ -720,7 +720,7 @@ public class UtilsFX {
       float var13 = (float)(par6 >> 8 & 255) / 255.0F;
       float var14 = (float)(par6 & 255) / 255.0F;
       GL11.glDisable(3553);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glDisable(3008);
       GL11.glBlendFunc(770, 771);
       GL11.glShadeModel(7425);
@@ -734,7 +734,7 @@ public class UtilsFX {
       var15.addVertex(par3, par4, 300.0F);
       var15.draw();
       GL11.glShadeModel(7424);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glEnable(3008);
       GL11.glEnable(3553);
    }
@@ -755,7 +755,7 @@ public class UtilsFX {
       float g = (float)co.getGreen() / 255.0F;
       float b = (float)co.getBlue() / 255.0F;
       GL11.glDepthMask(false);
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 1);
       Tessellator tessellator = Tessellator.instance;
       double dc1x = (float)(x - x2);
@@ -809,7 +809,7 @@ public class UtilsFX {
 
       tessellator.draw();
       GL11.glEnable(2884);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glDepthMask(true);
    }
 
@@ -821,7 +821,7 @@ public class UtilsFX {
       float r = (float)co.getRed() / 255.0F;
       float g = (float)co.getGreen() / 255.0F;
       float b = (float)co.getBlue() / 255.0F;
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       Tessellator tessellator = Tessellator.instance;
       double dc1x = (float)(x - x2);
@@ -851,7 +851,7 @@ public class UtilsFX {
       }
 
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glPopMatrix();
    }
 

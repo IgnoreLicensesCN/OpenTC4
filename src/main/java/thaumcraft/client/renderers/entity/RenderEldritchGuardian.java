@@ -38,7 +38,7 @@ public class RenderEldritchGuardian extends RenderLiving {
    }
 
    public void doRenderLiving(EntityLiving guardian, double par2, double par4, double par6, float par8, float par9) {
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glAlphaFunc(516, 0.003921569F);
       GL11.glBlendFunc(770, 771);
       float base = 1.0F;
@@ -63,7 +63,7 @@ public class RenderEldritchGuardian extends RenderLiving {
 
       GL11.glColor4f(1.0F, 1.0F, 1.0F, base);
       super.doRender(guardian, par2, d3, par6, par8, par9);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glAlphaFunc(516, 0.1F);
    }
 

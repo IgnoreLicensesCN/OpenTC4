@@ -72,7 +72,7 @@ public class RenderCultist extends RenderBiped {
       float r = (float)co.getRed() / 255.0F;
       float g = (float)co.getGreen() / 255.0F;
       float b = (float)co.getBlue() / 255.0F;
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       Tessellator tessellator = Tessellator.instance;
       double dc1x = (float)(x - x2);
@@ -124,6 +124,6 @@ public class RenderCultist extends RenderBiped {
       }
 
       tessellator.draw();
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
    }
 }

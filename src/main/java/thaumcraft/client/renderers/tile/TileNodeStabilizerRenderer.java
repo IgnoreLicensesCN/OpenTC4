@@ -24,6 +24,8 @@ public class TileNodeStabilizerRenderer extends TileEntitySpecialRenderer {
    }
 
    public void renderTileEntityAt(TileNodeStabilizer tile, double par2, double par4, double par6, float par8) {
+      if (!tile.hasWorldObj()) {return;}
+      if (tile.getBlockType() == null) {return;}
       int lock = 1;
       int bright = 20;
       if (tile.getWorldObj() != null) {
@@ -78,21 +80,22 @@ public class TileNodeStabilizerRenderer extends TileEntitySpecialRenderer {
       if (tile.count > 0) {
          GL11.glPushMatrix();
          GL11.glAlphaFunc(516, 0.003921569F);
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 1);
          GL11.glDepthMask(false);
          float alpha = MathHelper.sin((float)Minecraft.getMinecraft().renderViewEntity.ticksExisted / 8.0F) * 0.1F + 0.5F;
          UtilsFX.bindTexture("textures/misc/node_bubble.png");
          UtilsFX.renderFacingQuad((double)tile.xCoord + (double)0.5F, (double)tile.yCoord + (double)1.5F, (double)tile.zCoord + (double)0.5F, 0.0F, 0.9F, (float)tile.count / 37.0F * alpha, 1, 0, par8, lock == 1 ? 16777215 : 16729156);
          GL11.glDepthMask(true);
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glAlphaFunc(516, 0.1F);
          GL11.glPopMatrix();
       }
 
    }
 
-   public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {
-      this.renderTileEntityAt((TileNodeStabilizer)par1TileEntity, par2, par4, par6, par8);
+   public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
+      if (!(tileEntity instanceof TileNodeStabilizer)){return;}
+      this.renderTileEntityAt((TileNodeStabilizer)tileEntity, par2, par4, par6, par8);
    }
 }

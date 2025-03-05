@@ -57,7 +57,7 @@ public class RenderCultistPortal extends Render {
       scale -= bob2 / 3.0F;
       UtilsFX.bindTexture(portaltex);
       GL11.glPushMatrix();
-      GL11.glEnable(3042);
+      GL11.glEnable(GL11.GL_BLEND);
       GL11.glBlendFunc(770, 771);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
       if (Minecraft.getMinecraft().renderViewEntity instanceof EntityPlayer) {
@@ -92,7 +92,7 @@ public class RenderCultistPortal extends Render {
       }
 
       GL11.glDisable(32826);
-      GL11.glDisable(3042);
+      GL11.glDisable(GL11.GL_BLEND);
       GL11.glPopMatrix();
    }
 

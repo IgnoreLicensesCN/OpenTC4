@@ -1,18 +1,44 @@
 package thaumcraft.common;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartedEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDispenser;
+import net.minecraft.dispenser.BehaviorProjectileDispense;
+import net.minecraft.dispenser.IBlockSource;
+import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.ForgeDirection;
+import tc4tweak.ConfigurationHandler;
+import tc4tweak.modules.FlushableCache;
+import tc4tweak.network.MessageSendConfiguration;
+import tc4tweak.network.MessageSendConfigurationV2;
+import tc4tweak.network.NetworkedConfiguration;
+import tc4tweak.network.TileHoleSyncPacket;
 import thaumcraft.api.aspects.AspectList;
+import thaumcraft.api.research.ResearchCategories;
+import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.container.ContainerAlchemyFurnace;
 import thaumcraft.common.container.ContainerArcaneBore;
 import thaumcraft.common.container.ContainerArcaneWorkbench;
@@ -31,6 +57,7 @@ import thaumcraft.common.entities.golems.ContainerTravelingTrunk;
 import thaumcraft.common.entities.golems.EntityGolemBase;
 import thaumcraft.common.entities.golems.EntityTravelingTrunk;
 import thaumcraft.common.entities.monster.EntityPech;
+import thaumcraft.common.entities.projectile.EntityPrimalArrow;
 import thaumcraft.common.items.wands.WandManager;
 import thaumcraft.common.lib.research.PlayerKnowledge;
 import thaumcraft.common.lib.research.ResearchManager;
@@ -305,5 +332,81 @@ public class CommonProxy implements IGuiHandler {
    }
 
    public void arcLightning(World world, double x, double y, double z, double tx, double ty, double tz, float r, float g, float b, float h) {
+   }
+
+
+   public CommonProxy() {
+      FMLCommonHandler.instance().bus().register(this);
+   }
+
+   public void preInit(FMLPreInitializationEvent e) {
+      ConfigurationHandler.INSTANCE.init(e.getSuggestedConfigurationFile());
+
+//        if (Loader.isModLoaded("MineTweaker3")) {
+//            MTCompat.preInit();
+//        }
+
+      Thaumcraft.instance.CHANNEL.registerMessage(MessageSendConfiguration.class, MessageSendConfiguration.class, 0, Side.CLIENT);
+      Thaumcraft.instance.CHANNEL.registerMessage(MessageSendConfigurationV2.class, MessageSendConfigurationV2.class, 1, Side.CLIENT);
+      Thaumcraft.instance.CHANNEL.registerMessage(TileHoleSyncPacket.class, TileHoleSyncPacket.class, 2, Side.CLIENT);
+      int debugadd = Integer.getInteger("glease.debug.addtc4tabs.pre", 0);
+      addDummyCategories(debugadd, "DUMMYPRE");
+   }
+
+   public void serverStarted(FMLServerStartedEvent e) {
+      FlushableCache.enableAll(true);
+      NetworkedConfiguration.resetServer();
+   }
+
+   public void init(FMLInitializationEvent e) {
+      BlockDispenser.dispenseBehaviorRegistry.putObject(ConfigItems.itemPrimalArrow, new BehaviorProjectileDispense() {
+         @Override
+         public ItemStack dispenseStack(IBlockSource dispenser, ItemStack stack) {
+            EnumFacing facing = BlockDispenser.func_149937_b(dispenser.getBlockMetadata());
+            IPosition pos = BlockDispenser.func_149939_a(dispenser);
+            ItemStack toDrop = stack.splitStack(1);
+            if (ConfigurationHandler.INSTANCE.isDispenserShootPrimalArrow()) {
+               World w = dispenser.getWorld();
+               EntityPrimalArrow e = (EntityPrimalArrow) getProjectileEntity(w, pos);
+               e.type = toDrop.getItemDamage();
+               if (e.type == 3)
+                  // inherent power of earth arrow
+                  // this is unfortunately not done on hit, but at bow draw time, so we must emulate this as well
+                  e.setKnockbackStrength(1);
+               e.setThrowableHeading(facing.getFrontOffsetX(), facing.getFrontOffsetY() + 0.1F, facing.getFrontOffsetZ(), this.func_82500_b(), this.func_82498_a());
+               w.spawnEntityInWorld(e);
+            } else {
+               doDispense(dispenser.getWorld(), toDrop, 6, facing, pos);
+            }
+            return stack;
+         }
+
+         @Override
+         protected IProjectile getProjectileEntity(World w, IPosition iposition) {
+            return new EntityPrimalArrow(w, iposition.getX(), iposition.getY(), iposition.getZ());
+         }
+      });
+   }
+
+   public void postInit(FMLPostInitializationEvent e) {
+      int debugadd = Integer.getInteger("glease.debug.addtc4tabs.post", 0);
+      for (int i = 0; i < debugadd; i++) {
+         addDummyCategories(debugadd, "DUMMYPOST");
+      }
+   }
+
+   private void addDummyCategories(int amount, String categoryPrefix) {
+      for (int i = 0; i < amount; i++) {
+         ResearchCategories.registerCategory(categoryPrefix + i, new ResourceLocation("thaumcraft", "textures/items/thaumonomiconcheat.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png"));
+      }
+   }
+
+   @SubscribeEvent
+   public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent e) {
+      if (e.player instanceof EntityPlayerMP && !((EntityPlayerMP) e.player).playerNetServerHandler.netManager.isLocalChannel()) {
+         // no point sending config over to a local client
+         Thaumcraft.instance.CHANNEL.sendTo(new MessageSendConfiguration(), (EntityPlayerMP) e.player);
+         Thaumcraft.instance.CHANNEL.sendTo(new MessageSendConfigurationV2(), (EntityPlayerMP) e.player);
+      }
    }
 }

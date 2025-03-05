@@ -109,10 +109,10 @@ public class ModelGolemAccessories extends ModelBase {
 
       GL11.glPopMatrix();
       if (deco != null && deco.contains("B")) {
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 771);
          this.golemBowtie.render(par7);
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
       }
 
       if (deco != null && deco.contains("P")) {
@@ -136,10 +136,10 @@ public class ModelGolemAccessories extends ModelBase {
       if (en.advanced) {
          this.golemHeadBrain.render(par7);
          GL11.glPushMatrix();
-         GL11.glEnable(3042);
+         GL11.glEnable(GL11.GL_BLEND);
          GL11.glBlendFunc(770, 771);
          this.golemHeadJar.render(par7);
-         GL11.glDisable(3042);
+         GL11.glDisable(GL11.GL_BLEND);
          GL11.glPopMatrix();
          if (en.getCore() >= 0) {
             GL11.glPushMatrix();
