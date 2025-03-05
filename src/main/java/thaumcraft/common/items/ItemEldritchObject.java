@@ -99,11 +99,30 @@ public class ItemEldritchObject extends Item {
 
    }
 
-   public ItemStack onItemRightClick(ItemStack stack, World par2World, EntityPlayer player) {
-      if (!par2World.isRemote && stack.getItemDamage() == 1 && !ResearchManager.isResearchComplete(player.getCommandSenderName(), "CRIMSON")) {
-         PacketHandler.INSTANCE.sendTo(new PacketResearchComplete("CRIMSON"), (EntityPlayerMP)player);
-         Thaumcraft.proxy.getResearchManager().completeResearch(player, "CRIMSON");
-         par2World.playSoundAtEntity(player, "thaumcraft:learn", 0.75F, 1.0F);
+   public static void unlockResearchForPlayer(World world,EntityPlayerMP player,String research,String... preRequsites) {
+      for (String preReq : preRequsites) {
+         if (ResearchManager.isResearchComplete(player.getCommandSenderName(), preReq)){return;}
+      }
+      if (ResearchManager.isResearchComplete(player.getCommandSenderName(), research)){return;}
+      PacketHandler.INSTANCE.sendTo(new PacketResearchComplete(research), player);
+      Thaumcraft.proxy.getResearchManager().completeResearch(player, research);
+      world.playSoundAtEntity(player, "thaumcraft:learn", 0.75F, 1.0F);
+   }
+
+   public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+      if (!world.isRemote){
+         if (player instanceof EntityPlayerMP) {
+            EntityPlayerMP playerMP = (EntityPlayerMP) player;
+            if (stack.getItemDamage() == 1) {
+               unlockResearchForPlayer(world, playerMP, "CRIMSON");
+            }
+
+            //primal pearl research bug fix
+            //anyway they got pearl.give research
+            if (stack.getItemDamage() == 3){
+               unlockResearchForPlayer(world, playerMP, "PRIMPEARL", "ELDRITCHMINOR");
+            }
+         }
       }
 
       return stack;
