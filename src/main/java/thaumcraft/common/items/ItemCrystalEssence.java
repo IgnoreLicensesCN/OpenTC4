@@ -12,12 +12,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
 import thaumcraft.common.Thaumcraft;
+
+import static thaumcraft.api.aspects.AspectList.addAspectDescriptionToList;
 
 public class ItemCrystalEssence extends Item implements IEssentiaContainerItem {
    public IIcon icon;
@@ -48,15 +49,7 @@ public class ItemCrystalEssence extends Item implements IEssentiaContainerItem {
 
    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
       AspectList aspects = this.getAspects(stack);
-      if (aspects != null && aspects.size() > 0) {
-         for(Aspect tag : aspects.getAspectsSorted()) {
-            if (Thaumcraft.proxy.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), tag)) {
-               list.add(tag.getName() + " x" + aspects.getAmount(tag));
-            } else {
-               list.add(StatCollector.translateToLocal("tc.aspect.unknown"));
-            }
-         }
-      }
+      addAspectDescriptionToList(aspects,player,list);
 
       super.addInformation(stack, player, list, par4);
    }

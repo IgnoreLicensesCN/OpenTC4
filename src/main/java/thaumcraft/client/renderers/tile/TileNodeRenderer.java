@@ -13,6 +13,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import org.lwjgl.opengl.GL11;
+import tc4tweak.ConfigurationHandler;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
@@ -28,6 +29,11 @@ import thaumcraft.common.tiles.TileNode;
 public class TileNodeRenderer extends TileEntitySpecialRenderer {
    public static final ResourceLocation nodetex = new ResourceLocation("thaumcraft", "textures/misc/nodes.png");
 
+   public static void renderFacingStrip_tweaked(double px, double py, double pz, float angle, float scale, float alpha, int frames, int strip, int frame, float partialTicks, int color) {
+      UtilsFX.renderFacingStrip(px, py, pz, angle,
+              Math.min(scale, ConfigurationHandler.INSTANCE.getNodeVisualSizeLimit()),
+              alpha, frames, strip, frame, partialTicks, color);
+   }
    public static void renderNode(EntityLivingBase viewer, double viewDistance, boolean visible, boolean depthIgnore, float size, int x, int y, int z, float partialTicks, AspectList aspects, NodeType type, NodeModifier mod) {
       long nt = System.nanoTime();
       UtilsFX.bindTexture(nodetex);
@@ -84,7 +90,9 @@ public class TileNodeRenderer extends TileEntitySpecialRenderer {
             scale = 0.2F + scale * ((float)aspects.getAmount(aspect) / 50.0F);
             scale *= size;
             angle = (float)(time % (long)(5000 + 500L * count)) / (5000.0F + (float)(500 * count)) * rad;
-            UtilsFX.renderFacingStrip((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, angle, scale, alpha / Math.max(1.0F, (float)aspects.size() / 2.0F), frames, 0, i, partialTicks, aspect.getColor());
+//            UtilsFX.renderFacingStrip
+            renderFacingStrip_tweaked
+                    ((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, angle, scale, alpha / Math.max(1.0F, (float)aspects.size() / 2.0F), frames, 0, i, partialTicks, aspect.getColor());
             GL11.glDisable(3042);
             GL11.glPopMatrix();
             ++count;
@@ -128,7 +136,9 @@ public class TileNodeRenderer extends TileEntitySpecialRenderer {
          }
 
          GL11.glColor4f(1.0F, 0.0F, 1.0F, alpha);
-         UtilsFX.renderFacingStrip((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, angle, scale, alpha, frames, strip, i, partialTicks, 16777215);
+//         UtilsFX.renderFacingStrip
+         renderFacingStrip_tweaked
+                 ((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, angle, scale, alpha, frames, strip, i, partialTicks, 16777215);
          GL11.glDisable(3042);
          GL11.glPopMatrix();
          GL11.glPopMatrix();
@@ -148,7 +158,9 @@ public class TileNodeRenderer extends TileEntitySpecialRenderer {
          GL11.glDepthMask(false);
          int i = (int)((nt / 40000000L + (long)x) % (long)frames);
          GL11.glColor4f(1.0F, 0.0F, 1.0F, 0.1F);
-         UtilsFX.renderFacingStrip((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, 0.0F, 0.5F, 0.1F, frames, 1, i, partialTicks, 16777215);
+         //            UtilsFX.renderFacingStrip
+         renderFacingStrip_tweaked
+                 ((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, 0.0F, 0.5F, 0.1F, frames, 1, i, partialTicks, 16777215);
          GL11.glDepthMask(true);
          GL11.glDisable(3042);
          GL11.glAlphaFunc(516, 0.1F);

@@ -34,6 +34,8 @@ import thaumcraft.common.lib.network.playerdata.PacketResearchComplete;
 import thaumcraft.common.lib.research.ResearchManager;
 import thaumcraft.common.lib.utils.InventoryUtils;
 
+import static thaumcraft.api.aspects.AspectList.addAspectDescriptionToList;
+
 public class ItemResource extends Item implements IEssentiaContainerItem {
    public IIcon[] icon = new IIcon[19];
    public IIcon iconOverlay;
@@ -252,15 +254,7 @@ public class ItemResource extends Item implements IEssentiaContainerItem {
 
    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
       AspectList aspects = this.getAspects(stack);
-      if (aspects != null && aspects.size() > 0) {
-         for(Aspect tag : aspects.getAspectsSorted()) {
-            if (Thaumcraft.proxy.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), tag)) {
-               list.add(tag.getName());
-            } else {
-               list.add(StatCollector.translateToLocal("tc.aspect.unknown"));
-            }
-         }
-      }
+      addAspectDescriptionToList(aspects,player,list);
 
       if (stack.getItemDamage() == 15) {
          Random rand = new Random(stack.hashCode() + player.ticksExisted / 120);

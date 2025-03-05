@@ -57,8 +57,14 @@ public class EntityShockOrb extends EntityThrowable {
             int xx = MathHelper.floor_double(this.posX) + this.rand.nextInt(this.area) - this.rand.nextInt(this.area);
             int yy = MathHelper.floor_double(this.posY) + this.area;
 
-            int zz;
-            for(zz = MathHelper.floor_double(this.posZ) + this.rand.nextInt(this.area) - this.rand.nextInt(this.area); this.worldObj.isAirBlock(xx, yy, zz) && yy > MathHelper.floor_double(this.posY) - this.area; --yy) {
+            int zz  = MathHelper.floor_double(this.posZ)
+                    + this.rand.nextInt(this.area)
+                    - this.rand.nextInt(this.area);
+            while (
+                    this.worldObj.isAirBlock(xx, yy, zz)
+                    && (yy > MathHelper.floor_double(this.posY) - this.area)
+            ) {
+               yy -= 1;
             }
 
             if (this.worldObj.isAirBlock(xx, yy + 1, zz) && !this.worldObj.isAirBlock(xx, yy, zz) && this.worldObj.getBlock(xx, yy + 1, zz) != ConfigBlocks.blockAiry && EntityUtils.canEntityBeSeen(this, (double)xx + (double)0.5F, (double)yy + (double)1.5F, (double)zz + (double)0.5F)) {

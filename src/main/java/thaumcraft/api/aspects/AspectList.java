@@ -2,12 +2,16 @@ package thaumcraft.api.aspects;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import fromhodgepodge.util.AspectNameSorter;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.StatCollector;
 import thaumcraft.api.ThaumcraftApiHelper;
+import thaumcraft.common.Thaumcraft;
 
 public class AspectList implements Serializable {
 	
@@ -30,8 +34,20 @@ public class AspectList implements Serializable {
 	
 	public AspectList() {
 	}
-	
-	public AspectList copy() {
+
+    public static void addAspectDescriptionToList(AspectList aspects, EntityPlayer player, List list) {
+       if (aspects != null && !aspects.aspects.isEmpty()) {
+          for(Aspect tag : aspects.getAspectsSorted()) {
+             if (Thaumcraft.proxy.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), tag)) {
+                list.add(tag.getName() + " x " + aspects.getAmount(tag));
+             } else {
+                list.add(StatCollector.translateToLocal("tc.aspect.unknown"));
+             }
+          }
+       }
+    }
+
+    public AspectList copy() {
 		AspectList out = new AspectList();
 		for (Aspect a:this.getAspects())
 			out.add(a, this.getAmount(a));
@@ -175,7 +191,7 @@ public class AspectList implements Serializable {
 	/**
 	 * Simply removes the aspect from the list
 	 * @param key
-	 * @param amount
+//	 * @param amount
 	 * @return
 	 */
 	public AspectList remove(Aspect key) {

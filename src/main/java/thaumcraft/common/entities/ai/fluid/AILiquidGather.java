@@ -1,8 +1,10 @@
 package thaumcraft.common.entities.ai.fluid;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
+import java.util.*;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Blocks;
@@ -16,6 +18,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidHandler;
+import tc4tweak.ConfigurationHandler;
 import thaumcraft.common.entities.golems.EntityGolemBase;
 import thaumcraft.common.entities.golems.GolemHelper;
 import thaumcraft.common.entities.golems.Marker;
@@ -246,12 +249,58 @@ public class AILiquidGather extends EntityAIBase {
       this.cache.clear();
       this.origin = loc;
       ArrayList<SourceBlock> sources = new ArrayList<>();
-      this.getConnectedFluidBlocks(this.theWorld, loc.posX, loc.posY, loc.posZ, fluid, sources);
+      getConnectedFluidBlocks_tweak(this.theWorld, loc.posX, loc.posY, loc.posZ, fluid, sources,pumpDist);
       sources.sort(Collections.reverseOrder());
       this.queue.put(loc, sources);
    }
 
-   private void getConnectedFluidBlocks(World world, int x, int y, int z, Fluid fluid, ArrayList sources) {
+   private static boolean validFluidBlock_tweak(World world, Fluid fluid, int i, int j, int k) {
+      Block bi = world.getBlock(i, j, k);
+      if(FluidRegistry.lookupFluidForBlock(bi) != fluid) {
+         return false;
+      } else {
+         if(bi instanceof BlockFluidBase && ((IFluidBlock)bi).canDrain(world, i, j, k)) {
+            FluidStack fs = ((IFluidBlock)bi).drain(world, i, j, k, false);
+            if(fs != null) {
+               return true;
+            }
+         }
+
+         return (FluidRegistry.lookupFluidForBlock(bi) == FluidRegistry.WATER && fluid == FluidRegistry.WATER || FluidRegistry.lookupFluidForBlock(bi) == FluidRegistry.LAVA && fluid == FluidRegistry.LAVA) && world.getBlockMetadata(i, j, k) == 0;
+      }
+   }
+
+   public static void getConnectedFluidBlocks_tweak(World world, int x, int y, int z, Fluid fluid, ArrayList<SourceBlock> sources, float pumpDist) {
+      if (fluid == null) return;
+      Set<ChunkCoordinates> seen = new HashSet<>();  // ChunkCoordinates has quite terrible hash function, but there are multiple different optimization mod that optimize this. given the popularity of those I'd say it's fine to use it
+      Queue<ChunkCoordinates> toVisit = new ArrayDeque<>();
+      ChunkCoordinates origin = new ChunkCoordinates(x, y, z);
+      toVisit.add(origin);
+      while (!toVisit.isEmpty()) {
+         ChunkCoordinates v = toVisit.poll();
+         if (seen.contains(v)) continue;
+         seen.add(v);
+         float dist = v.getDistanceSquared(x, y, z);
+         if (dist > pumpDist) continue;
+         Block block = world.getBlock(v.posX, v.posY, v.posZ);
+         if (block == Blocks.flowing_lava)
+            block = Blocks.lava;
+         else if (block == Blocks.flowing_water)
+            block = Blocks.water;
+         Fluid f = FluidRegistry.lookupFluidForBlock(block);
+         if (f != fluid) continue;
+         if (validFluidBlock_tweak(world, fluid, v.posX, v.posY, v.posZ)) {
+            sources.add(new SourceBlock(v, dist));
+            if (sources.size() >= ConfigurationHandler.INSTANCE.getDecantMaxBlocks())
+               return;
+         }
+         for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            toVisit.add(new ChunkCoordinates(v.posX + direction.offsetX, v.posY + direction.offsetY, v.posZ + direction.offsetZ));
+         }
+      }
+   }
+
+   private void getConnectedFluidBlocks(World world, int x, int y, int z, Fluid fluid, ArrayList<SourceBlock> sources) {
       try {
          if (this.cache.contains(new ChunkCoordinates(x, y, z))) {
             return;
@@ -296,7 +345,7 @@ public class AILiquidGather extends EntityAIBase {
 
    }
 
-   private static class SourceBlock implements Comparable {
+   public static class SourceBlock implements Comparable<SourceBlock> {
       ChunkCoordinates loc;
       float dist;
 
@@ -309,8 +358,9 @@ public class AILiquidGather extends EntityAIBase {
          return Float.compare(this.dist, target.dist);
       }
 
-      public int compareTo(Object target) {
-         return this.compareTo((SourceBlock)target);
-      }
+//      public int compareTo(Object target) {
+//         return this.compareTo((SourceBlock)target);
+//      }
+
    }
 }

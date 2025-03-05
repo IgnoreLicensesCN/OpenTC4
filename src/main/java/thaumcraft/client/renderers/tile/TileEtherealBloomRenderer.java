@@ -12,6 +12,8 @@ import thaumcraft.common.blocks.BlockCustomPlant;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.tiles.TileEtherealBloom;
 
+import static thaumcraft.client.renderers.tile.TileNodeRenderer.renderFacingStrip_tweaked;
+
 @SideOnly(Side.CLIENT)
 public class TileEtherealBloomRenderer extends TileEntitySpecialRenderer {
    String tx2 = "textures/models/crystalcapacitor.png";
@@ -65,7 +67,9 @@ public class TileEtherealBloomRenderer extends TileEntitySpecialRenderer {
       GL11.glDisable(2884);
       int i = ((TileEtherealBloom)tile).counter % 32;
       UtilsFX.bindTexture(TileNodeRenderer.nodetex);
-      UtilsFX.renderFacingStrip((double)tile.xCoord + (double)0.5F, (float)tile.yCoord + scale1, (double)tile.zCoord + (double)0.5F, 0.0F, scale1, 1.0F, 32, 6, i, par8, 11197951);
+      //            UtilsFX.renderFacingStrip
+      renderFacingStrip_tweaked
+              ((double)tile.xCoord + (double)0.5F, (float)tile.yCoord + scale1, (double)tile.zCoord + (double)0.5F, 0.0F, scale1, 1.0F, 32, 6, i, par8, 11197951);
       GL11.glEnable(2884);
       GL11.glDepthMask(true);
       GL11.glPopMatrix();

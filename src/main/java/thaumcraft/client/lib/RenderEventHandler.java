@@ -63,6 +63,8 @@ import thaumcraft.common.tiles.TileWandPedestal;
 import truetyper.FontLoader;
 import truetyper.TrueTypeFont;
 
+import static thaumcraft.client.renderers.tile.TileNodeRenderer.renderFacingStrip_tweaked;
+
 public class RenderEventHandler {
    TrueTypeFont font = null;
    public static List blockTags = new ArrayList<>();
@@ -451,10 +453,14 @@ public class RenderEventHandler {
    @SideOnly(Side.CLIENT)
    public void drawPickScannedObject(double x, double y, double z, float partialTicks, float alpha, int cframe, float size) {
       GL11.glPushMatrix();
-      UtilsFX.renderFacingStrip(x + (double)0.5F, y + (double)0.5F, z + (double)0.5F, 0.0F, 0.2F * size, alpha, 32, 0, cframe, partialTicks, 11184657);
+      //            UtilsFX.renderFacingStrip
+      renderFacingStrip_tweaked
+              (x + (double)0.5F, y + (double)0.5F, z + (double)0.5F, 0.0F, 0.2F * size, alpha, 32, 0, cframe, partialTicks, 11184657);
       GL11.glPopMatrix();
       GL11.glPushMatrix();
-      UtilsFX.renderFacingStrip(x + (double)0.5F, y + (double)0.5F, z + (double)0.5F, 0.0F, 0.5F * size, alpha, 32, 0, cframe, partialTicks, 11145506);
+      //            UtilsFX.renderFacingStrip
+      renderFacingStrip_tweaked
+              (x + (double)0.5F, y + (double)0.5F, z + (double)0.5F, 0.0F, 0.5F * size, alpha, 32, 0, cframe, partialTicks, 11145506);
       GL11.glPopMatrix();
    }
 

@@ -9,11 +9,23 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+import thaumcraft.common.tiles.TileMagicWorkbench;
 
 import java.awt.*;
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.WeakHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientUtils {
+
+    public static final WeakHashMap<TileMagicWorkbench, Void> postponed = new WeakHashMap<>();
+    public static final AtomicBoolean cacheUsed = new AtomicBoolean(false);
+    // workbench throttling
+    public static long lastUpdate = 0;
+    public static boolean priorityChanged = false;
+    public static long start;
+    public static Field fieldParticleTexture;
 
     public static void drawRectTextured(double xmin, double xmax, double ymin, double ymax, double umin, double umax, double vmin, double vmax, double zLevel) {
         // can't just call gui.drawTexturedModalRect, it can't do width scales

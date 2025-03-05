@@ -10,6 +10,7 @@ import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 import net.minecraftforge.client.IItemRenderer.ItemRendererHelper;
 import org.lwjgl.opengl.GL11;
+import tc4tweak.ConfigurationHandler;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
@@ -56,6 +57,10 @@ public class ItemNodeRenderer implements IItemRenderer {
       GL11.glPopMatrix();
       GL11.glEnable(32826);
    }
+   public static void renderAnimatedQuadStrip_tweaked(float scale, float alpha, int frames, int strip, int cframe, float partialTicks, int color) {
+      UtilsFX.renderAnimatedQuadStrip(Math.min(scale, ConfigurationHandler.INSTANCE.getNodeVisualSizeLimit()), alpha, frames, strip, cframe, partialTicks, color);
+   }
+
 
    public static void renderItemNode(INode node) {
       if (node.getAspects().size() > 0) {
@@ -102,7 +107,10 @@ public class ItemNodeRenderer implements IItemRenderer {
             GL11.glBlendFunc(770, aspect.getBlend());
             scale = MathHelper.sin((float)viewer.ticksExisted / (14.0F - (float)count)) * bscale + bscale * 2.0F;
             scale = 0.2F + scale * ((float)node.getAspects().getAmount(aspect) / 50.0F);
-            UtilsFX.renderAnimatedQuadStrip(scale, alpha / (float)node.getAspects().size(), frames, 0, i, 0.0F, aspect.getColor());
+
+//            UtilsFX.renderAnimatedQuadStrip
+            renderAnimatedQuadStrip_tweaked
+                    (scale, alpha / (float)node.getAspects().size(), frames, 0, i, 0.0F, aspect.getColor());
             GL11.glDisable(3042);
             GL11.glPopMatrix();
             ++count;
@@ -121,30 +129,32 @@ public class ItemNodeRenderer implements IItemRenderer {
             case NORMAL:
                GL11.glBlendFunc(770, 1);
                break;
-            case UNSTABLE:
-               GL11.glBlendFunc(770, 1);
-               strip = 6;
-               break;
             case DARK:
                GL11.glBlendFunc(770, 771);
                strip = 2;
-               break;
-            case TAINTED:
-               GL11.glBlendFunc(770, 771);
-               strip = 5;
-               break;
-            case PURE:
-               GL11.glBlendFunc(770, 1);
-               strip = 4;
                break;
             case HUNGRY:
                scale *= 0.75F;
                GL11.glBlendFunc(770, 1);
                strip = 3;
+            case PURE:
+               GL11.glBlendFunc(770, 1);
+               strip = 4;
+               break;
+            case TAINTED:
+               GL11.glBlendFunc(770, 771);
+               strip = 5;
+               break;
+            case UNSTABLE:
+               GL11.glBlendFunc(770, 1);
+               strip = 6;
+               break;
          }
 
          GL11.glColor4f(1.0F, 0.0F, 1.0F, alpha);
-         UtilsFX.renderAnimatedQuadStrip(scale, alpha, frames, strip, i, 0.0F, 16777215);
+//         UtilsFX.renderAnimatedQuadStrip
+         renderAnimatedQuadStrip_tweaked
+                 (scale, alpha, frames, strip, i, 0.0F, 16777215);
          GL11.glDisable(3042);
          GL11.glPopMatrix();
          GL11.glPopMatrix();

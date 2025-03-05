@@ -34,6 +34,8 @@ import thaumcraft.common.lib.network.playerdata.PacketAspectPool;
 import thaumcraft.common.lib.research.ResearchManager;
 import thaumcraft.common.tiles.TileManaPod;
 
+import static thaumcraft.api.aspects.AspectList.addAspectDescriptionToList;
+
 public class ItemManaBean extends ItemFood implements IEssentiaContainerItem {
    public final int itemUseDuration = 10;
    public IIcon icon;
@@ -93,15 +95,7 @@ public class ItemManaBean extends ItemFood implements IEssentiaContainerItem {
 
    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
       AspectList aspects = this.getAspects(stack);
-      if (aspects != null && aspects.size() > 0) {
-         for(Aspect tag : aspects.getAspectsSorted()) {
-            if (Thaumcraft.proxy.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), tag)) {
-               list.add(tag.getName() + " x" + aspects.getAmount(tag));
-            } else {
-               list.add(StatCollector.translateToLocal("tc.aspect.unknown"));
-            }
-         }
-      }
+      addAspectDescriptionToList(aspects,player,list);
 
       super.addInformation(stack, player, list, par4);
    }

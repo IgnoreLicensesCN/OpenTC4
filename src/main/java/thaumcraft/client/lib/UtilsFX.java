@@ -39,6 +39,8 @@ import thaumcraft.client.fx.particles.FXSparkle;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.Config;
 
+import static tc4tweak.ClientUtils.fieldParticleTexture;
+
 public class UtilsFX {
    public static final String[] colorNames = new String[]{"White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black"};
    public static final String[] colorCodes = new String[]{"§f", "§6", "§d", "§9", "§e", "§a", "§d", "§8", "§7", "§b", "§5", "§9", "§4", "§2", "§c", "§8"};
@@ -903,14 +905,23 @@ public class UtilsFX {
 
    public static ResourceLocation getParticleTexture() {
       try {
-         return ReflectionHelper.getPrivateValue(
-
-                 EffectRenderer.class,
-                 null,
-                 new String[]{"particleTextures", "b", "field_110737_b"}
-         );
-      } catch (Exception var1) {
+         if (fieldParticleTexture == null)
+            fieldParticleTexture = ReflectionHelper.findField(
+                    EffectRenderer.class,
+                    "particleTextures", "b", "field_110737_b");
+         return (ResourceLocation) fieldParticleTexture.get(null);
+      } catch (Exception ignored) {
          return null;
       }
+//      try {
+//         return ReflectionHelper.getPrivateValue(
+//
+//                 EffectRenderer.class,
+//                 null,
+//                 new String[]{"particleTextures", "b", "field_110737_b"}
+//         );
+//      } catch (Exception var1) {
+//         return null;
+//      }
    }
 }

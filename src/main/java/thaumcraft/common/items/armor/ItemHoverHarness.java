@@ -26,6 +26,8 @@ import thaumcraft.client.renderers.models.gear.ModelHoverHarness;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.blocks.ItemJarFilled;
 
+import static thaumcraft.api.aspects.AspectList.addAspectDescriptionToList;
+
 public class ItemHoverHarness extends ItemArmor implements IRepairable, IVisDiscountGear, IRunicArmor {
    ModelBiped model = null;
    public IIcon icon;
@@ -99,15 +101,7 @@ public class ItemHoverHarness extends ItemArmor implements IRepairable, IVisDisc
 
          try {
             AspectList aspects = ((ItemJarFilled)jar.getItem()).getAspects(jar);
-            if (aspects != null && aspects.size() > 0) {
-               for(Aspect tag : aspects.getAspectsSorted()) {
-                  if (Thaumcraft.proxy.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), tag)) {
-                     list.add(tag.getName() + " x " + aspects.getAmount(tag));
-                  } else {
-                     list.add(StatCollector.translateToLocal("tc.aspect.unknown"));
-                  }
-               }
-            }
+            addAspectDescriptionToList(aspects,player,list);
          } catch (Exception ignored) {
          }
       }

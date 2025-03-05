@@ -21,6 +21,7 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchItem;
+import thaumcraft.client.ClientProxy;
 import thaumcraft.client.fx.ParticleEngine;
 import thaumcraft.client.lib.PlayerNotifications;
 import thaumcraft.client.lib.UtilsFX;
@@ -765,5 +766,11 @@ public class GuiResearchTable extends GuiContainer {
          this.x = x;
          this.y = y;
       }
+   }
+
+   @Override
+   public void handleMouseInput() {
+      super.handleMouseInput();
+      tc4tweak.ClientProxy.handleMouseInput(this);
    }
 }

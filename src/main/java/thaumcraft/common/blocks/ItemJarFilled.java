@@ -22,6 +22,8 @@ import thaumcraft.common.tiles.TileJarFillable;
 
 import java.util.List;
 
+import static thaumcraft.api.aspects.AspectList.addAspectDescriptionToList;
+
 public class ItemJarFilled extends Item implements IEssentiaContainerItem {
    @SideOnly(Side.CLIENT)
    public IIcon icon;
@@ -47,15 +49,7 @@ public class ItemJarFilled extends Item implements IEssentiaContainerItem {
 
    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
       AspectList aspects = this.getAspects(stack);
-      if (aspects != null && aspects.size() > 0) {
-         for(Aspect tag : aspects.getAspectsSorted()) {
-            if (Thaumcraft.proxy.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), tag)) {
-               list.add(tag.getName() + " x " + aspects.getAmount(tag));
-            } else {
-               list.add(StatCollector.translateToLocal("tc.aspect.unknown"));
-            }
-         }
-      }
+      addAspectDescriptionToList(aspects,player,list);
 
       if (stack.hasTagCompound() && stack.stackTagCompound.hasKey("AspectFilter")) {
          String tf = stack.stackTagCompound.getString("AspectFilter");

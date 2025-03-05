@@ -51,6 +51,8 @@ import net.minecraft.launchwrapper.LaunchClassLoader;
 import sun.misc.URLClassPath;
 import sun.net.util.URLUtil;
 
+import static tc4tweak.ClientProxy.dev;
+
 public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
    private static ByteBuffer downloadBuffer = ByteBuffer.allocateDirect(8388608);
    private static final String owner = "CB's DepLoader";
@@ -76,7 +78,8 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
       return this.getClass().getName();
    }
 
-   public void injectData(Map data) {
+   public void injectData(Map<String, Object> data) {
+      dev = !(boolean) data.get("runtimeDeobfuscationEnabled");
    }
 
    public Void call() {

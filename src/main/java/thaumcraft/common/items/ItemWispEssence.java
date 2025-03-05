@@ -16,6 +16,8 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
 import thaumcraft.common.Thaumcraft;
 
+import static thaumcraft.api.aspects.AspectList.addAspectDescriptionToList;
+
 public class ItemWispEssence extends Item implements IEssentiaContainerItem {
    public IIcon icon;
    static Aspect[] displayAspects;
@@ -49,15 +51,7 @@ public class ItemWispEssence extends Item implements IEssentiaContainerItem {
 
    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
       AspectList aspects = this.getAspects(stack);
-      if (aspects != null && aspects.size() > 0) {
-         for(Aspect tag : aspects.getAspectsSorted()) {
-            if (Thaumcraft.proxy.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), tag)) {
-               list.add(tag.getName() + " x" + aspects.getAmount(tag));
-            } else {
-               list.add(StatCollector.translateToLocal("tc.aspect.unknown"));
-            }
-         }
-      }
+      addAspectDescriptionToList(aspects,player,list);
 
       super.addInformation(stack, player, list, par4);
    }

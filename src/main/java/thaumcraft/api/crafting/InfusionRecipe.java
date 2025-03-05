@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import tc4tweak.ConfigurationHandler;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.AspectList;
 
@@ -69,30 +70,44 @@ public class InfusionRecipe
 		return ii.size() == 0;
     }
 	
-	public static boolean areItemStacksEqual(ItemStack stack0, ItemStack stack1, boolean fuzzy)
+	public static boolean areItemStacksEqual(ItemStack playerInput, ItemStack recipeSpec, boolean fuzzy)
     {
-		if (stack0==null && stack1!=null) return false;
-		if (stack0!=null && stack1==null) return false;
-		if (stack0==null && stack1==null) return true;
-		
-		//nbt
-		boolean t1=ThaumcraftApiHelper.areItemStackTagsEqualForCrafting(stack0, stack1);		
-		if (!t1) return false;
-		
+		if (playerInput == null) {
+			return recipeSpec == null;
+		}
+		if (recipeSpec == null) return false;
+		if (!ThaumcraftApiHelper.areItemStackTagsEqualForCrafting(playerInput, recipeSpec)) return false;
 		if (fuzzy) {
-			int od = OreDictionary.getOreID(stack0);
-			if (od!=-1) {
-				ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[]{});
-				if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{stack1}, ores))
-					return true;
+			if (ConfigurationHandler.INSTANCE.getInfusionOreDictMode().test(playerInput, recipeSpec)) {
+				return true;
 			}
 		}
-		
-		//damage
-		boolean damage = stack0.getItemDamage() == stack1.getItemDamage() ||
-				stack1.getItemDamage() == OreDictionary.WILDCARD_VALUE;		
-		
-        return stack0.getItem() == stack1.getItem() && (damage && stack0.stackSize <= stack0.getMaxStackSize());
+
+		return playerInput.getItem() == recipeSpec.getItem() &&
+				(playerInput.getItemDamage() == recipeSpec.getItemDamage() || recipeSpec.getItemDamage() == 32767) &&
+				playerInput.stackSize <= playerInput.getMaxStackSize();
+//		if (playerInput==null && recipeSpec!=null) return false;
+//		if (playerInput!=null && recipeSpec==null) return false;
+//		if (playerInput==null && recipeSpec==null) return true;
+//
+//		//nbt
+//		boolean t1=ThaumcraftApiHelper.areItemStackTagsEqualForCrafting(playerInput, recipeSpec);
+//		if (!t1) return false;
+//
+//		if (fuzzy) {
+//			int od = OreDictionary.getOreID(playerInput);
+//			if (od!=-1) {
+//				ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[]{});
+//				if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{recipeSpec}, ores))
+//					return true;
+//			}
+//		}
+//
+//		//damage
+//		boolean damage = playerInput.getItemDamage() == recipeSpec.getItemDamage() ||
+//				recipeSpec.getItemDamage() == OreDictionary.WILDCARD_VALUE;
+//
+//        return playerInput.getItem() == recipeSpec.getItem() && (damage && playerInput.stackSize <= playerInput.getMaxStackSize());
     }
 	   
     public Object getRecipeOutput() {

@@ -6,17 +6,18 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.network.NetworkCheckHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import java.io.File;
+import java.util.Map;
+
+import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityList;
@@ -81,6 +82,12 @@ public class Thaumcraft {
       serverSide = "thaumcraft.common.CommonProxy"
    )
    public static CommonProxy proxy;
+
+   @SidedProxy(
+           clientSide = "tc4tweak.CommonProxy",
+           serverSide = "tc4tweak.ClientProxy"
+   )
+   public static tc4tweak.CommonProxy tc4tweakProxy;
    @Instance("Thaumcraft")
    public static Thaumcraft instance;
    ResearchManager researchManager;
@@ -100,7 +107,7 @@ public class Thaumcraft {
 
    @EventHandler
    public void preInit(FMLPreInitializationEvent event) {
-      event.getModMetadata().version = "4.2.3.5";
+      event.getModMetadata().version = VERSION;
       this.modDir = event.getModConfigurationDirectory();
 
       try {
@@ -149,6 +156,7 @@ public class Thaumcraft {
       this.worldGen.initialize();
       FMLCommonHandler.instance().bus().register(instance);
       Config.registerBiomes();
+      tc4tweakProxy.preInit(event);
    }
 
    @EventHandler
@@ -168,6 +176,7 @@ public class Thaumcraft {
       proxy.registerKeyBindings();
       DimensionManager.registerProviderType(Config.dimensionOuterId, WorldProviderOuter.class, false);
       DimensionManager.registerDimension(Config.dimensionOuterId, Config.dimensionOuterId);
+      tc4tweakProxy.init(evt);
    }
 
    @EventHandler
@@ -257,12 +266,19 @@ public class Thaumcraft {
             }
          }
       }
+      tc4tweakProxy.postInit(evt);
 
    }
 
    @EventHandler
    public void serverLoad(FMLServerStartingEvent event) {
       event.registerServerCommand(new CommandThaumcraft());
+
+   }
+
+   @Mod.EventHandler
+   public void serverStarted(FMLServerStartedEvent e) {
+      tc4tweakProxy.serverStarted(e);
    }
 
    @SubscribeEvent

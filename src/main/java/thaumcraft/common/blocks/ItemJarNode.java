@@ -15,12 +15,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
-import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.tiles.TileJarNode;
 
@@ -49,6 +47,8 @@ public class ItemJarNode extends Item implements IEssentiaContainerItem {
       return par1;
    }
 
+   @Override
+   @SideOnly(Side.CLIENT)
    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
       String desc = "§9" + StatCollector.translateToLocal("nodetype." + this.getNodeType(stack) + ".name");
       if (this.getNodeModifier(stack) != null) {
@@ -56,16 +56,7 @@ public class ItemJarNode extends Item implements IEssentiaContainerItem {
       }
 
       list.add(desc);
-      AspectList aspects = this.getAspects(stack);
-      if (aspects != null && aspects.size() > 0) {
-         for(Aspect tag : aspects.getAspectsSorted()) {
-            if (Thaumcraft.proxy.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), tag)) {
-               list.add(tag.getName() + " x " + aspects.getAmount(tag));
-            } else {
-               list.add(StatCollector.translateToLocal("tc.aspect.unknown"));
-            }
-         }
-      }
+      AspectList.addAspectDescriptionToList(this.getAspects(stack), player, list);
 
       super.addInformation(stack, player, list, par4);
    }

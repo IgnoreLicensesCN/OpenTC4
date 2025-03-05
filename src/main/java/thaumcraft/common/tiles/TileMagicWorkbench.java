@@ -12,6 +12,9 @@ import thaumcraft.common.items.wands.ItemWandCasting;
 
 import java.util.WeakHashMap;
 
+import static tc4tweak.ClientUtils.lastUpdate;
+import static tc4tweak.ClientUtils.postponed;
+
 public class TileMagicWorkbench extends TileThaumcraft implements IInventory, ISidedInventory {
    public ItemStack[] stackList = new ItemStack[11];
    public Container eventHandler;
@@ -69,8 +72,6 @@ public class TileMagicWorkbench extends TileThaumcraft implements IInventory, IS
          return null;
       }
    }
-   public static final WeakHashMap<TileMagicWorkbench, Void> postponed = new WeakHashMap<>();
-   public static long lastUpdate = 0;
    public static void updateCraftingMatrix(TileMagicWorkbench self) {
       if (!self.getWorldObj().isRemote) {
          self.eventHandler.onCraftMatrixChanged(self);

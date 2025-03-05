@@ -8,12 +8,13 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import tc4tweak.ConfigurationHandler;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
@@ -21,6 +22,8 @@ import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.tiles.TileAlembic;
 import thaumcraft.common.tiles.TileJarFillable;
+
+import static thaumcraft.api.aspects.AspectList.addAspectDescriptionToList;
 
 public class ItemEssence extends Item implements IEssentiaContainerItem {
    public IIcon icon;
@@ -68,13 +71,13 @@ public class ItemEssence extends Item implements IEssentiaContainerItem {
    }
 
    @SideOnly(Side.CLIENT)
-   public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
-      par3List.add(new ItemStack(this, 1, 0));
+   public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List stacks) {
+      stacks.add(new ItemStack(this, 1, 0));
 
       for(Aspect tag : Aspect.aspects.values()) {
          ItemStack i = new ItemStack(this, 1, 1);
          this.setAspects(i, (new AspectList()).add(tag, 8));
-         par3List.add(i);
+         stacks.add(i);
       }
 
    }
@@ -85,19 +88,39 @@ public class ItemEssence extends Item implements IEssentiaContainerItem {
 
    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
       AspectList aspects = this.getAspects(stack);
-      if (aspects != null && aspects.size() > 0) {
-         for(Aspect tag : aspects.getAspectsSorted()) {
-            if (Thaumcraft.proxy.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), tag)) {
-               list.add(tag.getName() + " x " + aspects.getAmount(tag));
-            } else {
-               list.add(StatCollector.translateToLocal("tc.aspect.unknown"));
-            }
-         }
-      }
+      addAspectDescriptionToList(aspects,player,list);
 
       super.addInformation(stack, player, list, par4);
    }
 
+   public static boolean addItemStackToInventory_tweaked(InventoryPlayer inv, ItemStack itemStack) {
+      if (!ConfigurationHandler.INSTANCE.isAlternativeAddStack()) {
+         return inv.addItemStackToInventory(itemStack);
+      }
+      // first check if a partial stack exists
+      for (ItemStack stack : inv.mainInventory) {
+         // empty or same stack
+         if (stack == null || !stack.isItemEqual(itemStack) || !ItemStack.areItemStackTagsEqual(itemStack, stack) ||
+                 // space left
+                 stack.stackSize <= 0 || stack.stackSize >= stack.getMaxStackSize()) {
+            continue;
+         }
+         int toAdd = Math.min(stack.getMaxStackSize() - stack.stackSize, itemStack.stackSize);
+         itemStack.stackSize -= toAdd;
+         stack.stackSize += toAdd;
+         if (itemStack.stackSize <= 0) {
+            return true;
+         }
+      }
+      // then try to add to current active slot if it's now empty
+      ItemStack currentStack = inv.mainInventory[inv.currentItem];
+      if (currentStack == null || currentStack.getItem() == null || currentStack.stackSize <= 0) {
+         inv.mainInventory[inv.currentItem] = itemStack;
+         return true;
+      }
+      // fallback to vanilla logic if both failed
+      return inv.addItemStackToInventory(itemStack);
+   }
    public boolean onItemUseFirst(ItemStack itemstack, EntityPlayer player, World world, int x, int y, int z, int side, float f1, float f2, float f3) {
       Block bi = world.getBlock(x, y, z);
       int md = world.getBlockMetadata(x, y, z);
@@ -113,7 +136,7 @@ public class ItemEssence extends Item implements IEssentiaContainerItem {
             this.setAspects(phial, (new AspectList()).add(tile.aspect, 8));
             if (tile.takeFromContainer(tile.aspect, 8)) {
                --itemstack.stackSize;
-               if (!player.inventory.addItemStackToInventory(phial)) {
+               if (!addItemStackToInventory_tweaked(player.inventory,phial)) {
                   world.spawnEntityInWorld(new EntityItem(world, (float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, phial));
                }
 
@@ -137,7 +160,7 @@ public class ItemEssence extends Item implements IEssentiaContainerItem {
                --itemstack.stackSize;
                ItemStack phial = new ItemStack(this, 1, 1);
                this.setAspects(phial, (new AspectList()).add(asp, 8));
-               if (!player.inventory.addItemStackToInventory(phial)) {
+               if (!addItemStackToInventory_tweaked(player.inventory,phial)) {
                   world.spawnEntityInWorld(new EntityItem(world, (float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, phial));
                }
 
@@ -163,7 +186,7 @@ public class ItemEssence extends Item implements IEssentiaContainerItem {
                   world.markBlockForUpdate(x, y, z);
                   tile.markDirty();
                   --itemstack.stackSize;
-                  if (!player.inventory.addItemStackToInventory(new ItemStack(this, 1, 0))) {
+                  if (!addItemStackToInventory_tweaked(player.inventory,new ItemStack(this, 1, 0))) {
                      world.spawnEntityInWorld(new EntityItem(world, (float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, new ItemStack(this, 1, 0)));
                   }
 

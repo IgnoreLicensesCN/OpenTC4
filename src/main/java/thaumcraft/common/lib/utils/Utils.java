@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.nio.channels.FileChannel;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -45,6 +46,8 @@ import thaumcraft.common.items.equipment.ItemElementalAxe;
 import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.network.fx.PacketFXVisDrain;
 import thaumcraft.common.lib.network.misc.PacketBiomeChange;
+
+import static thaumcraft.common.Thaumcraft.log;
 
 public class Utils {
    public static HashMap<List<?/*0:ItemStack,1:int*/>,ItemStack> specialMiningResult = new HashMap<>();
@@ -153,6 +156,23 @@ public class Utils {
       return par0 < par1 ? par1 : (par0 > par2 ? par2 : par0);
    }
 
+   private static Method getRenderDistanceChunks;
+   public static double getViewDistance(World w) {
+      int chunks;
+      try {
+         if (getRenderDistanceChunks == null) {
+            // the latest mcp mapping calls it getRenderDistanceChunks,
+            // but it remains as a srg name in the mapping comes with forge 1614
+            getRenderDistanceChunks = ReflectionHelper.findMethod(World.class, null, new String[]{"getRenderDistanceChunks", "func_152379_p", "p"});
+         }
+         chunks = (Integer) getRenderDistanceChunks.invoke(w);
+      } catch (ReflectiveOperationException | ReflectionHelper.UnableToFindMethodException ex) {
+         log.error("error calling World#getRenderDistanceChunks", ex);
+         chunks = 12;
+      }
+      return chunks * 16D;
+   }
+
    public static void setBiomeAt(World world, int x, int z, BiomeGenBase biome) {
       if (biome != null) {
          Chunk chunk = world.getChunkFromBlockCoords(x, z);
@@ -160,7 +180,16 @@ public class Utils {
          array[(z & 15) << 4 | x & 15] = (byte)(biome.biomeID & 255);
          chunk.setBiomeArray(array);
          if (!world.isRemote) {
-            PacketHandler.INSTANCE.sendToAllAround(new PacketBiomeChange(x, z, (short)biome.biomeID), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, world.getHeightValue(x, z), z, 32.0F));
+            PacketHandler.INSTANCE.sendToAllAround(
+                    new PacketBiomeChange(x, z, (short)biome.biomeID),
+                    new NetworkRegistry.TargetPoint(
+                            world.provider.dimensionId,
+                            x,
+                            world.getHeightValue(x, z),
+                            z,
+                            getViewDistance(world)//32.0F
+                    )
+            );
          }
 
       }
