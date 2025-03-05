@@ -217,12 +217,18 @@ public class GetObjectTags {
         TIntObjectMap<AspectList> submap = cache.get(item);
         if (submap != null) {
             AspectList aspectList;
-            if ((aspectList = submap.get(meta)) != null) return aspectList;
-            if ((aspectList = submap.get(OreDictionary.WILDCARD_VALUE)) != null) return aspectList;
+            if ((aspectList = submap.get(meta)) != null) {
+                return aspectList;
+            }
+            if ((aspectList = submap.get(OreDictionary.WILDCARD_VALUE)) != null) {
+                return aspectList;
+            }
 
             if (meta == OreDictionary.WILDCARD_VALUE) {
                 for (int i = 0; i < 16; i++) {
-                    if ((aspectList = submap.get(i)) != null) return aspectList;
+                    if ((aspectList = submap.get(i)) != null) {
+                        return aspectList;
+                    }
                 }
             }
         }

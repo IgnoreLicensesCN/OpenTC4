@@ -42,9 +42,6 @@ import thaumcraft.api.research.ResearchPage;
  *
  */
 public class ThaumcraftApi {
-	static {
-		ThaumcraftApi.objectTags = GetObjectTags.newReplacementObjectTagsMap();
-	}
 	//Materials	
 	public static ToolMaterial toolMatThaumium = EnumHelper.addToolMaterial("THAUMIUM", 3, 400, 7F, 2, 22);
 	public static ToolMaterial toolMatVoid = EnumHelper.addToolMaterial("VOID", 4, 150, 8F, 3, 10);
@@ -333,7 +330,7 @@ public class ThaumcraftApi {
 	
 	//ASPECTS////////////////////////////////////////
 	
-	public static ConcurrentHashMap<List,AspectList> objectTags = new ConcurrentHashMap<>();
+	public static ConcurrentHashMap<List,AspectList> objectTags = GetObjectTags.newReplacementObjectTagsMap();
 	public static ConcurrentHashMap<List,int[]> groupedObjectTags = new ConcurrentHashMap<>();
 	
 	/**
