@@ -17,10 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
@@ -834,7 +831,7 @@ public class TileArcaneBore extends TileThaumcraft implements IInventory, IWanda
    }
 
    public String getInventoryName() {
-      return "Arcane Bore";
+      return StatCollector.translateToLocal("tile.blockWoodenDevice.5.name");
    }
 
    public int getInventoryStackLimit() {

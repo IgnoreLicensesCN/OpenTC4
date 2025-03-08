@@ -6,7 +6,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import thaumcraft.common.blocks.BlockChestHungry;
 import thaumcraft.common.config.ConfigBlocks;
+
+import static thaumcraft.common.config.ConfigBlocks.blockChestHungry;
 
 public class TileChestHungry extends TileEntity implements IInventory {
    private ItemStack[] chestContents = new ItemStack[36];
@@ -57,7 +60,7 @@ public class TileChestHungry extends TileEntity implements IInventory {
    }
 
    public String getInventoryName() {
-      return blockType.getLocalizedName();
+      return blockChestHungry.getLocalizedName();
    }
 
    public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
@@ -159,12 +162,12 @@ public class TileChestHungry extends TileEntity implements IInventory {
 
    public void openInventory() {
       ++this.numUsingPlayers;
-      this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, ConfigBlocks.blockChestHungry, 1, this.numUsingPlayers);
+      this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, blockChestHungry, 1, this.numUsingPlayers);
    }
 
    public void closeInventory() {
       --this.numUsingPlayers;
-      this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, ConfigBlocks.blockChestHungry, 1, this.numUsingPlayers);
+      this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, blockChestHungry, 1, this.numUsingPlayers);
    }
 
    public void invalidate() {

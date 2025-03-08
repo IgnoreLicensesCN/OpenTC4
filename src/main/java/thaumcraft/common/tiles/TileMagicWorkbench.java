@@ -7,6 +7,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.StatCollector;
 import thaumcraft.api.TileThaumcraft;
 import thaumcraft.common.items.wands.ItemWandCasting;
 
@@ -140,7 +141,7 @@ public class TileMagicWorkbench extends TileThaumcraft implements IInventory, IS
    }
 
    public String getInventoryName() {
-      return null;
+      return StatCollector.translateToLocal("tile.blockTable.15.name");
    }
 
    public void openInventory() {
