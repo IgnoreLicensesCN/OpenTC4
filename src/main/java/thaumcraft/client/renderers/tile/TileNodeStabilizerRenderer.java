@@ -2,6 +2,7 @@ package thaumcraft.client.renderers.tile;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -14,6 +15,8 @@ import org.lwjgl.opengl.GL11;
 import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.common.tiles.TileNodeStabilizer;
 
+import static thaumcraft.client.renderers.tile.TileBlockInfoGetter.getBlockTypeSafely;
+
 @SideOnly(Side.CLIENT)
 public class TileNodeStabilizerRenderer extends TileEntitySpecialRenderer {
    private IModelCustom model;
@@ -24,16 +27,15 @@ public class TileNodeStabilizerRenderer extends TileEntitySpecialRenderer {
    }
 
    public void renderTileEntityAt(TileNodeStabilizer tile, double par2, double par4, double par6, float par8) {
-      if (!tile.hasWorldObj()) {return;}
-      if (tile.getBlockType() == null) {return;}
       int lock = 1;
       int bright = 20;
-      if (tile.getWorldObj() != null) {
-         if (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) == 10) {
+      Block blockType = getBlockTypeSafely(tile);
+      if (blockType != null) {
+         if (tile.hasWorldObj() && tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) == 10) {
             lock = 2;
          }
 
-         bright = tile.getBlockType().getMixedBrightnessForBlock(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord);
+         bright = blockType.getMixedBrightnessForBlock(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord);
       } else {
          lock = tile.lock;
       }

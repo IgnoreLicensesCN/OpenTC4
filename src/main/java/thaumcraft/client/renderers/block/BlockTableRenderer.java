@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.tiles.TileArcaneWorkbench;
@@ -26,7 +27,10 @@ public class BlockTableRenderer extends BlockRenderer implements ISimpleBlockRen
       GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
       GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
       if (metadata == 0) {
-         TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileTable(), 0.0F, 0.0F, 0.0F, 0.0F);
+         TileEntityRendererDispatcher.instance.renderTileEntityAt(
+                 new TileTable(),
+                 0.0F, 0.0F, 0.0F, 0.0F
+         );
       } else if (metadata == 14) {
          TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileDeconstructionTable(), 0.0F, 0.0F, 0.0F, 0.0F);
       } else if (metadata == 15) {
@@ -36,7 +40,7 @@ public class BlockTableRenderer extends BlockRenderer implements ISimpleBlockRen
          TileEntityRendererDispatcher.instance.renderTileEntityAt(this.trt, 0.0F, 0.0F, 0.0F, 0.0F);
       }
 
-      GL11.glEnable(32826);
+      GL11.glEnable(GL12.GL_RESCALE_NORMAL);
    }
 
    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {

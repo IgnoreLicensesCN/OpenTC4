@@ -10,22 +10,20 @@ import org.lwjgl.opengl.GL11;
 import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.common.tiles.TileChestHungry;
 
+import static thaumcraft.client.renderers.tile.TileBlockInfoGetter.getBlockMetaSafely;
+
 @SideOnly(Side.CLIENT)
 public class TileChestHungryRenderer extends TileEntitySpecialRenderer {
-   private ModelChest chestModel = new ModelChest();
+   private static final ModelChest chestModel = new ModelChest();
 
    public void renderTileEntityChestAt(TileChestHungry chest, double par2, double par4, double par6, float par8) {
-      if (!chest.hasWorldObj()) {return;}
-      if (chest.getBlockType() == null) {return;}
-      int var9 = 0;
-      if (!chest.hasWorldObj()) {
-         var9 = 0;
-      } else {
-         Block var10 = chest.getBlockType();
-         var9 = chest.getBlockMetadata();
+      int direction = getBlockMetaSafely(chest);
+      if (direction == -1){
+         direction = 0;
       }
 
-      ModelChest var14 = this.chestModel;
+
+      ModelChest var14 = chestModel;
       UtilsFX.bindTexture("textures/models/chesthungry.png");
       GL11.glPushMatrix();
       GL11.glEnable(32826);
@@ -33,24 +31,18 @@ public class TileChestHungryRenderer extends TileEntitySpecialRenderer {
       GL11.glTranslatef((float)par2, (float)par4 + 1.0F, (float)par6 + 1.0F);
       GL11.glScalef(1.0F, -1.0F, -1.0F);
       GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-      short var11 = 0;
-      if (var9 == 2) {
-         var11 = 180;
+      short rotateDegree = 0;
+      if (direction == 4) {
+         rotateDegree = 90;
+      }
+      if (direction == 5) {
+         rotateDegree = -90;
+      }
+      if (direction == 2) {
+         rotateDegree = 180;
       }
 
-      if (var9 == 3) {
-         var11 = 0;
-      }
-
-      if (var9 == 4) {
-         var11 = 90;
-      }
-
-      if (var9 == 5) {
-         var11 = -90;
-      }
-
-      GL11.glRotatef(var11, 0.0F, 1.0F, 0.0F);
+      GL11.glRotatef(rotateDegree, 0.0F, 1.0F, 0.0F);
       GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
       float var12 = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * par8;
       var12 = 1.0F - var12;
@@ -63,7 +55,10 @@ public class TileChestHungryRenderer extends TileEntitySpecialRenderer {
    }
 
    public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
-      if (!(tileEntity instanceof TileChestHungry)){return;}
+      if (!(tileEntity instanceof TileChestHungry)){
+         System.out.println("TileChestHungryRenderer.renderTileEntityAt:" + tileEntity.getClass().getName());
+         return;
+      }
       this.renderTileEntityChestAt((TileChestHungry)tileEntity, par2, par4, par6, par8);
    }
 }

@@ -6,11 +6,11 @@ ext.publishDir = project.multiproject_structure.toBoolean() ? "${projectDir}/../
 
 def getCommitVersion(){
     try {
-        def commitHashProc = "python3 ${ext.publishDir}/get_version.py".execute()
+        def commitHashProc = "python ${ext.publishDir}/get_version.py".execute()
         commitHashProc.waitFor()
         if(commitHashProc.exitValue() == 0){
             def commitHash = commitHashProc.text.trim()
-            
+
             return commitHash
         } else {
             println commitHashProc.err.text
@@ -107,7 +107,7 @@ def getCommitHash(){
         commitHashProc.waitFor()
         if(commitHashProc.exitValue() == 0){
             def commitHash = commitHashProc.text.trim()
-            
+
             return commitHash
         } else {
             println commitHashProc.err.text

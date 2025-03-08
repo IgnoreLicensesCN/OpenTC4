@@ -15,26 +15,30 @@ import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.client.renderers.models.ModelManaPod;
 import thaumcraft.common.tiles.TileManaPod;
 
+import static thaumcraft.client.renderers.tile.TileBlockInfoGetter.getBlockMetaSafely;
+
 public class TileManaPodRenderer extends TileEntitySpecialRenderer {
    private ModelManaPod model = new ModelManaPod();
    private static final ResourceLocation pod0tex = new ResourceLocation("thaumcraft", "textures/models/manapod_0.png");
    private static final ResourceLocation pod2tex = new ResourceLocation("thaumcraft", "textures/models/manapod_2.png");
 
    public void renderEntityAt(TileManaPod pod, double x, double y, double z, float fq) {
-      if (!pod.hasWorldObj()) {return;}
-      if (pod.getBlockType() == null) {return;}
       int meta = 0;
       int bright = 20;
       Aspect aspect = Aspect.PLANT;
-      if (pod.getWorldObj() == null) {
+
+      if (!pod.hasWorldObj()) {
          meta = 5;
       } else {
-         meta = pod.getBlockMetadata();
+         meta = getBlockMetaSafely(pod);
+         if (meta == -1){
+            meta = 5;
+         }
          if (pod.aspect != null) {
             aspect = pod.aspect;
          }
 
-         bright = pod.getBlockType().getMixedBrightnessForBlock(pod.getWorldObj(), pod.xCoord, pod.yCoord, pod.zCoord);
+//         bright = pod.getBlockType().getMixedBrightnessForBlock(pod.getWorldObj(), pod.xCoord, pod.yCoord, pod.zCoord);
       }
 
       if (meta > 1) {

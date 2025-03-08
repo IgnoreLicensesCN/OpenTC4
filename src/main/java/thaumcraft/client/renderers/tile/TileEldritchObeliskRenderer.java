@@ -2,6 +2,8 @@ package thaumcraft.client.renderers.tile;
 
 import java.nio.FloatBuffer;
 import java.util.Random;
+
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.GLAllocation;
@@ -17,6 +19,8 @@ import net.minecraftforge.client.model.IModelCustom;
 import org.lwjgl.opengl.GL11;
 import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.common.config.Config;
+
+import static thaumcraft.client.renderers.tile.TileBlockInfoGetter.getBlockTypeSafely;
 
 public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
    FloatBuffer fBuffer = GLAllocation.createDirectFloatBuffer(16);
@@ -36,8 +40,6 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
    }
 
    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {
-      if (!te.hasWorldObj()) {return;}
-      if (te.getBlockType() == null) {return;}
       double var10002 = (double)te.xCoord + (double)0.5F;
       double var10003 = (double)te.yCoord + (double)0.5F;
       double var10004 = te.zCoord;
@@ -61,12 +63,13 @@ public class TileEldritchObeliskRenderer extends TileEntitySpecialRenderer {
       GL11.glBlendFunc(770, 771);
       String tempTex1 = this.t4;
       String tempTex2 = this.t5;
-      if (te.getWorldObj() != null) {
-         int j = te.getBlockType().getMixedBrightnessForBlock(te.getWorldObj(), te.xCoord, te.yCoord + 5, te.zCoord);
+      Block blockType = getBlockTypeSafely(te);
+      if (blockType != null) {
+         int j = blockType.getMixedBrightnessForBlock(te.getWorldObj(), te.xCoord, te.yCoord + 5, te.zCoord);
          int k = j % 65536;
          int l = j / 65536;
          OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) k, (float) l);
-         if (te.getWorldObj().provider.dimensionId == Config.dimensionOuterId) {
+         if (te.hasWorldObj() && te.getWorldObj().provider.dimensionId == Config.dimensionOuterId) {
             tempTex1 = this.t6;
             tempTex2 = this.t7;
          }

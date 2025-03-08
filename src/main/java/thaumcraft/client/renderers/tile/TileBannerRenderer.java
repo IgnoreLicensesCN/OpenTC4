@@ -17,6 +17,7 @@ public class TileBannerRenderer extends TileEntitySpecialRenderer {
    private ModelBanner model = new ModelBanner();
 
    public void renderTileEntityAt(TileBanner banner, double par2, double par4, double par6, float par8) {
+      if (banner == null){return;}
       boolean flag = banner.getWorldObj() != null;
       long k = flag ? banner.getWorldObj().getTotalWorldTime() : 0L;
       GL11.glPushMatrix();
@@ -67,6 +68,7 @@ public class TileBannerRenderer extends TileEntitySpecialRenderer {
    }
 
    public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
+      if (! (tileEntity instanceof TileBanner)) {return;}
       this.renderTileEntityAt((TileBanner)tileEntity, par2, par4, par6, par8);
    }
 }

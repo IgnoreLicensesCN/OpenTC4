@@ -12,7 +12,9 @@ import thaumcraft.common.tiles.TileResearchTable;
 public class PacketCheck {
     public static final Marker securityMarker = MarkerManager.getMarker("SuspiciousPackets");
     public static boolean hasAspect(EntityPlayerMP playerEntity, ResearchItem research) {
-        return research.tags.aspects.entrySet().stream().noneMatch(e -> e.getValue() != null && !hasAspect(playerEntity, e.getKey(), e.getValue()));
+        return research.tags.aspects.entrySet().stream().noneMatch(e ->
+                e.getValue() != null
+                        && !hasAspect(playerEntity, e.getKey(), e.getValue()));
     }
 
     public static boolean hasAspect(TileResearchTable table, EntityPlayerMP player, Aspect aspect) {
@@ -20,9 +22,10 @@ public class PacketCheck {
     }
 
     public static boolean hasAspect(EntityPlayerMP player, Aspect aspect, int threshold) {
-        return Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), aspect) > threshold;
+        return Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), aspect) >= threshold;
     }
     public static boolean isSecondaryResearch(ResearchItem research) {
-        return research.tags != null && research.tags.size() > 0 && (Config.researchDifficulty == -1 || Config.researchDifficulty == 0 && research.isSecondary());
+        return research.tags != null && research.tags.size() > 0
+                && (Config.researchDifficulty == -1 || Config.researchDifficulty == 0 && research.isSecondary());
     }
 }

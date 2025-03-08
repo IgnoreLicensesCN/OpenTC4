@@ -17,6 +17,7 @@ public class TileArcaneLampRenderer extends TileEntitySpecialRenderer {
    private ModelBoreBase model = new ModelBoreBase();
 
    public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
+      if (tileentity == null){return;}
       Minecraft mc = FMLClientHandler.instance().getClient();
       if (tileentity.getWorldObj() != null) {
          ForgeDirection dir = ForgeDirection.DOWN;

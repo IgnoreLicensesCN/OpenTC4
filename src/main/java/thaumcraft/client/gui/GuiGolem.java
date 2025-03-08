@@ -35,10 +35,10 @@ import thaumcraft.common.lib.utils.Utils;
 public class GuiGolem extends GuiContainer {
    private float xSize_lo;
    private float ySize_lo;
-   private EntityGolemBase golem;
+   private final EntityGolemBase golem;
    private int threat = -1;
    RenderLiving rgb = new RenderGolemBase(new ModelGolem(false));
-   private static ModelGolem model = new ModelGolem(true);
+   private static final ModelGolem model = new ModelGolem(true);
    private Slot theSlot;
 
    public GuiGolem(EntityPlayer player, EntityGolemBase e) {
@@ -426,7 +426,7 @@ public class GuiGolem extends GuiContainer {
 
    protected void renderToolTip(ItemStack par1ItemStack, int par2, int par3) {
       if (this.golem.getCore() == 5 && this.theSlot instanceof SlotGhostFluid) {
-         List list = new ArrayList<>();
+         List<String> list = new ArrayList<>();
          FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(par1ItemStack);
          if (fluid != null) {
             list.add(fluid.getFluid().getLocalizedName(fluid));

@@ -72,7 +72,7 @@ public class BlockStoneDeviceRenderer extends BlockRenderer implements ISimpleBl
          renderer.setRenderBoundsFromBlock(block);
          drawFaces(renderer, block, ((BlockStoneDevice)block).iconWandPedestalFocus[2], ((BlockStoneDevice)block).iconWandPedestalFocus[1], ((BlockStoneDevice)block).iconWandPedestalFocus[0], ((BlockStoneDevice)block).iconWandPedestalFocus[0], ((BlockStoneDevice)block).iconWandPedestalFocus[0], ((BlockStoneDevice)block).iconWandPedestalFocus[0], true);
       } else if (metadata != 9 && metadata != 10) {
-         if (metadata != 9 && metadata != 11) {
+         if (metadata != 11) {
             if (metadata == 12) {
                block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
                renderer.setRenderBoundsFromBlock(block);
@@ -85,8 +85,13 @@ public class BlockStoneDeviceRenderer extends BlockRenderer implements ISimpleBl
                TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileFluxScrubber(), 0.0F, 0.0F, 0.0F, 0.0F);
             }
          } else {
-            GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileNodeConverter(), 0.0F, 0.0F, 0.0F, 0.0F);
+            try {
+               GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+               TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileNodeConverter(), 0.0F, 0.0F, 0.0F, 0.0F);
+            }catch (Exception e) {
+               e.printStackTrace();
+//               throw e;
+            }
          }
       } else {
          GL11.glTranslatef(-0.5F, -0.5F, -0.5F);

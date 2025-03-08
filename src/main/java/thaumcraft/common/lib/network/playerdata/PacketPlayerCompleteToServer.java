@@ -62,7 +62,7 @@ public class PacketPlayerCompleteToServer implements IMessage, IMessageHandler<P
          if (PacketCheck.hasAspect(playerEntity, research))
             return true;
       }
-      log.info(securityMarker.getName(),
+      log.info(
               "Player {} sent suspicious packet to complete research {}@{}",
               playerEntity.getGameProfile(),
               research.key, research.category);

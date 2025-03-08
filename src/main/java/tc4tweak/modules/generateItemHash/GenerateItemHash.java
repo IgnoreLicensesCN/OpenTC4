@@ -15,23 +15,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static thaumcraft.api.ThaumcraftApi.groupedObjectTags;
+
 public class GenerateItemHash {
     private static final String DEFAULT_NAMESPACE = "oops:";
     private static final int DEFAULT_NAMESPACE_HASH_BASE = DEFAULT_NAMESPACE.hashCode() * 31;
-    private static final ConcurrentHashMap<List<?>, int[]> groupedObjectTags;
     private static final CustomItemStacks customItemStacksCache = new CustomItemStacks();
     private static final RangedObjectTags rangedObjectTags = new RangedObjectTags();
     private static final ThreadLocal<StringBuilder> buffer = ThreadLocal.withInitial(StringBuilder::new);
-
-    static {
-        ConcurrentHashMap<List<?>, int[]> tmp;
-        try {
-            tmp = ReflectionHelper.getPrivateValue(ThaumcraftApi.class, null, "groupedObjectTags");
-        } catch (Exception e) {
-            tmp = new ConcurrentHashMap<>();
-        }
-        groupedObjectTags = tmp;
-    }
 
     /**
      * give hash as if the whole thing was a string: {@code (earlierString+":").hashCode()}

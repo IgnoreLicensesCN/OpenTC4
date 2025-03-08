@@ -371,7 +371,7 @@ public class ScanManager implements IScanEventHandler {
 
          aspects = ThaumcraftCraftingManager.getObjectTags(new ItemStack(Item.getItemById(scan.id), 1, scan.meta));
          aspects = ThaumcraftCraftingManager.getBonusTags(new ItemStack(Item.getItemById(scan.id), 1, scan.meta), aspects);
-         if ((aspects == null || aspects.size() == 0) && scan.id > 0) {
+         if (aspects.size() == 0 && scan.id > 0) {
             aspects = ThaumcraftCraftingManager.getObjectTags(new ItemStack(Item.getItemById(scan.id), 1, scan.meta));
             aspects = ThaumcraftCraftingManager.getBonusTags(new ItemStack(Item.getItemById(scan.id), 1, scan.meta), aspects);
          }

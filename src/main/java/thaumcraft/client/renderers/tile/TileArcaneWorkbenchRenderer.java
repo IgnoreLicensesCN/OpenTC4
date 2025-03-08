@@ -19,6 +19,7 @@ public class TileArcaneWorkbenchRenderer extends TileEntitySpecialRenderer {
    private ModelArcaneWorkbench tableModel = new ModelArcaneWorkbench();
 
    public void renderTileEntityAt(TileArcaneWorkbench table, double par2, double par4, double par6, float par8) {
+      if (table == null){return;}
       GL11.glPushMatrix();
       UtilsFX.bindTexture("textures/models/worktable.png");
       GL11.glTranslatef((float)par2 + 0.5F, (float)par4 + 1.0F, (float)par6 + 0.5F);
@@ -44,6 +45,7 @@ public class TileArcaneWorkbenchRenderer extends TileEntitySpecialRenderer {
    }
 
    public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
+      if (! (tileEntity instanceof TileArcaneWorkbench)) {return;}
       this.renderTileEntityAt((TileArcaneWorkbench)tileEntity, par2, par4, par6, par8);
    }
 }

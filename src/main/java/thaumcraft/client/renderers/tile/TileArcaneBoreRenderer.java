@@ -17,6 +17,7 @@ public class TileArcaneBoreRenderer extends TileEntitySpecialRenderer {
    private ModelJar modelJar = new ModelJar();
 
    public void renderEntityAt(TileArcaneBore bore, double x, double y, double z, float fq) {
+      if (bore == null){return;}
       Minecraft mc = FMLClientHandler.instance().getClient();
       UtilsFX.bindTexture("textures/models/Bore.png");
       GL11.glPushMatrix();
@@ -82,6 +83,7 @@ public class TileArcaneBoreRenderer extends TileEntitySpecialRenderer {
    }
 
    public void renderTileEntityAt(TileEntity tileentity, double d, double d1, double d2, float f) {
+      if (! (tileentity instanceof TileArcaneBore)) {return;}
       this.renderEntityAt((TileArcaneBore)tileentity, d, d1, d2, f);
    }
 }

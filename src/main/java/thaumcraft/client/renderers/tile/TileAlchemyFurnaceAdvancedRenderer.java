@@ -2,6 +2,7 @@ package thaumcraft.client.renderers.tile;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -18,6 +19,8 @@ import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.tiles.TileAlchemyFurnaceAdvanced;
 
+import static thaumcraft.client.renderers.tile.TileBlockInfoGetter.getBlockTypeSafely;
+
 @SideOnly(Side.CLIENT)
 public class TileAlchemyFurnaceAdvancedRenderer extends TileEntitySpecialRenderer {
    public static IModelCustom model = null;
@@ -30,6 +33,8 @@ public class TileAlchemyFurnaceAdvancedRenderer extends TileEntitySpecialRendere
    }
 
    public void renderTileEntityAt(TileAlchemyFurnaceAdvanced tile, double par2, double par4, double par6, float par8) {
+      if (tile == null){return;}
+      Block blockType = getBlockTypeSafely(tile);
       GL11.glPushMatrix();
       GL11.glTranslatef((float)par2 + 0.5F, (float)par4, (float)par6 + 0.5F);
       GL11.glRotatef(90.0F, -1.0F, 0.0F, 0.0F);
@@ -70,7 +75,9 @@ public class TileAlchemyFurnaceAdvancedRenderer extends TileEntitySpecialRendere
             GL11.glRotatef(90.0F, -1.0F, 0.0F, 0.0F);
             GL11.glTranslatef(0.85F, -1.8F, -1.4F);
             GL11.glScaled(0.3, 0.6, 1.0F);
-            this.renderQuadCenteredFromIcon(tile.getBlockType().getIcon(0, 0), 150, 0.0F);
+            if (blockType != null){
+               this.renderQuadCenteredFromIcon(blockType.getIcon(0, 0), 150, 0.0F);
+            }
             GL11.glTranslatef(0.0F, 0.0F, -0.01F);
             this.renderQuadCenteredFromIcon(ConfigBlocks.FLUXGOO.getIcon(), 190, f);
             GL11.glPopMatrix();
@@ -79,7 +86,9 @@ public class TileAlchemyFurnaceAdvancedRenderer extends TileEntitySpecialRendere
             GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
             GL11.glTranslatef(1.15F, 1.8F, -1.4F);
             GL11.glScaled(-0.3, -0.6, -1.0F);
-            this.renderQuadCenteredFromIcon(tile.getBlockType().getIcon(0, 0), 150, 0.0F);
+            if (blockType != null){
+               this.renderQuadCenteredFromIcon(blockType.getIcon(0, 0), 150, 0.0F);
+            }
             GL11.glTranslatef(0.0F, 0.0F, 0.01F);
             this.renderQuadCenteredFromIcon(ConfigBlocks.FLUXGOO.getIcon(), 190, f);
             GL11.glPopMatrix();
@@ -103,7 +112,9 @@ public class TileAlchemyFurnaceAdvancedRenderer extends TileEntitySpecialRendere
             this.renderQuadCenteredFromIcon(Blocks.fire.getIcon(0, 0), 220, 1.0F - Math.min(1.0F, (float)tile.heat / (float)tile.maxPower));
             GL11.glPopMatrix();
             GL11.glTranslatef(0.0F, 0.0F, 0.05F);
-            this.renderQuadCenteredFromIcon(tile.getBlockType().getIcon(0, 0), 150, 0.0F);
+            if (blockType != null){
+               this.renderQuadCenteredFromIcon(blockType.getIcon(0, 0), 150, 0.0F);
+            }
             GL11.glPopMatrix();
          }
 
@@ -143,6 +154,7 @@ public class TileAlchemyFurnaceAdvancedRenderer extends TileEntitySpecialRendere
    }
 
    public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
+      if (!(tileEntity instanceof TileAlchemyFurnaceAdvanced)){return;}
       this.renderTileEntityAt((TileAlchemyFurnaceAdvanced)tileEntity, par2, par4, par6, par8);
    }
 }

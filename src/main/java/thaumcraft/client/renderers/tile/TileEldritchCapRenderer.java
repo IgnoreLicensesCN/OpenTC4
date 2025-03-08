@@ -1,5 +1,6 @@
 package thaumcraft.client.renderers.tile;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -15,6 +16,8 @@ import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.tiles.TileEldritchAltar;
+
+import static thaumcraft.client.renderers.tile.TileBlockInfoGetter.getBlockTypeSafely;
 
 public class TileEldritchCapRenderer extends TileEntitySpecialRenderer {
    private IModelCustom model;
@@ -34,12 +37,11 @@ public class TileEldritchCapRenderer extends TileEntitySpecialRenderer {
    }
 
    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {
-      if (!te.hasWorldObj()) {return;}
-      if (te.getBlockType() == null) {return;}
       String tempTex = this.tex;
       GL11.glPushMatrix();
-      if (te.getWorldObj() != null) {
-         int j = te.getBlockType().getMixedBrightnessForBlock(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord);
+      Block blockType = getBlockTypeSafely(te);
+      if (blockType != null) {
+         int j = blockType.getMixedBrightnessForBlock(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord);
          int k = j % 65536;
          int l = j / 65536;
          OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) k, (float) l);

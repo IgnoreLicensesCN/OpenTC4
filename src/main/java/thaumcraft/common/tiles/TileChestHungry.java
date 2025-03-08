@@ -57,7 +57,7 @@ public class TileChestHungry extends TileEntity implements IInventory {
    }
 
    public String getInventoryName() {
-      return "Hungry Chest";
+      return blockType.getLocalizedName();
    }
 
    public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
@@ -68,7 +68,7 @@ public class TileChestHungry extends TileEntity implements IInventory {
       for(int var3 = 0; var3 < var2.tagCount(); ++var3) {
          NBTTagCompound var4 = var2.getCompoundTagAt(var3);
          int var5 = var4.getByte("Slot") & 255;
-         if (var5 >= 0 && var5 < this.chestContents.length) {
+         if (var5 < this.chestContents.length) {
             this.chestContents[var5] = ItemStack.loadItemStackFromNBT(var4);
          }
       }

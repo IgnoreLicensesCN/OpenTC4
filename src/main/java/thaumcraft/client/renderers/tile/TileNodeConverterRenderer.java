@@ -2,6 +2,7 @@ package thaumcraft.client.renderers.tile;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -15,6 +16,8 @@ import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.common.tiles.TileChestHungry;
 import thaumcraft.common.tiles.TileNodeConverter;
 
+import static thaumcraft.client.renderers.tile.TileBlockInfoGetter.getBlockTypeSafely;
+
 @SideOnly(Side.CLIENT)
 public class TileNodeConverterRenderer extends TileEntitySpecialRenderer {
    private IModelCustom model;
@@ -25,12 +28,12 @@ public class TileNodeConverterRenderer extends TileEntitySpecialRenderer {
    }
 
    public void renderTileEntityAt(TileNodeConverter tile, double par2, double par4, double par6, float par8) {
-
-      if (!tile.hasWorldObj()) {return;}
-      if (tile.getBlockType() == null) {return;}
+      if (tile == null){return;}
       int bright = 20;
-      if (tile.getWorldObj() != null) {
-         bright = tile.getBlockType().getMixedBrightnessForBlock(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord);
+      Block blockType = getBlockTypeSafely(tile);
+      if (blockType != null
+      ) {
+         bright = blockType.getMixedBrightnessForBlock(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord);
       }
 
       GL11.glPushMatrix();

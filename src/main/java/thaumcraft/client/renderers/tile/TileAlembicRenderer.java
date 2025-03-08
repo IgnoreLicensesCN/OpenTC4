@@ -28,6 +28,7 @@ public class TileAlembicRenderer extends TileEntitySpecialRenderer {
    }
 
    public void renderTileEntityAt(TileAlembic tile, double par2, double par4, double par6, float par8) {
+      if (tile == null){return;}
       GL11.glPushMatrix();
       GL11.glTranslatef((float)par2 + 0.5F, (float)par4, (float)par6 + 0.5F);
       GL11.glPushMatrix();
@@ -35,7 +36,7 @@ public class TileAlembicRenderer extends TileEntitySpecialRenderer {
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       UtilsFX.bindTexture("textures/models/alembic.png");
       int md = 0;
-      if (tile.getWorldObj() != null) {
+      if (tile.hasWorldObj()) {
          switch (tile.facing) {
             case 2:
                GL11.glRotatef(270.0F, 0.0F, 0.0F, 1.0F);
@@ -137,6 +138,9 @@ public class TileAlembicRenderer extends TileEntitySpecialRenderer {
    }
 
    public void renderTileEntityAt(TileEntity tileEntity, double par2, double par4, double par6, float par8) {
+      if (! (tileEntity instanceof TileAlembic)) {
+         return;
+      }
       this.renderTileEntityAt((TileAlembic)tileEntity, par2, par4, par6, par8);
    }
 }

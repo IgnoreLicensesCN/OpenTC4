@@ -101,7 +101,7 @@ public class ItemEldritchObject extends Item {
 
    public static void unlockResearchForPlayer(World world,EntityPlayerMP player,String research,String... preRequsites) {
       for (String preReq : preRequsites) {
-         if (ResearchManager.isResearchComplete(player.getCommandSenderName(), preReq)){return;}
+         if (!ResearchManager.isResearchComplete(player.getCommandSenderName(), preReq)){return;}
       }
       if (ResearchManager.isResearchComplete(player.getCommandSenderName(), research)){return;}
       PacketHandler.INSTANCE.sendTo(new PacketResearchComplete(research), player);
