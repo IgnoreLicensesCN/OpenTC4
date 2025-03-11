@@ -10,12 +10,14 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
+import simpleutils.bauble.BaubleConsumer;
 import thaumcraft.api.IArchitect;
 import thaumcraft.api.IVisDiscountGear;
 import thaumcraft.api.aspects.Aspect;
@@ -43,26 +45,31 @@ import thaumcraft.common.tiles.TileNode;
 import thaumcraft.common.tiles.TilePedestal;
 import thaumcraft.common.tiles.TileThaumatorium;
 
+import static baubles.api.expanded.BaubleExpandedSlots.slotLimit;
+import static simpleutils.bauble.BaubleUtils.forEachBauble;
+
 public class WandManager implements IWandTriggerManager {
    static HashMap<Integer,Long> cooldownServer = new HashMap<>();
    static HashMap<Integer,Long> cooldownClient = new HashMap<>();
 
    public static float getTotalVisDiscount(EntityPlayer player, Aspect aspect) {
-      int total = 0;
+      final int[] total = {0};
       if (player == null) {
          return 0.0F;
       } else {
-         IInventory baubles = BaublesApi.getBaubles(player);
+         BaubleConsumer<IVisDiscountGear> visDiscountGearBaubleConsumer = (slot,stack,visDiscountGear) -> {
+            total[0] += visDiscountGear.getVisDiscount(stack, player, aspect);
+            return false;
+         };
+         forEachBauble(player, IVisDiscountGear.class , visDiscountGearBaubleConsumer);
 
          for(int a = 0; a < 4; ++a) {
-            if (baubles.getStackInSlot(a) != null && baubles.getStackInSlot(a).getItem() instanceof IVisDiscountGear) {
-               total += ((IVisDiscountGear)baubles.getStackInSlot(a).getItem()).getVisDiscount(baubles.getStackInSlot(a), player, aspect);
-            }
-         }
-
-         for(int a = 0; a < 4; ++a) {
-            if (player.inventory.armorItemInSlot(a) != null && player.inventory.armorItemInSlot(a).getItem() instanceof IVisDiscountGear) {
-               total += ((IVisDiscountGear)player.inventory.armorItemInSlot(a).getItem()).getVisDiscount(player.inventory.armorItemInSlot(a), player, aspect);
+            ItemStack stack = player.inventory.getStackInSlot(a);
+            if (player.inventory.armorItemInSlot(a) != null) {
+               Item item = player.inventory.armorItemInSlot(a).getItem();
+               if (item instanceof IVisDiscountGear) {
+                  visDiscountGearBaubleConsumer.accept(a,stack, ((IVisDiscountGear)item));
+               }
             }
          }
 
@@ -77,36 +84,41 @@ public class WandManager implements IWandTriggerManager {
                level2 = player.getActivePotionEffect(Potion.potionTypes[Config.potionInfVisExhaustID]).getAmplifier();
             }
 
-            total -= (Math.max(level1, level2) + 1) * 10;
+            total[0] -= (Math.max(level1, level2) + 1) * 10;
          }
 
-         return (float)total / 100.0F;
+         return (float)total[0] / 100.0F;
       }
    }
 
    public static boolean consumeVisFromInventory(EntityPlayer player, AspectList cost) {
-      IInventory baubles = BaublesApi.getBaubles(player);
-
-      for(int a = 0; a < 4; ++a) {
-         if (baubles.getStackInSlot(a) != null && baubles.getStackInSlot(a).getItem() instanceof ItemAmuletVis) {
-            boolean done = ((ItemAmuletVis)baubles.getStackInSlot(a).getItem()).consumeAllVis(baubles.getStackInSlot(a), player, cost, true, true);
-            if (done) {
-               return true;
-            }
-         }
+      boolean[] done = {false};
+      BaubleConsumer<ItemAmuletVis> amuletVisBaubleConsumer = (slot,stack, itemAmuletVis) -> {
+         done[0] = itemAmuletVis.consumeAllVis(stack, player, cost, true, true);
+         return done[0];
+      };
+      forEachBauble(player,ItemAmuletVis.class , amuletVisBaubleConsumer);
+      if (done[0]){
+         return true;
       }
 
-      for(int a = player.inventory.mainInventory.length - 1; a >= 0; --a) {
-         ItemStack item = player.inventory.mainInventory[a];
-         if (item != null && item.getItem() instanceof ItemWandCasting) {
-            boolean done = ((ItemWandCasting)item.getItem()).consumeAllVis(item, player, cost, true, true);
-            if (done) {
-               return true;
-            }
-         }
-      }
 
-      return false;
+      BaubleConsumer<ItemWandCasting> wandCastingBaubleConsumer = (slot,stack, itemWandCasting) -> {
+         done[0] = itemWandCasting.consumeAllVis(stack, player, cost, true, true);
+         return done[0];
+      };
+      forEachBauble(player,ItemWandCasting.class , wandCastingBaubleConsumer);
+       return done[0];
+
+//      for(int a = player.inventory.mainInventory.length - 1; a >= 0; --a) {
+//         ItemStack item = player.inventory.mainInventory[a];
+//         if (item != null && item.getItem() instanceof ItemWandCasting) {
+//            boolean done = ((ItemWandCasting)item.getItem()).consumeAllVis(item, player, cost, true, true);
+//            if (done) {
+//               return true;
+//            }
+//         }
+//      }
    }
 
    public static boolean createCrucible(ItemStack is, EntityPlayer player, World world, int x, int y, int z) {
@@ -487,52 +499,53 @@ public class WandManager implements IWandTriggerManager {
       return false;
    }
 
+   private static BaubleConsumer<ItemFocusPouch> getItemFocusPouchBaubleConsumer(
+           int offset,
+           int[] pouchcountPointer,
+           HashMap<Integer, Integer> pouches,
+           TreeMap<String, Integer> foci
+   ){
+      return (slot,stack,itemFocusPouch) -> {
+         ++pouchcountPointer[0];
+         pouches.put(pouchcountPointer[0], slot + offset);
+         ItemStack[] inv = itemFocusPouch.getInventory(stack);
+
+         for(int q = 0; q < inv.length; ++q) {
+            ItemStack probablyFocusBasicStack = inv[q];
+            if (probablyFocusBasicStack != null && probablyFocusBasicStack.getItem() instanceof ItemFocusBasic) {
+               foci.put(((ItemFocusBasic) probablyFocusBasicStack.getItem()).getSortingHelper(probablyFocusBasicStack), q + pouchcountPointer[0] * 1000);
+            }
+         }
+         return false;
+      };
+   }
+
    public static void changeFocus(ItemStack is, World w, EntityPlayer player, String focus) {
       ItemWandCasting wand = (ItemWandCasting)is.getItem();
       TreeMap<String, Integer> foci = new TreeMap<>();
       HashMap<Integer, Integer> pouches = new HashMap<>();
-      int pouchcount = 0;
-      ItemStack item = null;
+      final int[] pouchcount = {0};
+      final ItemStack[] item = {null};
       IInventory baubles = BaublesApi.getBaubles(player);
 
-      for(int a = 0; a < 4; ++a) {
-         if (baubles.getStackInSlot(a) != null && baubles.getStackInSlot(a).getItem() instanceof ItemFocusPouch) {
-            ++pouchcount;
-            item = baubles.getStackInSlot(a);
-            pouches.put(pouchcount, a - 4);
-            ItemStack[] inv = ((ItemFocusPouch)item.getItem()).getInventory(item);
-
-            for(int q = 0; q < inv.length; ++q) {
-               item = inv[q];
-               if (item != null && item.getItem() instanceof ItemFocusBasic) {
-                  foci.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), q + pouchcount * 1000);
-               }
-            }
-         }
-      }
+      BaubleConsumer<ItemFocusPouch> itemFocusPouchInventoryConsumer = getItemFocusPouchBaubleConsumer(0,pouchcount,pouches,foci);
+      BaubleConsumer<ItemFocusPouch> itemFocusPouchBaubleConsumer = getItemFocusPouchBaubleConsumer(-slotLimit,pouchcount,pouches,foci);
+      forEachBauble(player,ItemFocusPouch.class, itemFocusPouchBaubleConsumer);
 
       for(int a = 0; a < 36; ++a) {
-         item = player.inventory.mainInventory[a];
-         if (item != null && item.getItem() instanceof ItemFocusBasic) {
-            foci.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), a);
+         item[0] = player.inventory.mainInventory[a];
+         if (item[0] != null && item[0].getItem() instanceof ItemFocusBasic) {
+            foci.put(((ItemFocusBasic) item[0].getItem()).getSortingHelper(item[0]), a);
          }
 
-         if (item != null && item.getItem() instanceof ItemFocusPouch) {
-            ++pouchcount;
-            pouches.put(pouchcount, a);
-            ItemStack[] inv = ((ItemFocusPouch)item.getItem()).getInventory(item);
-
-            for(int q = 0; q < inv.length; ++q) {
-               item = inv[q];
-               if (item != null && item.getItem() instanceof ItemFocusBasic) {
-                  foci.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), q + pouchcount * 1000);
-               }
-            }
+         if (item[0] != null && item[0].getItem() instanceof ItemFocusPouch) {
+            itemFocusPouchInventoryConsumer.accept(a,item[0], (ItemFocusPouch) item[0].getItem());
          }
       }
 
-      if (!focus.equals("REMOVE") && foci.size() != 0) {
-         if (foci != null && foci.size() > 0 && focus != null) {
+      if (focus != null && !focus.equals("REMOVE") && !foci.isEmpty()
+      ) {
+         {
             String newkey = focus;
             if (foci.get(focus) == null) {
                newkey = foci.higherKey(focus);
@@ -543,7 +556,7 @@ public class WandManager implements IWandTriggerManager {
             }
 
             if (foci.get(newkey) < 1000 && foci.get(newkey) >= 0) {
-               item = player.inventory.mainInventory[foci.get(newkey)].copy();
+               item[0] = player.inventory.mainInventory[foci.get(newkey)].copy();
             } else {
                int pid = foci.get(newkey) / 1000;
                if (pouches.containsKey(pid)) {
@@ -553,14 +566,14 @@ public class WandManager implements IWandTriggerManager {
                   if (pouchslot >= 0) {
                      tmp = player.inventory.mainInventory[pouchslot].copy();
                   } else {
-                     tmp = baubles.getStackInSlot(pouchslot + 4).copy();
+                     tmp = baubles.getStackInSlot(pouchslot + slotLimit).copy();
                   }
 
-                  item = fetchFocusFromPouch(player, focusslot, tmp, pouchslot);
+                  item[0] = fetchFocusFromPouch(player, focusslot, tmp, pouchslot);
                }
             }
 
-            if (item == null) {
+            if (item[0] == null) {
                return;
             }
 
@@ -574,14 +587,17 @@ public class WandManager implements IWandTriggerManager {
             }
 
             if (wand.getFocus(is) == null) {
-               wand.setFocus(is, item);
-            } else if (!addFocusToPouch(player, item, pouches)) {
-               player.inventory.addItemStackToInventory(item);
+               wand.setFocus(is, item[0]);
+            } else if (!addFocusToPouch(player, item[0], pouches)) {
+               player.inventory.addItemStackToInventory(item[0]);
             }
          }
 
       } else {
-         if (wand.getFocus(is) != null && (addFocusToPouch(player, wand.getFocusItem(is).copy(), pouches) || player.inventory.addItemStackToInventory(wand.getFocusItem(is).copy()))) {
+         if (wand.getFocus(is) != null
+                 && (addFocusToPouch(player, wand.getFocusItem(is).copy(), pouches)
+                 || player.inventory.addItemStackToInventory(wand.getFocusItem(is).copy()))
+         ) {
             wand.setFocus(is, null);
             w.playSoundAtEntity(player, "thaumcraft:cameraticks", 0.3F, 0.9F);
          }

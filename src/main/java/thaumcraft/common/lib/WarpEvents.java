@@ -2,6 +2,8 @@ package thaumcraft.common.lib;
 
 import baubles.api.BaublesApi;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,7 +37,10 @@ import thaumcraft.common.lib.network.playerdata.PacketWarpMessage;
 import thaumcraft.common.lib.research.ResearchManager;
 import thaumcraft.common.lib.utils.EntityUtils;
 
+import static simpleutils.bauble.BaubleUtils.forEachBauble;
+
 public class WarpEvents {
+
    public static void checkWarpEvent(EntityPlayer player) {
       int warp = Thaumcraft.proxy.getPlayerKnowledge().getWarpTotal(player.getCommandSenderName());
       int actualwarp = Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(player.getCommandSenderName()) + Thaumcraft.proxy.getPlayerKnowledge().getWarpSticky(player.getCommandSenderName());
@@ -277,9 +282,12 @@ public class WarpEvents {
          boolean success = false;
 
          for(int l = 0; l < 50; ++l) {
-            int i1 = i + MathHelper.getRandomIntegerInRange(player.worldObj.rand, 7, 24) * MathHelper.getRandomIntegerInRange(player.worldObj.rand, -1, 1);
-            int j1 = j + MathHelper.getRandomIntegerInRange(player.worldObj.rand, 7, 24) * MathHelper.getRandomIntegerInRange(player.worldObj.rand, -1, 1);
-            int k1 = k + MathHelper.getRandomIntegerInRange(player.worldObj.rand, 7, 24) * MathHelper.getRandomIntegerInRange(player.worldObj.rand, -1, 1);
+            int i1 = i + MathHelper.getRandomIntegerInRange(player.worldObj.rand, 7, 24)
+                    * MathHelper.getRandomIntegerInRange(player.worldObj.rand, -1, 1);
+            int j1 = j + MathHelper.getRandomIntegerInRange(player.worldObj.rand, 7, 24)
+                    * MathHelper.getRandomIntegerInRange(player.worldObj.rand, -1, 1);
+            int k1 = k + MathHelper.getRandomIntegerInRange(player.worldObj.rand, 7, 24)
+                    * MathHelper.getRandomIntegerInRange(player.worldObj.rand, -1, 1);
             if (World.doesBlockHaveSolidTopSurface(player.worldObj, i1, j1 - 1, k1)) {
                spider.setPosition(i1, j1, k1);
                if (player.worldObj.checkNoEntityCollision(spider.boundingBox) && player.worldObj.getCollidingBoundingBoxes(spider, spider.boundingBox).isEmpty() && !player.worldObj.isAnyLiquid(spider.boundingBox)) {
@@ -309,18 +317,26 @@ public class WarpEvents {
       if (pe != null) {
          int level = pe.getAmplifier();
          int range = Math.min(8 + level * 3, 24);
-         List list = player.worldObj.getEntitiesWithinAABBExcludingEntity(player, player.boundingBox.expand(range, range, range));
+         List<Entity> list = (List<Entity>)player.worldObj.getEntitiesWithinAABBExcludingEntity(player, player.boundingBox.expand(range, range, range));
 
-          for (Object o : list) {
-              Entity entity = (Entity) o;
-              if (entity.canBeCollidedWith() && entity instanceof EntityLivingBase && entity.isEntityAlive() && EntityUtils.isVisibleTo(0.75F, player, entity, (float) range) && entity != null && player.canEntityBeSeen(entity) && (!(entity instanceof EntityPlayer) || MinecraftServer.getServer().isPVPEnabled()) && !((EntityLivingBase) entity).isPotionActive(Potion.wither.getId())) {
-                  ((EntityLivingBase) entity).setRevengeTarget(player);
-                  ((EntityLivingBase) entity).setLastAttacker(player);
+          for (Entity entity : list) {
+              if (entity.canBeCollidedWith()
+                      && entity instanceof EntityLivingBase
+                      && entity.isEntityAlive()
+                      && EntityUtils.isVisibleTo(0.75F, player, entity, (float) range)
+                      && player.canEntityBeSeen(entity)
+                      && (!(entity instanceof EntityPlayer)
+                      || MinecraftServer.getServer().isPVPEnabled())
+                      && !((EntityLivingBase) entity).isPotionActive(Potion.wither.getId()))
+              {
+                 EntityLivingBase living = (EntityLivingBase) entity;
+                  living.setRevengeTarget(player);
+                  living.setLastAttacker(player);
                   if (entity instanceof EntityCreature) {
                       ((EntityCreature) entity).setTarget(player);
                   }
 
-                  ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(Potion.wither.getId(), 80));
+                  living.addPotionEffect(new PotionEffect(Potion.wither.getId(), 80));
               }
           }
 
@@ -328,18 +344,15 @@ public class WarpEvents {
    }
 
    private static int getWarpFromGear(EntityPlayer player) {
-      int w = EventHandlerRunic.getFinalWarp(player.getCurrentEquippedItem(), player);
+      AtomicInteger w = new AtomicInteger(EventHandlerRunic.getFinalWarp(player.getCurrentEquippedItem(), player));
 
       for(int a = 0; a < 4; ++a) {
-         w += EventHandlerRunic.getFinalWarp(player.inventory.armorItemInSlot(a), player);
+         w.addAndGet(EventHandlerRunic.getFinalWarp(player.inventory.armorItemInSlot(a), player));
       }
-
-      IInventory baubles = BaublesApi.getBaubles(player);
-
-      for(int a = 0; a < 4; ++a) {
-         w += EventHandlerRunic.getFinalWarp(baubles.getStackInSlot(a), player);
-      }
-
-      return w;
+      forEachBauble(player,(slot, stack, item) -> {
+         w.addAndGet(EventHandlerRunic.getFinalWarp(stack, player));
+         return false;
+      });
+      return w.get();
    }
 }

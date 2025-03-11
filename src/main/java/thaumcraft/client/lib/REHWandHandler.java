@@ -1,11 +1,11 @@
 package thaumcraft.client.lib;
 
-import baubles.api.BaublesApi;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.RenderHelper;
@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Facing;
 import net.minecraft.util.IIcon;
@@ -25,6 +25,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+import simpleutils.bauble.BaubleConsumer;
 import thaumcraft.api.BlockCoordinates;
 import thaumcraft.api.IArchitect;
 import thaumcraft.api.wands.ItemFocusBasic;
@@ -35,6 +36,8 @@ import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.lib.events.KeyHandler;
 import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.network.misc.PacketFocusChangeToServer;
+
+import static simpleutils.bauble.BaubleUtils.forEachBauble;
 
 public class REHWandHandler {
    static float radialHudScale = 0.0F;
@@ -48,6 +51,14 @@ public class REHWandHandler {
    int lastArcHash = 0;
    ArrayList<BlockCoordinates> architectBlocks = new ArrayList<>();
    String tex = "textures/misc/architect_arrows.png";
+
+   private void putFocusBasic(ItemStack stack,ItemFocusBasic focusBasic,int fociAt) {
+
+      this.foci.put(focusBasic.getSortingHelper(stack), fociAt);
+      this.fociItem.put(focusBasic.getSortingHelper(stack), stack.copy());
+      this.fociScale.put(focusBasic.getSortingHelper(stack), 1.0F);
+      this.fociHover.put(focusBasic.getSortingHelper(stack), false);
+   }
 
    @SideOnly(Side.CLIENT)
    public void handleFociRadial(Minecraft mc, long time, RenderGameOverlayEvent event) {
@@ -76,54 +87,40 @@ public class REHWandHandler {
                this.fociItem.clear();
                this.fociHover.clear();
                this.fociScale.clear();
-               int pouchcount = 0;
-               ItemStack item = null;
-               IInventory baubles = BaublesApi.getBaubles(mc.thePlayer);
+               final int[] pouchcount = {0};
+               final ItemStack[] item = {null};
+               BaubleConsumer<ItemFocusPouch> focusPouchConsumer = (slot,stack,pouch) -> {
+                  ++pouchcount[0];
+                  ItemStack[] inv = pouch.getInventory(stack);
 
-               for(int a = 0; a < 4; ++a) {
-                  if (baubles.getStackInSlot(a) != null && baubles.getStackInSlot(a).getItem() instanceof ItemFocusPouch) {
-                     ++pouchcount;
-                     item = baubles.getStackInSlot(a);
-                     ItemStack[] inv = ((ItemFocusPouch)item.getItem()).getInventory(item);
-
-                     for(int q = 0; q < inv.length; ++q) {
-                        item = inv[q];
-                        if (item != null && item.getItem() instanceof ItemFocusBasic) {
-                           this.foci.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), q + pouchcount * 1000);
-                           this.fociItem.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), item.copy());
-                           this.fociScale.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), 1.0F);
-                           this.fociHover.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), false);
-                        }
+                  for(int q = 0; q < inv.length; ++q) {
+                     stack = inv[q];
+                     if (stack != null && stack.getItem() instanceof ItemFocusBasic) {
+                        ItemFocusBasic focusBasic = (ItemFocusBasic) stack.getItem();
+                        putFocusBasic(stack,focusBasic,q + pouchcount[0]*1000);
                      }
                   }
-               }
+                  return false;
+               };
+               forEachBauble(mc.thePlayer,ItemFocusPouch.class,focusPouchConsumer);
 
                for(int a = 0; a < 36; ++a) {
-                  item = mc.thePlayer.inventory.mainInventory[a];
-                  if (item != null && item.getItem() instanceof ItemFocusBasic) {
-                     this.foci.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), a);
-                     this.fociItem.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), item.copy());
-                     this.fociScale.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), 1.0F);
-                     this.fociHover.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), false);
+                  ItemStack stack = mc.thePlayer.inventory.mainInventory[a];
+                  if (stack == null){
+                     continue;
+                  }
+                  Item stackItem = stack.getItem();
+                  if (stackItem instanceof ItemFocusBasic) {
+                     ItemFocusBasic focusBasic = (ItemFocusBasic) stackItem;
+                     putFocusBasic(stack,focusBasic,a);
                   }
 
-                  if (item != null && item.getItem() instanceof ItemFocusPouch) {
-                     ++pouchcount;
-                     ItemStack[] inv = ((ItemFocusPouch)item.getItem()).getInventory(item);
-
-                     for(int q = 0; q < inv.length; ++q) {
-                        item = inv[q];
-                        if (item != null && item.getItem() instanceof ItemFocusBasic) {
-                           this.foci.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), q + pouchcount * 1000);
-                           this.fociItem.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), item.copy());
-                           this.fociScale.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), 1.0F);
-                           this.fociHover.put(((ItemFocusBasic)item.getItem()).getSortingHelper(item), false);
-                        }
-                     }
+                  if (stackItem instanceof ItemFocusPouch) {
+                     focusPouchConsumer.accept(a,stack, (ItemFocusPouch) stackItem);
                   }
                }
 
-               if (this.foci.size() > 0 && mc.inGameHasFocus) {
+               if (!this.foci.isEmpty() && mc.inGameHasFocus) {
                   mc.inGameHasFocus = false;
                   mc.mouseHelper.ungrabMouseCursor();
                }
@@ -149,7 +146,7 @@ public class REHWandHandler {
 
             if (!KeyHandler.radialActive) {
                radialHudScale -= 0.05F;
-            } else if (KeyHandler.radialActive && radialHudScale < 1.0F) {
+            } else if (radialHudScale < 1.0F) {
                radialHudScale += 0.05F;
             }
 
@@ -179,7 +176,7 @@ public class REHWandHandler {
          int i = (int)((double)Mouse.getEventX() * sw / (double)mc.displayWidth);
          int j = (int)(sh - (double)Mouse.getEventY() * sh / (double)mc.displayHeight - (double)1.0F);
          int k = Mouse.getEventButton();
-         if (this.fociItem.size() != 0) {
+         if (!this.fociItem.isEmpty()) {
             GL11.glPushMatrix();
             GL11.glClear(256);
             GL11.glMatrixMode(5889);

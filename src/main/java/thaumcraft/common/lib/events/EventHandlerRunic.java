@@ -1,6 +1,5 @@
 package thaumcraft.common.lib.events;
 
-import baubles.api.BaublesApi;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import java.util.HashMap;
@@ -8,7 +7,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -35,6 +33,8 @@ import thaumcraft.common.lib.network.fx.PacketFXShield;
 import thaumcraft.common.lib.network.playerdata.PacketRunicCharge;
 import thaumcraft.common.lib.utils.EntityUtils;
 
+import static simpleutils.bauble.BaubleUtils.forEachBauble;
+
 public class EventHandlerRunic {
    public HashMap<Integer,Integer> runicCharge = new HashMap<>();
    private HashMap<Integer,Long> nextCycle = new HashMap<>();
@@ -49,50 +49,50 @@ public class EventHandlerRunic {
       if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
          EntityPlayer player = (EntityPlayer)event.entity;
          if (this.isDirty || player.ticksExisted % 40 == 0) {
-            int max = 0;
-            int charged = 0;
-            int kinetic = 0;
-            int healing = 0;
-            int emergency = 0;
+            final int[] max = {0};
+            final int[] charged = {0};
+            final int[] kinetic = {0};
+            final int[] healing = {0};
+            final int[] emergency = {0};
             this.isDirty = false;
 
             for(int a = 0; a < 4; ++a) {
                if (player.inventory.armorItemInSlot(a) != null && player.inventory.armorItemInSlot(a).getItem() instanceof IRunicArmor) {
                   int amount = getFinalCharge(player.inventory.armorItemInSlot(a));
-                  max += amount;
+                  max[0] += amount;
                }
             }
 
-            IInventory baubles = BaublesApi.getBaubles(player);
-
-            for(int a = 0; a < 4; ++a) {
-               if (baubles.getStackInSlot(a) != null && baubles.getStackInSlot(a).getItem() instanceof IRunicArmor) {
-                  int amount = getFinalCharge(baubles.getStackInSlot(a));
-                  if (baubles.getStackInSlot(a).getItem() instanceof ItemRingRunic) {
-                     switch (baubles.getStackInSlot(a).getItemDamage()) {
+            forEachBauble(player,(a,stack,item) -> {
+               if (item instanceof IRunicArmor){
+                  IRunicArmor armor = (IRunicArmor)stack.getItem();
+                  int amount = getFinalCharge(stack);
+                  if (item instanceof ItemRingRunic) {
+                     switch (stack.getItemDamage()) {
                         case 2:
-                           ++charged;
+                           ++charged[0];
                            break;
                         case 3:
-                           ++healing;
+                           ++healing[0];
                      }
-                  } else if (baubles.getStackInSlot(a).getItem() instanceof ItemAmuletRunic && baubles.getStackInSlot(a).getItemDamage() == 1) {
-                     ++emergency;
-                  } else if (baubles.getStackInSlot(a).getItem() instanceof ItemGirdleRunic && baubles.getStackInSlot(a).getItemDamage() == 1) {
-                     ++kinetic;
+                  } else if (item instanceof ItemAmuletRunic && stack.getItemDamage() == 1) {
+                     ++emergency[0];
+                  } else if (item instanceof ItemGirdleRunic && stack.getItemDamage() == 1) {
+                     ++kinetic[0];
                   }
 
-                  max += amount;
+                  max[0] += amount;
                }
-            }
+               return false;
+            });
 
-            if (max > 0) {
-               this.runicInfo.put(player.getEntityId(), new Integer[]{max, charged, kinetic, healing, emergency});
+            if (max[0] > 0) {
+               this.runicInfo.put(player.getEntityId(), new Integer[]{max[0], charged[0], kinetic[0], healing[0], emergency[0]});
                if (this.runicCharge.containsKey(player.getEntityId())) {
                   int charge = this.runicCharge.get(player.getEntityId());
-                  if (charge > max) {
-                     this.runicCharge.put(player.getEntityId(), max);
-                     PacketHandler.INSTANCE.sendTo(new PacketRunicCharge(player, (short)max, max), (EntityPlayerMP)player);
+                  if (charge > max[0]) {
+                     this.runicCharge.put(player.getEntityId(), max[0]);
+                     PacketHandler.INSTANCE.sendTo(new PacketRunicCharge(player, (short) max[0], max[0]), (EntityPlayerMP)player);
                   }
                }
             } else {
