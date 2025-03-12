@@ -212,7 +212,7 @@ public class EventHandlerEntity {
    }
 
    //unit:tick
-   public static final int checkWarpEventDelay = 200;//default:2000,200 is for testing
+   public static final int checkWarpEventDelay = 2000;
    @SubscribeEvent
    public void livingTick(LivingEvent.LivingUpdateEvent event) {
       if (event.entity instanceof EntityPlayer) {
