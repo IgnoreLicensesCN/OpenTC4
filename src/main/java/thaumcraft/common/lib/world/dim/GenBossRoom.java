@@ -7,7 +7,15 @@ import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.common.tiles.TileEldritchLock;
 
 public class GenBossRoom extends GenCommon {
-   static final int[][] PAT_DOORWAY = new int[][]{{0, 2, 2, 2, 2, 2, 0}, {2, 2, 9, 9, 9, 2, 2}, {2, 9, 9, 9, 9, 9, 2}, {2, 9, 9, 1, 9, 9, 2}, {2, 9, 9, 9, 9, 9, 2}, {2, 2, 9, 9, 9, 2, 2}, {0, 2, 2, 2, 2, 2, 0}};
+   static final int[][] PAT_DOORWAY = new int[][]{
+           {0, 2, 2, 2, 2, 2, 0},
+           {2, 2, 9, 9, 9, 2, 2},
+           {2, 9, 9, 9, 9, 9, 2},
+           {2, 9, 9, 1, 9, 9, 2},
+           {2, 9, 9, 9, 9, 9, 2},
+           {2, 2, 9, 9, 9, 2, 2},
+           {0, 2, 2, 2, 2, 2, 0}
+   };
 
    static void generateRoom(World world, Random random, int cx, int cz, int y, Cell cell) {
       int x = cx * 16;

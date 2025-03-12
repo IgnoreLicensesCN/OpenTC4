@@ -95,29 +95,29 @@ public class MazeHandler {
    public static void loadMaze(World world) {
       clearHashMap();
       File file1 = new File(world.getSaveHandler().getWorldDirectory(), "labyrinth.dat");
+      if (saveData(file1)) {
+         return;
+      }
+
+      file1 = new File(world.getSaveHandler().getWorldDirectory(), "labyrinth.dat_old");
+      if (saveData(file1)) {
+         return;
+      }
+
+   }
+
+   private static boolean saveData(File file1) {
       if (file1.exists()) {
          try {
             NBTTagCompound nbttagcompound = CompressedStreamTools.readCompressed(Files.newInputStream(file1.toPath()));
             NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Data");
             readNBT(nbttagcompound1);
-            return;
+            return true;
          } catch (Exception exception1) {
             exception1.printStackTrace();
          }
       }
-
-      file1 = new File(world.getSaveHandler().getWorldDirectory(), "labyrinth.dat_old");
-      if (file1.exists()) {
-         try {
-            NBTTagCompound nbttagcompound = CompressedStreamTools.readCompressed(Files.newInputStream(file1.toPath()));
-            NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Data");
-            readNBT(nbttagcompound1);
-            return;
-         } catch (Exception exception) {
-            exception.printStackTrace();
-         }
-      }
-
+      return false;
    }
 
    public static void saveMaze(World world) {

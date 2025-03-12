@@ -13,57 +13,70 @@ import thaumcraft.common.config.Config;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 
 public class WorldProviderOuter extends WorldProvider {
+   @Override
    public String getDimensionName() {
       return "The Outer Lands";
    }
 
+   @Override
    public String getWelcomeMessage() {
       return "Entering The Outer Lands";
    }
 
+   @Override
    public String getDepartMessage() {
       return "Leaving The Outer Lands";
    }
 
+   @Override
    public boolean shouldMapSpin(String entity, double x, double y, double z) {
       return true;
    }
 
+   @Override
    public boolean canBlockFreeze(int x, int y, int z, boolean byWater) {
       return false;
    }
 
+   @Override
    public boolean canSnowAt(int x, int y, int z, boolean checkLight) {
       return false;
    }
 
+   @Override
    public boolean canDoLightning(Chunk chunk) {
       return false;
    }
 
+   @Override
    public boolean canDoRainSnowIce(Chunk chunk) {
       return false;
    }
 
+   @Override
    public void registerWorldChunkManager() {
       this.worldChunkMgr = new WorldChunkManagerHell(ThaumcraftWorldGenerator.biomeEldritchLands, 0.0F);
       this.dimensionId = Config.dimensionOuterId;
       this.hasNoSky = true;
    }
 
+   @Override
    public IChunkProvider createChunkGenerator() {
       return new ChunkProviderOuter(this.worldObj, this.worldObj.getSeed(), true);
    }
 
+   @Override
    public float calculateCelestialAngle(long p_76563_1_, float p_76563_3_) {
       return 0.0F;
    }
 
+   @Override
    @SideOnly(Side.CLIENT)
    public float[] calcSunriseSunsetColors(float p_76560_1_, float p_76560_2_) {
       return null;
    }
 
+   @Override
    @SideOnly(Side.CLIENT)
    public Vec3 getFogColor(float p_76562_1_, float p_76562_2_) {
       int i = 10518688;
@@ -85,36 +98,44 @@ public class WorldProviderOuter extends WorldProvider {
       return Vec3.createVectorHelper(f3, f4, f5);
    }
 
+   @Override
    @SideOnly(Side.CLIENT)
    public boolean isSkyColored() {
       return false;
    }
 
+   @Override
    public boolean canRespawnHere() {
       return false;
    }
 
+   @Override
    public boolean isSurfaceWorld() {
       return false;
    }
 
+   @Override
    @SideOnly(Side.CLIENT)
    public float getCloudHeight() {
       return 1.0F;
    }
 
+   @Override
    public boolean canCoordinateBeSpawn(int p_76566_1_, int p_76566_2_) {
       return this.worldObj.getTopBlock(p_76566_1_, p_76566_2_).getMaterial().blocksMovement();
    }
 
+   @Override
    public ChunkCoordinates getEntrancePortalLocation() {
        return super.getEntrancePortalLocation();
    }
 
+   @Override
    public int getAverageGroundLevel() {
       return 50;
    }
 
+   @Override
    @SideOnly(Side.CLIENT)
    public boolean doesXZShowFog(int p_76568_1_, int p_76568_2_) {
       return true;
