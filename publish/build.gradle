@@ -44,6 +44,7 @@ def useVPrefixForTag = project.hasProperty("useVPrefixForTag") && project.useVPr
 task build {}
 task assemble {}
 
+
 if(githubOK){
 	githubRelease {
 		token project.githubToken // This is your personal access token with Repo permissions

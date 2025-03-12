@@ -16,7 +16,7 @@ import static cpw.mods.fml.client.config.GuiUtils.VALID;
 import static tc4tweak.CommonUtils.reflectGet;
 
 public class StringOrderingEntry extends GuiEditArrayEntries.StringEntry {
-    private static final String[] upLabels = {"↑", "↑5", "↟"};
+    private static final String[] upLabels = {"↑", "5", "↟"};
     private static final String[] downLabels = {"↓", "↓5", "↡"};
     private static final Field field_GuiEditArray_enabled = ReflectionHelper.findField(GuiEditArray.class, "enabled");
     private final GuiButtonExt btnMoveUp, btnMoveDown;

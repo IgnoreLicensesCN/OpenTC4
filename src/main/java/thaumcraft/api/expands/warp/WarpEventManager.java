@@ -22,6 +22,7 @@ import thaumcraft.common.lib.network.misc.PacketMiscEvent;
 import thaumcraft.common.lib.network.playerdata.PacketResearchComplete;
 import thaumcraft.common.lib.network.playerdata.PacketSyncWarp;
 import thaumcraft.common.lib.network.playerdata.PacketWarpMessage;
+import thaumcraft.common.lib.research.PlayerKnowledge;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -87,6 +88,12 @@ public class WarpEventManager {
             return result;
         }
     });
+    public static final WarpEvent eventSpawnMist = new WarpEvent(4,96) {
+        @Override
+        public void onEventTriggered(PickWarpEventContext context, EntityPlayer player) {
+            spawnMist(player, context.warp, context.warp / 15);
+        }
+    };
     public static void init(){
         pickWarpEventListenersBefore.add(new PickWarpEventListenerBefore(0) {
             @Override
@@ -334,10 +341,10 @@ public class WarpEventManager {
             @Nonnull
             @Override
             public WarpEvent afterPickEvent(PickWarpEventContext context, WarpEvent e, EntityPlayer player) {
-                if (context.randWithWarp >= 92 &&  e == WarpEvent.EMPTY) {
-                    spawnMist(player, context.warp, context.warp / 15);
+                if (context.randWithWarp >= 92 && e == WarpEvent.EMPTY) {
+                    return eventSpawnMist;
                 }
-                return WarpEvent.EMPTY;
+                return e;
             }
         });
         registerWarpEventListenerAfter(new WarpEventListenerAfter(0) {
@@ -368,6 +375,20 @@ public class WarpEventManager {
                 }
             }
         });
+        registerWarpEventListenerAfter(new WarpEventListenerAfter(0) {
+            @Override
+            public void onWarpEvent(@Nonnull PickWarpEventContext warpContext, @Nonnull WarpEvent e, @Nonnull EntityPlayer player) {
+                Thaumcraft.proxy.getPlayerKnowledge().addWarpTemp(player.getCommandSenderName(), -1);
+            }
+        });
+        registerWarpEventListenerAfter(new WarpEventListenerAfter(0) {
+            @Override
+            public void onWarpEvent(@Nonnull PickWarpEventContext warpContext, @Nonnull WarpEvent e, @Nonnull EntityPlayer player) {
+                if (e == WarpEvent.EMPTY){
+                    e.sendMiscPacket = false;
+                }
+            }
+        });
         registerWarpCondition(new WarpCondition(0) {
             @Override
             public boolean check(PickWarpEventContext context, EntityPlayer player) {
@@ -378,6 +399,13 @@ public class WarpEventManager {
                         <= Math.sqrt(context.warpCounter);
             }
         });
+        registerWarpCondition(new WarpCondition(0) {
+            @Override
+            public boolean check(PickWarpEventContext context, EntityPlayer player) {
+                return !player.isPotionActive(Config.potionWarpWardID);
+            }
+        });
+
     }
     public static void registerWarpEvent(WarpEvent e) {
         warpEvents.add(e);
@@ -422,16 +450,19 @@ public class WarpEventManager {
         if (warpContext.warp <= 0 || warpContext.actualWarp <= 0) {
             return WarpEvent.EMPTY;
         }
-        int randWithWarp = player.worldObj.rand.nextInt(warpContext.warp);
-        warpContext.randWithWarp = randWithWarp;
+        warpContext.randWithWarp = player.worldObj.rand.nextInt(warpContext.warp);
         WarpEvent picked = WarpEvent.EMPTY;
+
         for (WarpEvent pickEvent : warpEvents) {
-            if (warpContext.actualWarp >= pickEvent.warpRequired){
-                if (randWithWarp >= pickEvent.weight) {
-                    randWithWarp -= pickEvent.weight;
-                }else{
+            if (warpContext.actualWarp >= pickEvent.warpRequired) {
+                if (warpContext.randWithWarp >= pickEvent.weight) {
+                    warpContext.randWithWarp -= pickEvent.weight;
+                } else {
                     picked = pickEvent;
+                    break;
                 }
+            } else {
+                break;
             }
         }
 
@@ -455,36 +486,37 @@ public class WarpEventManager {
             if (e.retryAnotherFlag){
                 triggerRandomWarpEvent(warpContext,player);
                 return;
-            } else if (e.sendMiscPacket){
+            }
+            for (WarpEventListenerAfter listener : warpEventListenersAfter) {
+                listener.onWarpEvent(warpContext,e,player);
+            }
+            if (e.sendMiscPacket){
                 if (player instanceof EntityPlayerMP) {
                     PacketHandler.INSTANCE.sendTo(new PacketMiscEvent((short)0), (EntityPlayerMP)player);
                 }
             }
-            Thaumcraft.proxy.getPlayerKnowledge().addWarpTemp(player.getCommandSenderName(), -1);
             if (player instanceof EntityPlayerMP) {
                 PacketHandler.INSTANCE.sendTo(new PacketSyncWarp(player, (byte)2), (EntityPlayerMP)player);
-            }
-            for (WarpEventListenerAfter listener : warpEventListenersAfter) {
-                listener.onWarpEvent(warpContext,e,player);
             }
         }
     }
 
     public static void tryTriggerRandomWarpEvent(EntityPlayer player) {
-
+        PlayerKnowledge knowledge = Thaumcraft.proxy.getPlayerKnowledge();
         PickWarpEventContext warpContext = new PickWarpEventContext(
-                Thaumcraft.proxy.getPlayerKnowledge().getWarpTotal(player.getCommandSenderName())
+                knowledge.getWarpTotal(player.getCommandSenderName())
                         + getWarpFromGear(player),
                 null,
                 player,
-                Thaumcraft.proxy.getPlayerKnowledge().getWarpPerm(player.getCommandSenderName())
-                        + Thaumcraft.proxy.getPlayerKnowledge().getWarpSticky(player.getCommandSenderName()),
-                Thaumcraft.proxy.getPlayerKnowledge().getWarpCounter(player.getCommandSenderName())
+                knowledge.getWarpPerm(player.getCommandSenderName())
+                        + knowledge.getWarpSticky(player.getCommandSenderName()),
+                knowledge.getWarpCounter(player.getCommandSenderName())
         );
         for (WarpCondition condition : warpConditions) {
-            if (condition.check(warpContext,player)) {
-                triggerRandomWarpEvent(warpContext,player);
+            if (!condition.check(warpContext,player)) {
+                return;
             }
         }
+        triggerRandomWarpEvent(warpContext,player);
     }
 }

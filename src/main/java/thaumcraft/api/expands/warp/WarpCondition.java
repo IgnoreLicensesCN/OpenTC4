@@ -9,6 +9,12 @@ public abstract class WarpCondition implements Comparable<WarpCondition> {
 
     public int priority;
 
+    /**
+     *
+     * @param context
+     * @param player
+     * @return true if can trigger wrap event
+     */
     public abstract boolean check(PickWarpEventContext context, EntityPlayer player);
 
     @Override

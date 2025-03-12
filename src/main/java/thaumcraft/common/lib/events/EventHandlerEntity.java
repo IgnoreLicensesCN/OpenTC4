@@ -211,6 +211,8 @@ public class EventHandlerEntity {
       }
    }
 
+   //unit:tick
+   public static final int checkWarpEventDelay = 200;//default:2000,200 is for testing
    @SubscribeEvent
    public void livingTick(LivingEvent.LivingUpdateEvent event) {
       if (event.entity instanceof EntityPlayer) {
@@ -227,7 +229,7 @@ public class EventHandlerEntity {
          }
 
          if (!event.entity.worldObj.isRemote) {
-            if (!Config.wuss && player.ticksExisted > 0 && player.ticksExisted % 2000 == 0 && !player.isPotionActive(Config.potionWarpWardID)) {
+            if (!Config.wuss && player.ticksExisted > 0 && player.ticksExisted % checkWarpEventDelay == 0) {
                WarpEvents.checkWarpEvent(player);
             }
 
