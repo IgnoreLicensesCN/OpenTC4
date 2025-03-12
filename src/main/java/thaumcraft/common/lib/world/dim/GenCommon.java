@@ -43,7 +43,8 @@ public class GenCommon {
            {1, 8, 2, 3, 9, 9, 9, 4, 2, 8, 1},
            {1, 8, 8, 2, 2, 2, 2, 2, 8, 8, 1},
            {1, 8, 8, 8, 8, 8, 8, 8, 8, 8, 1},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}};
+           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+   };
 
    static void placeBlock(World world, int i, int j, int k, int l, Cell cell) {
       placeBlock(world, i, j, k, l, ForgeDirection.UNKNOWN, cell);

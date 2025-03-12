@@ -112,6 +112,7 @@ public class GenPortal extends GenCommon {
 //      placeBlock(world, x + 11, y + 8, z + 11, 11, ForgeDirection.SOUTH, cell);
 //      placeBlock(world, x + 11, y + 8, z + 12, 11, ForgeDirection.EAST, cell);
 
+      //generated text with java
       {
          placeBlock(world, x + 1, y , z + 1, 1, cell);
          placeBlock(world, x + 1, y + 1, z + 1, 1, cell);

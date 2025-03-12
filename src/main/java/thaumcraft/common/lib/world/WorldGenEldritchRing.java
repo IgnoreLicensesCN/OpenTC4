@@ -96,9 +96,7 @@ public class WorldGenEldritchRing extends WorldGenerator {
                                  TileEntity probablyBanner = world.getTileEntity(x - dir.offsetX * 3, j + 1, z + dir.offsetZ * 3);
                                  if (probablyBanner instanceof TileBanner) {
                                     TileBanner banner = (TileBanner) probablyBanner;
-                                    int face = bannerFaceFromDirection(a);
-
-                                    banner.setFacing((byte)face);
+                                    banner.setFacing(bannerFaceFromDirection(a));
                                  }
                               }
                            case 5:
@@ -130,8 +128,7 @@ public class WorldGenEldritchRing extends WorldGenerator {
       }
    }
 
-   public static int bannerFaceFromDirection(int a) {
-      int face = 0;
+   public static byte bannerFaceFromDirection(int a) {
       switch (a) {
          case 2:
             return 8;

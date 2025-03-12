@@ -135,9 +135,8 @@ public class EntityCultistPortal extends EntityMob implements IBossDisplayData {
                   this.worldObj.setBlock((int)this.posX - dir.offsetX * 6, (int)this.posY, (int)this.posZ + dir.offsetZ * 6, ConfigBlocks.blockWoodenDevice, 8, 3);
                   TileEntity te = this.worldObj.getTileEntity((int)this.posX - dir.offsetX * 6, (int)this.posY, (int)this.posZ + dir.offsetZ * 6);
                   if (te instanceof TileBanner) {
-                     WorldGenEldritchRing.bannerFaceFromDirection(a);
 
-                     ((TileBanner)te).setFacing((byte)face);
+                     ((TileBanner)te).setFacing(WorldGenEldritchRing.bannerFaceFromDirection(a));
                      PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockArc((int)this.posX - dir.offsetX * 6, (int)this.posY, (int)this.posZ + dir.offsetZ * 6, this.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.posX, this.posY, this.posZ, 32.0F));
                      this.playSound("thaumcraft:wandfail", 1.0F, 1.0F);
                   }
