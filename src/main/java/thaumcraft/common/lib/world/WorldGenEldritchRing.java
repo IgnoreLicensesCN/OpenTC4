@@ -81,35 +81,24 @@ public class WorldGenEldritchRing extends WorldGenerator {
                      int r = rand.nextInt(10);
                      TileEntity te = world.getTileEntity(x, j + 1, z);
                      if (te instanceof TileEldritchAltar) {
+                        TileEldritchAltar altar = (TileEldritchAltar) te;
                         switch (r) {
                            case 1:
                            case 2:
                            case 3:
                            case 4:
-                              ((TileEldritchAltar)te).setSpawner(true);
-                              ((TileEldritchAltar)te).setSpawnType((byte)0);
+                              altar.setSpawner(true);
+                              altar.setSpawnType((byte)0);
 
                               for(int a = 2; a < 6; ++a) {
                                  ForgeDirection dir = ForgeDirection.getOrientation(a);
                                  world.setBlock(x - dir.offsetX * 3, j + 1, z + dir.offsetZ * 3, ConfigBlocks.blockWoodenDevice, 8, 3);
-                                 te = world.getTileEntity(x - dir.offsetX * 3, j + 1, z + dir.offsetZ * 3);
-                                 if (te instanceof TileBanner) {
-                                    int face = 0;
-                                    switch (a) {
-                                       case 2:
-                                          face = 8;
-                                          break;
-                                       case 3:
-                                          face = 0;
-                                          break;
-                                       case 4:
-                                          face = 12;
-                                          break;
-                                       case 5:
-                                          face = 4;
-                                    }
+                                 TileEntity probablyBanner = world.getTileEntity(x - dir.offsetX * 3, j + 1, z + dir.offsetZ * 3);
+                                 if (probablyBanner instanceof TileBanner) {
+                                    TileBanner banner = (TileBanner) probablyBanner;
+                                    int face = bannerFaceFromDirection(a);
 
-                                    ((TileBanner)te).setFacing((byte)face);
+                                    banner.setFacing((byte)face);
                                  }
                               }
                            case 5:
@@ -117,8 +106,8 @@ public class WorldGenEldritchRing extends WorldGenerator {
                               break;
                            case 6:
                            case 7:
-                              ((TileEldritchAltar)te).setSpawner(true);
-                              ((TileEldritchAltar)te).setSpawnType((byte)1);
+                              altar.setSpawner(true);
+                              altar.setSpawnType((byte)1);
                         }
                      }
 
@@ -138,6 +127,22 @@ public class WorldGenEldritchRing extends WorldGenerator {
          return true;
       } else {
          return false;
+      }
+   }
+
+   public static int bannerFaceFromDirection(int a) {
+      int face = 0;
+      switch (a) {
+         case 2:
+            return 8;
+         case 3:
+            return 0;
+         case 4:
+            return 12;
+         case 5:
+            return 4;
+         default:
+            return 0;
       }
    }
 }

@@ -14,6 +14,12 @@ import static baubles.api.expanded.BaubleExpandedSlots.getIndexesOfAssignedSlots
 @ParametersAreNonnullByDefault
 public class BaubleUtils {
 
+    /**
+     * iterate through every bauble itemstack of a player
+     * @param player the victim
+     * @param operation what will be done to every operation,return true inside to break the loop
+     * @return whether the loop is broken by {@link BaubleConsumer#accept(int, ItemStack, Object)} returning true.
+     */
     public static boolean forEachBauble(EntityPlayer player,BaubleConsumer<Item> operation) {
         for(String baubleType:getCurrentlyRegisteredTypes()) {
             if (forEachBaubleWithBaubleType(baubleType,player,operation)){
@@ -23,6 +29,15 @@ public class BaubleUtils {
         return false;
     }
 
+    /**
+     * iterate through every bauble itemstack of a player,
+     * only item class meets {@code expectedItemType} will be accepted by {@link BaubleConsumer#accept(int, ItemStack, Object)}
+     * @param player the victim
+     * @param expectedItemType class to judge item type,judge with it's method {@link Class#isAssignableFrom(Class)}.
+     *                         e.g. expectedItemType.isAssignableFrom(itemstack.getItem().getClass())
+     * @param operation what will be done to every operation,return true inside to break the loop
+     * @return whether the loop is broken by {@link BaubleConsumer#accept(int, ItemStack, Object)} returning true.
+     */
     public static <T> boolean forEachBauble(EntityPlayer player,Class<T> expectedItemType, BaubleConsumer<T> operation) {
         for(String baubleType:getCurrentlyRegisteredTypes()) {
             if (forEachBaubleWithBaubleType(baubleType,player,expectedItemType,operation)){
@@ -31,6 +46,10 @@ public class BaubleUtils {
         }
         return false;
     }
+
+    /**
+     * see {@link BaubleUtils#forEachBauble(EntityPlayer, BaubleConsumer)},but it checks specific bauble type
+     */
     public static boolean forEachBaubleWithBaubleType(String baubleType, EntityPlayer player, BaubleConsumer<Item> operation) {
         IInventory baubles = BaublesApi.getBaubles(player);
 
@@ -43,14 +62,20 @@ public class BaubleUtils {
         }
         return false;
     }
+
+
+    /**
+     * see {@link BaubleUtils#forEachBauble(EntityPlayer, Class, BaubleConsumer)},but it checks specific bauble type
+     */
     public static <T> boolean forEachBaubleWithBaubleType(String baubleType,EntityPlayer player,Class<T> expectedItemType, BaubleConsumer<T> operation) {
         IInventory baubles = BaublesApi.getBaubles(player);
 
         for (int a:getIndexesOfAssignedSlotsOfType(baubleType)){
             ItemStack stack = baubles.getStackInSlot(a);
             if (stack == null) {continue;}
-            if (expectedItemType.isAssignableFrom(stack.getClass())) {
-                if (operation.accept(a,stack, (T) stack.getItem())){
+            Item stackItem = stack.getItem();
+            if (expectedItemType.isAssignableFrom(stackItem.getClass())) {
+                if (operation.accept(a,stack, (T) stackItem)){
                     return true;
                 }
             }

@@ -25,6 +25,7 @@ import thaumcraft.common.entities.monster.EntityCultistKnight;
 import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.network.fx.PacketFXBlockArc;
 import thaumcraft.common.lib.utils.EntityUtils;
+import thaumcraft.common.lib.world.WorldGenEldritchRing;
 import thaumcraft.common.tiles.TileBanner;
 
 public class EntityCultistPortal extends EntityMob implements IBossDisplayData {
@@ -134,20 +135,7 @@ public class EntityCultistPortal extends EntityMob implements IBossDisplayData {
                   this.worldObj.setBlock((int)this.posX - dir.offsetX * 6, (int)this.posY, (int)this.posZ + dir.offsetZ * 6, ConfigBlocks.blockWoodenDevice, 8, 3);
                   TileEntity te = this.worldObj.getTileEntity((int)this.posX - dir.offsetX * 6, (int)this.posY, (int)this.posZ + dir.offsetZ * 6);
                   if (te instanceof TileBanner) {
-                     int face = 0;
-                     switch (a) {
-                        case 2:
-                           face = 8;
-                           break;
-                        case 3:
-                           face = 0;
-                           break;
-                        case 4:
-                           face = 12;
-                           break;
-                        case 5:
-                           face = 4;
-                     }
+                     WorldGenEldritchRing.bannerFaceFromDirection(a);
 
                      ((TileBanner)te).setFacing((byte)face);
                      PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockArc((int)this.posX - dir.offsetX * 6, (int)this.posY, (int)this.posZ + dir.offsetZ * 6, this.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.posX, this.posY, this.posZ, 32.0F));
