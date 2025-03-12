@@ -341,7 +341,7 @@ public class WarpEventManager {
             @Nonnull
             @Override
             public WarpEvent afterPickEvent(PickWarpEventContext context, WarpEvent e, EntityPlayer player) {
-                if (context.randWithWarp >= 92 && e == WarpEvent.EMPTY) {
+                if (context.warp >= 92 && e == WarpEvent.EMPTY) {
                     return eventSpawnMist;
                 }
                 return e;
