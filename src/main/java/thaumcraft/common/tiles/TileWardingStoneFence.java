@@ -7,7 +7,7 @@ public class TileWardingStoneFence extends TileEntity {
    int count = 0;
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {

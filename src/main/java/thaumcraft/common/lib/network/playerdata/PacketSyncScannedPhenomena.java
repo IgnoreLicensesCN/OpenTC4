@@ -19,7 +19,7 @@ public class PacketSyncScannedPhenomena implements IMessage, IMessageHandler<Pac
    }
 
    public void toBytes(ByteBuf buffer) {
-      if (this.data != null && this.data.size() > 0) {
+      if (this.data != null && !this.data.isEmpty()) {
          buffer.writeShort(this.data.size());
 
          for(String s : this.data) {

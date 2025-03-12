@@ -78,7 +78,7 @@ public class ParticleEngine {
                tessellator.startDrawingQuads();
 
                 for (EntityFX part : parts) {
-                    final EntityFX entityfx = (EntityFX) part;
+                    final EntityFX entityfx = part;
                     if (entityfx != null) {
                         tessellator.setBrightness(entityfx.getBrightnessForRender(frame));
 

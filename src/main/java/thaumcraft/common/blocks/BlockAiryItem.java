@@ -37,12 +37,13 @@ public class BlockAiryItem extends ItemBlock {
       return super.getUnlocalizedName() + "." + par1ItemStack.getItemDamage();
    }
 
-   public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+   public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List list, boolean par4) {
+      List<String> loreList = (List<String>) list;
       if (par1ItemStack.getItemDamage() == 0) {
-         par3List.add("§5Place a randomly generated node");
-         par3List.add("§oCreative Mode Only");
+         loreList.add("§5Place a randomly generated node");
+         loreList.add("§oCreative Mode Only");
       }
 
-      super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
+      super.addInformation(par1ItemStack, par2EntityPlayer, loreList, par4);
    }
 }

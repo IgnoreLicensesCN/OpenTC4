@@ -1,7 +1,7 @@
 package thaumcraft.common.lib.world.dim;
 
 import java.util.Random;
-import net.minecraft.entity.IEntityLivingData;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumDifficulty;

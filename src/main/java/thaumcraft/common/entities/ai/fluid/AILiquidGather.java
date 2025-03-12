@@ -1,8 +1,5 @@
 package thaumcraft.common.entities.ai.fluid;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
 import java.util.*;
 
 import net.minecraft.block.Block;
@@ -159,12 +156,12 @@ public class AILiquidGather extends EntityAIBase {
                   int j = loc.posY;
                   int k = loc.posZ;
                   if (this.theGolem.getUpgradeAmount(5) > 0) {
-                     if (!this.queue.containsKey(loc) || ((ArrayList)this.queue.get(loc)).size() == 0) {
+                     if (!this.queue.containsKey(loc) || this.queue.get(loc).isEmpty()) {
                         this.rebuildQueue(loc, fluidstack.getFluid());
                      }
 
-                     if (this.queue.containsKey(loc) && !((ArrayList) this.queue.get(loc)).isEmpty()) {
-                        ArrayList<SourceBlock> t = (ArrayList)this.queue.get(loc);
+                     if (this.queue.containsKey(loc) && !this.queue.get(loc).isEmpty()) {
+                        ArrayList<SourceBlock> t = this.queue.get(loc);
 
                         do {
                            ChunkCoordinates current = t.get(0).loc;
@@ -172,7 +169,7 @@ public class AILiquidGather extends EntityAIBase {
                            j = current.posY;
                            k = current.posZ;
                            t.remove(0);
-                        } while(t.size() > 0 && !this.validFluidBlock(fluidstack.getFluid(), i, j, k));
+                        } while(!t.isEmpty() && !this.validFluidBlock(fluidstack.getFluid(), i, j, k));
 
                         this.queue.put(loc, t);
                      }

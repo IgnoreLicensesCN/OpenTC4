@@ -17,7 +17,7 @@ public class TileJar extends TileThaumcraft {
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {

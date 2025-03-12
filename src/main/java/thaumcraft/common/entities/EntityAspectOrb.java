@@ -62,14 +62,6 @@ public class EntityAspectOrb extends Entity implements IEntityAdditionalSpawnDat
    @SideOnly(Side.CLIENT)
    public int getBrightnessForRender(float par1) {
       float f1 = 0.5F;
-      if (f1 < 0.0F) {
-         f1 = 0.0F;
-      }
-
-      if (f1 > 1.0F) {
-         f1 = 1.0F;
-      }
-
       int i = super.getBrightnessForRender(par1);
       int j = i & 255;
       int k = i >> 16 & 255;
@@ -102,7 +94,7 @@ public class EntityAspectOrb extends Entity implements IEntityAdditionalSpawnDat
       double d0 = 8.0F;
       if (this.ticksExisted % 5 == 0 && this.closestPlayer == null) {
          List<Entity> targets = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ).expand(d0, d0, d0));
-         if (targets.size() > 0) {
+         if (!targets.isEmpty()) {
             double distance = Double.MAX_VALUE;
 
             for(Entity t : targets) {

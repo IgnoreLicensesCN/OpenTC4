@@ -9,7 +9,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -77,25 +76,25 @@ public class ItemTrunkSpawner extends Item {
                d0 = 0.5F;
            }
 
-           Entity entity = new EntityTravelingTrunk(par3World);
+           EntityTravelingTrunk entity = new EntityTravelingTrunk(par3World);
            if (entity != null && entity instanceof EntityLivingBase) {
-               EntityLiving entityliving = (EntityLiving) entity;
+               EntityLiving entityliving = entity;
                entity.setLocationAndAngles(par4, (double) par5 + d0, par6, MathHelper.wrapAngleTo180_float(par3World.rand.nextFloat() * 360.0F), 0.0F);
                entityliving.rotationYawHead = entityliving.rotationYaw;
                entityliving.renderYawOffset = entityliving.rotationYaw;
-               ((EntityTravelingTrunk) entity).setOwner(par2EntityPlayer.getCommandSenderName());
+               entity.setOwner(par2EntityPlayer.getCommandSenderName());
                if (stack.hasDisplayName()) {
-                   ((EntityLiving) entity).setCustomNameTag(stack.getDisplayName());
+                   entity.setCustomNameTag(stack.getDisplayName());
                }
 
                if (stack.hasTagCompound() && stack.stackTagCompound.hasKey("upgrade")) {
-                   ((EntityTravelingTrunk) entity).setUpgrade(stack.stackTagCompound.getByte("upgrade"));
-                   ((EntityTravelingTrunk) entity).setInvSize();
+                   entity.setUpgrade(stack.stackTagCompound.getByte("upgrade"));
+                   entity.setInvSize();
                }
 
                if (stack.hasTagCompound() && stack.stackTagCompound.hasKey("inventory")) {
                    NBTTagList nbttaglist = stack.stackTagCompound.getTagList("inventory", 10);
-                   ((EntityTravelingTrunk) entity).inventory.readFromNBT(nbttaglist);
+                   entity.inventory.readFromNBT(nbttaglist);
                }
 
                entityliving.onSpawnWithEgg(null);

@@ -117,7 +117,7 @@ public class ItemResearchNotes extends Item {
    }
 
    public boolean getShareTag() {
-      return true;
+       return super.getShareTag();
    }
 
    public String getItemStackDisplayName(ItemStack itemstack) {

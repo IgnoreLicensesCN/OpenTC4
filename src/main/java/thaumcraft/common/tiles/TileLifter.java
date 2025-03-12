@@ -16,7 +16,7 @@ public class TileLifter extends TileEntity {
    public boolean lastPowerState = false;
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {
@@ -37,7 +37,7 @@ public class TileLifter extends TileEntity {
 
       if (this.rangeAbove > 0 && !this.gettingPower()) {
          List<Entity> targets = this.worldObj.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord + 1, this.zCoord, this.xCoord + 1, this.yCoord + 1 + this.rangeAbove, this.zCoord + 1));
-         if (targets.size() > 0) {
+         if (!targets.isEmpty()) {
             for(Entity e : targets) {
                if (e instanceof EntityItem || e.canBePushed() || e instanceof EntityHorse) {
                   if (Thaumcraft.proxy.isShiftKeyDown()) {

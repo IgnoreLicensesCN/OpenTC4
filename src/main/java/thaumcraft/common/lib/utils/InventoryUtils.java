@@ -549,7 +549,7 @@ public class InventoryUtils {
          if (it.getItemDamage() == 32767 && it.getItem().getHasSubtypes()) {
             List<ItemStack> q = new ArrayList<>();
             it.getItem().getSubItems(it.getItem(), it.getItem().getCreativeTab(), q);
-            if (q != null && q.size() > 0) {
+            if (q != null && !q.isEmpty()) {
                int md = (int)(System.currentTimeMillis() / 1000L % (long)q.size());
                ItemStack it2 = new ItemStack(it.getItem(), 1, md);
                it2.setTagCompound(it.getTagCompound());
@@ -563,13 +563,13 @@ public class InventoryUtils {
          }
       } else if (input instanceof ArrayList) {
          ArrayList<ItemStack> q = (ArrayList)input;
-         if (q != null && q.size() > 0) {
+         if (q != null && !q.isEmpty()) {
             int idx = (int)(System.currentTimeMillis() / 1000L % (long)q.size());
             it = cycleItemStack(q.get(idx));
          }
       } else if (input instanceof String) {
          ArrayList<ItemStack> q = OreDictionary.getOres((String)input);
-         if (q != null && q.size() > 0) {
+         if (q != null && !q.isEmpty()) {
             int idx = (int)(System.currentTimeMillis() / 1000L % (long)q.size());
             it = cycleItemStack(q.get(idx));
          }

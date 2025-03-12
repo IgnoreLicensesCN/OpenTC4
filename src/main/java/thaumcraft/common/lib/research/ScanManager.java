@@ -1,11 +1,10 @@
 package thaumcraft.common.lib.research;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import net.minecraft.block.Block;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -250,7 +249,7 @@ public class ScanManager implements IScanEventHandler {
    private static AspectList generateNodeAspects(World world, String node) {
       AspectList tags = new AspectList();
       ArrayList<Integer> loc = (ArrayList)TileNode.locations.get(node);
-      if (loc != null && loc.size() > 0) {
+      if (loc != null && !loc.isEmpty()) {
          int dim = loc.get(0);
          int x = loc.get(1);
          int y = loc.get(2);

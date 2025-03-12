@@ -168,6 +168,7 @@ public class GuiResearchRecipe extends GuiScreen {
     }
 
     public void initGui() {
+        super.initGui();
     }
 
     protected void actionPerformed(GuiButton par1GuiButton) {
@@ -499,7 +500,7 @@ public class GuiResearchRecipe extends GuiScreen {
                 int ty = y + count * 50;
                 if (mposx >= tx && mposy >= ty && mposx < tx + 40 && mposy < ty + 40) {
                     ArrayList<ItemStack> items = this.aspectItems.get(aspect);
-                    if (items != null && items.size() > 0) {
+                    if (items != null && !items.isEmpty()) {
                         int xcount = 0;
                         int ycount = 0;
 
@@ -1358,7 +1359,7 @@ public class GuiResearchRecipe extends GuiScreen {
             }
         }
 
-        if (this.reference.size() > 0) {
+        if (!this.reference.isEmpty()) {
             for (List coords : this.reference) {
                 if (par1 >= (Integer) coords.get(0) && par2 >= (Integer) coords.get(1) && par1 < (Integer) coords.get(0) + 16 && par2 < (Integer) coords.get(1) + 16) {
                     Minecraft.getMinecraft().theWorld.playSound(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY, Minecraft.getMinecraft().thePlayer.posZ, "thaumcraft:page", 0.66F, 1.0F, false);

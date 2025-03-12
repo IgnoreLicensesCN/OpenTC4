@@ -53,7 +53,7 @@ public class TileThaumatoriumRenderer extends TileEntitySpecialRenderer {
       this.model.renderAll();
       GL11.glPopMatrix();
       float ticks = (float)Minecraft.getMinecraft().renderViewEntity.ticksExisted + par8;
-      if (tile != null && tile.getWorldObj() != null && tile.recipeHash != null && tile.recipeHash.size() > 0) {
+      if (tile != null && tile.getWorldObj() != null && tile.recipeHash != null && !tile.recipeHash.isEmpty()) {
          int stack = Minecraft.getMinecraft().renderViewEntity.ticksExisted / 40 % tile.recipeHash.size();
          CrucibleRecipe recipe = ThaumcraftApi.getCrucibleRecipeFromHash(tile.recipeHash.get(stack));
          if (recipe != null) {

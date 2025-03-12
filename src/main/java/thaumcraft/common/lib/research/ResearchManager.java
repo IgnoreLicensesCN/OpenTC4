@@ -64,28 +64,32 @@ public class ResearchManager {
                         continue label110;
                      }
                   }
-               } else if (clue instanceof String && ri.getEntityTriggers() != null && ri.getEntityTriggers().length > 0) {
-                  for(String entity : ri.getEntityTriggers()) {
-                     if (clue.equals(entity)) {
-                        keys.add(ri.key);
-                        continue label110;
-                     }
-                  }
+               } else {
+                   if (clue instanceof String && ri.getEntityTriggers() != null) {
+                       ri.getEntityTriggers();
+                       for (String entity : ri.getEntityTriggers()) {
+                           if (clue.equals(entity)) {
+                               keys.add(ri.key);
+                               continue label110;
+                           }
+                       }
+                   }
                }
 
-               if (aspects != null && aspects.size() > 0 && ri.getAspectTriggers() != null && ri.getAspectTriggers().length > 0) {
-                  for(Aspect aspect : ri.getAspectTriggers()) {
-                     if (aspects.getAmount(aspect) > 0) {
-                        keys.add(ri.key);
-                        break;
-                     }
-                  }
+               if (aspects != null && aspects.size() > 0 && ri.getAspectTriggers() != null) {
+                   ri.getAspectTriggers();
+                   for (Aspect aspect : ri.getAspectTriggers()) {
+                       if (aspects.getAmount(aspect) > 0) {
+                           keys.add(ri.key);
+                           break;
+                       }
+                   }
                }
             }
          }
       }
 
-      if (keys.size() > 0) {
+      if (!keys.isEmpty()) {
          String key = keys.get(world.rand.nextInt(keys.size()));
          PacketHandler.INSTANCE.sendTo(new PacketResearchComplete("@" + key), (EntityPlayerMP)player);
          Thaumcraft.proxy.getResearchManager().completeResearch(player, "@" + key);
@@ -136,7 +140,7 @@ public class ResearchManager {
       }
 
       Random rand = new Random(player.worldObj.getWorldTime() / 10L / 5L);
-      if (keys.size() > 0) {
+      if (!keys.isEmpty()) {
          int r = rand.nextInt(keys.size());
          return keys.get(r);
       } else {
@@ -167,7 +171,7 @@ public class ResearchManager {
          }
       }
 
-      if (keys.size() > 0) {
+      if (!keys.isEmpty()) {
          randomMatch = keys.get(player.worldObj.rand.nextInt(keys.size()));
       }
 
@@ -234,7 +238,7 @@ public class ResearchManager {
          }
       }
 
-      if (main.size() != 0) {
+      if (!main.isEmpty()) {
          return false;
       } else {
          ArrayList<String> remove = new ArrayList<>();
@@ -473,7 +477,7 @@ public class ResearchManager {
       if (parents != null && parents.length > 0) {
          out = false;
          List<String> completed = getResearchForPlayer(playername);
-         if (completed != null && completed.size() > 0) {
+         if (completed != null && !completed.isEmpty()) {
             out = true;
 
             for(String item : parents) {
@@ -488,7 +492,7 @@ public class ResearchManager {
       if (parents != null && parents.length > 0) {
          out = false;
          List<String> completed = getResearchForPlayer(playername);
-         if (completed != null && completed.size() > 0) {
+         if (completed != null && !completed.isEmpty()) {
             out = true;
 
             for(String item : parents) {
@@ -871,7 +875,7 @@ public class ResearchManager {
    public static void saveResearchNBT(NBTTagCompound entityData, EntityPlayer player) {
       NBTTagList tagList = new NBTTagList();
       List res = getResearchForPlayer(player.getCommandSenderName());
-      if (res != null && res.size() > 0) {
+      if (res != null && !res.isEmpty()) {
          for(Object key : res) {
             if (key != null && (((String)key).startsWith("@") || ResearchCategories.getResearch((String)key) != null)) {
                if (((String)key).startsWith("@")) {
@@ -913,7 +917,7 @@ public class ResearchManager {
    public static void saveScannedNBT(NBTTagCompound entityData, EntityPlayer player) {
       NBTTagList tagList = new NBTTagList();
       List<String> obj = Thaumcraft.proxy.getScannedObjects().get(player.getCommandSenderName());
-      if (obj != null && obj.size() > 0) {
+      if (obj != null && !obj.isEmpty()) {
          for(String object : obj) {
             if (object != null) {
                NBTTagCompound f = new NBTTagCompound();
@@ -926,7 +930,7 @@ public class ResearchManager {
       entityData.setTag("THAUMCRAFT.SCAN.OBJECTS", tagList);
       tagList = new NBTTagList();
       List<String> ent = Thaumcraft.proxy.getScannedEntities().get(player.getCommandSenderName());
-      if (ent != null && ent.size() > 0) {
+      if (ent != null && !ent.isEmpty()) {
          for(String key : ent) {
             if (key != null) {
                NBTTagCompound f = new NBTTagCompound();
@@ -939,7 +943,7 @@ public class ResearchManager {
       entityData.setTag("THAUMCRAFT.SCAN.ENTITIES", tagList);
       tagList = new NBTTagList();
       List<String> phe = Thaumcraft.proxy.getScannedPhenomena().get(player.getCommandSenderName());
-      if (phe != null && phe.size() > 0) {
+      if (phe != null && !phe.isEmpty()) {
          for(String key : phe) {
             if (key != null) {
                NBTTagCompound f = new NBTTagCompound();

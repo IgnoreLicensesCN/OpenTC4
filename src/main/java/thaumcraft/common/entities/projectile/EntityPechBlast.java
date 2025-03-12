@@ -40,7 +40,7 @@ public class EntityPechBlast extends EntityThrowable {
    }
 
    protected float func_70182_d() {
-      return 1.5F;
+       return super.func_70182_d();
    }
 
    public void onUpdate() {

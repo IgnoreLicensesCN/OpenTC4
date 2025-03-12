@@ -94,7 +94,7 @@ public class TileTube extends TileThaumcraft implements IEssentiaTransport, IWan
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {

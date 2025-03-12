@@ -85,13 +85,13 @@ public class ModelWatcher extends ModelBase {
       }
 
       this.guardianEye.rotationPointZ = -8.25F;
-      Object object = Minecraft.getMinecraft().renderViewEntity;
+      Entity object = Minecraft.getMinecraft().renderViewEntity;
       if (entityguardian.func_175474_cn()) {
          object = entityguardian.getTargetedEntity();
       }
 
       if (object != null) {
-         Vec3 vec3 = this.getPositionEyes((Entity)object, 0.0F);
+         Vec3 vec3 = this.getPositionEyes(object, 0.0F);
          Vec3 vec31 = this.getPositionEyes(p_78087_7_, 0.0F);
          double d0 = vec3.yCoord - vec31.yCoord;
          if (d0 > (double)0.0F) {

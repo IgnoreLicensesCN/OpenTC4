@@ -156,7 +156,7 @@ public class EntityEldritchGuardian extends EntityMob implements IRangedAttackMo
    }
 
    protected Item getDropItem() {
-      return Item.getItemById(0);
+       return super.getDropItem();
    }
 
    protected void dropFewItems(boolean flag, int i) {
@@ -205,14 +205,14 @@ public class EntityEldritchGuardian extends EntityMob implements IRangedAttackMo
    }
 
    public IEntityLivingData onSpawnWithEgg(IEntityLivingData p_110161_1_) {
-      Object p_110161_1_1 = super.onSpawnWithEgg(p_110161_1_);
+      IEntityLivingData p_110161_1_1 = super.onSpawnWithEgg(p_110161_1_);
       float f = this.worldObj.func_147462_b(this.posX, this.posY, this.posZ);
       if (this.worldObj.provider.dimensionId == Config.dimensionOuterId) {
          int bh = (int)this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue() / 2;
          this.setAbsorptionAmount(this.getAbsorptionAmount() + (float)bh);
       }
 
-      return (IEntityLivingData)p_110161_1_1;
+      return p_110161_1_1;
    }
 
    protected void updateAITasks() {
@@ -251,7 +251,7 @@ public class EntityEldritchGuardian extends EntityMob implements IRangedAttackMo
 
    public boolean getCanSpawnHere() {
       List ents = this.worldObj.getEntitiesWithinAABB(EntityEldritchGuardian.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX + (double)1.0F, this.posY + (double)1.0F, this.posZ + (double)1.0F).expand(32.0F, 16.0F, 32.0F));
-      return ents.size() <= 0 && super.getCanSpawnHere();
+      return ents.isEmpty() && super.getCanSpawnHere();
    }
 
    protected boolean isValidLightLevel() {

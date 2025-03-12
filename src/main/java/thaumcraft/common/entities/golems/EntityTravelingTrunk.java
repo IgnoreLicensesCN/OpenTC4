@@ -98,7 +98,7 @@ public class EntityTravelingTrunk extends EntityLiving implements IEntityOwnable
       this.setStay(nbttagcompound.getBoolean("Stay"));
       this.setUpgrade(nbttagcompound.getByte("upgrade"));
       String s = nbttagcompound.getString("Owner");
-      if (s.length() > 0) {
+      if (!s.isEmpty()) {
          this.setOwner(s);
       }
 
@@ -262,7 +262,7 @@ public class EntityTravelingTrunk extends EntityLiving implements IEntityOwnable
    }
 
    protected Item getDropItem() {
-      return Item.getItemById(0);
+       return super.getDropItem();
    }
 
    protected float getSoundVolume() {

@@ -16,7 +16,6 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 import thaumcraft.client.lib.UtilsFX;
-import thaumcraft.common.blocks.BlockMirror;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.tiles.TileMirror;
 import thaumcraft.common.tiles.TileMirrorEssentia;

@@ -162,7 +162,7 @@ public class EntityThaumicSlime extends EntityMob implements IMob, ITaintedMob {
       EntityThaumicSlime closest = null;
       double distance = Double.MAX_VALUE;
       List ents = this.worldObj.getEntitiesWithinAABB(EntityThaumicSlime.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ).expand(16.0F, 8.0F, 16.0F));
-      if (ents != null && ents.size() > 0) {
+      if (ents != null && !ents.isEmpty()) {
          for(Object s : ents) {
             EntityThaumicSlime slime = (EntityThaumicSlime)s;
             if (slime.getEntityId() != this.getEntityId() && slime.ticksExisted > 100 && slime.getSlimeSize() < 100 && this.getDistanceSqToEntity(slime) < distance) {

@@ -16,7 +16,7 @@ public class TileWardingStone extends TileEntity {
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {
@@ -27,7 +27,7 @@ public class TileWardingStone extends TileEntity {
 
          if (this.count % 5 == 0 && !this.gettingPower()) {
             List<EntityLivingBase> targets = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 3, this.zCoord + 1).expand(0.1, 0.1, 0.1));
-            if (targets.size() > 0) {
+            if (!targets.isEmpty()) {
                for(EntityLivingBase e : targets) {
                   if (!e.onGround && !(e instanceof EntityPlayer)) {
                      e.addVelocity(-MathHelper.sin((e.rotationYaw + 180.0F) * (float)Math.PI / 180.0F) * 0.2F, -0.1, MathHelper.cos((e.rotationYaw + 180.0F) * (float)Math.PI / 180.0F) * 0.2F);

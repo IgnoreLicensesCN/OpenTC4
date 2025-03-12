@@ -44,7 +44,7 @@ public class TileBanner extends TileThaumcraft {
       this.facing = nbttagcompound.getByte("facing");
       this.setColor(nbttagcompound.getByte("color"));
       String as = nbttagcompound.getString("aspect");
-      if (as != null && as.length() > 0) {
+      if (as != null && !as.isEmpty()) {
          this.setAspect(Aspect.getAspect(as));
       } else {
          this.aspect = null;

@@ -33,7 +33,7 @@ public class TileOwned extends TileThaumcraft {
 
        for (String s : this.accessList) {
            NBTTagCompound var4 = new NBTTagCompound();
-           var4.setString("name", (String) s);
+           var4.setString("name", s);
            var2.appendTag(var4);
        }
 

@@ -28,7 +28,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.ForgeDirection;
 import tc4tweak.ConfigurationHandler;
 import tc4tweak.modules.FlushableCache;
@@ -125,14 +124,6 @@ public class CommonProxy implements IGuiHandler {
             return new ContainerTravelingTrunk(player.inventory, world, (EntityTravelingTrunk) world.getEntityByID(x));
          case 3:
             return new ContainerThaumatorium(player.inventory, (TileThaumatorium)world.getTileEntity(x, y, z));
-         case 4:
-         case 6:
-         case 7:
-         case 11:
-         case 12:
-         case 14:
-         default:
-            return null;
          case 5:
             return new ContainerFocusPouch(player.inventory, world, x, y, z);
          case 8:
@@ -155,6 +146,8 @@ public class CommonProxy implements IGuiHandler {
             return new ContainerSpa(player.inventory, (TileSpa)world.getTileEntity(x, y, z));
          case 20:
             return new ContainerFocalManipulator(player.inventory, (TileFocalManipulator)world.getTileEntity(x, y, z));
+         default:
+            return null;
       }
    }
 

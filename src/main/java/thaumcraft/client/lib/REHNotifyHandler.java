@@ -13,11 +13,11 @@ import thaumcraft.common.config.Config;
 
 public class REHNotifyHandler {
    public void handleNotifications(Minecraft mc, long time, RenderGameOverlayEvent event) {
-      if (PlayerNotifications.getListAndUpdate(time).size() > 0) {
+      if (!PlayerNotifications.getListAndUpdate(time).isEmpty()) {
          this.renderNotifyHUD(event.resolution.getScaledWidth_double(), event.resolution.getScaledHeight_double(), time);
       }
 
-      if (PlayerNotifications.getAspectListAndUpdate(time).size() > 0) {
+      if (!PlayerNotifications.getAspectListAndUpdate(time).isEmpty()) {
          this.renderAspectHUD(event.resolution.getScaledWidth_double(), event.resolution.getScaledHeight_double(), time);
       }
 

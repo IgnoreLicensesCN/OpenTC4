@@ -2,7 +2,7 @@ package thaumcraft.common.tiles;
 
 public class TileArcaneWorkbench extends TileMagicWorkbench {
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {

@@ -69,7 +69,7 @@ public class TileVisRelay extends TileVisNode implements IWandable {
       super.updateEntity();
       if (!this.worldObj.isRemote && this.nodeCounter % 20 == 0) {
          List<EntityPlayer> var5 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(5.0F, 5.0F, 5.0F));
-         if (var5 != null && var5.size() > 0) {
+         if (var5 != null && !var5.isEmpty()) {
             for(EntityPlayer player : var5) {
                if (!nearbyPlayers.containsKey(player.getEntityId()) || ((WeakReference)nearbyPlayers.get(player.getEntityId())).get() == null || !(((TileVisRelay)((WeakReference)nearbyPlayers.get(player.getEntityId())).get()).getDistanceFrom(player.posX, player.posY, player.posZ) < this.getDistanceFrom(player.posX, player.posY, player.posZ))) {
                   nearbyPlayers.put(player.getEntityId(), new WeakReference(this));

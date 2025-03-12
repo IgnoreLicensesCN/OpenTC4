@@ -47,7 +47,7 @@ public class TileEssentiaReservoir extends TileThaumcraft implements IAspectSour
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void readCustomNBT(NBTTagCompound nbttagcompound) {

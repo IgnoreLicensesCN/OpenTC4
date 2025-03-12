@@ -64,7 +64,7 @@ public class AIHomeTake extends EntityAIBase {
                   return false;
                }
 
-               if (neededList.size() > 0) {
+               if (!neededList.isEmpty()) {
                   for(ItemStack stack : neededList) {
                      if (GolemHelper.validTargetForItem(this.theGolem, stack)) {
                         ItemStack needed = stack.copy();
@@ -123,5 +123,6 @@ public class AIHomeTake extends EntityAIBase {
    }
 
    public void startExecuting() {
+       super.startExecuting();
    }
 }

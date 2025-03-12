@@ -57,7 +57,7 @@ public class BlockUtils {
                block.harvestBlock(world, player, x, y, z, i1);
                if (followItem) {
                   ArrayList<Entity> entities = EntityUtils.getEntitiesInRange(world, (double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, player, EntityItem.class, 2.0F);
-                  if (entities != null && entities.size() > 0) {
+                  if (entities != null && !entities.isEmpty()) {
                      for(Entity e : entities) {
                         if (!e.isDead && e instanceof EntityItem && e.ticksExisted == 0 && !(e instanceof EntityFollowingItem)) {
                            EntityFollowingItem fi = new EntityFollowingItem(world, e.posX, e.posY, e.posZ, ((EntityItem)e).getEntityItem().copy(), player, color);

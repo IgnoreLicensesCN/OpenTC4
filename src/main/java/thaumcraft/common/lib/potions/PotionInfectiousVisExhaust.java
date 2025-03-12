@@ -38,7 +38,7 @@ public class PotionInfectiousVisExhaust extends Potion {
 
    public void performEffect(EntityLivingBase target, int par2) {
       List<EntityLivingBase> targets = target.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, target.boundingBox.expand(4.0F, 4.0F, 4.0F));
-      if (targets.size() > 0) {
+      if (!targets.isEmpty()) {
          for(EntityLivingBase e : targets) {
             if (!e.isPotionActive(Config.potionInfVisExhaustID)) {
                if (par2 > 0) {

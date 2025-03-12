@@ -72,7 +72,7 @@ public class ThaumcraftWorldGenerator implements IWorldGenerator {
    }
 
    public static int getDimBlacklist(int dim) {
-      return !dimensionBlacklist.containsKey(dim) ? -1 : dimensionBlacklist.get(dim);
+      return dimensionBlacklist.getOrDefault(dim, -1);
    }
 
    public static void addBiomeBlacklist(int biome, int level) {
@@ -80,7 +80,7 @@ public class ThaumcraftWorldGenerator implements IWorldGenerator {
    }
 
    public static int getBiomeBlacklist(int biome) {
-      return !biomeBlacklist.containsKey(biome) ? -1 : biomeBlacklist.get(biome);
+      return biomeBlacklist.getOrDefault(biome, -1);
    }
 
    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
@@ -193,7 +193,7 @@ public class ThaumcraftWorldGenerator implements IWorldGenerator {
    }
 
    public static void createRandomNodeAt(World world, int x, int y, int z, Random random, boolean silverwood, boolean eerie, boolean small) {
-      if (basicAspects.size() == 0) {
+      if (basicAspects.isEmpty()) {
          for(Aspect as : c) {
             if (as.getComponents() != null) {
                complexAspects.add(as);

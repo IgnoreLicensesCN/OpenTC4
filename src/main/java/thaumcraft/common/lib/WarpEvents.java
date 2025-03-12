@@ -1,6 +1,5 @@
 package thaumcraft.common.lib;
 
-import baubles.api.BaublesApi;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -9,9 +8,6 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
@@ -19,21 +15,15 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.Config;
-import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.entities.monster.EntityEldritchGuardian;
 import thaumcraft.common.entities.monster.EntityMindSpider;
-import thaumcraft.common.items.armor.ItemFortressArmor;
 import thaumcraft.common.lib.events.EventHandlerRunic;
 import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.network.misc.PacketMiscEvent;
 import thaumcraft.common.lib.network.playerdata.PacketAspectPool;
-import thaumcraft.common.lib.network.playerdata.PacketResearchComplete;
-import thaumcraft.common.lib.network.playerdata.PacketSyncWarp;
-import thaumcraft.common.lib.network.playerdata.PacketWarpMessage;
 import thaumcraft.common.lib.research.ResearchManager;
 import thaumcraft.common.lib.utils.EntityUtils;
 

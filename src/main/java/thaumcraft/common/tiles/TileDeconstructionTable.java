@@ -73,7 +73,7 @@ public class TileDeconstructionTable extends TileThaumcraft implements ISidedInv
    }
 
    public boolean hasCustomInventoryName() {
-      return this.customName != null && this.customName.length() > 0;
+      return this.customName != null && !this.customName.isEmpty();
    }
 
    public void setGuiDisplayName(String par1Str) {
@@ -140,7 +140,7 @@ public class TileDeconstructionTable extends TileThaumcraft implements ISidedInv
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {

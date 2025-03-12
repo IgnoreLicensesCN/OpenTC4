@@ -256,7 +256,7 @@ public class EntityWisp extends EntityFlying implements IMob {
    }
 
    protected Item getDropItem() {
-      return Item.getItemById(0);
+       return super.getDropItem();
    }
 
    protected void dropFewItems(boolean flag, int i) {
@@ -274,7 +274,7 @@ public class EntityWisp extends EntityFlying implements IMob {
    }
 
    protected boolean canDespawn() {
-      return true;
+       return super.canDespawn();
    }
 
    public boolean getCanSpawnHere() {

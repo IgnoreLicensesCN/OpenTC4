@@ -31,7 +31,7 @@ public class TileCentrifuge extends TileThaumcraft implements IAspectContainer, 
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void readCustomNBT(NBTTagCompound nbttagcompound) {

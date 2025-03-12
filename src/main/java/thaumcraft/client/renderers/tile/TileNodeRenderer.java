@@ -89,7 +89,7 @@ public class TileNodeRenderer extends TileEntitySpecialRenderer {
             scale = MathHelper.sin((float)viewer.ticksExisted / (14.0F - (float)count)) * bscale + bscale * 2.0F;
             scale = 0.2F + scale * ((float)aspects.getAmount(aspect) / 50.0F);
             scale *= size;
-            angle = (float)(time % (long)(5000 + 500L * count)) / (5000.0F + (float)(500 * count)) * rad;
+            angle = (float)(time % (5000 + 500L * count)) / (5000.0F + (float)(500 * count)) * rad;
 //            UtilsFX.renderFacingStrip
             renderFacingStrip_tweaked
                     ((double)x + (double)0.5F, (double)y + (double)0.5F, (double)z + (double)0.5F, angle, scale, alpha / Math.max(1.0F, (float)aspects.size() / 2.0F), frames, 0, i, partialTicks, aspect.getColor());

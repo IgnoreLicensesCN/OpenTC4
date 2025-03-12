@@ -12,7 +12,7 @@ public class TileEldritchTrap extends TileEntity {
    int count = 20;
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {

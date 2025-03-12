@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
@@ -25,7 +24,7 @@ public class TileArcaneLampFertility extends TileThaumcraft implements IEssentia
    int drawDelay = 0;
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
@@ -59,9 +58,9 @@ public class TileArcaneLampFertility extends TileThaumcraft implements IEssentia
          if (var3.getGrowingAge() == 0 && !var3.isInLove()) {
             ArrayList<EntityAnimal> sa = new ArrayList<>();
 
-            for(EntityLivingBase var7 : var5) {
+            for(EntityAnimal var7 : var5) {
                if (var7.getClass().equals(var4.getClass())) {
-                  sa.add((EntityAnimal)var7);
+                  sa.add(var7);
                }
             }
 

@@ -324,7 +324,7 @@ public class MazeGenerator {
             }
          }
 
-         if (deadEndsloc.size() == 0) {
+         if (deadEndsloc.isEmpty()) {
             return false;
          } else {
             int r = this.rand.nextInt(deadEndsloc.size());
@@ -333,7 +333,7 @@ public class MazeGenerator {
             c.feature = 6;
             this.grid[ll.x][ll.z] = c.pack();
             deadEndsloc.remove(r);
-            if (deadEndsloc.size() > 0) {
+            if (!deadEndsloc.isEmpty()) {
                r = 0;
 
                while(r < deadEndsloc.size() / 2) {

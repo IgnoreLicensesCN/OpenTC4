@@ -4,7 +4,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.particle.EntitySpellParticleFX;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,7 +35,7 @@ public class TileMirror extends TileThaumcraft implements IInventory {
    private ArrayList outputStacks = new ArrayList<>();
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void restoreLink() {
@@ -178,7 +177,7 @@ public class TileMirror extends TileThaumcraft implements IInventory {
    }
 
    public void eject() {
-      if (this.outputStacks.size() > 0 && this.count > 20) {
+      if (!this.outputStacks.isEmpty() && this.count > 20) {
          int i = this.worldObj.rand.nextInt(this.outputStacks.size());
          if (this.outputStacks.get(i) != null) {
             ItemStack outItem = ((ItemStack)this.outputStacks.get(i)).copy();

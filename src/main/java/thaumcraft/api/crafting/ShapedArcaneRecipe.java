@@ -140,7 +140,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
     @Override
     public boolean matches(IInventory inv, World world, EntityPlayer player)
     {
-    	if (research.length()>0 && !ThaumcraftApiHelper.isResearchComplete(player.getCommandSenderName(), research)) {
+    	if (!research.isEmpty() && !ThaumcraftApiHelper.isResearchComplete(player.getCommandSenderName(), research)) {
     		return false;
     	}
         for (int x = 0; x <= MAX_CRAFT_GRID_WIDTH - width; x++)

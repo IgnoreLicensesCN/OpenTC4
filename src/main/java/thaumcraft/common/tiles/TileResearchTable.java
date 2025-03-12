@@ -105,7 +105,7 @@ public class TileResearchTable extends TileThaumcraft implements IInventory {
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void markDirty() {

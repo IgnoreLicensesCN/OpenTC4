@@ -5,7 +5,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.monster.EntityMob;
@@ -111,21 +110,14 @@ public class EntityCultistPortal extends EntityMob implements IBossDisplayData {
                      this.stagecounter = 15 + this.rand.nextInt(10 - this.stage) - this.stage;
                      this.spawnMinions();
                      break;
-                  case 5:
-                  case 6:
-                  case 7:
-                  case 8:
-                  case 9:
-                  case 10:
-                  case 11:
+                  case 12:
+                     this.stagecounter = 50 + this.getTiming() * 2 + this.rand.nextInt(50);
+                     this.spawnBoss();
                   default:
                      int t = this.getTiming();
                      this.stagecounter = t + this.rand.nextInt(5 + t / 3);
                      this.spawnMinions();
                      break;
-                  case 12:
-                     this.stagecounter = 50 + this.getTiming() * 2 + this.rand.nextInt(50);
-                     this.spawnBoss();
                }
 
                ++this.stage;
@@ -252,7 +244,7 @@ public class EntityCultistPortal extends EntityMob implements IBossDisplayData {
    }
 
    protected Item getDropItem() {
-      return Item.getItemById(0);
+       return super.getDropItem();
    }
 
    protected void dropFewItems(boolean flag, int fortune) {

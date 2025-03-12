@@ -48,7 +48,7 @@ public class ItemGolemBell extends Item {
    }
 
    public boolean getShareTag() {
-      return true;
+       return super.getShareTag();
    }
 
    public static int getGolemId(ItemStack stack) {
@@ -311,7 +311,7 @@ public class ItemGolemBell extends Item {
                   dropped.setStackDisplayName(((EntityGolemBase)entity).getCustomNameTag());
                }
 
-               if (deco.length() > 0) {
+               if (!deco.isEmpty()) {
                   dropped.setTagInfo("deco", new NBTTagString(deco));
                }
 

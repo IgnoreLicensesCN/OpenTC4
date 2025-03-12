@@ -38,7 +38,7 @@ public class EntityBottleTaint extends EntityThrowable {
    protected void onImpact(MovingObjectPosition p_70184_1_) {
       if (!this.worldObj.isRemote) {
          List ents = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ).expand(5.0F, 5.0F, 5.0F));
-         if (ents.size() > 0) {
+         if (!ents.isEmpty()) {
             for(Object ent : ents) {
                EntityLivingBase el = (EntityLivingBase)ent;
                if (!(el instanceof ITaintedMob) && !el.isEntityUndead()) {

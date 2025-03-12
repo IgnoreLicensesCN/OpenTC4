@@ -152,7 +152,7 @@ public class EntityFireBat extends EntityMob {
    }
 
    protected boolean isAIEnabled() {
-      return false;
+       return super.isAIEnabled();
    }
 
    public void onLivingUpdate() {

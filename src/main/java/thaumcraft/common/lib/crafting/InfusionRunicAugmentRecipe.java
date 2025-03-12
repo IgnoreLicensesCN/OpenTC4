@@ -75,7 +75,7 @@ public class InfusionRunicAugmentRecipe extends InfusionRecipe {
             }
          }
 
-         return ii.size() == 0;
+         return ii.isEmpty();
       }
    }
 

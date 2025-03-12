@@ -210,7 +210,7 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource 
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {

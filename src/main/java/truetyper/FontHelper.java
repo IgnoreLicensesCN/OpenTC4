@@ -55,7 +55,7 @@ public class FontHelper {
       GL11.glMatrixMode(5889);
       GL11.glPushMatrix();
       GL11.glLoadIdentity();
-      GL11.glOrtho((double)0.0F, (double)mc.displayWidth, (double)0.0F, (double)mc.displayHeight, (double)-1.0F, (double)1.0F);
+      GL11.glOrtho(0.0F, mc.displayWidth, 0.0F, mc.displayHeight, -1.0F, 1.0F);
       GL11.glMatrixMode(5888);
       GL11.glPushMatrix();
       GL11.glLoadIdentity();

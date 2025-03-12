@@ -36,7 +36,7 @@ public class InfusionRecipe
 	public boolean matches(ArrayList<ItemStack> input, ItemStack central, World world, EntityPlayer player) {
 		if (getRecipeInput()==null) return false;
 			
-		if (research.length()>0 && !ThaumcraftApiHelper.isResearchComplete(player.getCommandSenderName(), research)) {
+		if (!research.isEmpty() && !ThaumcraftApiHelper.isResearchComplete(player.getCommandSenderName(), research)) {
     		return false;
     	}
 		
@@ -67,7 +67,7 @@ public class InfusionRecipe
 			}
 			if (!b) return false;
 		}
-		return ii.size() == 0;
+		return ii.isEmpty();
     }
 	
 	public static boolean areItemStacksEqual(ItemStack playerInput, ItemStack recipeSpec, boolean fuzzy)

@@ -71,17 +71,14 @@ public class BlockArcaneFurnace extends BlockContainer {
                switch (meta) {
                   case 2:
                      return this.icon[16];
-                  case 3:
-                  case 5:
-                  case 7:
-                  default:
-                     break;
                   case 4:
                      return this.icon[17];
                   case 6:
                      return this.icon[26];
                   case 8:
                      return this.icon[25];
+                  default:
+                     break;
                }
             }
 
@@ -96,8 +93,6 @@ public class BlockArcaneFurnace extends BlockContainer {
                   return this.icon[(meta - 1) % 3 + (meta - 1) / 3 * 9];
                }
             }
-         default:
-            return add == 0 ? this.icon[7] : this.icon[6];
          case 2:
             switch (meta) {
                case 1:
@@ -154,6 +149,8 @@ public class BlockArcaneFurnace extends BlockContainer {
                default:
                   return level != 9 ? this.icon[7] : this.icon[6];
             }
+         default:
+            return add == 0 ? this.icon[7] : this.icon[6];
       }
    }
 

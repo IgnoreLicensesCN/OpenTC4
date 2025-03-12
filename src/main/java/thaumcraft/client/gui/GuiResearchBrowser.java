@@ -76,8 +76,8 @@ public class GuiResearchBrowser extends GuiScreen {
     public GuiResearchBrowser() {
         short var2 = 141;
         short var3 = 141;
-        this.field_74117_m = this.guiMapX = this.field_74124_q = lastX * 24 - var2 / 2 - 12;
-        this.field_74115_n = this.guiMapY = this.field_74123_r = lastY * 24 - var3 / 2;
+        this.field_74117_m = this.guiMapX = this.field_74124_q = lastX * 24 - var2 / 2. - 12;
+        this.field_74115_n = this.guiMapY = this.field_74123_r = lastY * 24 - var3 / 2.;
         this.updateResearch();
         this.galFontRenderer = FMLClientHandler.instance().getClient().standardGalacticFontRenderer;
         this.player = Minecraft.getMinecraft().thePlayer.getCommandSenderName();
@@ -125,6 +125,7 @@ public class GuiResearchBrowser extends GuiScreen {
     }
 
     public void initGui() {
+        super.initGui();
     }
 
     protected void actionPerformed(GuiButton par1GuiButton) {
@@ -202,20 +203,20 @@ public class GuiResearchBrowser extends GuiScreen {
         int count = 0;
         boolean swop = false;
 
-        for (Object obj : cats) {
+        for (String obj : cats) {
             if (count == getTabPerSide()//9
             ) {
                 count = 0;
                 swop = true;
             }
 
-            ResearchCategoryList rcl = ResearchCategories.getResearchList((String) obj);
+            ResearchCategoryList rcl = ResearchCategories.getResearchList(obj);
             if (!obj.equals("ELDRITCH") || ResearchManager.isResearchComplete(this.player, "ELDRITCHMINOR")) {
                 int mposx = mx - (var4 - 24 + (swop ? getTabIconDistance()//280
                         : 0));
                 int mposy = my - (var5 + count * 24);
                 if (mposx >= 0 && mposx < 24 && mposy >= 0 && mposy < 24) {
-                    this.fontRendererObj.drawStringWithShadow(ResearchCategories.getCategoryName((String) obj), mx, my - 8, 16777215);
+                    this.fontRendererObj.drawStringWithShadow(ResearchCategories.getCategoryName(obj), mx, my - 8, 16777215);
                 }
 
                 ++count;
@@ -289,8 +290,8 @@ public class GuiResearchBrowser extends GuiScreen {
         GL11.glEnable(2929);
         GL11.glDepthFunc(515);
         if (completedResearch.get(this.player) != null) {
-            for (Object o : this.research) {
-                ResearchItem var33 = (ResearchItem) o;
+            for (ResearchItem o : this.research) {
+                ResearchItem var33 = o;
                 if (var33.parents != null && var33.parents.length > 0) {
                     for (int a = 0; a < var33.parents.length; ++a) {
                         if (var33.parents[a] != null && ResearchCategories.getResearch(var33.parents[a]).category.equals(selectedCategory)) {
@@ -349,8 +350,8 @@ public class GuiResearchBrowser extends GuiScreen {
         GL11.glEnable(32826);
         GL11.glEnable(2903);
         if (completedResearch.get(this.player) != null) {
-            for (Object o : this.research) {
-                ResearchItem var35 = (ResearchItem) o;
+            for (ResearchItem o : this.research) {
+                ResearchItem var35 = o;
                 int var26 = var35.displayColumn * 24 - var4;
                 int var27 = var35.displayRow * 24 - var5;
                 if (!var35.isVirtual() && var26 >= -24 && var27 >= -24
@@ -754,7 +755,7 @@ public class GuiResearchBrowser extends GuiScreen {
     }
 
     private boolean canUnlockResearch(ResearchItem res) {
-        if (res.parents != null && res.parents.length > 0) {
+        if (res.parents != null) {
             for (String pt : res.parents) {
                 ResearchItem parent = ResearchCategories.getResearch(pt);
                 if (parent != null && !completedResearch.get(this.player).contains(parent.key)) {
@@ -763,7 +764,7 @@ public class GuiResearchBrowser extends GuiScreen {
             }
         }
 
-        if (res.parentsHidden != null && res.parentsHidden.length > 0) {
+        if (res.parentsHidden != null) {
             for (String pt : res.parentsHidden) {
                 ResearchItem parent = ResearchCategories.getResearch(pt);
                 if (parent != null && !completedResearch.get(this.player).contains(parent.key)) {

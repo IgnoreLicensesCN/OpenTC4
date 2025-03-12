@@ -25,9 +25,10 @@ public class AspectList implements Serializable {
 	public AspectList(ItemStack stack) {
 		try {
 			AspectList temp = ThaumcraftApiHelper.getObjectAspects(stack);
-			if (temp!=null)
-			for (Aspect tag:temp.getAspects()) {
-				add(tag,temp.getAmount(tag));
+			if (temp!=null) {
+				for (Aspect tag : temp.getAspects()) {
+					add(tag, temp.getAmount(tag));
+				}
 			}
 		} catch (Exception ignored) {}
 	}
@@ -35,13 +36,13 @@ public class AspectList implements Serializable {
 	public AspectList() {
 	}
 
-    public static void addAspectDescriptionToList(AspectList aspects, EntityPlayer player, List list) {
+    public static void addAspectDescriptionToList(AspectList aspects, EntityPlayer player, List<String> aspectDescriptions) {
        if (aspects != null && !aspects.aspects.isEmpty()) {
           for(Aspect tag : aspects.getAspectsSorted()) {
              if (Thaumcraft.proxy.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), tag)) {
-                list.add(tag.getName() + " x " + aspects.getAmount(tag));
+                aspectDescriptions.add(tag.getName() + " x " + aspects.getAmount(tag));
              } else {
-                list.add(StatCollector.translateToLocal("tc.aspect.unknown"));
+                aspectDescriptions.add(StatCollector.translateToLocal("tc.aspect.unknown"));
              }
           }
        }
@@ -182,9 +183,13 @@ public class AspectList implements Serializable {
 	 * @return
 	 */
 	public AspectList remove(Aspect key, int amount) {
-		int am = getAmount(key)-amount;
-		if (am<=0) aspects.remove(key); else
-		this.aspects.put(key, am);
+		int am = getAmount(key) - amount;
+		if (am<=0) {
+			aspects.remove(key);
+		}
+		else {
+			this.aspects.put(key, am);
+		}
 		return this;
 	}
 	

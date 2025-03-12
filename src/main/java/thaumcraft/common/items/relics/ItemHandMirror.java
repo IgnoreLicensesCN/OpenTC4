@@ -11,7 +11,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.server.MinecraftServer;
@@ -52,7 +51,7 @@ public class ItemHandMirror extends Item {
    }
 
    public boolean getShareTag() {
-      return true;
+       return super.getShareTag();
    }
 
    public EnumRarity getRarity(ItemStack itemstack) {

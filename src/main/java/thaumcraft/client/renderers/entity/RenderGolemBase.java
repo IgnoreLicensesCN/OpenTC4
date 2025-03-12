@@ -116,7 +116,7 @@ public class RenderGolemBase extends RenderLiving {
          GL11.glDisable(GL11.GL_BLEND);
          GL11.glPopMatrix();
       } else {
-         if (pass == 1 && (((EntityGolemBase)entity).getGolemDecoration().length() > 0 || ((EntityGolemBase)entity).advanced)) {
+         if (pass == 1 && (!((EntityGolemBase) entity).getGolemDecoration().isEmpty() || ((EntityGolemBase)entity).advanced)) {
             UtilsFX.bindTexture("textures/models/golem_decoration.png");
             this.setRenderPassModel(this.accessories);
             return 1;

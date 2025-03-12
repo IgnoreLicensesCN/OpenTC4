@@ -115,7 +115,7 @@ public class EntityThaumcraftBoss extends EntityMob implements IBossDisplayData 
             ArrayList<Integer> dl = new ArrayList<>();
             int players = 0;
             int hei = this.getAttackTarget().getEntityId();
-            int ad = this.aggro.containsKey(hei) ? this.aggro.get(hei) : 0;
+            int ad = this.aggro.getOrDefault(hei, 0);
             int ld = ad;
             Entity newTarget = null;
 

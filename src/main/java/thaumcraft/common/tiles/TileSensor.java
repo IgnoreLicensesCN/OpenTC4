@@ -71,7 +71,7 @@ public class TileSensor extends TileEntity {
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateTone() {

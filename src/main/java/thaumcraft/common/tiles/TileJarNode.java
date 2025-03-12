@@ -34,7 +34,7 @@ public class TileJarNode extends TileJar implements IAspectContainer, INode, IWa
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void readCustomNBT(NBTTagCompound nbttagcompound) {

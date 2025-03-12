@@ -129,7 +129,7 @@ public class TileThaumatorium extends TileThaumcraft implements IAspectContainer
       if (!this.recipePlayer.isEmpty()) {
           for (String s : this.recipePlayer) {
               if (s != null) {
-                  NBTTagString nbttagcompound1 = new NBTTagString((String) s);
+                  NBTTagString nbttagcompound1 = new NBTTagString(s);
                   nbttaglist2.appendTag(nbttagcompound1);
               }
           }
@@ -139,7 +139,7 @@ public class TileThaumatorium extends TileThaumcraft implements IAspectContainer
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    boolean checkHeat() {
@@ -151,7 +151,7 @@ public class TileThaumatorium extends TileThaumcraft implements IAspectContainer
 
    public ItemStack getCurrentOutputRecipe() {
       ItemStack out = null;
-      if (this.currentCraft >= 0 && this.recipeHash != null && this.recipeHash.size() > 0) {
+      if (this.currentCraft >= 0 && this.recipeHash != null && !this.recipeHash.isEmpty()) {
          CrucibleRecipe recipe = ThaumcraftApi.getCrucibleRecipeFromHash(this.recipeHash.get(this.currentCraft));
          if (recipe != null) {
             out = recipe.getRecipeOutput().copy();
@@ -169,7 +169,7 @@ public class TileThaumatorium extends TileThaumcraft implements IAspectContainer
          }
 
          ++this.counter;
-         if (this.heated && !this.gettingPower() && this.counter % 5 == 0 && this.recipeHash != null && this.recipeHash.size() > 0) {
+         if (this.heated && !this.gettingPower() && this.counter % 5 == 0 && this.recipeHash != null && !this.recipeHash.isEmpty()) {
             if (this.inputStack == null) {
                this.currentSuction = null;
                return;

@@ -33,6 +33,7 @@ public class GuiArcaneWorkbench extends GuiContainer {
    protected void drawGuiContainerForegroundLayer() {
    }
 
+   @Override
    protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
       UtilsFX.bindTexture("textures/gui/gui_arcaneworkbench.png");
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -80,8 +81,10 @@ public class GuiArcaneWorkbench extends GuiContainer {
          GL11.glEnable(2896);
          GL11.glEnable(2884);
          GL11.glEnable(GL11.GL_BLEND);
-         itemRender.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.renderEngine, ThaumcraftCraftingManager.findMatchingArcaneRecipe(this.tileEntity, this.ip.player), var5 + 160, var6 + 64);
-         itemRender.renderItemOverlayIntoGUI(this.mc.fontRenderer, this.mc.renderEngine, ThaumcraftCraftingManager.findMatchingArcaneRecipe(this.tileEntity, this.ip.player), var5 + 160, var6 + 64);
+         itemRender.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.renderEngine,
+                 ThaumcraftCraftingManager.findMatchingArcaneRecipe(this.tileEntity, this.ip.player), var5 + 160, var6 + 64);
+         itemRender.renderItemOverlayIntoGUI(this.mc.fontRenderer, this.mc.renderEngine,
+                 ThaumcraftCraftingManager.findMatchingArcaneRecipe(this.tileEntity, this.ip.player), var5 + 160, var6 + 64);
          itemRender.renderWithColor = true;
          GL11.glDisable(GL11.GL_BLEND);
          GL11.glDisable(2896);

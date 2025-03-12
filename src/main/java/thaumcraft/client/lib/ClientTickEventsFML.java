@@ -80,7 +80,7 @@ public class ClientTickEventsFML {
    public void playerTick(TickEvent.PlayerTickEvent event) {
       if (event.side != Side.SERVER) {
          if (event.phase == Phase.START) {
-            if (!this.startThread && GuiResearchRecipe.cache.size() == 0) {
+            if (!this.startThread && GuiResearchRecipe.cache.isEmpty()) {
                Map<String, Integer> idMappings = Maps.newHashMap();
                GameData.getBlockRegistry().serializeInto(idMappings);
                GameData.getItemRegistry().serializeInto(idMappings);
@@ -236,7 +236,7 @@ public class ClientTickEventsFML {
          } else if (mc.theWorld != null && !this.checkedDate) {
             this.checkedDate = true;
             Calendar calendar = mc.theWorld.getCurrentDate();
-            if (calendar.get(2) + 1 == 10 && calendar.get(5) == 31) {
+            if (calendar.get(Calendar.MONTH) + 1 == 10 && calendar.get(Calendar.DATE) == 31) {
                Thaumcraft.isHalloween = true;
             }
          }
@@ -572,7 +572,7 @@ public class ClientTickEventsFML {
       try {
          ResourceLocation resourcelocation = mc.renderEngine.getResourceLocation(armor.getItemSpriteNumber());
          mc.renderEngine.bindTexture(resourcelocation);
-         Object object = armor.getIconIndex();
+         IIcon object = armor.getIconIndex();
          if (object == null) {
             object = ((TextureMap)Minecraft.getMinecraft().getTextureManager().getTexture(resourcelocation)).getAtlasSprite("missingno");
          }
@@ -582,7 +582,7 @@ public class ClientTickEventsFML {
          float f = (float)(i1 >> 8 & 255) / 255.0F;
          float f1 = (float)(i1 & 255) / 255.0F;
          GL11.glColor4f(f2, f, f1, 1.0F);
-         this.ri.renderIcon(2, l / 2 - 43, (IIcon)object, 16, 16);
+         this.ri.renderIcon(2, l / 2 - 43, object, 16, 16);
       } catch (Exception ignored) {
       }
 

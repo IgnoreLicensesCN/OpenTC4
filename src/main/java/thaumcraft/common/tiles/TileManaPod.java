@@ -71,7 +71,7 @@ public class TileManaPod extends TileThaumcraft implements IAspectContainer {
                   }
                }
 
-               if (outlist.size() > 0) {
+               if (!outlist.isEmpty()) {
                   this.aspect = outlist.get(this.worldObj.rand.nextInt(outlist.size()));
                   this.markDirty();
                }

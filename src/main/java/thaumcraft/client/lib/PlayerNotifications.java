@@ -31,7 +31,7 @@ public class PlayerNotifications {
 
    public static void addNotification(String text, ResourceLocation image, int color) {
       long time = System.nanoTime() / 1000000L;
-      long timeBonus = notificationList.size() == 0 ? (long)(Config.notificationDelay / 2) : 0L;
+      long timeBonus = notificationList.isEmpty() ? (long)(Config.notificationDelay / 2) : 0L;
       notificationList.add(new Notification(text, image, time + (long)Config.notificationDelay + timeBonus, time + (long)(Config.notificationDelay / 4), color));
    }
 

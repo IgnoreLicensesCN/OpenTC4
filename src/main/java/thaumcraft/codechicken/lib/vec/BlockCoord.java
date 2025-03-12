@@ -1,7 +1,5 @@
 package thaumcraft.codechicken.lib.vec;
 
-import net.minecraft.tileentity.TileEntity;
-import thaumcraft.codechicken.lib.math.MathHelper;
 import thaumcraft.codechicken.lib.util.Copyable;
 
 public class BlockCoord implements Comparable<BlockCoord>, Copyable<BlockCoord> {

@@ -21,7 +21,6 @@ import thaumcraft.common.lib.research.ResearchManager;
 
 import static thaumcraft.common.Thaumcraft.log;
 import static tc4tweak.PacketCheck.isSecondaryResearch;
-import static tc4tweak.PacketCheck.securityMarker;
 
 public class PacketPlayerCompleteToServer implements IMessage, IMessageHandler<PacketPlayerCompleteToServer,IMessage> {
    private String key;

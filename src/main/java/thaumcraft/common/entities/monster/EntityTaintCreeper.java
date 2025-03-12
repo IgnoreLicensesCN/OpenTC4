@@ -138,7 +138,7 @@ public class EntityTaintCreeper extends EntityMob implements ITaintedMob {
             if (!this.worldObj.isRemote) {
                this.worldObj.createExplosion(this, this.posX, this.posY + (double)(this.height / 2.0F), this.posZ, 1.5F, false);
                List ents = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ).expand(6.0F, 6.0F, 6.0F));
-               if (ents.size() > 0) {
+               if (!ents.isEmpty()) {
                   for(Object ent : ents) {
                      EntityLivingBase el = (EntityLivingBase)ent;
                      if (!(el instanceof ITaintedMob) && !el.isEntityUndead()) {

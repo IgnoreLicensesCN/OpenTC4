@@ -130,7 +130,7 @@ public class EntityEmber extends EntityThrowable implements IEntityAdditionalSpa
    }
 
    public boolean canBeCollidedWith() {
-      return false;
+       return super.canBeCollidedWith();
    }
 
    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_) {

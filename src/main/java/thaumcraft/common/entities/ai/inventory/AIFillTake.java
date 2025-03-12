@@ -90,5 +90,6 @@ public class AIFillTake extends EntityAIBase {
    }
 
    public void startExecuting() {
+       super.startExecuting();
    }
 }

@@ -17,7 +17,6 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGolem;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityBat;
@@ -479,7 +478,7 @@ public class EntityGolemBase extends EntityGolem implements IEntityAdditionalSpa
    }
 
    protected boolean canDespawn() {
-      return false;
+       return super.canDespawn();
    }
 
    protected void despawnEntity() {
@@ -653,7 +652,7 @@ public class EntityGolemBase extends EntityGolem implements IEntityAdditionalSpa
       this.decoration = nbt.getString("Decoration");
       this.setGolemDecoration(this.decoration);
       String var2 = nbt.getString("Owner");
-      if (var2.length() > 0) {
+      if (!var2.isEmpty()) {
          this.setOwner(var2);
       }
 

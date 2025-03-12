@@ -19,6 +19,6 @@ public class SlotGhostFluid extends SlotGhost {
    }
 
    public boolean canTakeStack(EntityPlayer par1EntityPlayer) {
-      return false;
+       return super.canTakeStack(par1EntityPlayer);
    }
 }

@@ -9,7 +9,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.crafting.CrucibleRecipe;
 import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.common.container.ContainerThaumatorium;
 import thaumcraft.common.tiles.TileThaumatorium;
@@ -34,7 +33,7 @@ public class GuiThaumatorium extends GuiContainer {
    }
 
    void refreshIndex() {
-      if (this.inventory.recipeHash != null && this.container.recipes.size() > 0) {
+      if (this.inventory.recipeHash != null && !this.container.recipes.isEmpty()) {
          for(int a = 0; a < this.container.recipes.size(); ++a) {
             if (this.inventory.recipeHash.contains(this.container.recipes.get(a).hash)) {
                this.index = a;
@@ -60,7 +59,7 @@ public class GuiThaumatorium extends GuiContainer {
          this.index = this.container.recipes.size() - 1;
       }
 
-      if (this.container.recipes.size() > 0) {
+      if (!this.container.recipes.isEmpty()) {
          if (this.lastSize != this.container.recipes.size()) {
             this.lastSize = this.container.recipes.size();
             this.refreshIndex();
@@ -100,7 +99,7 @@ public class GuiThaumatorium extends GuiContainer {
             this.startAspect = 0;
          }
 
-         if (this.inventory.recipeHash != null && this.inventory.recipeHash.size() > 0) {
+         if (this.inventory.recipeHash != null && !this.inventory.recipeHash.isEmpty()) {
             int x = mx - (k + 112);
             int y = my - (l + 16);
             if (x >= 0 && y >= 0 && x < 16 && y < 16 || this.inventory.recipeHash.contains(this.container.recipes.get(this.index).hash)) {
@@ -214,7 +213,7 @@ public class GuiThaumatorium extends GuiContainer {
       int gy = (this.height - this.ySize) / 2;
       int x = mx - (gx + 112);
       int y = my - (gy + 16);
-      if (this.container.recipes.size() > 0 && this.index >= 0 && this.index < this.container.recipes.size()) {
+      if (!this.container.recipes.isEmpty() && this.index >= 0 && this.index < this.container.recipes.size()) {
          if (x >= 0 && y >= 0 && x < 16 && y < 16 && (this.inventory.recipeHash.size() < this.inventory.maxRecipes || this.inventory.recipeHash.contains(this.container.recipes.get(this.index).hash))) {
             this.mc.playerController.sendEnchantPacket(this.inventorySlots.windowId, this.index);
             this.playButtonSelect();

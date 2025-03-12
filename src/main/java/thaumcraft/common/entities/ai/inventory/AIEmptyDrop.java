@@ -38,6 +38,7 @@ public class AIEmptyDrop extends EntityAIBase {
    }
 
    public void resetTask() {
+       super.resetTask();
    }
 
    public void updateTask() {

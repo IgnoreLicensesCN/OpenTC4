@@ -45,7 +45,7 @@ public class BlockMagicBox extends BlockContainer {
    }
 
    public boolean renderAsNormalBlock() {
-      return true;
+       return super.renderAsNormalBlock();
    }
 
    @SideOnly(Side.CLIENT)

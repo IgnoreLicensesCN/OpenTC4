@@ -36,7 +36,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
@@ -315,7 +314,7 @@ public class EventHandlerEntity {
 
    @SubscribeEvent
    public void playerInteract(EntityInteractEvent event) {
-      if (event.target instanceof EntityGolemBase && ((EntityGolemBase)event.target).getOwnerName().length() > 0 && !((EntityGolemBase)event.target).getOwnerName().equals(event.entityPlayer.getCommandSenderName())) {
+      if (event.target instanceof EntityGolemBase && !((EntityGolemBase) event.target).getOwnerName().isEmpty() && !((EntityGolemBase)event.target).getOwnerName().equals(event.entityPlayer.getCommandSenderName())) {
          if (!event.entityPlayer.worldObj.isRemote) {
             event.entityPlayer.addChatMessage(new ChatComponentTranslation("You are not my Master!"));
          }

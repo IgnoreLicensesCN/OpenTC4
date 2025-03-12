@@ -1,7 +1,7 @@
 package thaumcraft.common.lib.crafting;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;

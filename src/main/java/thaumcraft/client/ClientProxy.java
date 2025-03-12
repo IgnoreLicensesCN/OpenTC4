@@ -34,9 +34,6 @@ import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.resources.IReloadableResourceManager;
-import net.minecraft.client.resources.IResourceManager;
-import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -305,13 +302,6 @@ public class ClientProxy extends CommonProxy {
                return new GuiTravelingTrunk(player, (EntityTravelingTrunk) world.getEntityByID(x));
             case 3:
                return new GuiThaumatorium(player.inventory, (TileThaumatorium)world.getTileEntity(x, y, z));
-            case 4:
-            case 6:
-            case 7:
-            case 11:
-            case 14:
-            default:
-               break;
             case 5:
                return new GuiFocusPouch(player.inventory, world, x, y, z);
             case 8:
@@ -336,6 +326,8 @@ public class ClientProxy extends CommonProxy {
                return new GuiSpa(player.inventory, (TileSpa)world.getTileEntity(x, y, z));
             case 20:
                return new GuiFocalManipulator(player.inventory, (TileFocalManipulator)world.getTileEntity(x, y, z));
+            default:
+               break;
          }
       }
 

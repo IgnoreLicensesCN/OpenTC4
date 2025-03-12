@@ -33,7 +33,7 @@ public class CrucibleRecipe {
 		if (cat instanceof ItemStack) {
 			hc.append(((ItemStack) cat).toString());
 		} else
-		if (cat instanceof ArrayList && ((ArrayList<ItemStack>)catalyst).size()>0) {
+		if (cat instanceof ArrayList && !((ArrayList<ItemStack>) catalyst).isEmpty()) {
 			for (ItemStack is :(ArrayList<ItemStack>)catalyst) {
 				hc.append(is.toString());
 			}
@@ -49,7 +49,7 @@ public class CrucibleRecipe {
 				!ThaumcraftApiHelper.itemMatches((ItemStack) catalyst,cat,false)) {
 			return false;
 		} else 
-		if (catalyst instanceof ArrayList && ((ArrayList<ItemStack>)catalyst).size()>0) {
+		if (catalyst instanceof ArrayList && !((ArrayList<ItemStack>) catalyst).isEmpty()) {
 			ItemStack[] ores = ((ArrayList<ItemStack>)catalyst).toArray(new ItemStack[]{});
 			if (!ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{cat},ores)) return false;
 		}
@@ -64,7 +64,7 @@ public class CrucibleRecipe {
 		if (catalyst instanceof ItemStack && ThaumcraftApiHelper.itemMatches((ItemStack) catalyst,cat,false)) {
 			return true;
 		} else 
-		if (catalyst instanceof ArrayList && ((ArrayList<ItemStack>)catalyst).size()>0) {
+		if (catalyst instanceof ArrayList && !((ArrayList<ItemStack>) catalyst).isEmpty()) {
 			ItemStack[] ores = ((ArrayList<ItemStack>)catalyst).toArray(new ItemStack[]{});
             return ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{cat}, ores);
 		}

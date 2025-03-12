@@ -55,10 +55,10 @@ public class ServerTickEventsFML {
       int dim = event.world.provider.dimensionId;
       int count = 0;
       ArrayList<ChunkLoc> chunks = (ArrayList)chunksToGenerate.get(dim);
-      if (chunks != null && chunks.size() > 0) {
+      if (chunks != null && !chunks.isEmpty()) {
          for(int a = 0; a < 10; ++a) {
             chunks = (ArrayList)chunksToGenerate.get(dim);
-            if (chunks == null || chunks.size() == 0) {
+            if (chunks == null || chunks.isEmpty()) {
                break;
             }
 
@@ -123,7 +123,7 @@ public class ServerTickEventsFML {
                            ret = bi.getDrops(world, vs.x, vs.y, vs.z, md, fortune);
                         }
 
-                        if (ret.size() > 0) {
+                        if (!ret.isEmpty()) {
                            for(ItemStack is : ret) {
                               if (!vs.player.inventory.addItemStackToInventory(is)) {
                                  world.spawnEntityInWorld(new EntityItem(world, (double)vs.x + (double)0.5F, (double)vs.y + (double)0.5F, (double)vs.z + (double)0.5F, is));

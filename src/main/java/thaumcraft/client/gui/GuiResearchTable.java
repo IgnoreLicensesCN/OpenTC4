@@ -88,7 +88,7 @@ public class GuiResearchTable extends GuiContainer {
    protected void drawGuiContainerForegroundLayer(int mx, int my) {
       Minecraft mc = Minecraft.getMinecraft();
       long time = System.nanoTime() / 1000000L;
-      if (PlayerNotifications.getListAndUpdate(time).size() > 0) {
+      if (!PlayerNotifications.getListAndUpdate(time).isEmpty()) {
          GL11.glPushMatrix();
          Thaumcraft.instance.renderEventHandler.notifyHandler.renderNotifyHUD(this.width, this.height, time);
          GL11.glPopMatrix();
@@ -416,7 +416,7 @@ public class GuiResearchTable extends GuiContainer {
 
    private void drawSheet(int x, int y, int mx, int my) {
       this.note = ResearchManager.getData(this.tileEntity.getStackInSlot(1));
-      if (this.note != null && this.note.key != null && this.note.key.length() != 0) {
+      if (this.note != null && this.note.key != null && !this.note.key.isEmpty()) {
          UtilsFX.bindTexture("textures/misc/parchment3.png");
          this.drawTexturedModalRect(x + 94, y + 8, 0, 0, 150, 150);
          long time = System.currentTimeMillis();
@@ -430,7 +430,7 @@ public class GuiResearchTable extends GuiContainer {
             }
          }
 
-         if (this.runes.size() > 0) {
+         if (!this.runes.isEmpty()) {
             Rune[] rns = (Rune[])this.runes.values().toArray(new Rune[0]);
 
              for (Rune rune : rns) {

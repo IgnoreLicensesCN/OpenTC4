@@ -11,7 +11,7 @@ public class TileEtherealBloom extends TileEntity {
    public int growthCounter = 0;
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {

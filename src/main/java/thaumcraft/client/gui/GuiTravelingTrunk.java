@@ -73,7 +73,7 @@ public class GuiTravelingTrunk extends GuiContainer {
    }
 
    public boolean doesGuiPauseGame() {
-      return false;
+       return super.doesGuiPauseGame();
    }
 
    public void onGuiClosed() {

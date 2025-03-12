@@ -9,7 +9,7 @@ public class TileArcaneLamp extends TileThaumcraft {
    public ForgeDirection facing = ForgeDirection.getOrientation(0);
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {

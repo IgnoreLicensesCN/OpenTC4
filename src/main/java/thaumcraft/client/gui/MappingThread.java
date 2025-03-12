@@ -1,14 +1,12 @@
 package thaumcraft.client.gui;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import tc4tweak.ClientUtils;
 import tc4tweak.ConfigurationHandler;
 import thaumcraft.common.lib.research.ScanManager;
 

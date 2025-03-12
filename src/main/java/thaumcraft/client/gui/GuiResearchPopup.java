@@ -60,7 +60,7 @@ public class GuiResearchPopup extends Gui {
    }
 
    public void updateResearchWindow() {
-      if (this.theResearch.size() > 0 && this.researchTime != 0L) {
+      if (!this.theResearch.isEmpty() && this.researchTime != 0L) {
          double var1 = (double)(Minecraft.getSystemTime() - this.researchTime) / (double)3000.0F;
          if (!(var1 < (double)0.0F) && !(var1 > (double)1.0F)) {
             this.updateResearchWindowScale();
@@ -116,7 +116,7 @@ public class GuiResearchPopup extends Gui {
             GL11.glDisable(2896);
          } else {
             this.theResearch.remove(0);
-            if (this.theResearch.size() > 0) {
+            if (!this.theResearch.isEmpty()) {
                this.researchTime = Minecraft.getSystemTime();
             } else {
                this.researchTime = 0L;

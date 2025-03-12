@@ -11,8 +11,6 @@ import net.minecraft.util.StatCollector;
 import thaumcraft.api.TileThaumcraft;
 import thaumcraft.common.items.wands.ItemWandCasting;
 
-import java.util.WeakHashMap;
-
 import static tc4tweak.ClientUtils.lastUpdate;
 import static tc4tweak.ClientUtils.postponed;
 

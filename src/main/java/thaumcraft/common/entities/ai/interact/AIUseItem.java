@@ -2,12 +2,11 @@ package thaumcraft.common.entities.ai.interact;
 
 import com.mojang.authlib.GameProfile;
 import java.util.Iterator;
-import java.util.UUID;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.management.ItemInWorldManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;

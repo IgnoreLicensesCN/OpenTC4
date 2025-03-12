@@ -2,7 +2,7 @@ package thaumcraft.common.entities.ai.interact;
 
 import com.mojang.authlib.GameProfile;
 import java.util.Random;
-import java.util.UUID;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Blocks;

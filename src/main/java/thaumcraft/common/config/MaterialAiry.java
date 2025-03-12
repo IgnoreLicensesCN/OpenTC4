@@ -25,7 +25,7 @@ public class MaterialAiry extends Material {
    }
 
    public boolean blocksMovement() {
-      return true;
+       return super.blocksMovement();
    }
 
    protected Material setRequiresTool() {

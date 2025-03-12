@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import java.util.UUID;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.BlockLog;
@@ -149,7 +149,7 @@ public class AIHarvestCrops extends EntityAIBase {
 
    private Vec3 findGrownCrop() {
       Random rand = this.theGolem.getRNG();
-      if (this.checklist.size() == 0) {
+      if (this.checklist.isEmpty()) {
          for(int a = (int)(-this.distance); (float)a <= this.distance; ++a) {
             for(int b = (int)(-this.distance); (float)b <= this.distance; ++b) {
                this.checklist.add(new BlockCoordinates(this.theGolem.getHomePosition().posX + a, 0, this.theGolem.getHomePosition().posZ + b));
@@ -184,7 +184,7 @@ public class AIHarvestCrops extends EntityAIBase {
          if (this.theGolem.getUpgradeAmount(4) > 0) {
             new ArrayList<>();
             ArrayList<Entity> drops = EntityUtils.getEntitiesInRange(this.theWorld, this.theGolem.posX, this.theGolem.posY, this.theGolem.posZ, this.theGolem, EntityItem.class, 6.0F);
-            if (drops.size() > 0) {
+            if (!drops.isEmpty()) {
                for(Entity e : drops) {
                   if (e instanceof EntityItem) {
                      if (e.ticksExisted < 2) {

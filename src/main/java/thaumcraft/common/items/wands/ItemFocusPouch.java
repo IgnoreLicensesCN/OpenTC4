@@ -34,7 +34,7 @@ public class ItemFocusPouch extends Item {
    }
 
    public boolean getShareTag() {
-      return true;
+       return super.getShareTag();
    }
 
    public EnumRarity getRarity(ItemStack itemstack) {

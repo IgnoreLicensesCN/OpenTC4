@@ -9,7 +9,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
-import org.lwjgl.input.Keyboard;
 import thaumcraft.api.Keys;
 import thaumcraft.common.entities.golems.ItemGolemBell;
 import thaumcraft.common.items.armor.Hover;

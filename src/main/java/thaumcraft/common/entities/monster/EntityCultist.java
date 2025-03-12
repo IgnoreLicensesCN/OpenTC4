@@ -41,7 +41,7 @@ public class EntityCultist extends EntityMob {
    }
 
    protected Item getDropItem() {
-      return Item.getItemById(0);
+       return super.getDropItem();
    }
 
    protected void dropFewItems(boolean flag, int i) {
@@ -74,7 +74,7 @@ public class EntityCultist extends EntityMob {
    }
 
    protected boolean canDespawn() {
-      return true;
+       return super.canDespawn();
    }
 
    public boolean attackEntityAsMob(Entity p_70652_1_) {

@@ -23,7 +23,7 @@ public class RayTracer {
    private double s_dist;
    private int s_side;
    private IndexedCuboid6 c_cuboid;
-   private static final ThreadLocal<RayTracer> t_inst = new ThreadLocal<RayTracer>();
+   private static final ThreadLocal<RayTracer> t_inst = new ThreadLocal<>();
 
    public static RayTracer instance() {
       RayTracer inst = t_inst.get();

@@ -25,6 +25,8 @@ import thaumcraft.common.tiles.TileEssentiaReservoir;
 import thaumcraft.common.tiles.TileJarFillable;
 import thaumcraft.common.tiles.TileJarFillableVoid;
 
+import javax.annotation.Nonnull;
+
 public class GolemHelper {
    public static final double ADJACENT_RANGE = 4.0F;
    static HashMap<String,TileJarFillable> jarlist = new HashMap<>();
@@ -291,14 +293,14 @@ public class GolemHelper {
          }
       }
 
-      if (jars.size() > 0) {
+      if (!jars.isEmpty()) {
          jarlist.clear();
 
          for(TileEntity jar : jars) {
             jarlist.put(jar.xCoord + ":" + jar.yCoord + ":" + jar.zCoord, (TileJarFillable)jar);
             getConnectedJars((TileJarFillable)jar);
          }
-      } else if (others.size() == 0) {
+      } else if (others.isEmpty()) {
          return null;
       }
 
@@ -310,7 +312,7 @@ public class GolemHelper {
          }
       }
 
-      if (jars.size() == 0) {
+      if (jars.isEmpty()) {
          for(TileJarFillable jar : jarlist.values()) {
             if ((jar.aspect == null || jar.amount == 0) && jar.aspectFilter != null && jar.doesContainerAccept(golem.essentia)) {
                jars.add(jar);
@@ -318,7 +320,7 @@ public class GolemHelper {
          }
       }
 
-      if (jars.size() == 0) {
+      if (jars.isEmpty()) {
          for(TileJarFillable jar : jarlist.values()) {
             if (jar.aspect != null && jar.amount >= jar.maxAmount && jar instanceof TileJarFillableVoid && jar.aspectFilter != null && golem.essentiaAmount > 0 && jar.aspect.equals(golem.essentia) && jar.doesContainerAccept(golem.essentia)) {
                jars.add(jar);
@@ -326,7 +328,7 @@ public class GolemHelper {
          }
       }
 
-      if (jars.size() == 0) {
+      if (jars.isEmpty()) {
          for(TileJarFillable jar : jarlist.values()) {
             if (jar.aspect != null && jar.amount > 0 && jar.amount < jar.maxAmount && jar.aspectFilter == null && golem.essentiaAmount > 0 && jar.aspect.equals(golem.essentia) && jar.doesContainerAccept(golem.essentia)) {
                jars.add(jar);
@@ -334,7 +336,7 @@ public class GolemHelper {
          }
       }
 
-      if (jars.size() == 0) {
+      if (jars.isEmpty()) {
          for(TileJarFillable jar : jarlist.values()) {
             if ((jar.aspect == null || jar.amount == 0) && jar.aspectFilter == null && !(jar instanceof TileJarFillableVoid) && jar.doesContainerAccept(golem.essentia)) {
                jars.add(jar);
@@ -342,7 +344,7 @@ public class GolemHelper {
          }
       }
 
-      if (jars.size() == 0) {
+      if (jars.isEmpty()) {
          for(TileJarFillable jar : jarlist.values()) {
             if (jar.aspect != null && jar instanceof TileJarFillableVoid && jar.aspectFilter == null && golem.essentiaAmount > 0 && jar.aspect.equals(golem.essentia) && jar.doesContainerAccept(golem.essentia)) {
                jars.add(jar);
@@ -350,7 +352,7 @@ public class GolemHelper {
          }
       }
 
-      if (jars.size() == 0) {
+      if (jars.isEmpty()) {
          for(TileJarFillable jar : jarlist.values()) {
             if ((jar.aspect == null || jar.amount == 0) && jar.aspectFilter == null && jar instanceof TileJarFillableVoid && jar.doesContainerAccept(golem.essentia)) {
                jars.add(jar);
@@ -554,14 +556,14 @@ public class GolemHelper {
       switch (golem.getCore()) {
          case 1:
             needed = golem.inventory.getItemsNeeded(golem.getUpgradeAmount(5) > 0);
-            if (needed.size() == 0) {
+            if (needed.isEmpty()) {
                return null;
             }
 
             return filterEmptyCore(golem, needed);
          case 8:
             needed = golem.inventory.getItemsNeeded(golem.getUpgradeAmount(5) > 0);
-            if (needed.size() == 0) {
+            if (needed.isEmpty()) {
                return null;
             }
 
@@ -722,7 +724,7 @@ public class GolemHelper {
             default:
                golem.worldObj.getTileEntity(cX, cY, cZ);
                ArrayList<ItemStack> neededList = getItemsNeeded(golem, golem.getUpgradeAmount(5) > 0);
-               if (neededList != null && neededList.size() > 0) {
+               if (neededList != null && !neededList.isEmpty()) {
                   for(ItemStack ss : neededList) {
                      if (InventoryUtils.areItemStacksEqual(ss, golem.itemCarried, golem.checkOreDict(), golem.ignoreDamage(), golem.ignoreNBT())) {
                         return true;
@@ -814,7 +816,7 @@ public class GolemHelper {
             }
          }
 
-         if (aint != null && aint.length > 0) {
+         if (aint != null) {
              for (int i : aint) {
                  if (inv.getStackInSlot(i) != null) {
                      out.add(inv.getStackInSlot(i).copy());
@@ -839,7 +841,7 @@ public class GolemHelper {
          this.time = time;
       }
 
-      public int compareTo(SortingItemTimeout arg0) {
+      public int compareTo(@Nonnull SortingItemTimeout arg0) {
          return this.equals(arg0) ? 0 : -1;
       }
 

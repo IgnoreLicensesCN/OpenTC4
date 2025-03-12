@@ -91,7 +91,7 @@ public class BlockTaintFibreRenderer extends BlockRenderer implements ISimpleBlo
          double d0 = x;
          double d1 = y;
          double d2 = z;
-         long i1 = (long)(x * 3129871L) ^ (long)z * 116129781L ^ (long)y;
+         long i1 = (x * 3129871L) ^ (long)z * 116129781L ^ (long)y;
          i1 = i1 * i1 * 42317861L + i1 * 11L;
          d0 += ((double)((float)(i1 >> 16 & 15L) / 15.0F) - (double)0.5F) * (double)0.5F;
          d2 += ((double)((float)(i1 >> 24 & 15L) / 15.0F) - (double)0.5F) * (double)0.5F;

@@ -45,7 +45,7 @@ public class TileNodeEnergized extends TileVisNode implements IAspectContainer {
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void setupNode() {
@@ -208,6 +208,6 @@ public class TileNodeEnergized extends TileVisNode implements IAspectContainer {
    }
 
    public byte getAttunement() {
-      return -1;
+       return super.getAttunement();
    }
 }

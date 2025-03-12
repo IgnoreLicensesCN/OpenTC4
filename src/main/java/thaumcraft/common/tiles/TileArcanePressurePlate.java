@@ -8,7 +8,7 @@ public class TileArcanePressurePlate extends TileOwned {
    public byte setting = 0;
 
    public boolean canUpdate() {
-      return false;
+       return super.canUpdate();
    }
 
    public void readCustomNBT(NBTTagCompound nbttagcompound) {

@@ -108,7 +108,7 @@ public class WorldProviderOuter extends WorldProvider {
    }
 
    public ChunkCoordinates getEntrancePortalLocation() {
-      return null;
+       return super.getEntrancePortalLocation();
    }
 
    public int getAverageGroundLevel() {

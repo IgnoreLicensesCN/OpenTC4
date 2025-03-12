@@ -293,7 +293,7 @@ public class REHWandHandler {
          this.architectBlocks = af.getArchitectBlocks(stack, mc.theWorld, target.blockX, target.blockY, target.blockZ, target.sideHit, event.player);
       }
 
-      if (this.architectBlocks != null && this.architectBlocks.size() != 0) {
+      if (this.architectBlocks != null && !this.architectBlocks.isEmpty()) {
          this.drawArchitectAxis(target.blockX, target.blockY, target.blockZ, event.partialTicks, af.showAxis(stack, mc.theWorld, event.player, target.sideHit, IArchitect.EnumAxis.X), af.showAxis(stack, mc.theWorld, event.player, target.sideHit, IArchitect.EnumAxis.Y), af.showAxis(stack, mc.theWorld, event.player, target.sideHit, IArchitect.EnumAxis.Z));
 
          for(BlockCoordinates cc : this.architectBlocks) {

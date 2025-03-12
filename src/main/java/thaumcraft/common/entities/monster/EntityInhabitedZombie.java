@@ -94,6 +94,6 @@ public class EntityInhabitedZombie extends EntityZombie {
 
    public boolean getCanSpawnHere() {
       List ents = this.worldObj.getEntitiesWithinAABB(EntityInhabitedZombie.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX + (double)1.0F, this.posY + (double)1.0F, this.posZ + (double)1.0F).expand(32.0F, 16.0F, 32.0F));
-      return ents.size() <= 0 && super.getCanSpawnHere();
+      return ents.isEmpty() && super.getCanSpawnHere();
    }
 }

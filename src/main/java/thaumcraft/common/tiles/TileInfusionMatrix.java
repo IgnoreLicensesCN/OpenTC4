@@ -125,7 +125,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
 
    public void writeToNBT(NBTTagCompound nbtCompound) {
       super.writeToNBT(nbtCompound);
-      if (this.recipeIngredients != null && this.recipeIngredients.size() > 0) {
+      if (this.recipeIngredients != null && !this.recipeIngredients.isEmpty()) {
          NBTTagList nbttaglist = new NBTTagList();
          int count = 0;
 
@@ -174,7 +174,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {
@@ -259,7 +259,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
                }
             }
 
-            if (components.size() != 0) {
+            if (!components.isEmpty()) {
                InfusionRecipe recipe = ThaumcraftCraftingManager.findMatchingInfusionRecipe(components, this.recipeInput, player);
                if (recipe != null) {
                   this.recipeType = 0;
@@ -402,7 +402,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
          this.markDirty();
       } else if (this.recipeType == 1 && this.recipeXP > 0) {
          List<EntityPlayer> targets = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(10.0F, 10.0F, 10.0F));
-         if (targets != null && targets.size() > 0) {
+         if (targets != null && !targets.isEmpty()) {
             for(EntityPlayer target : targets) {
                if (target.experienceLevel > 0) {
                   target.addExperienceLevel(-1);
@@ -466,7 +466,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
             }
 
             this.checkSurroundings = true;
-         } else if (this.recipeIngredients.size() == 0) {
+         } else if (this.recipeIngredients.isEmpty()) {
             this.instability = 0;
             this.crafting = false;
             this.craftingFinish(this.recipeOutput, this.recipeOutputLabel);
@@ -519,7 +519,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
 
    private void inEvZap(boolean all) {
       List<Entity> targets = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(10.0F, 10.0F, 10.0F));
-      if (targets != null && targets.size() > 0) {
+      if (targets != null && !targets.isEmpty()) {
          for(Entity target : targets) {
             PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockZap((float)this.xCoord + 0.5F, (float)this.yCoord + 0.5F, (float)this.zCoord + 0.5F, (float)target.posX, (float)target.posY + target.height / 2.0F, (float)target.posZ), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 32.0F));
             target.attackEntityFrom(DamageSource.magic, (float)(4 + this.worldObj.rand.nextInt(4)));
@@ -533,7 +533,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
 
    private void inEvHarm(boolean all) {
       List<EntityLivingBase> targets = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(10.0F, 10.0F, 10.0F));
-      if (targets != null && targets.size() > 0) {
+      if (targets != null && !targets.isEmpty()) {
          for(EntityLivingBase target : targets) {
             if (this.worldObj.rand.nextBoolean()) {
                target.addPotionEffect(new PotionEffect(Config.potionTaintPoisonID, 120, 0, false));
@@ -553,7 +553,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
 
    private void inEvWarp() {
       List<EntityPlayer> targets = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(10.0F, 10.0F, 10.0F));
-      if (targets != null && targets.size() > 0) {
+      if (targets != null && !targets.isEmpty()) {
          EntityPlayer target = targets.get(this.worldObj.rand.nextInt(targets.size()));
          if (this.worldObj.rand.nextFloat() < 0.25F) {
             Thaumcraft.addStickyWarpToPlayer(target, 1);
@@ -565,7 +565,7 @@ public class TileInfusionMatrix extends TileThaumcraft implements IWandable, IAs
    }
 
    private void inEvEjectItem(int type) {
-      for(int q = 0; q < 50 && this.pedestals.size() > 0; ++q) {
+      for(int q = 0; q < 50 && !this.pedestals.isEmpty(); ++q) {
          ChunkCoordinates cc = this.pedestals.get(this.worldObj.rand.nextInt(this.pedestals.size()));
          TileEntity te = this.worldObj.getTileEntity(cc.posX, cc.posY, cc.posZ);
          if (te instanceof TilePedestal && ((TilePedestal) te).getStackInSlot(0) != null) {

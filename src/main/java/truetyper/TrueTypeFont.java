@@ -25,8 +25,8 @@ public class TrueTypeFont {
    public static final int ALIGN_LEFT = 0;
    public static final int ALIGN_RIGHT = 1;
    public static final int ALIGN_CENTER = 2;
-   private FloatObject[] charArray;
-   private Map customChars;
+   private final FloatObject[] charArray = new FloatObject[256];
+   private final Map<Character,FloatObject> customChars = new HashMap<>();
    protected boolean antiAlias;
    private float fontSize;
    private float fontHeight;
@@ -39,8 +39,6 @@ public class TrueTypeFont {
    private int correctR;
 
    public TrueTypeFont(Font font, boolean antiAlias, char[] additionalChars) {
-      this.charArray = new FloatObject[256];
-      this.customChars = new HashMap<>();
       this.fontSize = 0.0F;
       this.fontHeight = 0.0F;
       this.textureWidth = 1024;
@@ -60,7 +58,7 @@ public class TrueTypeFont {
    }
 
    public TrueTypeFont(Font font, boolean antiAlias) {
-      this(font, antiAlias, (char[])null);
+      this(font, antiAlias, null);
    }
 
    public void setCorrection(boolean on) {
@@ -144,12 +142,12 @@ public class TrueTypeFont {
                rowHeight = newIntObject.height;
             }
 
-            g.drawImage(fontImage, (int)positionX, (int)positionY, (ImageObserver)null);
+            g.drawImage(fontImage, (int)positionX, (int)positionY, null);
             positionX += newIntObject.width;
             if (i < 256) {
                this.charArray[i] = newIntObject;
             } else {
-               this.customChars.put(new Character(ch), newIntObject);
+               this.customChars.put(ch, newIntObject);
             }
 
             Object var13 = null;
@@ -173,16 +171,16 @@ public class TrueTypeFont {
       float RenderWidth = SrcWidth / (float)this.textureWidth;
       float RenderHeight = SrcHeight / (float)this.textureHeight;
       Tessellator t = Tessellator.instance;
-      t.addVertexWithUV((double)drawX, (double)drawY, (double)0.0F, (double)TextureSrcX, (double)TextureSrcY);
-      t.addVertexWithUV((double)drawX, (double)(drawY + DrawHeight), (double)0.0F, (double)TextureSrcX, (double)(TextureSrcY + RenderHeight));
-      t.addVertexWithUV((double)(drawX + DrawWidth), (double)(drawY + DrawHeight), (double)0.0F, (double)(TextureSrcX + RenderWidth), (double)(TextureSrcY + RenderHeight));
-      t.addVertexWithUV((double)(drawX + DrawWidth), (double)drawY, (double)0.0F, (double)(TextureSrcX + RenderWidth), (double)TextureSrcY);
+      t.addVertexWithUV(drawX, drawY, 0.0F, TextureSrcX, TextureSrcY);
+      t.addVertexWithUV(drawX, drawY + DrawHeight, 0.0F, TextureSrcX, TextureSrcY + RenderHeight);
+      t.addVertexWithUV(drawX + DrawWidth, drawY + DrawHeight, 0.0F, TextureSrcX + RenderWidth, TextureSrcY + RenderHeight);
+      t.addVertexWithUV(drawX + DrawWidth, drawY, 0.0F, TextureSrcX + RenderWidth, TextureSrcY);
    }
 
    public float getWidth(String whatchars) {
       float totalwidth = 0.0F;
       FloatObject floatObject = null;
-      int currentChar = 0;
+      char currentChar = 0;
       float lastWidth = -10.0F;
 
       for(int i = 0; i < whatchars.length(); ++i) {
@@ -190,7 +188,7 @@ public class TrueTypeFont {
          if (currentChar < 256) {
             floatObject = this.charArray[currentChar];
          } else {
-            floatObject = (FloatObject)this.customChars.get(new Character((char)currentChar));
+            floatObject = this.customChars.get(currentChar);
          }
 
          if (floatObject != null) {
@@ -255,7 +253,7 @@ public class TrueTypeFont {
             break;
          case 2:
             for(int l = startIndex; l <= endIndex; ++l) {
-               int charCurrent = whatchars.charAt(l);
+               char charCurrent = whatchars.charAt(l);
                if (charCurrent == 10) {
                   break;
                }
@@ -263,7 +261,7 @@ public class TrueTypeFont {
                if (charCurrent < 256) {
                   floatObject = this.charArray[charCurrent];
                } else {
-                  floatObject = (FloatObject)this.customChars.get(new Character((char)charCurrent));
+                  floatObject = this.customChars.get(charCurrent);
                }
 
                totalwidth += floatObject.width - (float)this.correctL;
@@ -284,11 +282,11 @@ public class TrueTypeFont {
       }
 
       while(i >= startIndex && i <= endIndex) {
-         int charCurrent = whatchars.charAt(i);
+         char charCurrent = whatchars.charAt(i);
          if (charCurrent < 256) {
             floatObject = this.charArray[charCurrent];
          } else {
-            floatObject = (FloatObject)this.customChars.get(new Character((char)charCurrent));
+            floatObject = this.customChars.get(charCurrent);
          }
 
          if (floatObject != null) {
@@ -309,7 +307,7 @@ public class TrueTypeFont {
                      if (charCurrent < 256) {
                         floatObject = this.charArray[charCurrent];
                      } else {
-                        floatObject = (FloatObject)this.customChars.get(new Character((char)charCurrent));
+                        floatObject = this.customChars.get(charCurrent);
                      }
 
                      totalwidth += floatObject.width - (float)this.correctL;
@@ -340,7 +338,7 @@ public class TrueTypeFont {
          DataBuffer db = bufferedImage.getData().getDataBuffer();
          ByteBuffer byteBuffer;
          if (db instanceof DataBufferInt) {
-            int[] intI = ((DataBufferInt)((DataBufferInt)bufferedImage.getData().getDataBuffer())).getData();
+            int[] intI = ((DataBufferInt) bufferedImage.getData().getDataBuffer()).getData();
             byte[] newI = new byte[intI.length * 4];
 
             for(int i = 0; i < intI.length; ++i) {
@@ -354,7 +352,7 @@ public class TrueTypeFont {
 
             byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder()).put(newI);
          } else {
-            byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder()).put(((DataBufferByte)((DataBufferByte)bufferedImage.getData().getDataBuffer())).getData());
+            byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder()).put(((DataBufferByte) bufferedImage.getData().getDataBuffer()).getData());
          }
 
          byteBuffer.flip();
@@ -404,7 +402,7 @@ public class TrueTypeFont {
       GL11.glDeleteTextures(scratch);
    }
 
-   private class FloatObject {
+   private static class FloatObject {
       public float width;
       public float height;
       public float storedX;

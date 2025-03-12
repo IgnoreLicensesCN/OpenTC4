@@ -28,24 +28,13 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLConnection;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import javax.swing.Box;
-import javax.swing.JDialog;
-import javax.swing.JEditorPane;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
+import javax.swing.*;
 import javax.swing.event.HyperlinkEvent.EventType;
 
 import net.minecraft.launchwrapper.LaunchClassLoader;
@@ -123,7 +112,7 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
                 this.setMessage(this.makeProgressPanel());
                 this.setOptions(new Object[]{"Stop"});
                 this.addPropertyChangeListener(evt -> {
-                    if (evt.getSource() == Downloader.this && evt.getPropertyName() == "value") {
+                    if (evt.getSource() == Downloader.this && Objects.equals(evt.getPropertyName(), "value")) {
                         Downloader.this.requestClose("This will stop minecraft from launching\nAre you sure you want to do this?");
                     }
 
@@ -136,7 +125,7 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
                 this.container.pack();
                 this.container.setMinimumSize(this.container.getPreferredSize());
                 this.container.setVisible(true);
-                this.container.setDefaultCloseOperation(0);
+                this.container.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                 this.container.addWindowListener(new WindowAdapter() {
                     public void windowClosing(WindowEvent e) {
                         Downloader.this.requestClose("Closing this window will stop minecraft from launching\nAre you sure you wish to do this?");
@@ -147,7 +136,7 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
         }
 
         protected void requestClose(String message) {
-            int shouldClose = JOptionPane.showConfirmDialog(this.container, message, "Are you sure you want to stop?", 0, 2);
+            int shouldClose = JOptionPane.showConfirmDialog(this.container, message, "Are you sure you want to stop?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (shouldClose == 0) {
                 this.container.dispose();
             }
@@ -201,7 +190,7 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
                 }
 
             });
-            JOptionPane.showMessageDialog(null, ep, "A download error has occured", 0);
+            JOptionPane.showMessageDialog(null, ep, "A download error has occured", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -321,7 +310,7 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
                     String msg = "CB's DepLoader was unable to delete file " + mod.getPath() + " the game will now try to delete it on exit. If this dialog appears again, delete it manually.";
                     System.err.println(msg);
                     if (!GraphicsEnvironment.isHeadless()) {
-                        JOptionPane.showMessageDialog(null, msg, "An update error has occured", 0);
+                        JOptionPane.showMessageDialog(null, msg, "An update error has occured", JOptionPane.ERROR_MESSAGE);
                     }
 
                     System.exit(1);

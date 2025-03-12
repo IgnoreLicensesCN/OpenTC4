@@ -124,7 +124,7 @@ public class RenderEventHandler {
       if (Config.shaders && event.type == ElementType.ALL) {
          Minecraft mc = Minecraft.getMinecraft();
          long time = System.nanoTime() / 1000000L;
-         if (OpenGlHelper.shadersSupported && shaderGroups.size() > 0) {
+         if (OpenGlHelper.shadersSupported && !shaderGroups.isEmpty()) {
             this.updateShaderFrameBuffers(mc);
             GL11.glMatrixMode(5890);
             GL11.glLoadIdentity();
@@ -164,7 +164,7 @@ public class RenderEventHandler {
    public void blockHighlight(DrawBlockHighlightEvent event) {
       int ticks = event.player.ticksExisted;
       MovingObjectPosition target = event.target;
-      if (blockTags.size() > 0) {
+      if (!blockTags.isEmpty()) {
          int x = (Integer)blockTags.get(0);
          int y = (Integer)blockTags.get(1);
          int z = (Integer)blockTags.get(2);
@@ -370,7 +370,7 @@ public class RenderEventHandler {
                      int md = bi.getDamageValue(player.worldObj, x + xx, y + yy, z + zz);
                      int[] od = OreDictionary.getOreIDs(new ItemStack(bi, 1, md));
                      boolean ore = false;
-                     if (od != null && od.length > 0) {
+                     if (od != null) {
                         for(int id : od) {
                            if (OreDictionary.getOreName(id) != null && OreDictionary.getOreName(id).toUpperCase().contains("ORE")) {
                               ore = true;

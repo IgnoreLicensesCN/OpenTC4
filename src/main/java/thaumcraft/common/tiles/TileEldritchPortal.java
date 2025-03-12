@@ -20,7 +20,7 @@ public class TileEldritchPortal extends TileEntity {
    private int count = 0;
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public double getMaxRenderDistanceSquared() {
@@ -44,7 +44,7 @@ public class TileEldritchPortal extends TileEntity {
 
       if (!this.worldObj.isRemote && this.count % 5 == 0) {
          List ents = this.worldObj.getEntitiesWithinAABB(EntityPlayerMP.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(0.5F, 1.0F, 0.5F));
-         if (ents.size() > 0) {
+         if (!ents.isEmpty()) {
             for(Object e : ents) {
                EntityPlayerMP player = (EntityPlayerMP)e;
                if (player.ridingEntity == null && player.riddenByEntity == null) {

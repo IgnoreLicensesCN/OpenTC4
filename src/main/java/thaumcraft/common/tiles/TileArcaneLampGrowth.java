@@ -43,7 +43,7 @@ public class TileArcaneLampGrowth extends TileThaumcraft implements IEssentiaTra
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
@@ -101,7 +101,7 @@ public class TileArcaneLampGrowth extends TileThaumcraft implements IEssentiaTra
       }
 
       int distance = 6;
-      if (this.checklist.size() == 0) {
+      if (this.checklist.isEmpty()) {
          for(int a = -distance; a <= distance; ++a) {
             for(int b = -distance; b <= distance; ++b) {
                this.checklist.add(new BlockCoordinates(this.xCoord + a, this.yCoord + distance, this.zCoord + b));

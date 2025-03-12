@@ -8,16 +8,12 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.network.NetworkCheckHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import java.io.File;
-import java.util.Map;
 
-import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
-import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityList;
@@ -33,6 +29,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.expands.warp.WarpEventManager;
 import thaumcraft.client.lib.RenderEventHandler;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.config.ConfigAspects;
@@ -154,6 +151,9 @@ public class Thaumcraft {
       FMLCommonHandler.instance().bus().register(instance);
       Config.registerBiomes();
       proxy.preInit(event);
+
+
+      WarpEventManager.init();
    }
 
    @EventHandler

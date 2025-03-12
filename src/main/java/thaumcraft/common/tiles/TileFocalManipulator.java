@@ -53,7 +53,7 @@ public class TileFocalManipulator extends TileThaumcraftInventory {
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {

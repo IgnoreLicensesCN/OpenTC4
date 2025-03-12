@@ -62,10 +62,10 @@ public class ItemThaumometerRenderer implements IItemRenderer {
          player_id = ((EntityLivingBase)data[1]).getEntityId();
       }
 
-      EntityPlayer playermp = mc.thePlayer;
+      EntityPlayerSP playermp = mc.thePlayer;
       float par1 = UtilsFX.getTimer(mc).renderPartialTicks;
       float var7 = 0.8F;
-      EntityPlayerSP playersp = (EntityPlayerSP)playermp;
+      EntityPlayerSP playersp = playermp;
       GL11.glPushMatrix();
       if (type == ItemRenderType.EQUIPPED_FIRST_PERSON && player_id == rve_id && mc.gameSettings.thirdPersonView == 0) {
          GL11.glTranslatef(1.0F, 0.75F, -1.0F);
@@ -229,7 +229,7 @@ public class ItemThaumometerRenderer implements IItemRenderer {
                text = "?";
             }
 
-            if (text.length() > 0) {
+            if (!text.isEmpty()) {
                RenderHelper.disableStandardItemLighting();
                GL11.glPushMatrix();
                GL11.glEnable(GL11.GL_BLEND);

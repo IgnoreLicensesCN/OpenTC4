@@ -356,12 +356,13 @@ public class ResearchItem
 	public Aspect getResearchPrimaryTag() {
 		Aspect aspect=null;
 		int highest=0;
-		if (tags!=null)
-		for (Aspect tag:tags.getAspects()) {
-			if (tags.getAmount(tag)>highest) {
-				aspect=tag;
-				highest=tags.getAmount(tag);
-			}
+		if (tags!=null) {
+            for (Aspect tag : tags.getAspects()) {
+                if (tags.getAmount(tag) > highest) {
+                    aspect = tag;
+                    highest = tags.getAmount(tag);
+                }
+            }
         }
 		return aspect;
 	}

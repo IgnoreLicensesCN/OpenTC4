@@ -31,7 +31,7 @@ public class AIPechItemEntityGoto extends EntityAIBase {
       } else {
          double range = Double.MAX_VALUE;
          List<Entity> targets = this.pech.worldObj.getEntitiesWithinAABBExcludingEntity(this.pech, this.pech.boundingBox.expand(this.maxTargetDistance, this.maxTargetDistance, this.maxTargetDistance));
-         if (targets.size() == 0) {
+         if (targets.isEmpty()) {
             return false;
          } else {
             for(Entity e : targets) {

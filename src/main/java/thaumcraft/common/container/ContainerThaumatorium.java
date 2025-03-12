@@ -71,7 +71,7 @@ public class ContainerThaumatorium extends Container {
    }
 
    public boolean enchantItem(EntityPlayer par1EntityPlayer, int button) {
-      if (this.recipes.size() > 0 && button >= 0 && button < this.recipes.size()) {
+      if (!this.recipes.isEmpty() && button >= 0 && button < this.recipes.size()) {
          boolean found = false;
 
          for(int a = 0; a < this.thaumatorium.recipeHash.size(); ++a) {

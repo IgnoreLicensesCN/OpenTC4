@@ -163,7 +163,7 @@ public class BlockTaintFibres extends Block {
                   world.spawnEntityInWorld(spore);
                } else if (md == 4) {
                   List<Entity> targets = world.getEntitiesWithinAABB(EntityTaintSpore.class, AxisAlignedBB.getBoundingBox(x, y + 1, z, x + 1, y + 2, z + 1));
-                  if (targets.size() == 0) {
+                  if (targets.isEmpty()) {
                      world.setBlockMetadataWithNotify(x, y, z, 3, 3);
                   }
                }

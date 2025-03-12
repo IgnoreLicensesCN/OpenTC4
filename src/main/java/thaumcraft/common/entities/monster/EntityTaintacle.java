@@ -39,7 +39,7 @@ public class EntityTaintacle extends EntityMob implements ITaintedMob {
       byte var5 = 7;
       List ents = this.worldObj.getEntitiesWithinAABB(EntityTaintacle.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ).expand(24.0F, 8.0F, 24.0F));
       boolean onTaint = (this.worldObj.getBlock(var2, var1, var3) == ConfigBlocks.blockTaintFibres && this.worldObj.getBlockMetadata(var2, var1, var3) == 0 || this.worldObj.getBlock(var2, var1, var3) == ConfigBlocks.blockTaint && this.worldObj.getBlockMetadata(var2, var1, var3) == 1) && this.worldObj.getBiomeGenForCoords(var2, var3).biomeID == Config.biomeTaintID;
-      return ents.size() == 0 && onTaint && super.getCanSpawnHere();
+      return ents.isEmpty() && onTaint && super.getCanSpawnHere();
    }
 
    public float getShadowSize() {
@@ -63,7 +63,7 @@ public class EntityTaintacle extends EntityMob implements ITaintedMob {
    protected Entity findPlayerToAttack() {
       Entity entity = null;
       List ents = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX, this.posY, this.posZ).expand(this.height * 6.0F, this.height * 3.0F, this.height * 6.0F));
-      if (ents.size() > 0) {
+      if (!ents.isEmpty()) {
          double distance = Double.MAX_VALUE;
 
          for(Object ent : ents) {

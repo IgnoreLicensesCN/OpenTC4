@@ -142,7 +142,7 @@ public class ItemGolemPlacer extends Item {
    }
 
    public boolean getShareTag() {
-      return true;
+       return super.getShareTag();
    }
 
    public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player) {

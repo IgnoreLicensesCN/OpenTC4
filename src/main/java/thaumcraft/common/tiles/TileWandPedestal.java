@@ -96,7 +96,7 @@ public class TileWandPedestal extends TileThaumcraft implements ISidedInventory,
    }
 
    public boolean hasCustomInventoryName() {
-      return this.customName != null && this.customName.length() > 0;
+      return this.customName != null && !this.customName.isEmpty();
    }
 
    public void setGuiDisplayName(String par1Str) {
@@ -161,7 +161,7 @@ public class TileWandPedestal extends TileThaumcraft implements ISidedInventory,
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {
@@ -172,12 +172,12 @@ public class TileWandPedestal extends TileThaumcraft implements ISidedInventory,
 
       ++this.counter;
       boolean recalc = false;
-      if (this.counter % 20 == 0 && this.somethingChanged && this.nodes != null && this.nodes.size() > 0 && this.getStackInSlot(0) != null) {
+      if (this.counter % 20 == 0 && this.somethingChanged && this.nodes != null && !this.nodes.isEmpty() && this.getStackInSlot(0) != null) {
          this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.getBlockType());
          this.somethingChanged = false;
       }
 
-      if (this.counter % 5 == 0 && this.nodes != null && this.nodes.size() > 0 && this.getStackInSlot(0) != null) {
+      if (this.counter % 5 == 0 && this.nodes != null && !this.nodes.isEmpty() && this.getStackInSlot(0) != null) {
          boolean hasThingy = this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord) == ConfigBlocks.blockStoneDevice && this.worldObj.getBlockMetadata(this.xCoord, this.yCoord + 1, this.zCoord) == 8;
 
           if (this.getStackInSlot(0).getItem() instanceof ItemWandCasting) {
@@ -301,7 +301,7 @@ public class TileWandPedestal extends TileThaumcraft implements ISidedInventory,
          }
       }
 
-      if (this.counter % 100 == 0 && (recalc || this.nodes.size() == 0)) {
+      if (this.counter % 100 == 0 && (recalc || this.nodes.isEmpty())) {
          this.findNodes();
       }
 

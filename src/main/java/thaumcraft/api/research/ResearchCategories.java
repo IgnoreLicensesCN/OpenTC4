@@ -99,6 +99,6 @@ public class ResearchCategories {
 	        {
 	            rl.maxDisplayRow = ri.displayRow;
 	        }
-	        		}
+		}
 	}
 }

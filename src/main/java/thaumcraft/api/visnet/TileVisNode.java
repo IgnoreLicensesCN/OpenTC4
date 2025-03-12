@@ -128,8 +128,8 @@ public abstract class TileVisNode extends TileThaumcraft {
 	
 	@Override
 	public boolean canUpdate() {
-		return true;
-	}
+        return super.canUpdate();
+    }
 	
 	protected int nodeCounter = 0;
 	private boolean nodeRegged = false;

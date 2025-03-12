@@ -17,7 +17,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ThaumcraftApiHelper;
-import thaumcraft.common.Thaumcraft;
 
 import java.io.File;
 import java.util.*;

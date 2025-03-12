@@ -16,7 +16,7 @@ public class TileNodeConverter extends TileThaumcraft {
    public int status = 0;
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {

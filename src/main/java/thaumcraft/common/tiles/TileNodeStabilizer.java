@@ -18,7 +18,7 @@ public class TileNodeStabilizer extends TileEntity {
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {

@@ -159,7 +159,7 @@ public class ConfigEntities {
       BiomeGenBase[] allBiomes = biomes.toArray(new BiomeGenBase[]{null});
       if (Config.spawnAngryZombie) {
          for(BiomeGenBase bgb : biomes) {
-            if (bgb.getSpawnableList(EnumCreatureType.monster) != null & bgb.getSpawnableList(EnumCreatureType.monster).size() > 0) {
+            if (bgb.getSpawnableList(EnumCreatureType.monster) != null & !bgb.getSpawnableList(EnumCreatureType.monster).isEmpty()) {
                EntityRegistry.addSpawn(EntityBrainyZombie.class, 10, 1, 1, EnumCreatureType.monster, bgb);
             }
          }
@@ -167,7 +167,7 @@ public class ConfigEntities {
 
       if (Config.spawnPech) {
          for(BiomeGenBase bgb : BiomeDictionary.getBiomesForType(Type.MAGICAL)) {
-            if (bgb.getSpawnableList(EnumCreatureType.monster) != null & bgb.getSpawnableList(EnumCreatureType.monster).size() > 0) {
+            if (bgb.getSpawnableList(EnumCreatureType.monster) != null & !bgb.getSpawnableList(EnumCreatureType.monster).isEmpty()) {
                EntityRegistry.addSpawn(EntityPech.class, 10, 1, 1, EnumCreatureType.monster, bgb);
             }
          }
@@ -177,7 +177,7 @@ public class ConfigEntities {
          EntityRegistry.addSpawn(EntityFireBat.class, 10, 1, 2, EnumCreatureType.monster, BiomeDictionary.getBiomesForType(Type.NETHER));
          Calendar calendar = Calendar.getInstance();
          calendar.setTimeInMillis(System.currentTimeMillis());
-         if (calendar.get(2) + 1 == 10 && calendar.get(5) == 31) {
+         if (calendar.get(Calendar.MONTH) + 1 == 10 && calendar.get(Calendar.DATE) == 31) {
             EntityRegistry.addSpawn(EntityFireBat.class, 5, 1, 2, EnumCreatureType.monster, biomes.toArray(allBiomes));
          }
       }

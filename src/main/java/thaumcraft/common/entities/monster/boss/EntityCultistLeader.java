@@ -118,7 +118,7 @@ public class EntityCultistLeader extends EntityThaumcraftBoss implements IRanged
    }
 
    protected Item getDropItem() {
-      return Item.getItemById(0);
+       return super.getDropItem();
    }
 
    protected void dropFewItems(boolean flag, int i) {

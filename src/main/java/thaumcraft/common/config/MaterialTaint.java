@@ -25,7 +25,7 @@ public class MaterialTaint extends Material {
    }
 
    public boolean blocksMovement() {
-      return true;
+       return super.blocksMovement();
    }
 
    protected Material setRequiresTool() {

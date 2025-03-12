@@ -34,7 +34,7 @@ public class EntityTaintacleSmall extends EntityTaintacle implements ITaintedMob
    }
 
    protected Item getDropItem() {
-      return Item.getItemById(0);
+       return super.getDropItem();
    }
 
    protected void dropFewItems(boolean flag, int i) {

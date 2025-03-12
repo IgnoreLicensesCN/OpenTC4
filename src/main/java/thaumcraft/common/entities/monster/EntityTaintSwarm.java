@@ -44,7 +44,7 @@ public class EntityTaintSwarm extends EntityMob implements ITaintedMob {
    }
 
    protected boolean canDespawn() {
-      return true;
+       return super.canDespawn();
    }
 
    public float getBrightness(float par1) {
@@ -92,7 +92,7 @@ public class EntityTaintSwarm extends EntityMob implements ITaintedMob {
    }
 
    protected boolean isAIEnabled() {
-      return false;
+       return super.isAIEnabled();
    }
 
    public void onLivingUpdate() {

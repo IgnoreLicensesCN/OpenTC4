@@ -1,7 +1,6 @@
 package thaumcraft.api;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

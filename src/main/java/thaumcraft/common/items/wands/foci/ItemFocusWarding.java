@@ -82,7 +82,7 @@ public class ItemFocusWarding extends ItemFocusBasic implements IArchitect {
       player.swingItem();
       if (!world.isRemote && mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
          String key = mop.blockX + ":" + mop.blockY + ":" + mop.blockZ + ":" + world.provider.dimensionId;
-         if (delay.containsKey(key) && (Long)delay.get(key) > System.currentTimeMillis()) {
+         if (delay.containsKey(key) && delay.get(key) > System.currentTimeMillis()) {
             return itemstack;
          }
 

@@ -24,7 +24,7 @@ public class TileFluxScrubber extends TileThaumcraft implements IEssentiaTranspo
    ArrayList<BlockCoordinates> checklist = new ArrayList<>();
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {
@@ -63,7 +63,7 @@ public class TileFluxScrubber extends TileThaumcraft implements IEssentiaTranspo
 
    private void checkFlux() {
       int distance = 16;
-      if (this.checklist.size() == 0) {
+      if (this.checklist.isEmpty()) {
          for(int a = -distance; a <= distance; ++a) {
             for(int c = -distance; c <= distance; ++c) {
                for(int b = -distance; b <= distance; ++b) {
@@ -80,7 +80,7 @@ public class TileFluxScrubber extends TileThaumcraft implements IEssentiaTranspo
       int z = 0;
       int cc = 0;
 
-      while(cc < 16 && this.checklist.size() > 0) {
+      while(cc < 16 && !this.checklist.isEmpty()) {
          ++cc;
          x = this.checklist.get(0).x;
          y = this.checklist.get(0).y;

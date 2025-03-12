@@ -15,7 +15,7 @@ public class TileThaumatoriumTop extends TileThaumcraft implements IAspectContai
    public TileThaumatorium thaumatorium = null;
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {

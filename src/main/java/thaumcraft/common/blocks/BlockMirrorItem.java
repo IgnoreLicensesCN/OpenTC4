@@ -45,7 +45,7 @@ public class BlockMirrorItem extends ItemBlock {
    }
 
    public boolean getShareTag() {
-      return true;
+       return super.getShareTag();
    }
 
    public String getUnlocalizedName(ItemStack par1ItemStack) {

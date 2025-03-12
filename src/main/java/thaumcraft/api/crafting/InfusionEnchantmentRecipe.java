@@ -1,7 +1,6 @@
 package thaumcraft.api.crafting;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
 
 import net.minecraft.enchantment.Enchantment;
@@ -38,7 +37,7 @@ public class InfusionEnchantmentRecipe
      * @param player 
      */
 	public boolean matches(ArrayList<ItemStack> input, ItemStack central, World world, EntityPlayer player) {
-		if (research.length()>0 && !ThaumcraftApiHelper.isResearchComplete(player.getCommandSenderName(), research)) {
+		if (!research.isEmpty() && !ThaumcraftApiHelper.isResearchComplete(player.getCommandSenderName(), research)) {
     		return false;
     	}
 		
@@ -83,7 +82,7 @@ public class InfusionEnchantmentRecipe
 			if (!b) return false;
 		}
 //		System.out.println(ii.size());
-		return ii.size() == 0;
+		return ii.isEmpty();
     }
 	
 	protected boolean areItemStacksEqual(ItemStack stack0, ItemStack stack1, boolean fuzzy)

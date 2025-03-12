@@ -41,7 +41,7 @@ public class AIHomeTakeSorting extends EntityAIBase {
 
             if (tile instanceof IInventory) {
                ArrayList<ItemStack> neededList = GolemHelper.getItemsNeeded(this.theGolem, this.theGolem.getUpgradeAmount(5) > 0);
-               if (neededList != null && neededList.size() > 0) {
+               if (neededList != null && !neededList.isEmpty()) {
                   for(ItemStack stack : neededList) {
                      ItemStack needed = stack.copy();
                      needed.stackSize = this.theGolem.getCarrySpace();
@@ -104,7 +104,7 @@ public class AIHomeTakeSorting extends EntityAIBase {
 
          if (tile instanceof IInventory) {
             ArrayList<ItemStack> neededList = GolemHelper.getItemsNeeded(this.theGolem, this.theGolem.getUpgradeAmount(5) > 0);
-            if (neededList != null && neededList.size() > 0) {
+            if (neededList != null && !neededList.isEmpty()) {
                for(ItemStack stack : neededList) {
                   ItemStack needed = stack.copy();
                   needed.stackSize = this.theGolem.getCarrySpace();

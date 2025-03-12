@@ -46,6 +46,7 @@ public class AIReturnHome extends EntityAIBase {
    }
 
    public void resetTask() {
+       super.resetTask();
    }
 
    public void updateTask() {

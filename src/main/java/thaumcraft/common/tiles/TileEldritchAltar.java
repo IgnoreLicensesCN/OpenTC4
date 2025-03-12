@@ -3,7 +3,7 @@ package thaumcraft.common.tiles;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
-import net.minecraft.entity.IEntityLivingData;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
@@ -66,7 +66,7 @@ public class TileEldritchAltar extends TileThaumcraft {
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {
@@ -88,7 +88,7 @@ public class TileEldritchAltar extends TileThaumcraft {
 
    private void spawnGuards() {
       List ents = this.worldObj.getEntitiesWithinAABB(EntityCultistCleric.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(24.0F, 16.0F, 24.0F));
-      if (ents.size() < 1) {
+      if (ents.isEmpty()) {
          this.setSpawner(false);
       } else {
          ents = this.worldObj.getEntitiesWithinAABB(EntityCultist.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(24.0F, 16.0F, 24.0F));

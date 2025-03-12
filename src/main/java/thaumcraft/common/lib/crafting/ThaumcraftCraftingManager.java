@@ -753,11 +753,11 @@ public class ThaumcraftCraftingManager {
 
                             for (int i = 0; i < items.size() && i < 9; ++i) {
                                 if (items.get(i) != null) {
-                                    if (Utils.isEETransmutionItem(((ItemStack) items.get(i)).getItem())) {
+                                    if (Utils.isEETransmutionItem(items.get(i).getItem())) {
                                         continue label216;
                                     }
 
-                                    ItemStack is = ((ItemStack) items.get(i)).copy();
+                                    ItemStack is = items.get(i).copy();
                                     is.stackSize = 1;
                                     ingredients.add(is);
                                 }
@@ -909,20 +909,20 @@ public class ThaumcraftCraftingManager {
     }
 
     private static AspectList generateTagsFromRecipes(Item item, int meta, ArrayList<ItemStack> history) {
-        AspectList ret = null;
-        int value = 0;
+        AspectList ret;
         ret = generateTagsFromCrucibleRecipes(item, meta, history);
         if (ret != null) {
             return ret;
-        } else {
-            ret = generateTagsFromArcaneRecipes(item, meta, history);
-            if (ret == null) {
-                ret = generateTagsFromInfusionRecipes(item, meta, history);
-                if (ret == null) {
-                    ret = generateTagsFromCraftingRecipes(item, meta, history);
-                }
-            }
-            return ret;
         }
+
+        ret = generateTagsFromArcaneRecipes(item, meta, history);
+        if (ret == null) {
+            ret = generateTagsFromInfusionRecipes(item, meta, history);
+            if (ret == null) {
+                ret = generateTagsFromCraftingRecipes(item, meta, history);
+            }
+        }
+        return ret;
+
     }
 }

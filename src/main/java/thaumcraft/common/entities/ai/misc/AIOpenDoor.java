@@ -2,7 +2,6 @@ package thaumcraft.common.entities.ai.misc;
 
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockFenceGate;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import thaumcraft.common.entities.golems.EntityGolemBase;

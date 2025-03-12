@@ -150,7 +150,7 @@ public class TileNode extends TileThaumcraft implements INode, IWandable {
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public double getDistanceTo(double par1, double par3, double par5) {
@@ -211,7 +211,7 @@ public class TileNode extends TileThaumcraft implements INode, IWandable {
          }
       }
 
-      if (validaspects.size() == 0) {
+      if (validaspects.isEmpty()) {
          return null;
       } else {
          Aspect asp = validaspects.get(this.worldObj.rand.nextInt(validaspects.size()));
@@ -335,7 +335,7 @@ public class TileNode extends TileThaumcraft implements INode, IWandable {
 
       this.aspects.readFromNBT(nbttagcompound);
       String de = nbttagcompound.getString("drainer");
-      if (de != null && de.length() > 0 && this.getWorldObj() != null) {
+      if (de != null && !de.isEmpty() && this.getWorldObj() != null) {
          this.drainEntity = this.getWorldObj().getPlayerEntityByName(de);
          if (this.drainEntity != null) {
             this.drainCollision = new MovingObjectPosition(this.xCoord, this.yCoord, this.zCoord, 0, Vec3.createVectorHelper(this.drainEntity.posX, this.drainEntity.posY, this.drainEntity.posZ));
@@ -507,7 +507,7 @@ public class TileNode extends TileThaumcraft implements INode, IWandable {
 
          if (Config.hardNode) {
             List ents = this.worldObj.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(15.0F, 15.0F, 15.0F));
-            if (ents != null && ents.size() > 0) {
+            if (ents != null && !ents.isEmpty()) {
                for(Object ent : ents) {
                   Entity eo = (Entity)ent;
                   if (!(eo instanceof EntityPlayer) || !((EntityPlayer)eo).capabilities.disableDamage) {

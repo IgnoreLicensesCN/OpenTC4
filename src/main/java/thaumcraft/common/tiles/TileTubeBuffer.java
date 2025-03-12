@@ -29,7 +29,7 @@ public class TileTubeBuffer extends TileThaumcraft implements IAspectContainer, 
    int bellows = -1;
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void readCustomNBT(NBTTagCompound nbttagcompound) {

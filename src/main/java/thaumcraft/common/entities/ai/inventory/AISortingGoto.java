@@ -33,7 +33,7 @@ public class AISortingGoto extends EntityAIBase {
    public boolean shouldExecute() {
       if (this.theGolem.itemCarried != null && this.theGolem.ticksExisted % Config.golemDelay <= 0) {
          ArrayList<IInventory> results = GolemHelper.getContainersWithRoom(this.theGolem.worldObj, this.theGolem, (byte)-1);
-         if (results.size() == 0) {
+         if (results.isEmpty()) {
             return false;
          } else {
             ForgeDirection facing = ForgeDirection.getOrientation(this.theGolem.homeFacing);

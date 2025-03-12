@@ -108,7 +108,7 @@ public class EntityTaintSporeSwarmer extends EntityTaintSpore {
    }
 
    public int getTalkInterval() {
-      return 200;
+       return super.getTalkInterval();
    }
 
    protected String getLivingSound() {
@@ -141,7 +141,7 @@ public class EntityTaintSporeSwarmer extends EntityTaintSpore {
    }
 
    protected Item getDropItem() {
-      return ConfigItems.itemResource;
+       return super.getDropItem();
    }
 
    protected void dropFewItems(boolean flag, int i) {

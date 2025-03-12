@@ -1,7 +1,6 @@
 package thaumcraft.api.crafting;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -72,7 +71,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe
     @Override
     public boolean matches(IInventory var1, World world, EntityPlayer player)
     {
-    	if (research.length()>0 && !ThaumcraftApiHelper.isResearchComplete(player.getCommandSenderName(), research)) {
+    	if (!research.isEmpty() && !ThaumcraftApiHelper.isResearchComplete(player.getCommandSenderName(), research)) {
     		return false;
     	}
     	

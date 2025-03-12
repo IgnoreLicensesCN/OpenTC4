@@ -54,7 +54,7 @@ public class AIDartAttack extends EntityAIBase {
          if (this.rangedAttackTime == 0) {
             float r = this.theGolem.getRange() * 0.8F;
             r *= r;
-            if (var1 <= (double)r && var3) {
+            if (var1 <= (double)r) {
                this.theGolem.attackEntityWithRangedAttack(this.attackTarget);
                this.rangedAttackTime = this.maxRangedAttackTime;
             }

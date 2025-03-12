@@ -18,7 +18,7 @@ public class TileMagicWorkbenchCharger extends TileVisRelay {
    }
 
    public boolean isSource() {
-      return false;
+       return super.isSource();
    }
 
    public void updateEntity() {

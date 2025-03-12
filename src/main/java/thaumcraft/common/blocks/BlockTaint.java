@@ -165,7 +165,7 @@ public class BlockTaint extends Block {
             if (md == 0) {
                if (Config.spawnTaintSpore && world.isAirBlock(x, y + 1, z) && random.nextInt(200) == 0) {
                   List<Entity> targets = world.getEntitiesWithinAABB(EntityTaintSporeSwarmer.class, AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(16.0F, 16.0F, 16.0F));
-                  if (targets.size() == 0) {
+                  if (targets.isEmpty()) {
                      world.setBlockToAir(x, y, z);
                      EntityTaintSporeSwarmer spore = new EntityTaintSporeSwarmer(world);
                      spore.setLocationAndAngles((float)x + 0.5F, y, (float)z + 0.5F, 0.0F, 0.0F);

@@ -27,7 +27,7 @@ public class TileJarBrain extends TileJar {
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    public void updateEntity() {
@@ -111,7 +111,7 @@ public class TileJarBrain extends TileJar {
          --this.eatDelay;
       } else if (this.xp < this.xpMax) {
          List ents = this.worldObj.getEntitiesWithinAABB(EntityXPOrb.class, AxisAlignedBB.getBoundingBox((double)this.xCoord - 0.1, (double)this.yCoord - 0.1, (double)this.zCoord - 0.1, (double)this.xCoord + 1.1, (double)this.yCoord + 1.1, (double)this.zCoord + 1.1));
-         if (ents.size() > 0) {
+         if (!ents.isEmpty()) {
             for(Object ent : ents) {
                EntityXPOrb eo = (EntityXPOrb)ent;
                this.xp += eo.getXpValue();
@@ -130,7 +130,7 @@ public class TileJarBrain extends TileJar {
       double cdist = Double.MAX_VALUE;
       Entity orb = null;
       List ents = this.worldObj.getEntitiesWithinAABB(EntityXPOrb.class, AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(6.0F, 6.0F, 6.0F));
-      if (ents.size() > 0) {
+      if (!ents.isEmpty()) {
          for(Object ent : ents) {
             EntityXPOrb eo = (EntityXPOrb)ent;
             double d = this.getDistanceTo(eo.posX, eo.posY, eo.posZ);

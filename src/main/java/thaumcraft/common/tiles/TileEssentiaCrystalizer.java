@@ -55,7 +55,7 @@ public class TileEssentiaCrystalizer extends TileThaumcraft implements IAspectCo
    }
 
    public boolean canUpdate() {
-      return true;
+       return super.canUpdate();
    }
 
    @SideOnly(Side.CLIENT)

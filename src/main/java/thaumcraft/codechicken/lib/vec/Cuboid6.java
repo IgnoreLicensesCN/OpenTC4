@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import net.minecraft.block.Block;
-import net.minecraft.util.AxisAlignedBB;
 import thaumcraft.codechicken.lib.util.Copyable;
 
 public class Cuboid6 implements Copyable<Cuboid6> {

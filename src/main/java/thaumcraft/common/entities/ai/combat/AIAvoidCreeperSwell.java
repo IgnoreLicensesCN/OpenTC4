@@ -34,13 +34,13 @@ public class AIAvoidCreeperSwell extends EntityAIBase {
          this.nearSpeed = this.theGolem.getAIMoveSpeed() * 1.25F;
       }
 
-      List var1 = this.theGolem.worldObj.getEntitiesWithinAABB(EntityCreeper.class, this.theGolem.boundingBox.expand(this.distanceFromEntity, 3.0F, this.distanceFromEntity));
+      List<Entity> var1 = (List<Entity>)this.theGolem.worldObj.getEntitiesWithinAABB(EntityCreeper.class, this.theGolem.boundingBox.expand(this.distanceFromEntity, 3.0F, this.distanceFromEntity));
       if (var1.isEmpty()) {
          return false;
       } else if (((EntityCreeper)var1.get(0)).getCreeperState() != 1) {
          return false;
       } else {
-         this.closestLivingEntity = (Entity)var1.get(0);
+         this.closestLivingEntity = var1.get(0);
          if (!this.theGolem.getEntitySenses().canSee(this.closestLivingEntity)) {
             return false;
          } else {
@@ -66,10 +66,9 @@ public class AIAvoidCreeperSwell extends EntityAIBase {
       double var1 = this.targetBlock.xCoord + (double)0.5F - this.theGolem.posX;
       double var3 = this.targetBlock.zCoord + (double)0.5F - this.theGolem.posZ;
       float var5 = MathHelper.sqrt_double(var1 * var1 + var3 * var3);
-      EntityGolemBase var10000 = this.theGolem;
-      var10000.motionX += var1 / (double)var5 * (double)1.0F * (double)0.8F + this.theGolem.motionX * (double)0.2F;
-      var10000 = this.theGolem;
-      var10000.motionZ += var3 / (double)var5 * (double)1.0F * (double)0.8F + this.theGolem.motionZ * (double)0.2F;
+      EntityGolemBase golem = this.theGolem;
+      golem.motionX += var1 / (double)var5 * (double)1.0F * (double)0.8F + this.theGolem.motionX * (double)0.2F;
+      golem.motionZ += var3 / (double)var5 * (double)1.0F * (double)0.8F + this.theGolem.motionZ * (double)0.2F;
       this.theGolem.motionY = 0.3;
       this.entityPathNavigate.setPath(this.entityPathEntity, this.nearSpeed);
    }

@@ -15,7 +15,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
@@ -137,7 +136,7 @@ public class EventHandlerWorld implements IFuelHandler {
    @SubscribeEvent
    public void harvestEvent(BlockEvent.HarvestDropsEvent event) {
       EntityPlayer player = event.harvester;
-      if (event.drops != null && event.drops.size() != 0 && player != null) {
+      if (event.drops != null && !event.drops.isEmpty() && player != null) {
          ItemStack held = player.inventory.getCurrentItem();
          if (held != null && (held.getItem() instanceof ItemElementalPickaxe || held.getItem() instanceof ItemPrimalCrusher || held.getItem() instanceof ItemWandCasting && ((ItemWandCasting)held.getItem()).getFocus(held) != null && ((ItemWandCasting)held.getItem()).getFocus(held).isUpgradedWith(((ItemWandCasting)held.getItem()).getFocusItem(held), ItemFocusExcavation.dowsing))) {
             int fortune = EnchantmentHelper.getFortuneModifier(player);
@@ -218,7 +217,7 @@ public class EventHandlerWorld implements IFuelHandler {
          Cell c = MazeHandler.getFromHashMap(new CellLoc(xx, zz));
          if (c != null && c.feature >= 2 && c.feature <= 5) {
             ArrayList<Entity> list = EntityUtils.getEntitiesInRange(world, x, y, z, null, EntityThaumcraftBoss.class, 32.0F);
-             return list != null && list.size() > 0;
+             return list != null && !list.isEmpty();
          }
       }
 

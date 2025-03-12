@@ -36,7 +36,7 @@ public class AIEmptyGoto extends EntityAIBase {
 
          for(byte color : matchingColors) {
             ArrayList<IInventory> results = GolemHelper.getContainersWithRoom(this.theGolem.worldObj, this.theGolem, color);
-            if (results.size() != 0) {
+            if (!results.isEmpty()) {
                ForgeDirection facing = ForgeDirection.getOrientation(this.theGolem.homeFacing);
                ChunkCoordinates home = this.theGolem.getHomePosition();
                int cX = home.posX - facing.offsetX;

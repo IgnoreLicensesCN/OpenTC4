@@ -52,7 +52,7 @@ public class SavedLinkHandler {
             return false;
         }
         if (ConfigurationHandler.INSTANCE.isSavedLinkDebugEnabled() && action != Action.DISABLED) {
-            log.info("Processed saved link for node {} at {},{},{}: {}", getNodeType((TileVisNode) visNode), c.x, c.y, c.z, action);
+            log.info("Processed saved link for node {} at {},{},{}: {}", getNodeType(visNode), c.x, c.y, c.z, action);
         }
         return action.returnValue();
     }

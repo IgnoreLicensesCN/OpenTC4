@@ -131,7 +131,7 @@ public class EntityEldritchCrab extends EntityMob {
    }
 
    protected Item getDropItem() {
-      return Item.getItemById(0);
+       return super.getDropItem();
    }
 
    protected void dropFewItems(boolean p_70628_1_, int p_70628_2_) {
@@ -185,7 +185,7 @@ public class EntityEldritchCrab extends EntityMob {
    }
 
    protected String getHurtSound() {
-      return "game.hostile.hurt";
+       return super.getHurtSound();
    }
 
    protected String getDeathSound() {

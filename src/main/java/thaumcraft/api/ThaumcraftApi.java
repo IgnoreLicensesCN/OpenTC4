@@ -396,7 +396,7 @@ public class ThaumcraftApi {
 	public static void registerObjectTag(String oreDict, AspectList aspects) {
 		if (aspects==null) aspects=new AspectList();
 		ArrayList<ItemStack> ores = OreDictionary.getOres(oreDict);
-		if (ores!=null && ores.size()>0) {
+		if (ores!=null && !ores.isEmpty()) {
 			for (ItemStack ore:ores) {
 				try {
 				objectTags.put(Arrays.asList(ore.getItem(), ore.getItemDamage()), aspects);
