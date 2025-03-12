@@ -11,22 +11,17 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
 import java.awt.Desktop;
 import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.InterruptedIOException;
-import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
-import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -38,7 +33,6 @@ import javax.swing.*;
 import javax.swing.event.HyperlinkEvent.EventType;
 
 import net.minecraft.launchwrapper.LaunchClassLoader;
-import sun.misc.URLClassPath;
 import thaumcraft.client.ClientProxy;
 
 public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
@@ -285,67 +279,67 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
         }
 
         private void deleteMod(File mod) {
-            if (!mod.delete()) {
-                try {
-                    ClassLoader cl = DepLoader.class.getClassLoader();
-                    URL url = mod.toURI().toURL();
-                    Field f_ucp = URLClassLoader.class.getDeclaredField("ucp");
-                    Field f_loaders = URLClassPath.class.getDeclaredField("loaders");
-                    Field f_lmap = URLClassPath.class.getDeclaredField("lmap");
-                    f_ucp.setAccessible(true);
-                    f_loaders.setAccessible(true);
-                    f_lmap.setAccessible(true);
-                    URLClassPath ucp = (URLClassPath) f_ucp.get(cl);
-                    Closeable loader = (Closeable) ((Map) f_lmap.get(ucp)).remove(urlNoFragString(url));
-                    if (loader != null) {
-                        loader.close();
-                        ((List) f_loaders.get(ucp)).remove(loader);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                if (!mod.delete()) {
-                    mod.deleteOnExit();
-                    String msg = "CB's DepLoader was unable to delete file " + mod.getPath() + " the game will now try to delete it on exit. If this dialog appears again, delete it manually.";
-                    System.err.println(msg);
-                    if (!GraphicsEnvironment.isHeadless()) {
-                        JOptionPane.showMessageDialog(null, msg, "An update error has occured", JOptionPane.ERROR_MESSAGE);
-                    }
-
-                    System.exit(1);
-                }
-
-            }
+//            if (!mod.delete()) {
+//                try {
+//                    ClassLoader cl = DepLoader.class.getClassLoader();
+//                    URL url = mod.toURI().toURL();
+//                    Field f_ucp = URLClassLoader.class.getDeclaredField("ucp");
+//                    Field f_loaders = URLClassPath.class.getDeclaredField("loaders");
+//                    Field f_lmap = URLClassPath.class.getDeclaredField("lmap");
+//                    f_ucp.setAccessible(true);
+//                    f_loaders.setAccessible(true);
+//                    f_lmap.setAccessible(true);
+//                    URLClassPath ucp = (URLClassPath) f_ucp.get(cl);
+//                    Closeable loader = (Closeable) ((Map) f_lmap.get(ucp)).remove(urlNoFragString(url));
+//                    if (loader != null) {
+//                        loader.close();
+//                        ((List) f_loaders.get(ucp)).remove(loader);
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//
+//                if (!mod.delete()) {
+//                    mod.deleteOnExit();
+//                    String msg = "CB's DepLoader was unable to delete file " + mod.getPath() + " the game will now try to delete it on exit. If this dialog appears again, delete it manually.";
+//                    System.err.println(msg);
+//                    if (!GraphicsEnvironment.isHeadless()) {
+//                        JOptionPane.showMessageDialog(null, msg, "An update error has occured", JOptionPane.ERROR_MESSAGE);
+//                    }
+//
+//                    System.exit(1);
+//                }
+//
+//            }
         }
 
         private void download(Dependency dep) {
-            this.popupWindow = (JDialog) this.downloadMonitor.makeDialog();
-            File libFile = new File(this.v_modsDir, dep.file.filename);
-
-            try {
-                URL libDownload = new URL(dep.url + '/' + dep.file.filename);
-                this.downloadMonitor.updateProgressString("Downloading file %s", libDownload.toString());
-                System.out.format("Downloading file %s\n", libDownload);
-                URLConnection connection = libDownload.openConnection();
-                connection.setConnectTimeout(5000);
-                connection.setReadTimeout(5000);
-                connection.setRequestProperty("User-Agent", "CB's DepLoader Downloader");
-                int sizeGuess = connection.getContentLength();
-                this.download(connection.getInputStream(), sizeGuess, libFile);
-                this.downloadMonitor.updateProgressString("Download complete");
-                System.out.println("Download complete");
-                this.scanDepInfo(libFile);
-            } catch (Exception e) {
-                libFile.delete();
-                if (this.downloadMonitor.shouldStopIt()) {
-                    System.err.println("You have stopped the downloading operation before it could complete");
-                    System.exit(1);
-                } else {
-                    this.downloadMonitor.showErrorDialog(dep.file.filename, dep.url + '/' + dep.file.filename);
-                    throw new RuntimeException("A download error occured", e);
-                }
-            }
+//            this.popupWindow = (JDialog) this.downloadMonitor.makeDialog();
+//            File libFile = new File(this.v_modsDir, dep.file.filename);
+//
+//            try {
+//                URL libDownload = new URL(dep.url + '/' + dep.file.filename);
+//                this.downloadMonitor.updateProgressString("Downloading file %s", libDownload.toString());
+//                System.out.format("Downloading file %s\n", libDownload);
+//                URLConnection connection = libDownload.openConnection();
+//                connection.setConnectTimeout(5000);
+//                connection.setReadTimeout(5000);
+//                connection.setRequestProperty("User-Agent", "CB's DepLoader Downloader");
+//                int sizeGuess = connection.getContentLength();
+//                this.download(connection.getInputStream(), sizeGuess, libFile);
+//                this.downloadMonitor.updateProgressString("Download complete");
+//                System.out.println("Download complete");
+//                this.scanDepInfo(libFile);
+//            } catch (Exception e) {
+//                libFile.delete();
+//                if (this.downloadMonitor.shouldStopIt()) {
+//                    System.err.println("You have stopped the downloading operation before it could complete");
+//                    System.exit(1);
+//                } else {
+//                    this.downloadMonitor.showErrorDialog(dep.file.filename, dep.url + '/' + dep.file.filename);
+//                    throw new RuntimeException("A download error occured", e);
+//                }
+//            }
         }
 
         private void download(InputStream is, int sizeGuess, File target) throws Exception {
@@ -398,31 +392,31 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
         }
 
         private String checkExisting(Dependency dep) {
-            for (File f : this.modsDir.listFiles()) {
-                VersionedFile vfile = new VersionedFile(f.getName(), dep.file.pattern);
-                if (vfile.matches() && vfile.name.equals(dep.file.name) && !f.renameTo(new File(this.v_modsDir, f.getName()))) {
-                    this.deleteMod(f);
-                }
-            }
-
-            for (File f : this.v_modsDir.listFiles()) {
-                VersionedFile vfile = new VersionedFile(f.getName(), dep.file.pattern);
-                if (vfile.matches() && vfile.name.equals(dep.file.name)) {
-                    int cmp = vfile.version.compareTo(dep.file.version);
-                    if (cmp < 0) {
-                        System.out.println("Deleted old version " + f.getName());
-                        this.deleteMod(f);
-                        return null;
-                    }
-
-                    if (cmp > 0) {
-                        System.err.println("Warning: version of " + dep.file.name + ", " + vfile.version + " is newer than request " + dep.file.version);
-                        return f.getName();
-                    }
-
-                    return f.getName();
-                }
-            }
+//            for (File f : this.modsDir.listFiles()) {
+//                VersionedFile vfile = new VersionedFile(f.getName(), dep.file.pattern);
+//                if (vfile.matches() && vfile.name.equals(dep.file.name) && !f.renameTo(new File(this.v_modsDir, f.getName()))) {
+//                    this.deleteMod(f);
+//                }
+//            }
+//
+//            for (File f : this.v_modsDir.listFiles()) {
+//                VersionedFile vfile = new VersionedFile(f.getName(), dep.file.pattern);
+//                if (vfile.matches() && vfile.name.equals(dep.file.name)) {
+//                    int cmp = vfile.version.compareTo(dep.file.version);
+//                    if (cmp < 0) {
+//                        System.out.println("Deleted old version " + f.getName());
+//                        this.deleteMod(f);
+//                        return null;
+//                    }
+//
+//                    if (cmp > 0) {
+//                        System.err.println("Warning: version of " + dep.file.name + ", " + vfile.version + " is newer than request " + dep.file.version);
+//                        return f.getName();
+//                    }
+//
+//                    return f.getName();
+//                }
+//            }
 
             return null;
         }
@@ -467,8 +461,9 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
         private void load(Dependency dep) {
             dep.existing = this.checkExisting(dep);
             if (dep.existing == null && dep.file.name.equalsIgnoreCase("baubles")) {
-                this.download(dep);
-                dep.existing = dep.file.filename;
+                throw new RuntimeException("needs BaublesExpanded");
+//                this.download(dep);
+//                dep.existing = dep.file.filename;
             }
 
         }
