@@ -5,7 +5,9 @@ import thaumcraft.api.expands.warp.PickWarpEventContext;
 import thaumcraft.api.expands.warp.WarpEvent;
 
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 
+@ParametersAreNonnullByDefault
 public abstract class WarpEventListenerAfter implements Comparable<WarpEventListenerAfter> {
     public final int priority;
     /**

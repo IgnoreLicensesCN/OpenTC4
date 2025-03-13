@@ -56,23 +56,18 @@ public class WandManager implements IWandTriggerManager {
     static HashMap<Integer, Long> cooldownServer = new HashMap<>();
     static HashMap<Integer, Long> cooldownClient = new HashMap<>();
 
-    //TODO:Add listener API for this.
+    //Do not modify it's bytecode.go to see thaumcraft.api.expands.wandconsumption.ConsumptionModifierCalculator and add listener.
     public static float getTotalVisDiscount(EntityPlayer player, Aspect aspect) {
-        int cheatGadomancy = 0;
+        int cheatGadomancy = 0;//Gadomancy used tricks to modify java bytecode.deleting this will cause error with no stacktrace point to it.
         final AtomicInteger total = new AtomicInteger(cheatGadomancy);
         if (player == null) {
             return 0.0F;
         } else {
-            log.error("ASM MAY ERROR:LABEL A");
             BaubleConsumer<IVisDiscountGear> visDiscountGearBaubleConsumer = (slot, stack, visDiscountGear) -> {
-                log.error("ASM MAY ERROR:LABEL #A");
                 total.addAndGet(visDiscountGear.getVisDiscount(stack, player, aspect));
-                log.error("ASM MAY ERROR:LABEL #B");
                 return false;
             };
-            log.error("ASM MAY ERROR:LABEL B");
             forEachBauble(player, IVisDiscountGear.class, visDiscountGearBaubleConsumer);
-            log.error("ASM MAY ERROR:LABEL C");
 
             for (int a = 0; a < 4; ++a) {
                 ItemStack stack = player.inventory.getStackInSlot(a);

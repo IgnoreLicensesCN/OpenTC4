@@ -36,6 +36,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.IArchitect;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
+import thaumcraft.api.expands.wandconsumption.ConsumptionModifierCalculator;
 import thaumcraft.api.wands.FocusUpgradeType;
 import thaumcraft.api.wands.IWandable;
 import thaumcraft.api.wands.ItemFocusBasic;
@@ -229,26 +230,29 @@ public class ItemWandCasting extends Item implements IArchitect {
     }
 
     public float getConsumptionModifier(ItemStack is, EntityPlayer player, Aspect aspect, boolean crafting) {
-        float consumptionModifier = 1.0F;
-        if (this.getCap(is).getSpecialCostModifierAspects() != null && this.getCap(is).getSpecialCostModifierAspects().contains(aspect)) {
-            consumptionModifier = this.getCap(is).getSpecialCostModifier();
-        } else {
-            consumptionModifier = this.getCap(is).getBaseCostModifier();
-        }
-
-        if (player != null) {
-            consumptionModifier -= WandManager.getTotalVisDiscount(player, aspect);
-        }
-
-        if (this.getFocus(is) != null && !crafting) {
-            consumptionModifier -= (float) this.getFocusFrugal(is) / 10.0F;
-        }
-
-        if (this.isSceptre(is)) {
-            consumptionModifier -= 0.1F;
-        }
-
-        return Math.max(consumptionModifier, 0.1F);
+        return ConsumptionModifierCalculator.getConsumptionModifier(this, is, player, aspect, crafting);
+//        float consumptionModifier = 1.0F;
+//        if (this.getCap(is).getSpecialCostModifierAspects() != null
+//                && this.getCap(is).getSpecialCostModifierAspects().contains(aspect)
+//        ) {
+//            consumptionModifier = this.getCap(is).getSpecialCostModifier();
+//        } else {
+//            consumptionModifier = this.getCap(is).getBaseCostModifier();
+//        }
+//
+//        if (player != null) {
+//            consumptionModifier -= WandManager.getTotalVisDiscount(player, aspect);
+//        }
+//
+//        if (this.getFocus(is) != null && !crafting) {
+//            consumptionModifier -= (float) this.getFocusFrugal(is) / 10.0F;
+//        }
+//
+//        if (this.isSceptre(is)) {
+//            consumptionModifier -= 0.1F;
+//        }
+//
+//        return Math.max(consumptionModifier, 0.1F);
     }
 
     public int getFocusPotency(ItemStack itemstack) {
