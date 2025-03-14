@@ -2,6 +2,8 @@ package thaumcraft.api.research;
 
 import net.minecraft.entity.Entity;
 
+import java.util.Objects;
+
 public class ScanResult {
 	public byte type = 0;   //1=blocks,2=entities,3=phenomena
 	public int id;
@@ -35,4 +37,8 @@ public class ScanResult {
 		return true;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(type, id, meta, entity, phenomena);
+	}
 }

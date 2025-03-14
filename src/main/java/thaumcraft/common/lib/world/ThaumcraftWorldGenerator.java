@@ -423,15 +423,19 @@ public class ThaumcraftWorldGenerator implements IWorldGenerator {
             auraGen = this.generateWildNodes(world, random, chunkX, chunkZ, auraGen, newGen);
         }
 
-        if (blacklist == -1 && Config.genStructure && world.provider.dimensionId == 0 && !world.getWorldInfo().getTerrainType().getWorldTypeName().startsWith("flat") && (newGen || Config.regenStructure)) {
+        if (blacklist == -1
+                && Config.genStructure
+                && world.provider.dimensionId == 0
+                && !world.getWorldInfo().getTerrainType().getWorldTypeName().startsWith("flat")
+                && (newGen || Config.regenStructure)
+        ) {
             int randPosX = chunkX * 16 + random.nextInt(16);
             int randPosZ = chunkZ * 16 + random.nextInt(16);
             int randPosY = world.getHeightValue(randPosX, randPosZ) - 9;
             if (randPosY < world.getActualHeight()) {
                 world.getChunkFromBlockCoords(MathHelper.floor_double(randPosX), MathHelper.floor_double(randPosZ));
-                WorldGenerator mound = new WorldGenMound();
                 if (random.nextInt(150) == 0) {
-                    if (mound.generate(world, random, randPosX, randPosY, randPosZ)) {
+                    if (WorldGenMound.generateStatic(world, random, randPosX, randPosY, randPosZ)) {
                         auraGen = true;
                         int value = random.nextInt(200) + 400;
                         createRandomNodeAt(world, randPosX + 9, randPosY + 8, randPosZ + 9, random, false, true, false);

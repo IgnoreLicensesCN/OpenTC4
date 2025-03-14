@@ -12,11 +12,11 @@ import net.minecraftforge.common.ChestGenHooks;
 import thaumcraft.common.config.ConfigBlocks;
 
 public class WorldGenMound extends WorldGenerator {
-   protected Block[] GetValidSpawnBlocks() {
+   protected static Block[] GetValidSpawnBlocks() {
       return new Block[]{Blocks.stone, Blocks.grass, Blocks.dirt};
    }
 
-   public boolean LocationIsValidSpawn(World world, int i, int j, int k) {
+   public static boolean LocationIsValidSpawn(World world, int i, int j, int k) {
       int distanceToAir = 0;
 
       for(Block checkID = world.getBlock(i, j, k); checkID != Blocks.air; checkID = world.getBlock(i, j + distanceToAir, k)) {
@@ -29,7 +29,7 @@ public class WorldGenMound extends WorldGenerator {
            Block blockIDAbove = world.getBlock(i, j + 1, k);
            Block blockIDBelow = world.getBlock(i, j - 1, k);
 
-           for (Block x : this.GetValidSpawnBlocks()) {
+           for (Block x : GetValidSpawnBlocks()) {
                if (blockIDAbove != Blocks.air) {
                    return false;
                }
@@ -48,7 +48,10 @@ public class WorldGenMound extends WorldGenerator {
    }
 
    public boolean generate(World world, Random rand, int i, int j, int k) {
-      if (this.LocationIsValidSpawn(world, i + 9, j + 9, k + 9) && this.LocationIsValidSpawn(world, i, j + 9, k) && this.LocationIsValidSpawn(world, i + 18, j + 9, k) && this.LocationIsValidSpawn(world, i + 18, j + 9, k + 18) && this.LocationIsValidSpawn(world, i, j + 9, k + 18)) {
+      return generateStatic(world, rand, i, j, k);
+   }
+   public static boolean generateStatic(World world, Random rand, int i, int j, int k) {
+      if (LocationIsValidSpawn(world, i + 9, j + 9, k + 9) && LocationIsValidSpawn(world, i, j + 9, k) && LocationIsValidSpawn(world, i + 18, j + 9, k) && LocationIsValidSpawn(world, i + 18, j + 9, k + 18) && LocationIsValidSpawn(world, i, j + 9, k + 18)) {
          world.setBlock(i, j + 8, k + 4, Blocks.dirt);
          world.setBlock(i, j + 8, k + 5, Blocks.dirt);
          world.setBlock(i, j + 8, k + 6, Blocks.dirt);
@@ -1544,14 +1547,14 @@ public class WorldGenMound extends WorldGenerator {
          world.setBlock(i + 16, j + 10, k + 12, Blocks.dirt);
          world.setBlock(i + 16, j + 10, k + 13, Blocks.dirt);
          world.setBlock(i + 16, j + 10, k + 14, Blocks.dirt);
-         this.generate2(world, rand, i, j, k);
+         generate2(world, rand, i, j, k);
          return true;
       } else {
          return false;
       }
    }
 
-   public boolean generate2(World world, Random rand, int i, int j, int k) {
+   public static boolean generate2(World world, Random rand, int i, int j, int k) {
       world.setBlock(i + 16, j + 10, k + 15, Blocks.grass);
       world.setBlock(i + 16, j + 11, k + 3, Blocks.grass);
       world.setBlock(i + 16, j + 11, k + 4, Blocks.dirt);

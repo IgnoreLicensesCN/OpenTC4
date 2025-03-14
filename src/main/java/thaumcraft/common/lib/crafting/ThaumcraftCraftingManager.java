@@ -376,7 +376,7 @@ public class ThaumcraftCraftingManager {
 
         int id = Item.getIdFromItem(itemstack.getItem());
         int meta = itemstack.getItemDamage();
-        if (item != null && (tmp != null || item == Items.potionitem)) {
+        if (item != null) {
             if (item instanceof ItemArmor) {
                 tmp.merge(Aspect.ARMOR, ((ItemArmor) item).damageReduceAmount);
             } else if (item instanceof ItemSword && ((ItemSword) item).func_150931_i() + 1.0F > 0.0F) {

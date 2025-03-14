@@ -212,7 +212,22 @@ public class ConfigResearch {
       (new ResearchItem("ARCANELAMP", "ARTIFICE", (new AspectList()).add(Aspect.LIGHT, 3).add(Aspect.SENSES, 3).add(Aspect.DARKNESS, 3), -3, 1, 1, new ItemStack(ConfigBlocks.blockMetalDevice, 1, 7))).setPages(new ResearchPage("tc.research_page.ARCANELAMP.1"), new ResearchPage((IArcaneRecipe)recipes.get("ArcaneLamp")), new ResearchPage("ARCANEBORE", "tc.research_page.ARCANELAMP.2")).setSecondary().setParents("NITOR").registerResearchItem();
       (new ResearchItem("LAMPGROWTH", "ARTIFICE", (new AspectList()).add(Aspect.LIGHT, 3).add(Aspect.PLANT, 6).add(Aspect.LIFE, 3).add(Aspect.CROP, 3), -4, 3, 2, new ItemStack(ConfigBlocks.blockMetalDevice, 1, 8))).setPages(new ResearchPage("tc.research_page.LAMPGROWTH.1"), new ResearchPage((InfusionRecipe)recipes.get("LampGrowth"))).setHidden().setAspectTriggers(Aspect.LIGHT, Aspect.CROP).setParents("ARCANELAMP", "INFUSION").registerResearchItem();
       (new ResearchItem("LAMPFERTILITY", "ARTIFICE", (new AspectList()).add(Aspect.BEAST, 6).add(Aspect.LIFE, 6).add(Aspect.LIGHT, 3), -2, 3, 2, new ItemStack(ConfigBlocks.blockMetalDevice, 1, 13))).setPages(new ResearchPage("tc.research_page.LAMPFERTILITY.1"), new ResearchPage((InfusionRecipe)recipes.get("LampFertility"))).setHidden().setAspectTriggers(Aspect.LIGHT, Aspect.LIFE).setParents("ARCANELAMP", "INFUSION").registerResearchItem();
-      (new ResearchItem("BONEBOW", "ARTIFICE", (new AspectList()).add(Aspect.WEAPON, 3).add(Aspect.AIR, 3).add(Aspect.MOTION, 3), -7, 1, 1, new ItemStack(ConfigItems.itemBowBone))).setPages(new ResearchPage("tc.research_page.BONEBOW.1"), new ResearchPage((IArcaneRecipe)recipes.get("BoneBow"))).setHidden().setItemTriggers(new ItemStack(Items.bow, 1, 32767), new ItemStack(Items.bone)).registerResearchItem();
+      (new ResearchItem("BONEBOW",
+              "ARTIFICE",
+              (new AspectList())
+                      .add(Aspect.WEAPON, 3)
+                      .add(Aspect.AIR, 3)
+                      .add(Aspect.MOTION, 3),
+              -7, 1, 1,
+              new ItemStack(ConfigItems.itemBowBone)))
+              .setPages(new ResearchPage("tc.research_page.BONEBOW.1"),
+                      new ResearchPage((IArcaneRecipe)recipes.get("BoneBow")))
+              .setHidden()
+              .setItemTriggers(
+                      new ItemStack(Items.bow, 1, 32767),
+                      new ItemStack(Items.bone)
+              )
+              .registerResearchItem();
       ArrayList<IArcaneRecipe> rcbb = new ArrayList<>();
 
       for(int a = 0; a < 6; ++a) {

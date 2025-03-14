@@ -54,7 +54,13 @@ public class WorldGenEldritchRing extends WorldGenerator {
    }
 
    public boolean generate(World world, Random rand, int i, int j, int k) {
-      if (this.LocationIsValidSpawn(world, i - 3, j, k - 3) && this.LocationIsValidSpawn(world, i, j, k) && this.LocationIsValidSpawn(world, i + 3, j, k) && this.LocationIsValidSpawn(world, i + 3, j, k + 3) && this.LocationIsValidSpawn(world, i, j, k + 3) && !MazeHandler.mazesInRange(this.chunkX, this.chunkZ, this.width, this.height)) {
+      if (this.LocationIsValidSpawn(world, i - 3, j, k - 3)
+              && this.LocationIsValidSpawn(world, i, j, k)
+              && this.LocationIsValidSpawn(world, i + 3, j, k)
+              && this.LocationIsValidSpawn(world, i + 3, j, k + 3)
+              && this.LocationIsValidSpawn(world, i, j, k + 3)
+              && !MazeHandler.mazesInRange(this.chunkX, this.chunkZ, this.width, this.height)
+      ) {
          Block replaceBlock = world.getBiomeGenForCoords(i, k).topBlock;
 
          for(int x = i - 3; x <= i + 3; ++x) {

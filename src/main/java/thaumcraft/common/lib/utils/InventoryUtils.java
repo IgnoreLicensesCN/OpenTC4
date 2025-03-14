@@ -345,7 +345,7 @@ public class InventoryUtils {
          return false;
       } else if (stack0 != null && stack1 == null) {
          return false;
-      } else if (stack0 == null && stack1 == null) {
+      } else if (stack0 == null) {
          return true;
       } else {
          if (useOre) {

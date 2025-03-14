@@ -134,7 +134,13 @@ public class ResearchManager {
       ArrayList<String> keys = new ArrayList<>();
 
       for(ResearchItem research : allHiddenResearch) {
-         if (!isResearchComplete(player.getCommandSenderName(), research.key) && doesPlayerHaveRequisites(player.getCommandSenderName(), research.key) && (research.getItemTriggers() != null || research.getEntityTriggers() != null || research.getAspectTriggers() != null)) {
+         if (!isResearchComplete(player.getCommandSenderName(), research.key)
+                 && doesPlayerHaveRequisites(player.getCommandSenderName(), research.key)
+                 && (research.getItemTriggers() != null
+                 || research.getEntityTriggers() != null
+                 || research.getAspectTriggers() != null
+         )
+         ) {
             keys.add(research.key);
          }
       }

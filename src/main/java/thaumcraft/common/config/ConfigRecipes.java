@@ -200,7 +200,10 @@ public class ConfigRecipes {
       ConfigResearch.recipes.put("Levitator", ThaumcraftApi.addArcaneCraftingRecipe("LEVITATOR", new ItemStack(ConfigBlocks.blockLifter), (new AspectList()).add(Aspect.AIR, 10).add(Aspect.EARTH, 5), "WEW", "BNB", "WAW", 'W', new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6), 'E', new ItemStack(ConfigItems.itemShard, 1, 3), 'A', new ItemStack(ConfigItems.itemShard, 1, 0), 'N', new ItemStack(ConfigItems.itemResource, 1, 1), 'B', Items.iron_ingot));
       ConfigResearch.recipes.put("ArcaneEar", ThaumcraftApi.addArcaneCraftingRecipe("ARCANEEAR", new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 1), (new AspectList()).add(Aspect.AIR, 10).add(Aspect.ORDER, 10), "GIG", "GBG", "WRW", 'W', new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6), 'R', Items.redstone, 'I', Items.iron_ingot, 'G', Items.gold_ingot, 'B', new ItemStack(ConfigItems.itemZombieBrain)));
       ConfigResearch.recipes.put("MirrorGlass", ThaumcraftApi.addShapelessArcaneCraftingRecipe("BASICARTIFACE", new ItemStack(ConfigItems.itemResource, 1, 10), (new AspectList()).add(Aspect.FIRE, 10).add(Aspect.EARTH, 10), new ItemStack(ConfigItems.itemResource, 1, 3), Blocks.glass_pane));
-      ConfigResearch.recipes.put("BoneBow", ThaumcraftApi.addArcaneCraftingRecipe("BONEBOW", new ItemStack(ConfigItems.itemBowBone), (new AspectList()).add(Aspect.AIR, 16).add(Aspect.ENTROPY, 32), "SB ", "SEB", "SB ", 'E', new ItemStack(ConfigItems.itemShard, 1, 5), 'B', Items.bone, 'S', Items.string));
+      ConfigResearch.recipes.put("BoneBow",
+              ThaumcraftApi.addArcaneCraftingRecipe(
+                      "BONEBOW",
+                      new ItemStack(ConfigItems.itemBowBone), (new AspectList()).add(Aspect.AIR, 16).add(Aspect.ENTROPY, 32), "SB ", "SEB", "SB ", 'E', new ItemStack(ConfigItems.itemShard, 1, 5), 'B', Items.bone, 'S', Items.string));
       Aspect[] pa = new Aspect[]{Aspect.AIR, Aspect.FIRE, Aspect.WATER, Aspect.EARTH, Aspect.ORDER, Aspect.ENTROPY};
 
       for(int a = 0; a < 6; ++a) {

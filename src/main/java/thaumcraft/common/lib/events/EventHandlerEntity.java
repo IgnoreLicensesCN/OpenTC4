@@ -365,26 +365,34 @@ public class EventHandlerEntity {
          } else if (event.entity instanceof EntityMob) {
             EntityMob mob = (EntityMob)event.entity;
             if (mob.getEntityAttribute(EntityUtils.CHAMPION_MOD).getAttributeValue() < (double)-1.0F) {
-               int c = event.world.rand.nextInt(100);
+               int championChance = event.world.rand.nextInt(100);
                if (event.world.difficultySetting == EnumDifficulty.EASY || !Config.championMobs) {
-                  c += 2;
+                  championChance += 2;
                }
 
                if (event.world.difficultySetting == EnumDifficulty.HARD) {
-                  c -= Config.championMobs ? 2 : 0;
+                  championChance -= Config.championMobs ? 2 : 0;
                }
 
                if (event.world.provider.dimensionId == Config.dimensionOuterId) {
-                  c -= 3;
+                  championChance -= 3;
                }
 
-               BiomeGenBase bg = mob.worldObj.getBiomeGenForCoords(MathHelper.ceiling_double_int(mob.posX), MathHelper.ceiling_double_int(mob.posZ));
-               if (BiomeDictionary.isBiomeOfType(bg, Type.SPOOKY) || BiomeDictionary.isBiomeOfType(bg, Type.NETHER) || BiomeDictionary.isBiomeOfType(bg, Type.END)) {
-                  c -= Config.championMobs ? 2 : 1;
+               BiomeGenBase bg = mob.worldObj.getBiomeGenForCoords(
+                       MathHelper.ceiling_double_int(mob.posX),
+                       MathHelper.ceiling_double_int(mob.posZ)
+               );
+               if (BiomeDictionary.isBiomeOfType(bg, Type.SPOOKY)
+                       || BiomeDictionary.isBiomeOfType(bg, Type.NETHER)
+                       || BiomeDictionary.isBiomeOfType(bg, Type.END)) {
+                  championChance -= Config.championMobs ? 2 : 1;
                }
 
-               if (this.isDangerousLocation(mob.worldObj, MathHelper.ceiling_double_int(mob.posX), MathHelper.ceiling_double_int(mob.posY), MathHelper.ceiling_double_int(mob.posZ))) {
-                  c -= Config.championMobs ? 10 : 3;
+               if (this.isDangerousLocation(
+                       mob.worldObj, MathHelper.ceiling_double_int(mob.posX),
+                       MathHelper.ceiling_double_int(mob.posY),
+                       MathHelper.ceiling_double_int(mob.posZ))) {
+                  championChance -= Config.championMobs ? 10 : 3;
                }
 
                int cc = 0;
@@ -399,8 +407,9 @@ public class EventHandlerEntity {
                   }
                }
 
-               c -= cc;
-               if (whitelisted && c <= 0 && mob.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue() >= (double)10.0F) {
+               championChance -= cc;
+               if (whitelisted && championChance <= 0
+                       && mob.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue() >= (double)10.0F) {
                   EntityUtils.makeChampion(mob, false);
                } else {
                   IAttributeInstance modai = mob.getEntityAttribute(EntityUtils.CHAMPION_MOD);
@@ -443,18 +452,30 @@ public class EventHandlerEntity {
 
    @SubscribeEvent
    public void livingDrops(LivingDropsEvent event) {
-      boolean fakeplayer = event.source.getEntity() != null && event.source.getEntity() instanceof FakePlayer;
-      if (!event.entity.worldObj.isRemote && event.recentlyHit && !fakeplayer && event.entity instanceof EntityMob && !(event.entity instanceof EntityThaumcraftBoss) && ((EntityMob)event.entity).getEntityAttribute(EntityUtils.CHAMPION_MOD).getAttributeValue() >= (double)0.0F) {
+      boolean fakePlayerFlag = event.source.getEntity() != null && event.source.getEntity() instanceof FakePlayer;
+      if (!event.entity.worldObj.isRemote
+              && event.recentlyHit
+              && !fakePlayerFlag
+              && event.entity instanceof EntityMob
+              && !(event.entity instanceof EntityThaumcraftBoss)
+              && ((EntityMob)event.entity).getEntityAttribute(EntityUtils.CHAMPION_MOD).getAttributeValue() >= (double)0.0F) {
          int i = 5 + event.entity.worldObj.rand.nextInt(3);
 
          while(i > 0) {
             int j = EntityXPOrb.getXPSplit(i);
             i -= j;
-            event.entity.worldObj.spawnEntityInWorld(new EntityXPOrb(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, j));
+            event.entity.worldObj.spawnEntityInWorld(
+                    new EntityXPOrb(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, j
+                    ));
          }
 
          int lb = Math.min(2, MathHelper.floor_float((float)(event.entity.worldObj.rand.nextInt(9) + event.lootingLevel) / 5.0F));
-         event.drops.add(new EntityItem(event.entity.worldObj, event.entityLiving.posX, event.entityLiving.posY + (double)event.entityLiving.getEyeHeight(), event.entityLiving.posZ, new ItemStack(ConfigItems.itemLootbag, 1, lb)));
+         event.drops.add(
+                 new EntityItem(event.entity.worldObj,
+                         event.entityLiving.posX,
+                         event.entityLiving.posY + (double)event.entityLiving.getEyeHeight(),
+                         event.entityLiving.posZ,
+                         new ItemStack(ConfigItems.itemLootbag, 1, lb)));
       }
 
       if (event.entityLiving instanceof EntityZombie && !(event.entityLiving instanceof EntityBrainyZombie) && event.recentlyHit && event.entity.worldObj.rand.nextInt(10) - event.lootingLevel < 1) {
