@@ -12,7 +12,7 @@ public abstract class WarpConditionChecker implements Comparable<WarpConditionCh
     /**
      *
      * @param context
-     * @param player
+     * @param player victim
      * @return true if can trigger wrap event
      */
     public abstract boolean check(PickWarpEventContext context, EntityPlayer player);

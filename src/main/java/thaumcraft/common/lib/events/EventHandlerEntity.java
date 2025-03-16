@@ -102,6 +102,8 @@ import thaumcraft.common.lib.world.dim.CellLoc;
 import thaumcraft.common.lib.world.dim.MazeHandler;
 import thaumcraft.common.tiles.TileOwned;
 
+import static thaumcraft.api.expands.warp.WarpEventManager.getWarpEventDelayForPlayer;
+
 public class EventHandlerEntity {
    public HashMap<Integer,Float> prevStep = new HashMap<>();
    public static HashMap<String,ArrayList<WeakReference<Entity>>> linkedEntities = new HashMap<>();
@@ -211,8 +213,6 @@ public class EventHandlerEntity {
       }
    }
 
-   //unit:tick
-   public static final int checkWarpEventDelay = 2000;
    @SubscribeEvent
    public void livingTick(LivingEvent.LivingUpdateEvent event) {
       if (event.entity instanceof EntityPlayer) {
@@ -229,7 +229,7 @@ public class EventHandlerEntity {
          }
 
          if (!event.entity.worldObj.isRemote) {
-            if (!Config.wuss && player.ticksExisted > 0 && player.ticksExisted % checkWarpEventDelay == 0) {
+            if (!Config.wuss && player.ticksExisted > 0 && player.ticksExisted % getWarpEventDelayForPlayer(player) == 0) {
                WarpEvents.checkWarpEvent(player);
             }
 

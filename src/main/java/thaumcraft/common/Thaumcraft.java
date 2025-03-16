@@ -29,6 +29,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.expands.wandconsumption.ConsumptionModifierCalculator;
 import thaumcraft.api.expands.warp.WarpEventManager;
 import thaumcraft.client.lib.RenderEventHandler;
 import thaumcraft.common.config.Config;
@@ -144,6 +145,7 @@ public class Thaumcraft {
          MapGenStructureIO.func_143031_a(ComponentBankerHome.class, "TCVillageBanker");
       } catch (Throwable var7) {
          log.error("[Thaumcraft] Village tower could not be registered.");
+         var7.printStackTrace();
       }
 
       proxy.registerHandlers();
@@ -154,6 +156,7 @@ public class Thaumcraft {
 
 
       WarpEventManager.init();
+      ConsumptionModifierCalculator.init();
    }
 
    @EventHandler

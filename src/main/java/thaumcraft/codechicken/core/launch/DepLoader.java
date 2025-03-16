@@ -461,7 +461,7 @@ public class DepLoader implements IFMLLoadingPlugin, IFMLCallHook {
         private void load(Dependency dep) {
             dep.existing = this.checkExisting(dep);
             if (dep.existing == null && dep.file.name.equalsIgnoreCase("baubles")) {
-                throw new RuntimeException("needs BaublesExpanded");
+                throw new RuntimeException("needs BaublesExpanded,I recommend https://github.com/GTNewHorizons/Baubles-Expanded  (I'm using version 2.1.6 for testing when writing this.)");
 //                this.download(dep);
 //                dep.existing = dep.file.filename;
             }

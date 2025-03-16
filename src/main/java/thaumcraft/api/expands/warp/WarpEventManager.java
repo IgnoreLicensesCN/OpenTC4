@@ -3,10 +3,8 @@ package thaumcraft.api.expands.warp;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import simpleutils.AutoSortSynchronizedList;
-import thaumcraft.api.expands.warp.listeners.PickWarpEventListenerAfter;
-import thaumcraft.api.expands.warp.listeners.PickWarpEventListenerBefore;
-import thaumcraft.api.expands.warp.listeners.WarpEventListenerAfter;
-import thaumcraft.api.expands.warp.listeners.WarpEventListenerBefore;
+import simpleutils.ListenerManager;
+import thaumcraft.api.expands.warp.listeners.*;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.network.misc.PacketMiscEvent;
@@ -14,8 +12,6 @@ import thaumcraft.common.lib.network.playerdata.PacketSyncWarp;
 import thaumcraft.common.lib.research.PlayerKnowledge;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static thaumcraft.api.expands.warp.consts.AfterPickEventListeners.SPAWN_GUARD_IF_NO_EVENT;
@@ -29,88 +25,54 @@ import static thaumcraft.common.lib.WarpEvents.*;
 
 @ParametersAreNonnullByDefault
 public class WarpEventManager {
-    public static final List<WarpEvent> warpEvents = new AutoSortSynchronizedList<>();
     /**
      * I may update those register methods,so please don't access these lists directly.
      */
-    public static final List<WarpEventListenerBefore> warpEventListenersBefore = new AutoSortSynchronizedList<>();
-    public static final List<WarpEventListenerAfter> warpEventListenersAfter = new AutoSortSynchronizedList<>();
-    public static final List<PickWarpEventListenerBefore> pickWarpEventListenersBefore = new AutoSortSynchronizedList<>();
-    public static final List<PickWarpEventListenerAfter> pickWarpEventListenersAfter = new AutoSortSynchronizedList<>();
-    public static final List<WarpConditionChecker> WARP_CONDITION_CHECKERS = new AutoSortSynchronizedList<>();
+    public static final ListenerManager<WarpEvent> warpEventManager = new ListenerManager<>();
+    public static final ListenerManager<WarpEventListenerBefore> warpEventListenerBeforeManager = new ListenerManager<>();
+    public static final ListenerManager<WarpEventListenerAfter> warpEventListenerAfterManager = new ListenerManager<>();
+    public static final ListenerManager<PickWarpEventListenerBefore> pickWarpEventListenerBeforeManager = new ListenerManager<>();
+    public static final ListenerManager<PickWarpEventListenerAfter> pickWarpEventListenerAfterManager = new ListenerManager<>();
+    public static final ListenerManager<WarpConditionChecker> warpConditionCheckerManager = new ListenerManager<>();
+    public static final ListenerManager<GettingWarpDelayListener> gettingWarpDelayListenerManager = new ListenerManager<>();
+    
     public static void init(){
-        registerWarpEvent(GRANT_RESEARCH_LOW);
-        registerWarpEvent(NOISE_AND_FOLLOWING);
-        registerWarpEvent(VIS_EXHAUST);
-        registerWarpEvent(THAUMARHIA);
-        registerWarpEvent(STRANGE_HUNGER);
-        registerWarpEvent(FOLLOWING);
-        registerWarpEvent(SPAWN_A_GUARD);
-        registerWarpEvent(BLURRED);
-        registerWarpEvent(SUN_SCORNED);
-        registerWarpEvent(SLOW_DIGGING);
-        registerWarpEvent(INF_VIS_EXHAUST);
-        registerWarpEvent(NIGHT_VISION);
-        registerWarpEvent(DEATH_GAZE);
-        registerWarpEvent(FAKE_SPIDERS);
-        registerWarpEvent(BEING_WATCHED);
-        registerWarpEvent(SPAWN_SOME_GUARDS);
-        registerWarpEvent(BLINDNESS);
-        registerWarpEvent(DECREASE_A_STICKY_WARP);
-        registerWarpEvent(STRANGE_HUNGER_2);
-        registerWarpEvent(GRANT_RESEARCH_HIGH);
-        registerWarpEvent(REAL_SPIDERS);
-        registerPickWarpEventListenerBefore(THAUMIC_FORTRESS_MASK_DISCOUNT);
-        registerPickWarpEventListenerBefore(CALCULATE_WARP_AND_COUNTER);
-        registerPickWarpEventListenerAfter(SPAWN_GUARD_IF_NO_EVENT);
-        
-        registerWarpEventListenerAfter(CHECK_RESEARCH);
-        registerWarpEventListenerAfter(DECREASE_A_TEMP_WARP);
-        registerWarpEventListenerAfter(DONT_SEND_MISC_FOR_EMPTY);
-        
-        registerWarpConditionChecker(WARP_AND_COUNTER);
-        registerWarpConditionChecker(NO_WARP_WARD);
+        warpEventManager.registerListener(GRANT_RESEARCH_LOW);
+        warpEventManager.registerListener(NOISE_AND_FOLLOWING);
+        warpEventManager.registerListener(VIS_EXHAUST);
+        warpEventManager.registerListener(THAUMARHIA);
+        warpEventManager.registerListener(STRANGE_HUNGER);
+        warpEventManager.registerListener(FOLLOWING);
+        warpEventManager.registerListener(SPAWN_A_GUARD);
+        warpEventManager.registerListener(BLURRED);
+        warpEventManager.registerListener(SUN_SCORNED);
+        warpEventManager.registerListener(SLOW_DIGGING);
+        warpEventManager.registerListener(INF_VIS_EXHAUST);
+        warpEventManager.registerListener(NIGHT_VISION);
+        warpEventManager.registerListener(DEATH_GAZE);
+        warpEventManager.registerListener(FAKE_SPIDERS);
+        warpEventManager.registerListener(BEING_WATCHED);
+        warpEventManager.registerListener(SPAWN_SOME_GUARDS);
+        warpEventManager.registerListener(BLINDNESS);
+        warpEventManager.registerListener(DECREASE_A_STICKY_WARP);
+        warpEventManager.registerListener(STRANGE_HUNGER_2);
+        warpEventManager.registerListener(GRANT_RESEARCH_HIGH);
+        warpEventManager.registerListener(REAL_SPIDERS);
+        pickWarpEventListenerBeforeManager.registerListener(THAUMIC_FORTRESS_MASK_DISCOUNT);
+        pickWarpEventListenerBeforeManager.registerListener(CALCULATE_WARP_AND_COUNTER);
+        pickWarpEventListenerAfterManager.registerListener(SPAWN_GUARD_IF_NO_EVENT);
+
+        warpEventListenerAfterManager.registerListener(CHECK_RESEARCH);
+        warpEventListenerAfterManager.registerListener(DECREASE_A_TEMP_WARP);
+        warpEventListenerAfterManager.registerListener(DONT_SEND_MISC_FOR_EMPTY);
+
+        warpConditionCheckerManager.registerListener(WARP_AND_COUNTER);
+        warpConditionCheckerManager.registerListener(NO_WARP_WARD);
 
     }
-    public static void registerWarpEvent(WarpEvent e) {
-        warpEvents.add(e);
-    }
-    public static void unregisterWarpEvent(WarpEvent e) {
-        warpEvents.remove(e);
-    }
-    public static void registerWarpEventListenerBefore( WarpEventListenerBefore o) {
-        warpEventListenersBefore.add(o);
-    }
-    public static void unregisterWarpEventListenerBefore( WarpEventListenerBefore o) {
-        warpEventListenersBefore.remove(o);
-    }
-    public static void registerWarpEventListenerAfter( WarpEventListenerAfter o) {
-        warpEventListenersAfter.add(o);
-    }
-    public static void unregisterWarpEventListenerAfter( WarpEventListenerAfter o) {
-        warpEventListenersAfter.remove(o);
-    }
-    public static void registerPickWarpEventListenerBefore( PickWarpEventListenerBefore o) {
-        pickWarpEventListenersBefore.add(o);
-    }
-    public static void unregisterPickWarpEventListenerBefore( PickWarpEventListenerBefore o) {
-        pickWarpEventListenersBefore.remove(o);
-    }
-    public static void registerPickWarpEventListenerAfter( PickWarpEventListenerAfter o) {
-        pickWarpEventListenersAfter.add(o);
-    }
-    public static void unregisterPickWarpEventListenerAfter( PickWarpEventListenerAfter o) {
-        pickWarpEventListenersAfter.remove(o);
-    }
-    public static void registerWarpConditionChecker(WarpConditionChecker o) {
-        WARP_CONDITION_CHECKERS.add(o);
-    }
-    public static void unregisterWarpConditionChecker(WarpConditionChecker o) {
-        WARP_CONDITION_CHECKERS.remove(o);
-    }
-
+    
     public static  WarpEvent pickWarpEventWithListener(PickWarpEventContext warpContext,EntityPlayer player) {
-        for (PickWarpEventListenerBefore listener : pickWarpEventListenersBefore) {
+        for (PickWarpEventListenerBefore listener : pickWarpEventListenerBeforeManager.getListeners()) {
             listener.beforePickEvent(warpContext, player);
         }
         if (warpContext.warp <= 0 || warpContext.actualWarp <= 0) {
@@ -119,7 +81,7 @@ public class WarpEventManager {
         warpContext.randWithWarp = player.worldObj.rand.nextInt(warpContext.warp);
         WarpEvent picked = WarpEvent.EMPTY;
 
-        for (WarpEvent pickEvent : warpEvents) {
+        for (WarpEvent pickEvent : warpEventManager.getListeners()) {
             if (warpContext.actualWarp >= pickEvent.warpRequired) {
                 if (warpContext.randWithWarp >= pickEvent.weight) {
                     warpContext.randWithWarp -= pickEvent.weight;
@@ -132,7 +94,7 @@ public class WarpEventManager {
             }
         }
 
-        for (PickWarpEventListenerAfter listener : pickWarpEventListenersAfter) {
+        for (PickWarpEventListenerAfter listener : pickWarpEventListenerAfterManager.getListeners()) {
             picked = listener.afterPickEvent(warpContext,picked,player);
         }
         return picked;
@@ -144,7 +106,7 @@ public class WarpEventManager {
 
     public static void triggerWarpEvent(PickWarpEventContext warpContext,WarpEvent e,EntityPlayer player) {
         e.enable();
-        for (WarpEventListenerBefore listener : warpEventListenersBefore) {
+        for (WarpEventListenerBefore listener : warpEventListenerBeforeManager.getListeners()) {
             listener.onWarpEvent(warpContext,e,player);
         }
         if (e.enabledFlag) {
@@ -153,7 +115,7 @@ public class WarpEventManager {
                 triggerRandomWarpEvent(warpContext,player);
                 return;
             }
-            for (WarpEventListenerAfter listener : warpEventListenersAfter) {
+            for (WarpEventListenerAfter listener : warpEventListenerAfterManager.getListeners()) {
                 listener.onWarpEvent(warpContext,e,player);
             }
             if (e.sendMiscPacket){
@@ -178,11 +140,21 @@ public class WarpEventManager {
                         + knowledge.getWarpSticky(player.getCommandSenderName()),
                 knowledge.getWarpCounter(player.getCommandSenderName())
         );
-        for (WarpConditionChecker condition : WARP_CONDITION_CHECKERS) {
+        for (WarpConditionChecker condition : warpConditionCheckerManager.getListeners()) {
             if (!condition.check(warpContext,player)) {
                 return;
             }
         }
         triggerRandomWarpEvent(warpContext,player);
+    }
+
+    public static final int defaultCheckWarpEventDelay = 2000;
+    //unit:tick
+    public static int getWarpEventDelayForPlayer(EntityPlayer player) {
+        int result = defaultCheckWarpEventDelay;
+        for (GettingWarpDelayListener listener : gettingWarpDelayListenerManager.getListeners()) {
+            result = listener.onGettingWarpEventDelayForPlayer(player);
+        }
+        return result;
     }
 }

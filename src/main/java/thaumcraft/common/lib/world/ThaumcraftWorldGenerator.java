@@ -26,6 +26,7 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.BiomeManager.BiomeType;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
+import thaumcraft.api.expands.worldgen.node.NodeGenerationManager;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 import thaumcraft.common.Thaumcraft;
@@ -167,37 +168,39 @@ public class ThaumcraftWorldGenerator implements IWorldGenerator {
     }
 
     private boolean generateWildNodes(World world, Random random, int chunkX, int chunkZ, boolean auraGen, boolean newGen) {
-        if (Config.genAura && random.nextInt(Config.nodeRarity) == 0 && !auraGen) {
-            int x = chunkX * 16 + random.nextInt(16);
-            int z = chunkZ * 16 + random.nextInt(16);
-            int q = Utils.getFirstUncoveredY(world, x, z);
-            if (q < 2) {
-                q = world.provider.getAverageGroundLevel() + random.nextInt(64) - 32 + Utils.getFirstUncoveredY(world, x, z);
-            }
-
-            if (q < 2) {
-                q = 32 + random.nextInt(64);
-            }
-
-            if (world.isAirBlock(x, q + 1, z)) {
-                ++q;
-            }
-
-            int p = random.nextInt(4);
-            Block b = world.getBlock(x, q + p, z);
-            if (world.isAirBlock(x, q + p, z) || b.isReplaceable(world, x, q + p, z)) {
-                q += p;
-            }
-
-            if (q > world.getActualHeight()) {
-                return false;
-            } else {
-                createRandomNodeAt(world, x, q, z, random, false, false, false);
-                return true;
-            }
-        } else {
-            return false;
-        }
+        return NodeGenerationManager.generateWildNodes(world, random, chunkX, chunkZ, auraGen, newGen);
+//        if (Config.genAura && random.nextInt(Config.nodeRarity) == 0 && !auraGen) {
+//            int x = chunkX * 16 + random.nextInt(16);
+//            int z = chunkZ * 16 + random.nextInt(16);
+//            int q = Utils.getFirstUncoveredY(world, x, z);
+//            if (q < 2) {
+//                q = world.provider.getAverageGroundLevel() + random.nextInt(64) - 32 + Utils.getFirstUncoveredY(world, x, z);
+//            }
+//
+//            if (q < 2) {
+//                q = 32 + random.nextInt(64);
+//            }
+//
+//            if (world.isAirBlock(x, q + 1, z)) {
+//                ++q;
+//            }
+//
+//            int p = random.nextInt(4);
+//            Block b = world.getBlock(x, q + p, z);
+//            if (world.isAirBlock(x, q + p, z) || b.isReplaceable(world, x, q + p, z)) {
+//                q += p;
+//            }
+//
+//            if (q > world.getActualHeight()) {
+//                return false;
+//            } else {
+//                createRandomNodeAt(world, x, q, z, random, false, false, false);
+//                return true;
+//            }
+//        }
+//        else {
+//            return false;
+//        }
     }
 
     public static void createRandomNodeAt(World world, int x, int y, int z, Random random, boolean silverwood, boolean eerie, boolean small) {
@@ -438,7 +441,14 @@ public class ThaumcraftWorldGenerator implements IWorldGenerator {
                     if (WorldGenMound.generateStatic(world, random, randPosX, randPosY, randPosZ)) {
                         auraGen = true;
                         int value = random.nextInt(200) + 400;
-                        createRandomNodeAt(world, randPosX + 9, randPosY + 8, randPosZ + 9, random, false, true, false);
+                        createRandomNodeAt(
+                                world,
+                                randPosX + 9, randPosY + 8, randPosZ + 9,
+                                random,
+                                false,
+                                true,
+                                false
+                        );
                     }
                 } else if (random.nextInt(66) == 0) {
                     WorldGenEldritchRing stonering = new WorldGenEldritchRing();
