@@ -2,7 +2,6 @@ package thaumcraft.api.expands.warp;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import simpleutils.AutoSortSynchronizedList;
 import simpleutils.ListenerManager;
 import thaumcraft.api.expands.warp.listeners.*;
 import thaumcraft.common.Thaumcraft;
@@ -12,7 +11,6 @@ import thaumcraft.common.lib.network.playerdata.PacketSyncWarp;
 import thaumcraft.common.lib.research.PlayerKnowledge;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.List;
 
 import static thaumcraft.api.expands.warp.consts.AfterPickEventListeners.SPAWN_GUARD_IF_NO_EVENT;
 import static thaumcraft.api.expands.warp.consts.AfterWarpEventListeners.*;

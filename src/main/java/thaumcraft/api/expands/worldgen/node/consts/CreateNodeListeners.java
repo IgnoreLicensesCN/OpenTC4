@@ -17,9 +17,10 @@ public class CreateNodeListeners {
 
             TileEntity te = world.getTileEntity(context.x, context.y, context.z);
             if (te instanceof TileNode) {
-                ((TileNode) te).setNodeType(context.nodeType);
-                ((TileNode) te).setNodeModifier(context.nodeModifier);
-                ((TileNode) te).setAspects(context.aspects);
+                TileNode tileNode = (TileNode) te;
+                tileNode.setNodeType(context.nodeType);
+                tileNode.setNodeModifier(context.nodeModifier);
+                tileNode.setAspects(context.aspects);
             }
 
             world.markBlockForUpdate(context.x, context.y, context.z);

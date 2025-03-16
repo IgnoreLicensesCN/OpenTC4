@@ -2,13 +2,14 @@ package simpleutils;
 
 import javax.annotation.Nonnull;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
-public class AutoSortSynchronizedList<T extends Comparable<T>> implements List<T> {
-    private final List<T> wrapped = Collections.synchronizedList(new ArrayList<>());
+public class AutoSortThreadSafeList<T extends Comparable<T>> implements List<T> {
+    private final List<T> wrapped = new CopyOnWriteArrayList<>();
 
     @Override
     public boolean removeIf(@Nonnull Predicate<? super T> filter) {

@@ -1,13 +1,11 @@
 package simpleutils;
 
-import thaumcraft.api.expands.warp.listeners.WarpEventListenerAfter;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.*;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class ListenerManager<T extends Comparable<T>> {
-    private final List<T> listeners = new AutoSortSynchronizedList<>();
+    private final List<T> listeners = new AutoSortThreadSafeList<>();
     public ListenerManager() {
 
     }
@@ -18,7 +16,4 @@ public class ListenerManager<T extends Comparable<T>> {
         return listeners.remove(o);
     }
 
-    public List<T> getListeners() {
-        return Collections.unmodifiableList(listeners);
-    }
 }

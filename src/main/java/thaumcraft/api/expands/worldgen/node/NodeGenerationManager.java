@@ -1,21 +1,12 @@
 package thaumcraft.api.expands.worldgen.node;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import simpleutils.ListenerManager;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.expands.worldgen.node.listeners.*;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
-import thaumcraft.common.config.Config;
-import thaumcraft.common.config.ConfigBlocks;
-import thaumcraft.common.lib.world.biomes.BiomeHandler;
-import thaumcraft.common.tiles.TileNode;
 
 import java.util.*;
 
@@ -25,7 +16,6 @@ import static thaumcraft.api.expands.worldgen.node.consts.NodeAspectGenerators.D
 import static thaumcraft.api.expands.worldgen.node.consts.NodeCoordinatesPickers.defaultPicker;
 import static thaumcraft.api.expands.worldgen.node.consts.NodeModifierPickers.DEFAULT_NODE_MODIFIER_PICKER;
 import static thaumcraft.api.expands.worldgen.node.consts.NodeTypePickers.DEFAULT_NODE_TYPE_PICKER;
-import static thaumcraft.common.lib.world.ThaumcraftWorldGenerator.biomeTaint;
 
 public class NodeGenerationManager {
     public static List<Aspect> basicAspects = new ArrayList<>();
