@@ -16,4 +16,7 @@ public class ListenerManager<T extends Comparable<T>> {
         return listeners.remove(o);
     }
 
+    public List<T> getListeners() {
+        return Collections.unmodifiableList(listeners);
+    }
 }
