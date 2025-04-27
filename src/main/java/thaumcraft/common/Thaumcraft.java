@@ -32,6 +32,7 @@ import tc4tweak.network.MyNet;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.expands.wandconsumption.ConsumptionModifierCalculator;
 import thaumcraft.api.expands.warp.WarpEventManager;
+import thaumcraft.api.expands.worldgen.node.NodeGenerationManager;
 import thaumcraft.client.lib.RenderEventHandler;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.config.ConfigAspects;
@@ -157,6 +158,7 @@ public class Thaumcraft {
 
 
       WarpEventManager.init();
+      NodeGenerationManager.init();
       ConsumptionModifierCalculator.init();
    }
 
