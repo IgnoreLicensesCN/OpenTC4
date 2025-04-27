@@ -1,6 +1,7 @@
 package tc4tweak.modules.visrelay;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
+import tc4tweak.CommonUtils;
 import thaumcraft.api.WorldCoordinates;
 import thaumcraft.api.visnet.TileVisNode;
 import thaumcraft.api.visnet.VisNetHandler;
@@ -32,5 +33,6 @@ public class SetParentHelper {
         parent.getChildren().add(ref);
         nearbyNodes.clear();
         cache.clear();
+        CommonUtils.sendSupplementaryS35(parent);
     }
 }

@@ -17,6 +17,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ThaumcraftApiHelper;
+import thaumcraft.common.Thaumcraft;
 
 import java.io.File;
 import java.util.*;
@@ -48,6 +49,7 @@ public enum ConfigurationHandler {
     private boolean savedLink;
     private boolean savedLinkDebug;
     private boolean alternativeAddStack;
+    private boolean sendSupplementaryS35;
 
     private int browserHeight = 230;
     private int browserWidth = 256;
@@ -61,7 +63,7 @@ public enum ConfigurationHandler {
         FMLCommonHandler.instance().bus().register(this);
     }
 
-    public void init(File f) {
+    void init(File f) {
         config = new Configuration(f, ConfigurationVersion.latest().getVersionMarker());
         ConfigurationVersion.migrateToLatest(config);
         loadConfig(false);
@@ -89,7 +91,7 @@ public enum ConfigurationHandler {
 
     @SubscribeEvent
     public void onConfigChange(ConfigChangedEvent.OnConfigChangedEvent e) {
-        if (e.modID.equals("Thaumcraft")) {
+        if (e.modID.equals(Thaumcraft.MOD_ID)) {
             loadConfig(true);
             FlushableCache.enableAll(false);
             CommonUtils.sortResearchCategories(true);
@@ -120,11 +122,13 @@ public enum ConfigurationHandler {
         }
         browserScale = config.getFloat("scale", "client.browser_scale", 1, 1, 4, "Tweak the size of the book gui. No longer works if inferBrowserScale is set to true.");
         limitBookSearchToCategory = config.getBoolean("limitBookSearchToCategory", "client", false, "Whether the book gui search should search current tab only.");
-        nodeVisualSizeLimit = config.getFloat("limitOversizedNodeRender", "client", 1, 0.5f, 2000.f,
-                "The upper limit on how big nodes can be rendered. "+
-                "This is purely a visual thing and will not affect how big your node can actually grow. " +
+        nodeVisualSizeLimit = config.getFloat("limitOversizedNodeRender", "client", 1, 0.5f, 1e10f,
+                "The upper limit on how big nodes can be rendered." +
+                        " This is purely a visual thing and will not affect " +
+                        "how big your node can actually grow. " +
                         "Setting a value like 10000.0 will effectively turn off this functionality," +
-                        " i.e. not limit the rendered size.");
+                        " i.e. not limit the rendered size."
+        );
         inferBrowserScale = config.getBoolean("infer", "client.browser_scale", true, "Tweak the size of the book gui based on screen size automatically. The value of browserScale set manually will not function any more.");
         inferBrowserScaleUpperBound = config.getFloat("maximum", "client.browser_scale", 4, 1, 16, "The minimum inferred scale. Cannot be smaller than the value of inferBrowserScaleLowerBound. This shouldn't be too high as a huge browser would be rendered with really poor image quality.");
         inferBrowserScaleLowerBound = config.getFloat("minimum", "client.browser_scale", 1, 1, 16, "The maximum inferred scale. Cannot be bigger than the value of inferBrowserScaleUpperBound.");
@@ -143,6 +147,7 @@ public enum ConfigurationHandler {
         savedLinkSaveWholeLink = config.getBoolean("saveCompleteLink", "general.saved_link", false, "When enabled, save the entire link up to source node. There is no actual benefit of this beyond more debug info. You probably don't want to change this.");
         savedLinkDebug = config.getBoolean("debug", "general.saved_link", false, "When enabled, print more debug info for this feature. You probably don't want to change this.");
         alternativeAddStack = config.getBoolean("alternativeAddStack", "general", true, "When enabled, using a phial will cause the new stack to be added to current player inventory using an alternative rule that prefers partial stacks and current slot.");
+        sendSupplementaryS35 = config.getBoolean("sendSupplementaryS35", "general", true, "When enabled, will try harder at sending server side states for some particular tile entities. Enabling this might leads to very slight bandwidth usage increase, but can fix some rare desync.");
 
         String[][] championMods = new String[][]{
                 {"a62bef38-48cc-42a6-ac5e-ef913841c4fd", "Champion health buff", "Champion health buff. Plain add.",},
@@ -179,9 +184,9 @@ public enum ConfigurationHandler {
         browserWidth = (int) (browserScale * 256);
         browserHeight = (int) (browserScale * 230);
         // it has been proven that the lack of this mod on client side is not a concern at all, for now
-//        Thaumcraft.instance.setAllowAll(true);
+//        TC4Tweak.INSTANCE.setAllowAll(true);
         if (send) {
-//            Thaumcraft.instance.detectAndSendConfigChanges();
+//            TC4Tweak.INSTANCE.detectAndSendConfigChanges();
             BrowserPaging.flushCache();
         }
         breakLongCommentLines();
@@ -319,6 +324,10 @@ public enum ConfigurationHandler {
         return alternativeAddStack;
     }
 
+    public boolean isSendSupplementaryS35() {
+        return sendSupplementaryS35;
+    }
+
     public enum InfusionOreDictMode {
         Default {
             @SuppressWarnings("deprecation")
@@ -395,3 +404,4 @@ public enum ConfigurationHandler {
         }
     }
 }
+

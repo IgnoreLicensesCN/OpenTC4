@@ -14,6 +14,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import tc4tweak.CommonUtils;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.visnet.TileVisNode;
 import thaumcraft.api.visnet.VisNetHandler;
@@ -86,6 +87,15 @@ public class TileVisRelay extends TileVisNode implements IWandable {
             if (this.px == 0 && this.py == 0 && this.pz == 0) {
                this.setParent(null);
             } else {
+               if (
+                    !CommonUtils.isChunkLoaded(
+                    this.getWorldObj(),
+                    this.xCoord - this.px,
+                    this.yCoord - this.py,
+                    this.zCoord - this.pz)
+               ){
+                  return;
+               }
                TileEntity tile = this.getWorldObj().getTileEntity(this.xCoord - this.px, this.yCoord - this.py, this.zCoord - this.pz);
                if (tile instanceof TileVisNode) {
                   this.setParent(new WeakReference(tile));
@@ -241,5 +251,11 @@ public class TileVisRelay extends TileVisNode implements IWandable {
    }
 
    public void onWandStoppedUsing(ItemStack wandstack, World world, EntityPlayer player, int count) {
+   }
+
+   @Override
+   public void setParent(WeakReference<TileVisNode> parent) {
+      super.setParent(parent);
+      CommonUtils.sendSupplementaryS35(this);
    }
 }

@@ -24,18 +24,27 @@ public class TileChestHungry extends TileEntity implements IInventory {
       return this.chestContents[par1];
    }
 
-   public ItemStack decrStackSize(int par1, int par2) {
-      if (this.chestContents[par1] != null) {
-         ItemStack var3 = this.chestContents[par1].splitStack(par2);
-         if (this.chestContents[par1].stackSize == 0) {
-            this.chestContents[par1] = null;
+   public ItemStack decrStackSize(int itemIndexInChest, int extractAtMostCount) {
+      ItemStack result = this.chestContents[itemIndexInChest];
+      if (result != null) {
+         //directly output if not greater than extractAtMostCount
+         if (result.stackSize <= extractAtMostCount){
+            this.chestContents[itemIndexInChest] = null;
+            this.markDirty();
+            return result.stackSize == 0 ? null : result;
          }
 
+         //tc4 vanilla
+         result = result.splitStack(extractAtMostCount);
+         if (result.stackSize == 0) {
+            this.chestContents[itemIndexInChest] = null;
+         }
          this.markDirty();
-         return var3;
+         return result;
       } else {
          return null;
       }
+
    }
 
    public ItemStack getStackInSlotOnClosing(int par1) {

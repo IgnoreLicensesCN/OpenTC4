@@ -12,6 +12,8 @@ import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 import thaumcraft.common.tiles.TileArcaneWorkbench;
 
+import static tc4tweak.modules.findRecipes.FindRecipes.getNormalCraftingRecipeOutput;
+
 public class ContainerArcaneWorkbench extends Container {
    private TileArcaneWorkbench tileEntity;
    private InventoryPlayer ip;
@@ -50,7 +52,7 @@ public class ContainerArcaneWorkbench extends Container {
 
       this.tileEntity.setInventorySlotContentsSoftly(
               9,
-              CraftingManager.getInstance().findMatchingRecipe(ic, this.tileEntity.getWorldObj())
+              getNormalCraftingRecipeOutput(CraftingManager.getInstance(),ic, this.tileEntity.getWorldObj())
       );
       if (this.tileEntity.getStackInSlot(9) == null
               && this.tileEntity.getStackInSlot(10) != null

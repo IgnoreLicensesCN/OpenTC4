@@ -28,6 +28,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tc4tweak.network.MyNet;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.expands.wandconsumption.ConsumptionModifierCalculator;
 import thaumcraft.api.expands.warp.WarpEventManager;
@@ -98,7 +99,7 @@ public class Thaumcraft {
    public static boolean isHalloween = false;
    public static CreativeTabs tabTC = new CreativeTabThaumcraft(CreativeTabs.getNextID(), "thaumcraft");
    public boolean aspectShift = false;
-   public final SimpleNetworkWrapper CHANNEL = new SimpleNetworkWrapper(MOD_ID);
+   public final MyNet CHANNEL = new MyNet(MOD_ID);
 
    @EventHandler
    public void preInit(FMLPreInitializationEvent event) {

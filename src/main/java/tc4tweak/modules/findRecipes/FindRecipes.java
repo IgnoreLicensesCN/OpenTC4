@@ -2,6 +2,12 @@ package tc4tweak.modules.findRecipes;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.world.World;
+import tc4tweak.ConfigurationHandler;
+import tc4tweak.network.NetworkedConfiguration;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.crafting.IArcaneRecipe;
 
@@ -25,5 +31,15 @@ public class FindRecipes {
         if (r != null)
             cache.addToCache(r);
         return r;
+    }
+
+    public static ItemStack getNormalCraftingRecipeOutput(CraftingManager inst, InventoryCrafting ic, World world) {
+        // only check synced config if in remote world
+        if (ConfigurationHandler.INSTANCE.isCheckWorkbenchRecipes()
+                && (!world.isRemote || NetworkedConfiguration.isCheckWorkbenchRecipes())) {
+            return inst.findMatchingRecipe(ic, world);
+        } else {
+            return null;
+        }
     }
 }
