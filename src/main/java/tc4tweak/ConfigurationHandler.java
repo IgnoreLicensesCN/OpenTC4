@@ -63,7 +63,7 @@ public enum ConfigurationHandler {
         FMLCommonHandler.instance().bus().register(this);
     }
 
-    void init(File f) {
+    public void init(File f) {
         config = new Configuration(f, ConfigurationVersion.latest().getVersionMarker());
         ConfigurationVersion.migrateToLatest(config);
         loadConfig(false);

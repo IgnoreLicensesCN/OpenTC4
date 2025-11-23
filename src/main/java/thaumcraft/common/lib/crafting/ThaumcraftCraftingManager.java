@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -45,10 +46,13 @@ import thaumcraft.api.crafting.InfusionEnchantmentRecipe;
 import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.api.crafting.ShapedArcaneRecipe;
 import thaumcraft.api.crafting.ShapelessArcaneRecipe;
+import thaumcraft.api.expands.aspects.item.ItemAspectBonusTagsCalculator;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.lib.research.ResearchManager;
 import thaumcraft.common.lib.utils.Utils;
+
+import javax.annotation.Nullable;
 
 public class ThaumcraftCraftingManager {
     public static ShapedRecipes createFakeRecipe(ItemStack par1ItemStack, Object... par2ArrayOfObj) {
@@ -219,6 +223,7 @@ public class ThaumcraftCraftingManager {
         return var13;
     }
 
+    @Nullable
     public static AspectList getObjectTags(ItemStack itemstack) {
         return GetObjectTags.getObjectTags(itemstack);
     }
@@ -349,145 +354,7 @@ public class ThaumcraftCraftingManager {
     }
 
     public static AspectList getBonusTags(ItemStack itemstack, AspectList sourcetags) {
-        AspectList tmp = new AspectList();
-        Item item = itemstack.getItem();
-        if (item instanceof IEssentiaContainerItem) {
-            tmp = ((IEssentiaContainerItem) item).getAspects(itemstack);
-            if (tmp != null && tmp.size() > 0) {
-                for (Aspect tag : tmp.copy().getAspects()) {
-                    if (tmp.getAmount(tag) <= 0) {
-                        tmp.remove(tag);
-                    }
-                }
-            }
-        }
-
-        if (tmp == null) {
-            tmp = new AspectList();
-        }
-
-        if (sourcetags != null) {
-            for (Aspect tag : sourcetags.getAspects()) {
-                if (tag != null) {
-                    tmp.add(tag, sourcetags.getAmount(tag));
-                }
-            }
-        }
-
-        int id = Item.getIdFromItem(itemstack.getItem());
-        int meta = itemstack.getItemDamage();
-        if (item != null) {
-            if (item instanceof ItemArmor) {
-                tmp.merge(Aspect.ARMOR, ((ItemArmor) item).damageReduceAmount);
-            } else if (item instanceof ItemSword && ((ItemSword) item).func_150931_i() + 1.0F > 0.0F) {
-                tmp.merge(Aspect.WEAPON, (int) (((ItemSword) item).func_150931_i() + 1.0F));
-            } else if (item instanceof ItemBow) {
-                tmp.merge(Aspect.WEAPON, 3).merge(Aspect.FLIGHT, 1);
-            } else if (item instanceof ItemPickaxe) {
-                String mat = ((ItemTool) item).getToolMaterialName();
-
-                for (Item.ToolMaterial tm : ToolMaterial.values()) {
-                    if (tm.toString().equals(mat)) {
-                        tmp.merge(Aspect.MINE, tm.getHarvestLevel() + 1);
-                    }
-                }
-            } else if (item instanceof ItemTool) {
-                String mat = ((ItemTool) item).getToolMaterialName();
-
-                for (Item.ToolMaterial tm : ToolMaterial.values()) {
-                    if (tm.toString().equals(mat)) {
-                        tmp.merge(Aspect.TOOL, tm.getHarvestLevel() + 1);
-                    }
-                }
-            } else if (item instanceof ItemShears || item instanceof ItemHoe) {
-                if (item.getMaxDamage() <= ToolMaterial.WOOD.getMaxUses()) {
-                    tmp.merge(Aspect.HARVEST, 1);
-                } else if (item.getMaxDamage() > ToolMaterial.STONE.getMaxUses() && item.getMaxDamage() > ToolMaterial.GOLD.getMaxUses()) {
-                    if (item.getMaxDamage() <= ToolMaterial.IRON.getMaxUses()) {
-                        tmp.merge(Aspect.HARVEST, 3);
-                    } else {
-                        tmp.merge(Aspect.HARVEST, 4);
-                    }
-                } else {
-                    tmp.merge(Aspect.HARVEST, 2);
-                }
-            }
-
-            NBTTagList ench = itemstack.getEnchantmentTagList();
-            if (item instanceof ItemEnchantedBook) {
-                ench = ((ItemEnchantedBook) item).func_92110_g(itemstack);
-            }
-
-            if (ench != null) {
-                int var5 = 0;
-
-                for (int var3 = 0; var3 < ench.tagCount(); ++var3) {
-                    short eid = ench.getCompoundTagAt(var3).getShort("id");
-                    short lvl = ench.getCompoundTagAt(var3).getShort("lvl");
-                    if (eid == Enchantment.aquaAffinity.effectId) {
-                        tmp.merge(Aspect.WATER, lvl);
-                    } else if (eid == Enchantment.baneOfArthropods.effectId) {
-                        tmp.merge(Aspect.BEAST, lvl);
-                    } else if (eid == Enchantment.blastProtection.effectId) {
-                        tmp.merge(Aspect.ARMOR, lvl);
-                    } else if (eid == Enchantment.efficiency.effectId) {
-                        tmp.merge(Aspect.TOOL, lvl);
-                    } else if (eid == Enchantment.featherFalling.effectId) {
-                        tmp.merge(Aspect.FLIGHT, lvl);
-                    } else if (eid == Enchantment.fireAspect.effectId) {
-                        tmp.merge(Aspect.FIRE, lvl);
-                    } else if (eid == Enchantment.fireProtection.effectId) {
-                        tmp.merge(Aspect.ARMOR, lvl);
-                    } else if (eid == Enchantment.flame.effectId) {
-                        tmp.merge(Aspect.FIRE, lvl);
-                    } else if (eid == Enchantment.fortune.effectId) {
-                        tmp.merge(Aspect.GREED, lvl);
-                    } else if (eid == Enchantment.infinity.effectId) {
-                        tmp.merge(Aspect.CRAFT, lvl);
-                    } else if (eid == Enchantment.knockback.effectId) {
-                        tmp.merge(Aspect.AIR, lvl);
-                    } else if (eid == Enchantment.looting.effectId) {
-                        tmp.merge(Aspect.GREED, lvl);
-                    } else if (eid == Enchantment.power.effectId) {
-                        tmp.merge(Aspect.WEAPON, lvl);
-                    } else if (eid == Enchantment.projectileProtection.effectId) {
-                        tmp.merge(Aspect.ARMOR, lvl);
-                    } else if (eid == Enchantment.protection.effectId) {
-                        tmp.merge(Aspect.ARMOR, lvl);
-                    } else if (eid == Enchantment.punch.effectId) {
-                        tmp.merge(Aspect.AIR, lvl);
-                    } else if (eid == Enchantment.respiration.effectId) {
-                        tmp.merge(Aspect.AIR, lvl);
-                    } else if (eid == Enchantment.sharpness.effectId) {
-                        tmp.merge(Aspect.WEAPON, lvl);
-                    } else if (eid == Enchantment.silkTouch.effectId) {
-                        tmp.merge(Aspect.EXCHANGE, lvl);
-                    } else if (eid == Enchantment.thorns.effectId) {
-                        tmp.merge(Aspect.WEAPON, lvl);
-                    } else if (eid == Enchantment.smite.effectId) {
-                        tmp.merge(Aspect.ENTROPY, lvl);
-                    } else if (eid == Enchantment.unbreaking.effectId) {
-                        tmp.merge(Aspect.EARTH, lvl);
-                    } else if (eid == Enchantment.field_151370_z.effectId) {
-                        tmp.merge(Aspect.GREED, lvl);
-                    } else if (eid == Enchantment.field_151369_A.effectId) {
-                        tmp.merge(Aspect.BEAST, lvl);
-                    } else if (eid == Config.enchHaste.effectId) {
-                        tmp.merge(Aspect.MOTION, lvl);
-                    } else if (eid == Config.enchRepair.effectId) {
-                        tmp.merge(Aspect.TOOL, lvl);
-                    }
-
-                    var5 += lvl;
-                }
-
-                if (var5 > 0) {
-                    tmp.merge(Aspect.MAGIC, var5);
-                }
-            }
-        }
-
-        return ThaumcraftApiHelper.cullTags(tmp);
+        return ItemAspectBonusTagsCalculator.getBonusTags(itemstack, sourcetags);
     }
 
     public static AspectList generateTags(Item item, int meta) {

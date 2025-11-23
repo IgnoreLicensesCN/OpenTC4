@@ -120,7 +120,7 @@ public class ContainerAlchemyFurnace extends Container {
                if (!this.mergeItemStack(itemstack1, 1, 2, false) && !this.mergeItemStack(itemstack1, 0, 1, false)) {
                   return null;
                }
-            } else if (al != null && al.size() > 0) {
+            } else if (al.size() > 0) {
                if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
                   return null;
                }
@@ -128,7 +128,7 @@ public class ContainerAlchemyFurnace extends Container {
                if (!this.mergeItemStack(itemstack1, 29, 38, false)) {
                   return null;
                }
-            } else if (par2 >= 29 && par2 < 38 && !this.mergeItemStack(itemstack1, 2, 29, false)) {
+            } else if (par2 < 38 && !this.mergeItemStack(itemstack1, 2, 29, false)) {
                return null;
             }
          } else if (!this.mergeItemStack(itemstack1, 2, 38, false)) {

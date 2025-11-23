@@ -880,7 +880,11 @@ public class EntityGolemBase extends EntityGolem implements IEntityAdditionalSpa
    }
 
    public byte getCore() {
-      return this.dataWatcher.getWatchableObjectByte(21);
+      try {
+         return this.dataWatcher.getWatchableObjectByte(21);
+      }catch (ClassCastException cce) {//idk why
+         return (byte) this.dataWatcher.getWatchableObjectInt(21);
+      }
    }
 
    public String getGolemDecoration() {

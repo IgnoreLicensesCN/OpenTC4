@@ -6,3 +6,5 @@ I need lots of cleaning.
 maybe it's better to rewrite these all.
 
 most of Hodgepodge and TC4Tweaks modification are applied.Don't use with TC4Tweaks.
+
+UnicodeFontFixer is still recommended because i don't know what they actually did.

@@ -23,6 +23,7 @@ import thaumcraft.common.lib.research.ResearchManager;
 import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static tc4tweak.modules.researchBrowser.DrawResearchBrowserBorders.*;
 
@@ -34,6 +35,7 @@ public class BrowserPaging {
     static int currentPageIndex;
     static int maxPageIndex;
     private static final LinkedHashMap<String, ResearchCategoryList> currentPageTabs = new LinkedHashMap<>();
+    public static final AtomicBoolean currentPageTabsInitialized = new AtomicBoolean(false);
     private static boolean recalculateCurrentTabs = true;
 
     public static int getTabPerSide() {
@@ -54,17 +56,18 @@ public class BrowserPaging {
         if (newMaxPageIndex != maxPageIndex) {
             maxPageIndex = newMaxPageIndex;
             currentPageIndex = Math.min(currentPageIndex, BrowserPaging.maxPageIndex);
-            currentPageTabs = null;
+            currentPageTabs.clear();
+            currentPageTabsInitialized.set(false);
         }
     }
 
     public static LinkedHashMap<String, ResearchCategoryList> getTabsOnCurrentPage(String player) {
-        if (currentPageTabs == null) {
+        if (!currentPageTabsInitialized.get()) {
             int tabsPerPage = getTabPerSide() * 2;
             // reset in case tab count changed
-            if (currentPageIndex > maxPageIndex)
+            if (currentPageIndex > maxPageIndex) {
                 currentPageIndex = 0;
-            currentPageTabs = new LinkedHashMap<>();
+            }
             int toSkip = tabsPerPage * currentPageIndex;
             for (Map.Entry<String, ResearchCategoryList> e : ResearchCategories.researchCategories.entrySet()) {
                 // pretend eldritch tab doesn't exist if ELDRITCHMINOR is not complete
@@ -234,7 +237,8 @@ public class BrowserPaging {
                 ReflectionHelper.setPrivateValue(GuiResearchBrowser.class, gui, ConfigurationHandler.INSTANCE.getBrowserWidth(), "paneWidth");
                 ReflectionHelper.setPrivateValue(GuiResearchBrowser.class, gui, ConfigurationHandler.INSTANCE.getBrowserHeight(), "paneHeight");
 
-                currentPageTabs = null;
+                currentPageTabs.clear();
+                currentPageTabsInitialized.set(false);
                 updateMaxPageIndex(gui);
             }
         }

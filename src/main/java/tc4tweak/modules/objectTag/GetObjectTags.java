@@ -61,7 +61,7 @@ public class GetObjectTags {
         };
     }
 
-    @SuppressWarnings({"rawtypes"})
+    @Nullable
     public static AspectList getObjectTags(ItemStack itemstack) {
         Item item;
         int meta;
@@ -72,8 +72,9 @@ public class GetObjectTags {
             return null;
         }
 
-        if (item == null)
+        if (item == null) {
             return null;
+        }
 
         AspectList tmp = getBaseObjectTags(item, meta);
         if (tmp == null)
