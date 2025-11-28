@@ -79,21 +79,26 @@ public class Config {
     public static final String CATEGORY_REGEN = "World_Regeneration";
     public static final String CATEGORY_SPAWN = "Monster_Spawning";
     public static final String CATEGORY_RUNIC = "Runic_Shielding";
-    public static int biomeTaintID = 192;
+
+    public static int biomeTaintID = 192;//oneday all of you numbers order by hand will go fuck off
     public static int biomeMagicalForestID = 193;
     public static int biomeEerieID = 194;
     public static int biomeEldritchID = 195;
     public static int biomeTaintWeight = 2;
     public static int biomeMagicalForestWeight = 5;
+    public static int dimensionOuterId = -42;
+
     public static int taintSpreadRate = 200;
     public static boolean taintFromFlux = true;
+
     public static boolean hardNode = true;
     public static boolean wuss = false;
-    public static int dimensionOuterId = -42;
     public static boolean championMobs = true;
+
     public static int shieldRecharge = 2000;
     public static int shieldWait = 80;
     public static int shieldCost = 50;
+
     public static boolean colorBlind = false;
     public static boolean shaders = true;
     public static boolean crooked = true;
@@ -101,8 +106,10 @@ public class Config {
     public static boolean blueBiome = false;
     public static boolean allowMirrors = true;
     public static boolean dialBottom = false;
+
     public static int nodeRefresh = 10;
     public static final float auraSize = 4.0F;
+
     public static boolean genAura = true;
     public static boolean genStructure = true;
     public static boolean genCinnibar = true;

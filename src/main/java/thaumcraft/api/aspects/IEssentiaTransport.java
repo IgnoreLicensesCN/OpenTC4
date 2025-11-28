@@ -32,13 +32,12 @@ public interface IEssentiaTransport {
 			
 	/**
 	 * Sets the amount of suction this block will apply
-	 * @param suction
 	 */
     void setSuction(Aspect aspect, int amount);
 	
 	/**
 	 * Returns the type of suction this block is applying. 
-	 * @param loc
+	 * @param face
 	 * 		the location from where the suction is being checked
 	 * @return
 	 * 		a return type of null indicates the suction is untyped and the first thing available will be drawn
@@ -47,7 +46,7 @@ public interface IEssentiaTransport {
 	
 	/**
 	 * Returns the strength of suction this block is applying. 
-	 * @param loc
+	 * @param face
 	 * 		the location from where the suction is being checked
 	 * @return
 	 */

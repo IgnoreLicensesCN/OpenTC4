@@ -124,7 +124,7 @@ public class ResearchPage {
 	}
 	
 	/**
-	 * @param recipe a furnace smelting crafting recipe.
+	 * @param input recipe input a furnace smelting crafting recipe.
 	 */
 	public ResearchPage(ItemStack input) {
 		this.type = PageType.SMELTING;

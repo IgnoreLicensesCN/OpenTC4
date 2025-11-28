@@ -10,6 +10,17 @@ import tc4tweak.ConfigurationHandler;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.AspectList;
 
+/**
+ * <p>i have to say it's a fool idea to write like this.</p>
+ * <p>
+ * if two infusion(i mean matrix in world) with same recipe instance(this is a singleton for each recipe).the last recipe Output will override those before!
+ * </p>
+ * <p>
+ *     so there's something
+ *     TODO:store real output into infusion matrix.
+ * </p>
+ * --IgnoreLicensesCN
+ * **/
 public class InfusionRecipe
 {
 	protected AspectList aspects;

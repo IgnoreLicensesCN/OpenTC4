@@ -6,7 +6,7 @@ import net.minecraft.block.material.Material;
 public class MaterialAiry extends Material {
    private int mobilityFlag;
 
-   public MaterialAiry(MapColor par1MapColor) {
+   public MaterialAiry(MapColor par1MapColor) {//new MapColor(0, 0)
       super(par1MapColor);
       this.setNoPushMobility();
       this.setRequiresTool();

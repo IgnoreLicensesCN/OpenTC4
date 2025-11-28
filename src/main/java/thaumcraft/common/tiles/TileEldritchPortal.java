@@ -19,19 +19,23 @@ public class TileEldritchPortal extends TileEntity {
    public int opencount = -1;
    private int count = 0;
 
+   @Override
    public boolean canUpdate() {
        return super.canUpdate();
    }
 
+   @Override
    public double getMaxRenderDistanceSquared() {
       return 9216.0F;
    }
 
+   @Override
    @SideOnly(Side.CLIENT)
    public AxisAlignedBB getRenderBoundingBox() {
       return AxisAlignedBB.getBoundingBox(this.xCoord - 1, this.yCoord - 1, this.zCoord - 1, this.xCoord + 2, this.yCoord + 2, this.zCoord + 2);
    }
 
+   @Override
    public void updateEntity() {
       ++this.count;
       if (this.worldObj.isRemote && (this.count % 250 == 0 || this.count == 0)) {

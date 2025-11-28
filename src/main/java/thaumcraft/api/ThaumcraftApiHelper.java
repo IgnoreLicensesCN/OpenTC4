@@ -116,7 +116,7 @@ public class ThaumcraftApiHelper {
         if (recipeItem.stackTagCompound != null && slotItem.stackTagCompound == null) return false;
         if (recipeItem.stackTagCompound == null) return true;
 
-        for (Object o : recipeItem.stackTagCompound.func_150296_c()) {
+        for (Object o : recipeItem.stackTagCompound.func_150296_c()) {//public Set func_150296_c(){return this.tagMap.keySet();}
             String s = (String) o;
             if (slotItem.stackTagCompound.hasKey(s)) {
                 if (!slotItem.stackTagCompound.getTag(s).toString().equals(

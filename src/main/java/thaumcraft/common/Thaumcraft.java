@@ -115,7 +115,6 @@ public class Thaumcraft {
          if (Config.config != null) {
             Config.save();
          }
-
       }
 
       ThaumcraftApi.internalMethods = new InternalMethodHandler();

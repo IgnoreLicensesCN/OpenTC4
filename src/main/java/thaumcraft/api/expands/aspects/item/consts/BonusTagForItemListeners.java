@@ -133,6 +133,7 @@ public class BonusTagForItemListeners {
         }
     };
 
+    //hint:if you want to check you enchantment,you add your own listener.
     public static final BonusTagForItemListener DEFAULT_ENCHANTMENTS = new BonusTagForItemListener(80){
 
         @Override

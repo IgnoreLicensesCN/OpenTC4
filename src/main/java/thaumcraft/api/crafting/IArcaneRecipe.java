@@ -6,6 +6,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import thaumcraft.api.aspects.AspectList;
 
+/**
+ * dont store crafting result or anything here,it's a singleton.
+ * --IgnoreLicensesCN
+ */
 public interface IArcaneRecipe
 {
 	

@@ -116,7 +116,11 @@ public class ArcaneSceptreRecipe implements IArcaneRecipe {
          ItemStack cap3 = ThaumcraftApiHelper.getStackInRowAndColumn(inv, 0, 2);
          ItemStack rod = ThaumcraftApiHelper.getStackInRowAndColumn(inv, 1, 1);
          ItemStack focus = ThaumcraftApiHelper.getStackInRowAndColumn(inv, 2, 0);
-         return ThaumcraftApiHelper.getStackInRowAndColumn(inv, 0, 0) == null && ThaumcraftApiHelper.getStackInRowAndColumn(inv, 0, 1) == null && ThaumcraftApiHelper.getStackInRowAndColumn(inv, 1, 2) == null && ThaumcraftApiHelper.getStackInRowAndColumn(inv, 2, 2) == null && this.checkMatch(cap1, cap2, cap3, rod, focus, player);
+         return ThaumcraftApiHelper.getStackInRowAndColumn(inv, 0, 0) == null
+                 && ThaumcraftApiHelper.getStackInRowAndColumn(inv, 0, 1) == null
+                 && ThaumcraftApiHelper.getStackInRowAndColumn(inv, 1, 2) == null
+                 && ThaumcraftApiHelper.getStackInRowAndColumn(inv, 2, 2) == null
+                 && this.checkMatch(cap1, cap2, cap3, rod, focus, player);
       }
    }
 
