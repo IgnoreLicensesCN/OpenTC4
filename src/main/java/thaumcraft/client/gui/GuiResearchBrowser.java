@@ -99,9 +99,14 @@ public class GuiResearchBrowser extends GuiScreen {
         this.research.clear();
         this.hasScribestuff = false;
         if (selectedCategory == null) {
-//         Collection<String> cats = ResearchCategories.researchCategories.keySet();
             Collection<String> cats = getTabsOnCurrentPage(this.player).keySet();
-            selectedCategory = cats.iterator().next();
+            Iterator<String> iterator = cats.iterator();
+            if (iterator.hasNext()) {
+                selectedCategory = iterator.next();
+            }
+        }
+        if (selectedCategory == null) {
+            selectedCategory = "BASICS";//atleast keep one
         }
 
         this.research.addAll(ResearchCategories.getResearchList(selectedCategory).research.values());

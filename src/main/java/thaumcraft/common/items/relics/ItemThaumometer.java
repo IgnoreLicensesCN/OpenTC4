@@ -38,24 +38,29 @@ public class ItemThaumometer extends Item {
       this.setCreativeTab(Thaumcraft.tabTC);
    }
 
+   @Override
    public EnumRarity getRarity(ItemStack itemstack) {
       return EnumRarity.uncommon;
    }
 
+   @Override
    @SideOnly(Side.CLIENT)
    public void registerIcons(IIconRegister ir) {
       this.icon = ir.registerIcon("thaumcraft:blank");
    }
 
+   @Override
    @SideOnly(Side.CLIENT)
    public IIcon getIconFromDamage(int par1) {
       return this.icon;
    }
 
+   @Override
    public int getMaxItemUseDuration(ItemStack itemstack) {
       return 25;
    }
 
+   @Override
    public EnumAction getItemUseAction(ItemStack itemstack) {
       return EnumAction.none;
    }
@@ -126,6 +131,7 @@ public class ItemThaumometer extends Item {
       }
    }
 
+   @Override
    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer p) {
       if (world.isRemote) {
          ScanResult scan = this.doScan(stack, world, p, 0);
@@ -138,6 +144,7 @@ public class ItemThaumometer extends Item {
       return stack;
    }
 
+   @Override
    public void onUsingTick(ItemStack stack, EntityPlayer p, int count) {
       if (p.worldObj.isRemote && p.getCommandSenderName() == Minecraft.getMinecraft().thePlayer.getCommandSenderName()) {
          ScanResult scan = this.doScan(stack, p.worldObj, p, count);
@@ -160,6 +167,7 @@ public class ItemThaumometer extends Item {
 
    }
 
+   @Override
    public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer, int par4) {
       super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer, par4);
       this.startScan = null;

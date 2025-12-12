@@ -274,10 +274,11 @@ import thaumcraft.common.tiles.*;
 import static tc4tweak.ClientUtils.postponed;
 
 public class ClientProxy extends CommonProxy {
-   protected PlayerKnowledge playerResearch = new PlayerKnowledge();
-   protected ResearchManager researchManager = new ResearchManager();
-   public WandManager wandManager = new WandManager();
-   private HashMap customIcons = new HashMap<>();
+
+//   protected PlayerKnowledge playerResearch = new PlayerKnowledge();
+//   protected ResearchManager researchManager = new ResearchManager();
+//   public WandManager wandManager = new WandManager();
+//   private HashMap customIcons = new HashMap<>();
 
    public void registerHandlers() {
       FMLCommonHandler.instance().bus().register(new ClientTickEventsFML());
